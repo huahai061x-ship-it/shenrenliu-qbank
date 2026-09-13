@@ -1,0 +1,35 @@
+{
+  "id": "./",
+  "name": "神人刘题库训练站",
+  "short_name": "神人刘题库",
+  "description": "v2.2正式版：507道HOS应知应会题库，含双模拟、均衡复习、真实计时、错题纠正、掌握度地图与长期统计。",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": [
+    "standalone",
+    "minimal-ui"
+  ],
+  "background_color": "#f5f7fb",
+  "theme_color": "#2563eb",
+  "lang": "zh-CN",
+  "orientation": "any",
+  "categories": [
+    "education",
+    "productivity"
+  ],
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

@@ -1,12 +1,12 @@
-const BUILD_VERSION = 'v2.2-pages-20260913-r1';
-const CACHE_PREFIX = 'shenrenliu-qbank-';
-const CACHE = `${CACHE_PREFIX}${BUILD_VERSION}`;
-const CORE = [
-  './', './index.html', './①点我打开题库.html', './styles.css',
-  './questions.js', './pedagogy.js', './enhanced-fill.js', './app.js',
-  './manifest.webmanifest', './icon-192.png', './icon-512.png',
-  ...Array.from({length:111},(_,i)=>`./image${i+1}.webp`)
+const BUILD_VERSION = 'v2.2.1-pages-20260914-r1';
+const CACHE_PREFIX = 'shenrenliu-qbank-app-';
+const APP_CACHE = `${CACHE_PREFIX}${BUILD_VERSION}`;
+const IMAGE_CACHE = 'shenrenliu-qbank-images-v1';
+const REQUIRED = [
+  './', './index.html', './styles.css', './questions.js',
+  './pedagogy.js', './enhanced-fill.js', './app.js'
 ];
+const OPTIONAL = ['./①点我打开题库.html', './manifest.webmanifest', './icon-192.png', './icon-512.png'];
 
 async function fetchFresh(request) {
   const response = await fetch(request, {cache: 'no-store'});
@@ -14,13 +14,16 @@ async function fetchFresh(request) {
   return response;
 }
 
+async function cacheOne(cache, url) {
+  const request = new Request(url, {cache: 'reload'});
+  await cache.put(request, await fetchFresh(request));
+}
+
 self.addEventListener('install', event => {
   event.waitUntil((async () => {
-    const cache = await caches.open(CACHE);
-    await Promise.all(CORE.map(async url => {
-      const request = new Request(url, {cache: 'reload'});
-      await cache.put(request, await fetchFresh(request));
-    }));
+    const cache = await caches.open(APP_CACHE);
+    for (const url of REQUIRED) await cacheOne(cache, url);
+    await Promise.allSettled(OPTIONAL.map(url => cacheOne(cache, url)));
     await self.skipWaiting();
   })());
 });
@@ -28,7 +31,7 @@ self.addEventListener('install', event => {
 self.addEventListener('activate', event => {
   event.waitUntil((async () => {
     const keys = await caches.keys();
-    await Promise.all(keys.filter(key => key.startsWith(CACHE_PREFIX) && key !== CACHE).map(key => caches.delete(key)));
+    await Promise.all(keys.filter(key => key.startsWith(CACHE_PREFIX) && key !== APP_CACHE).map(key => caches.delete(key)));
     await self.clients.claim();
   })());
 });
@@ -37,43 +40,47 @@ self.addEventListener('message', event => {
   if (event.data === 'SKIP_WAITING') self.skipWaiting();
 });
 
+async function appCacheFirst(request, fallback) {
+  const cached = await caches.match(request, {cacheName: APP_CACHE});
+  if (cached) return cached;
+  try {
+    const response = await fetchFresh(request);
+    const cache = await caches.open(APP_CACHE);
+    await cache.put(request, response.clone());
+    return response;
+  } catch (_) {
+    return fallback ? (await caches.match(fallback, {cacheName: APP_CACHE})) || Response.error() : Response.error();
+  }
+}
+
 self.addEventListener('fetch', event => {
   const request = event.request;
   if (request.method !== 'GET') return;
   const url = new URL(request.url);
   if (url.origin !== self.location.origin) return;
 
-  if (request.mode === 'navigate') {
+  if (/\/image\d+\.webp$/.test(url.pathname)) {
     event.respondWith((async () => {
+      const cache = await caches.open(IMAGE_CACHE);
+      const cached = await cache.match(request);
+      if (cached) return cached;
       try {
         const response = await fetchFresh(request);
-        const cache = await caches.open(CACHE);
         await cache.put(request, response.clone());
         return response;
       } catch (_) {
-        return (await caches.match(request)) || (await caches.match('./index.html'));
+        return new Response('原题图片暂不可用', {status: 503, headers: {'Content-Type': 'text/plain; charset=utf-8'}});
       }
     })());
     return;
   }
 
-  if (/\/image\d+\.webp$/.test(url.pathname) || /\/icon-(192|512)\.png$/.test(url.pathname)) {
-    event.respondWith(caches.match(request).then(cached => cached || fetchFresh(request).then(async response => {
-      const cache = await caches.open(CACHE);
-      await cache.put(request, response.clone());
-      return response;
-    })));
+  if (request.mode === 'navigate') {
+    event.respondWith(appCacheFirst(request, './index.html'));
     return;
   }
 
-  event.respondWith((async () => {
-    try {
-      const response = await fetchFresh(request);
-      const cache = await caches.open(CACHE);
-      await cache.put(request, response.clone());
-      return response;
-    } catch (_) {
-      return (await caches.match(request)) || Response.error();
-    }
-  })());
+  if (REQUIRED.concat(OPTIONAL).some(path => url.pathname.endsWith(path.slice(1)))) {
+    event.respondWith(appCacheFirst(request));
+  }
 });

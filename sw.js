@@ -1,4 +1,4 @@
-const BUILD_VERSION = 'v2.2.1-pages-20260914-r2';
+const BUILD_VERSION = 'v2.2.2-pages-20260920-r1';
 const CACHE_PREFIX = 'shenrenliu-qbank-app-';
 const APP_CACHE = `${CACHE_PREFIX}${BUILD_VERSION}`;
 const IMAGE_CACHE = 'shenrenliu-qbank-images-v1';

@@ -2,7 +2,7 @@
   "id": "./",
   "name": "神人刘题库训练站",
   "short_name": "神人刘题库",
-  "description": "v2.2.1正式版：507道HOS应知应会题库，含考前冲刺、双模拟、备份提醒、错题纠正与离线学习。",
+  "description": "v2.2.2正式版：507道HOS应知应会题库，含考前冲刺、双模拟、备份提醒、错题纠正与离线学习。",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",

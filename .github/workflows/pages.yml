@@ -1,0 +1,62 @@
+name: Test and deploy GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - name: Run regression checks
+        run: |
+          python 受保护文件校验.py
+          python 题库数据校验.py
+          node 全功能发布前校验.js
+          node 增强填空与轮换校验.js
+          node v2.1边界与恢复校验.js
+          node v2.2学习逻辑校验.js
+          node 十五场真实考试实测.js
+          node 二十场真实考试实测.js
+          node v2.2_150场压力测试.js
+          node v2.2.1稳定性回归.js
+          node v2.2.2精修回归.js
+          node v2.2.3移动安装与彩蛋回归.js
+          node v2.2.3精修回归.js
+      - name: Configure Pages
+        uses: actions/configure-pages@v6
+      - name: Build site
+        env:
+          BUILD_VERSION: ${{ github.sha }}
+        run: node scripts/build-release.mjs
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: ./dist
+          include-hidden-files: true
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

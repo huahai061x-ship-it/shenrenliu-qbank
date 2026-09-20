@@ -1,0 +1,25 @@
+const fs=require('fs'),vm=require('vm');
+function classes(){const s=new Set(['hidden']);return {removeCount:0,add(k){s.add(k)},remove(k){s.delete(k);this.removeCount++},toggle(k,on){on?s.add(k):s.delete(k)},contains:k=>s.has(k)}}
+function boot(initial=''){
+  const nodes={},node=()=>({innerHTML:'',textContent:'',value:'',dataset:{},style:{},classList:classes(),append(){},remove(){},click(){},select(){}}),main=node(),watermark=node();
+  nodes['#eggModal']=node();nodes['#eggBody']=node();nodes['#settingsModal']=node();
+  const controls={'#realExamRule':{value:'normal'},'#countBtns .active':{dataset:{n:'30'}},'#examRule':{value:'normal'},'#fillRatio':{value:'15'},'#typeFilter':{value:'all'},'#sprintCountBtns .active':{dataset:{n:'30'}}};
+  const document={hidden:false,documentElement:{dataset:{}},body:{classList:classes(),append(){}},querySelector:s=>s==='#main'?main:s==='#watermark'?watermark:nodes[s]||controls[s]||null,querySelectorAll:()=>[],addEventListener(){},createElement:node,execCommand(){return true}};
+  const store={shenrenliu_qbank_v1:initial},localStorage={getItem:k=>store[k]||null,setItem:(k,v)=>store[k]=v};
+  const navigator={userAgent:'Mozilla/5.0',serviceWorker:null};
+  const c={window:{addEventListener(){},matchMedia:()=>({matches:false}),scrollTo(){},scrollY:0,isSecureContext:true},document,localStorage,location:{protocol:'https:',href:'https://example.test/'},navigator,history:{pushState(){},replaceState(){}},performance:{now:()=>1000},requestAnimationFrame:f=>f(),setTimeout:f=>{f();return 1},clearTimeout(){},setInterval:()=>0,clearInterval(){},structuredClone:o=>JSON.parse(JSON.stringify(o)),confirm:()=>true,prompt(){},alert(){},Blob:function(){},URL:{createObjectURL:()=>'',revokeObjectURL(){}},FileReader:function(){},Math:Object.create(Math)};
+  c.Math.random=()=>.5;Object.assign(c.window,{window:c.window,document,localStorage,location:c.location,navigator});vm.createContext(c);for(const f of ['questions.js','pedagogy.js','enhanced-fill.js','app.js'])vm.runInContext(fs.readFileSync(f,'utf8'),c,{filename:f});return {c,nodes,store};
+}
+function ok(v,m){if(!v)throw Error(m)}
+let x=boot(JSON.stringify({schemaVersion:2,easterEggs:{discovered:['score90'],recent:['score90'],titles:['初窥门径'],answerStreak:{correct:2,wrong:0}}})),t=x.c.window.__V223_TEST__;
+for(const id of ['score100','score90','score80','score70','score60','scoreLow','score40','score20'])ok(t.textPools[id].length>=4,`${id} 文案不足4条`);
+for(const id of ['streak10','streak20','wrong3','wrong5','wrong10','repeat3','repeat5','corrected','improved','comeback','rapidGuess','lateNight'])ok(t.textPools[id].length>=3,`${id} 文案不足3条`);
+const keys=Object.values(t.textPools).flat().map(v=>v.key);ok(new Set(keys).size===keys.length,'文案 key 不唯一');
+let picked=[];for(let i=0;i<3;i++){let p=t.pickEggCopy('score90',()=>i/4);picked.push(p.key);let s=t.getStore();s.easterEggs.recentCopyKeys=[...(s.easterEggs.recentCopyKeys||[]),p.key]}
+let migrated=t.sanitizeEggState({discovered:['score90'],recent:['score90'],answerStreak:{correct:7}});ok(Array.isArray(migrated.recentCopyKeys)&&migrated.answerStreak.correct===7,'旧彩蛋状态迁移失败');
+ok(JSON.stringify(t.consolidateEggCandidates(['wrong3','wrong5','wrong10','streak10','streak20','repeat3','repeat5']))===JSON.stringify(['wrong10','streak20','repeat5']),'同家族未保留最高级');
+let cooldown=boot(JSON.stringify({schemaVersion:2,easterEggs:{lastShown:{score90:Date.now()},discovered:[]}}));ok(!cooldown.c.window.__V223_TEST__.showEasterEgg('score90','',false),'冷却期间仍显示');ok(cooldown.c.window.__V223_TEST__.getStore().easterEggs.discovered.length===0,'未显示候选被标记发现');
+let titleBoot=boot(JSON.stringify({schemaVersion:2,aggregateStats:{totalAnswers:100}})),titleTest=titleBoot.c.window.__V223_TEST__;ok(titleTest.eligibleTitle()==='渐入佳境','称号资格识别失败');ok(titleTest.getStore().easterEggs.titles.length===0,'称号被静默解锁');
+let exam=boot();exam.c.window.beginExam('mixed');let ses=exam.c.window.__V22_TEST__.getSession();for(const item of ses.items){let fill=exam.c.window.HOS_ENHANCED_FILL[item.q.id]||exam.c.window.HOS_PEDAGOGY.fillBank[item.q.id];item.answer=item.renderType==='fill'?(fill?.answers||item.q.answers).join('、'):item.q.type==='multiple'?[...item.q.answers]:item.q.answers[0];item.timeMs=5000}ses.totalActiveMs=ses.items.length*5000;exam.c.window.submitExam();ok(exam.nodes['#eggModal'].classList.removeCount===1,'考试批量统计打开了多个彩蛋弹窗');let shown=exam.c.window.__V223_TEST__.getStore().easterEggs.discovered;ok(shown.includes('score100')&&shown.includes('streak20')&&!shown.includes('streak10'),'考试结算的可见发现状态不一致');
+const src=fs.readFileSync('app.js','utf8'),html=fs.readFileSync('index.html','utf8'),sw=fs.readFileSync('sw.js','utf8');ok(!/onclick="renderHistory\(\)">返回/.test(src),'图鉴返回仍指向学习记录');ok(html.includes("renderEggAtlas('settings')"),'设置入口未记录返回目标');ok(t.detectMobilePlatform('Android OpenHarmony')==='harmony','鸿蒙被 Android 抢先识别');ok(sw.includes("'__BUILD_VERSION__'"),'sw.js 未恢复构建占位符');
+console.log('v2.2.3精修回归通过：文案池/去重迁移、考试单弹窗结算、可见即解锁、家族升级、称号、图鉴返回、鸿蒙识别与构建占位符均正常。');

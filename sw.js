@@ -1,4 +1,4 @@
-const BUILD_VERSION = 'v2.2.2-pages-20260920-r1';
+const BUILD_VERSION = '__BUILD_VERSION__';
 const CACHE_PREFIX = 'shenrenliu-qbank-app-';
 const APP_CACHE = `${CACHE_PREFIX}${BUILD_VERSION}`;
 const IMAGE_CACHE = 'shenrenliu-qbank-images-v1';
@@ -59,7 +59,7 @@ self.addEventListener('fetch', event => {
   const url = new URL(request.url);
   if (url.origin !== self.location.origin) return;
 
-  if (/\/image\d+\.webp$/.test(url.pathname)) {
+  if (url.pathname.includes('/source/')) {
     event.respondWith((async () => {
       const cache = await caches.open(IMAGE_CACHE);
       const cached = await cache.match(request);

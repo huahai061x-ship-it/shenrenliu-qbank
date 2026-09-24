@@ -19,7 +19,9 @@ function answerCurrent(){
   const id=currentId(),q=byId.get(id);if(!q)throw Error('页面未显示有效原题号');
   if(currentIsFill()){
     const entry=enhanced[id]||standard[id];if(!entry)throw Error(`#${id}显示为填空但没有填空条目`);
-    context.window.setAnswer((entry.answers||q.answers).join('、'));
+    const item=context.window.__V22_TEST__.getSession().items.find(x=>x.q.id===id);
+    const variant=entry.variants?.find(v=>v.key===item.fillVariantKey)||entry;
+    context.window.setAnswer((variant.answers||q.answers).join('、'));
   }else if(q.type==='multiple'){
     const order=context.window.__V22_TEST__.getSession().items.find(x=>x.q.id===id).optionOrder;
     for(const answer of q.answers)context.window.chooseOption(order.indexOf(answer));

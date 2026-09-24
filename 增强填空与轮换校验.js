@@ -6,27 +6,30 @@ const full={...standard,...added}, errors=[];
 // 专项修订题以单个知识点命题，另由填空题命题质量专项校验核对原题语义。
 const focusedFillIds=new Set([138,143,144,145,154,164,165,168,170,173,177,183,184,185,186,187,247,258,259,261,268,308]);
 if(Object.keys(standard).length!==104)errors.push('标准填空数量不是104');
-if(Object.keys(full).length!==198)errors.push('增强填空总数不是198');
+if(Object.keys(full).length!==208)errors.push('增强填空总数不是208');
 for(const [id,e] of Object.entries(full)){
   const q=Q.find(x=>x.id===Number(id));
   if(!q)errors.push(`#${id}不存在`);
-  if(!e.stem||!e.stem.includes('______'))errors.push(`#${id}题干无填空线`);
-  if(!Array.isArray(e.answers||q?.answers)||(e.answers||q?.answers).length===0)errors.push(`#${id}无答案`);
-  if(q?.type==='judge'&&(!e.answers||e.answers.some(x=>x==='对'||x==='错')))errors.push(`#${id}判断改填空仍以对错作答`);
-  if(e.originType==='multiple'&&!focusedFillIds.has(Number(id))&&JSON.stringify(e.answers)!==JSON.stringify(q.answers))errors.push(`#${id}多选改填空答案与原题不一致`);
+  const variants=e.variants||[e];
+  for(const v of variants){
+    if(!v.stem||!v.stem.includes('______'))errors.push(`#${id}题干无填空线`);
+    if(!Array.isArray(v.answers||q?.answers)||(v.answers||q?.answers).length===0)errors.push(`#${id}无答案`);
+    if(q?.type==='judge'&&(!v.answers||v.answers.some(x=>x==='对'||x==='错')))errors.push(`#${id}判断改填空仍以对错作答`);
+  }
+  if(e.originType==='multiple'&&!e.variants&&!focusedFillIds.has(Number(id))&&JSON.stringify(e.answers)!==JSON.stringify(q.answers))errors.push(`#${id}多选改填空答案与原题不一致`);
   if(e.originType==='judge'&&q.answers[0]!=='对')errors.push(`#${id}错误判断题被直接改成填空`);
 }
 function clean(v){return String(v||'').normalize('NFKC').replace(/(\d)\s*[~～]\s*(\d)/g,'$1-$2').replace(/(\d)\s*(?:至|到)\s*(\d)/g,'$1-$2').replace(/\s+/g,'').replace(/[“”"'‘’。.!！?？,，、;；:：()（）\[\]【】]/g,'').toLowerCase()}
 function stripFraming(v){return v.replace(/^(正确答案是|正确答案为|答案是|答案为|应填写|应填入|应为|填写|填入)/,'')}
 function canonicalFillPass(answers,raw){let rest=stripFraming(clean(raw));for(const expected of answers.map(clean).sort((a,b)=>b.length-a.length)){const at=rest.indexOf(expected);if(at<0)return false;rest=rest.slice(0,at)+rest.slice(at+expected.length)}return rest.length===0}
 function fillPass(entry,raw){return (entry.accepted||[]).some(x=>clean(x)===clean(raw))||canonicalFillPass(entry.answers,raw)}
-for(const [id,e] of Object.entries(full)){
-  const q=Q.find(x=>x.id===Number(id)),answers=e.answers||q.answers,canonical=answers.join('、');
+for(const [id,e] of Object.entries(full))for(const variant of e.variants||[e]){
+  const q=Q.find(x=>x.id===Number(id)),answers=variant.answers||q.answers,canonical=answers.join('、');
   if(!canonicalFillPass(answers,canonical))errors.push(`#${id}标准答案不能被填空判题逻辑识别`);
   for(let missing=0;missing<answers.length;missing++)if(canonicalFillPass(answers,answers.filter((_,i)=>i!==missing).join('、')))errors.push(`#${id}漏答第${missing+1}项仍被判为正确`);
   if(canonicalFillPass(answers,canonical+'、错误内容'))errors.push(`#${id}夹带错误内容仍被判为正确`);
 }
-for(const [id,e] of Object.entries(full))for(const alt of e.accepted||[])if(!clean(alt))errors.push(`#${id}存在空白容错答案`);
+for(const [id,e] of Object.entries(full))for(const variant of e.variants||[e])for(const alt of variant.accepted||[])if(!clean(alt))errors.push(`#${id}存在空白容错答案`);
 if(!fillPass(standard[64],'人机物法')||!fillPass(standard[64],'人机料法'))errors.push('#64的“人机物法/人机料法”兼容回归失败');
 if(!fillPass(added[145],'订单型号')||!fillPass(added[145],'型号')||fillPass(added[145],'订单型号、错误内容'))errors.push('#145聚焦命题判题回归失败');
 if(clean('3～4')!==clean('3-4')||clean('3至4')!==clean('3-4'))errors.push('数字范围归一化回归失败');
@@ -54,4 +57,4 @@ for(let i=0;i<exams.length;i++)for(let j=i+1;j<exams.length&&j-i<=3;j++){const o
 if(errors.length){console.error(errors.join('\n'));process.exit(1)}
 const unique=new Set(exams.flat()).size;
 if(unique!==507){console.error(`连续20场仅覆盖${unique}/507题`);process.exit(1)}
-console.log(`校验通过：标准填空104题，增强填空198题（新增${Object.keys(added).length}题）；连续20场中任意相邻四场零重复，共覆盖${unique}道不同原题。`);
+console.log(`校验通过：标准填空104题，增强填空208题（独立${Object.keys(added).length}题）；连续20场中任意相邻四场零重复，共覆盖${unique}道不同原题。`);

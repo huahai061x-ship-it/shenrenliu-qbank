@@ -26,7 +26,7 @@ const x=boot(),Q=x.c.window.QUESTION_BANK,standard=x.c.window.HOS_PEDAGOGY.fillB
 const rewritten=[138,143,144,145,154,164,165,170,173,177,183,184,185,186,187];
 const fixed=[168,462,474],removed=[176,378,418,431,450,473],inserted=[247,258,259,261,268,308];
 check(Q.length===507,'原题不是507道');check(Object.keys(standard).length===104,'标准填空不是104道');
-check(Object.keys(added).length===94,'增强独立池不是94道');check(Object.keys(full).length===198,'增强总池不是198道');
+check(Object.keys(added).length===104,'增强独立池不是104道');check(Object.keys(full).length===208,'增强总池不是208道');
 check(x.main.innerHTML.includes('题库数据自检通过'),'运行时题库自检未通过');
 for(const id of removed){check(!added[id],`#${id}仍在增强池`);check(Q.some(q=>q.id===id),`原题#${id}丢失`)}
 for(const id of inserted)check(!!added[id],`#${id}未加入增强池`);
@@ -70,7 +70,7 @@ for(let round=0;round<100;round++){
   const ids=session.items.map(i=>i.q.id),counts={single:0,multiple:0,judge:0,fill:0};
   check(new Set(ids).size===55,`真实模拟第${round+1}场重复原题`);
   check(groups.every(g=>g.filter(id=>ids.includes(id)).length<=1),`真实模拟第${round+1}场等价组冲突`);
-  for(const item of session.items){counts[item.renderType]++;if(item.renderType==='fill'){fillSeen.add(item.q.id);const e=full[item.q.id],answers=e?.answers||item.q.answers;check(!!e&&answers.length>0,`真实模拟第${round+1}场空答案`);check(!e.stem.includes('undefined'),`真实模拟第${round+1}场undefined`);item.answer=answers.join('、')}else{regularSeen.add(item.q.id);item.answer=item.q.type==='multiple'?[...item.q.answers]:item.q.answers[0]}item.timeMs=5000}
+  for(const item of session.items){counts[item.renderType]++;if(item.renderType==='fill'){fillSeen.add(item.q.id);const e=full[item.q.id],v=e?.variants?.find(x=>x.key===item.fillVariantKey)||e,answers=v?.answers||item.q.answers;check(!!e&&!!v&&answers.length>0,`真实模拟第${round+1}场空答案`);check(!v.stem.includes('undefined'),`真实模拟第${round+1}场undefined`);item.answer=answers.join('、')}else{regularSeen.add(item.q.id);item.answer=item.q.type==='multiple'?[...item.q.answers]:item.q.answers[0]}item.timeMs=5000}
   check(counts.single===15&&counts.multiple===10&&counts.judge===10&&counts.fill===20,`真实模拟第${round+1}场比例不对`);
   session.totalActiveMs=275000;x.c.window.submitExam();check(x.c.window.__V22_TEST__.getStore().history[0].score===100,`真实模拟第${round+1}场标准答案未得100分`);
 }
@@ -79,12 +79,12 @@ for(let round=0;round<50;round++){
   x.c.window.renderExamSetup('fill','enhanced');x.c.window.beginExam('fill');const session=x.c.window.__V22_TEST__.getSession();
   check(!!session&&session.items.length===30,`纯填空第${round+1}场题数不对`);if(!session||session.items.length!==30)break;
   const ids=session.items.map(i=>i.q.id);check(new Set(ids).size===30,`纯填空第${round+1}场重复原题`);
-  for(const item of session.items){pureSeen.add(item.q.id);const e=full[item.q.id],answers=e?.answers||item.q.answers;check(item.renderType==='fill'&&!!e,`纯填空第${round+1}场无效填空`);check(!removed.includes(item.q.id),`纯填空第${round+1}场出现移除题`);check(!e.stem.includes('undefined'),`纯填空第${round+1}场undefined`);check(answers.length>0,`纯填空第${round+1}场无答案`);item.answer=answers.join('、');item.timeMs=5000}
+  for(const item of session.items){pureSeen.add(item.q.id);const e=full[item.q.id],v=e?.variants?.find(x=>x.key===item.fillVariantKey)||e,answers=v?.answers||item.q.answers;check(item.renderType==='fill'&&!!e&&!!v,`纯填空第${round+1}场无效填空`);check(!removed.includes(item.q.id),`纯填空第${round+1}场出现移除题`);check(!v.stem.includes('undefined'),`纯填空第${round+1}场undefined`);check(answers.length>0,`纯填空第${round+1}场无答案`);item.answer=answers.join('、');item.timeMs=5000}
   session.totalActiveMs=150000;x.c.window.submitExam();check(x.c.window.__V22_TEST__.getStore().history[0].score===100,`纯填空第${round+1}场得分异常`);
 }
 for(const id of inserted)check(pureSeen.has(id),`新增#${id}在50场纯填空中未抽到`);
 for(const id of removed)check(regularSeen.has(id),`移除增强资格的原题#${id}在100场普通题型中未抽到`);
-check(pureSeen.size===198,`50场纯填空仅覆盖${pureSeen.size}/198题`);
+check(pureSeen.size===208,`50场纯填空仅覆盖${pureSeen.size}/208题`);
 const summary={sourceQuestions:Q.length,standardFill:Object.keys(standard).length,enhancedIndependent:Object.keys(added).length,enhancedTotal:Object.keys(full).length,gradingCases:cases.length,fillStrongExams:100,pureFillExams:50,pureFillCoverage:pureSeen.size,removedOriginalsRegularCoverage:removed.filter(id=>regularSeen.has(id)).length,errors:errors.length};
 if(errors.length){console.error(errors.join('\n'));console.error(JSON.stringify(summary));process.exit(1)}
 console.log('填空题命题质量专项校验通过：'+JSON.stringify(summary));

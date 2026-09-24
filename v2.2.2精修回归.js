@@ -9,7 +9,7 @@ function boot(initial=''){
   Object.assign(c.window,{window:c.window,document,localStorage,location:c.location,navigator:c.navigator});vm.createContext(c);for(const f of ['questions.js','pedagogy.js','enhanced-fill.js','app.js'])vm.runInContext(fs.readFileSync(f,'utf8'),c,{filename:f});return {c,store,main,controls};
 }
 function ok(v,m){if(!v)throw Error(m)}
-function answerAll(x,good=true){const s=x.c.window.__V22_TEST__.getSession();for(const item of s.items){const e=x.c.window.HOS_ENHANCED_FILL[item.q.id]||x.c.window.HOS_PEDAGOGY.fillBank[item.q.id];item.timeMs=8000;if(good)item.answer=item.renderType==='fill'?(e?.answers||item.q.answers).join('、'):item.q.type==='multiple'?[...item.q.answers]:item.q.answers[0];else item.answer=item.renderType==='fill'?'__WRONG__':(item.q.options.find(o=>!item.q.answers.includes(o))||'__WRONG__')}s.totalActiveMs=s.items.reduce((n,i)=>n+i.timeMs,0);x.c.window.submitExam()}
+function answerAll(x,good=true){const s=x.c.window.__V22_TEST__.getSession();for(const item of s.items){const e=x.c.window.HOS_ENHANCED_FILL[item.q.id]||x.c.window.HOS_PEDAGOGY.fillBank[item.q.id];item.timeMs=8000;if(good)item.answer=item.renderType==='fill'?((e?.variants?.find(v=>v.key===item.fillVariantKey)||e)?.answers||item.q.answers).join('、'):item.q.type==='multiple'?[...item.q.answers]:item.q.answers[0];else item.answer=item.renderType==='fill'?'__WRONG__':(item.q.options.find(o=>!item.q.answers.includes(o))||'__WRONG__')}s.totalActiveMs=s.items.reduce((n,i)=>n+i.timeMs,0);x.c.window.submitExam()}
 
 // 1) v2.2.2 version loads and ordinary simulation really honors option shuffle.
 let x=boot();

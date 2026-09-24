@@ -36,6 +36,7 @@ jobs:
           node v2.2.3移动安装与彩蛋回归.js
           node v2.2.3精修回归.js
           node 填空题命题质量专项校验.js
+          node 填空模块封版与轮换挖空校验.js
       - name: Configure Pages
         uses: actions/configure-pages@v6
       - name: Build site

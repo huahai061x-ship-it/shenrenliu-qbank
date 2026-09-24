@@ -1,7 +1,7 @@
 from pathlib import Path
 import hashlib, sys
 ROOT=Path(__file__).resolve().parent
-EXPECTED={'questions.js': '1564742ccce3579c4a6606f8dacdbc2520fa57e93a9639f9f3512980ad95f328', 'pedagogy.js': '83c9eac18cf85ae7ba90dacce4cc0c999cabcdd95eb7f010be3d02a299eee4c6', 'enhanced-fill.js': '7821e814efb12536ba3a2c53932efa879321237fdca04a876aa4d23d2e0fa9d9'}
+EXPECTED={'questions.js': '1564742ccce3579c4a6606f8dacdbc2520fa57e93a9639f9f3512980ad95f328', 'pedagogy.js': '83c9eac18cf85ae7ba90dacce4cc0c999cabcdd95eb7f010be3d02a299eee4c6', 'enhanced-fill.js': 'b872af3ee3a8b5c07816898e77d3e191d225cceb48797be07f98c8fdcb952866'}
 EXPECTED_SOURCE_COUNT=111
 EXPECTED_SOURCE_DIGEST='08414f47b7af452c048da12079a14b565db2b331c3d3f095e0a258167c9abc56'
 

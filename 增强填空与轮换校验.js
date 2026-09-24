@@ -3,6 +3,8 @@ const ctx={window:{}};vm.createContext(ctx);
 for(const f of ['questions.js','pedagogy.js','enhanced-fill.js'])vm.runInContext(fs.readFileSync(f,'utf8'),ctx,{filename:f});
 const Q=ctx.window.QUESTION_BANK, standard=ctx.window.HOS_PEDAGOGY.fillBank, added=ctx.window.HOS_ENHANCED_FILL;
 const full={...standard,...added}, errors=[];
+// 专项修订题以单个知识点命题，另由填空题命题质量专项校验核对原题语义。
+const focusedFillIds=new Set([138,143,144,145,154,164,165,168,170,173,177,183,184,185,186,187,247,258,259,261,268,308]);
 if(Object.keys(standard).length!==104)errors.push('标准填空数量不是104');
 if(Object.keys(full).length!==198)errors.push('增强填空总数不是198');
 for(const [id,e] of Object.entries(full)){
@@ -11,7 +13,7 @@ for(const [id,e] of Object.entries(full)){
   if(!e.stem||!e.stem.includes('______'))errors.push(`#${id}题干无填空线`);
   if(!Array.isArray(e.answers||q?.answers)||(e.answers||q?.answers).length===0)errors.push(`#${id}无答案`);
   if(q?.type==='judge'&&(!e.answers||e.answers.some(x=>x==='对'||x==='错')))errors.push(`#${id}判断改填空仍以对错作答`);
-  if(e.originType==='multiple'&&JSON.stringify(e.answers)!==JSON.stringify(q.answers))errors.push(`#${id}多选改填空答案与原题不一致`);
+  if(e.originType==='multiple'&&!focusedFillIds.has(Number(id))&&JSON.stringify(e.answers)!==JSON.stringify(q.answers))errors.push(`#${id}多选改填空答案与原题不一致`);
   if(e.originType==='judge'&&q.answers[0]!=='对')errors.push(`#${id}错误判断题被直接改成填空`);
 }
 function clean(v){return String(v||'').normalize('NFKC').replace(/(\d)\s*[~～]\s*(\d)/g,'$1-$2').replace(/(\d)\s*(?:至|到)\s*(\d)/g,'$1-$2').replace(/\s+/g,'').replace(/[“”"'‘’。.!！?？,，、;；:：()（）\[\]【】]/g,'').toLowerCase()}
@@ -26,7 +28,7 @@ for(const [id,e] of Object.entries(full)){
 }
 for(const [id,e] of Object.entries(full))for(const alt of e.accepted||[])if(!clean(alt))errors.push(`#${id}存在空白容错答案`);
 if(!fillPass(standard[64],'人机物法')||!fillPass(standard[64],'人机料法'))errors.push('#64的“人机物法/人机料法”兼容回归失败');
-if(!fillPass(added[145],'根据订单型号确定加注量、加油枪应放置稳妥，不滑脱、加注完成后清理洒落油渍'))errors.push('#145自然写法兼容回归失败');
+if(!fillPass(added[145],'订单型号')||!fillPass(added[145],'型号')||fillPass(added[145],'订单型号、错误内容'))errors.push('#145聚焦命题判题回归失败');
 if(clean('3～4')!==clean('3-4')||clean('3至4')!==clean('3-4'))errors.push('数字范围归一化回归失败');
 const app=fs.readFileSync('app.js','utf8'),css=fs.readFileSync('styles.css','utf8'),html=fs.readFileSync('index.html','utf8');
 for(const token of ['class="quick-nav"','toggleAnswerPanel(true)','id="answerPanel"'])if(!app.includes(token))errors.push(`快捷导航结构缺少${token}`);

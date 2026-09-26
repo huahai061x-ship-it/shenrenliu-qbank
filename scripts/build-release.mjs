@@ -7,7 +7,7 @@ const version = (process.env.BUILD_VERSION || 'local').replace(/[^a-zA-Z0-9._-]/
 const files = [
   'index.html', '①点我打开题库.html', 'styles.css', 'questions.js',
   'pedagogy.js', 'enhanced-fill.js', 'app.js', 'manifest.webmanifest',
-  'icon-192.png', 'icon-512.png'
+  'icon-192.png', 'icon-512.png', 'icon-192-maskable.png', 'icon-512-maskable.png'
 ];
 
 await rm(output, {recursive: true, force: true});

@@ -1,4 +1,4 @@
-神人刘题库训练站 v2.2.5 正式版
+神人刘题库训练站 v2.2.6 正式版
 
 在线版：https://huahai061x-ship-it.github.io/shenrenliu-qbank/
 本地版：双击“①点我打开题库.html”。本地刷题可用，但标准桌面安装需要 HTTPS 在线网址。

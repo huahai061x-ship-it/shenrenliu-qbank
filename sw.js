@@ -1,12 +1,13 @@
 const BUILD_VERSION = '__BUILD_VERSION__';
 const CACHE_PREFIX = 'shenrenliu-qbank-app-';
 const APP_CACHE = `${CACHE_PREFIX}${BUILD_VERSION}`;
-const IMAGE_CACHE = 'shenrenliu-qbank-images-v1';
+const IMAGE_CACHE = 'shenrenliu-qbank-images-v2';
+const LEGACY_IMAGE_CACHE = 'shenrenliu-qbank-images-v1';
 const REQUIRED = [
   './', './index.html', './styles.css', './questions.js',
   './pedagogy.js', './enhanced-fill.js', './app.js'
 ];
-const OPTIONAL = ['./①点我打开题库.html', './manifest.webmanifest', './icon-192.png', './icon-512.png'];
+const OPTIONAL = ['./①点我打开题库.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './icon-192-maskable.png', './icon-512-maskable.png'];
 
 async function fetchFresh(request) {
   const response = await fetch(request, {cache: 'no-store'});
@@ -31,6 +32,18 @@ self.addEventListener('install', event => {
 self.addEventListener('activate', event => {
   event.waitUntil((async () => {
     const keys = await caches.keys();
+    // Preserve previously viewed screenshots for offline use, then retire the old cache.
+    if (keys.includes(LEGACY_IMAGE_CACHE)) {
+      const oldCache = await caches.open(LEGACY_IMAGE_CACHE);
+      const imageCache = await caches.open(IMAGE_CACHE);
+      for (const request of await oldCache.keys()) {
+        if (!(await imageCache.match(request))) {
+          const response = await oldCache.match(request);
+          if (response) await imageCache.put(request, response);
+        }
+      }
+      await caches.delete(LEGACY_IMAGE_CACHE);
+    }
     await Promise.all(keys.filter(key => key.startsWith(CACHE_PREFIX) && key !== APP_CACHE).map(key => caches.delete(key)));
     await self.clients.claim();
   })());
@@ -62,13 +75,13 @@ self.addEventListener('fetch', event => {
   if (url.pathname.includes('/source/')) {
     event.respondWith((async () => {
       const cache = await caches.open(IMAGE_CACHE);
-      const cached = await cache.match(request);
-      if (cached) return cached;
       try {
         const response = await fetchFresh(request);
         await cache.put(request, response.clone());
         return response;
       } catch (_) {
+        const cached = await cache.match(request);
+        if (cached) return cached;
         return new Response('原题图片暂不可用', {status: 503, headers: {'Content-Type': 'text/plain; charset=utf-8'}});
       }
     })());

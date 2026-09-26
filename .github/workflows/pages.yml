@@ -38,6 +38,9 @@ jobs:
           node 填空题命题质量专项校验.js
           node 填空模块封版与轮换挖空校验.js
           node 版本显示一致性校验.js
+          node v2.2.6封版精修回归.js
+          node v2.2.6_PWA缓存与图标回归.js
+          node 题库文本质量校验.js
       - name: Configure Pages
         uses: actions/configure-pages@v6
       - name: Build site
@@ -62,4 +65,4 @@ jobs:
     steps:
       - name: Deploy GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5

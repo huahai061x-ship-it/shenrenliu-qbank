@@ -7,7 +7,7 @@ const REQUIRED = [
   './', './index.html', './styles.css', './questions.js',
   './pedagogy.js', './enhanced-fill.js', './app.js'
 ];
-const OPTIONAL = ['./①点我打开题库.html', './manifest.webmanifest', './icon-192.png', './icon-512.png', './icon-192-maskable.png', './icon-512-maskable.png'];
+const OPTIONAL = ['./①点我打开题库.html', './manifest.webmanifest', './icon-source.svg', './icon-16.png', './icon-32.png', './icon-48.png', './icon-64.png', './icon-128.png', './icon-256.png', './icon-192.png', './icon-512.png', './icon-192-maskable.png', './icon-512-maskable.png', './manifest.webmanifest?v=2.2.8', ...[16,32,48,64,128,192,256,512].map(n=>`./icon-${n}.png?v=2.2.8`), './icon-192-maskable.png?v=2.2.8', './icon-512-maskable.png?v=2.2.8'];
 
 async function fetchFresh(request) {
   const response = await fetch(request, {cache: 'no-store'});

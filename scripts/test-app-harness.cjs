@@ -9,7 +9,7 @@ function boot(initial={}){
   Object.assign(c.window,{window:c.window,document,localStorage,location:c.location,navigator:c.navigator});vm.createContext(c);
   for(const f of ['questions.js','pedagogy.js','enhanced-fill.js','app.js']){
     let source=fs.readFileSync(f,'utf8');
-    if(f==='app.js')source=source.replace('updateWatermark();initBackGuard();renderHome();','window.__V226_TEST__={APP_VERSION,STORE_SCHEMA_VERSION,SESSION_SCHEMA_VERSION,BANK_SCHEMA_VERSION,normalizeSearchText,searchTextMatches,analyzeQuestionTimes,historyTimeAnalysis,sanitizeLastSession,sanitizeHistory,updateLearning,saveSession,getStore:()=>S,getSession:()=>session};updateWatermark();initBackGuard();renderHome();');
+    if(f==='app.js')source=source.replace('updateWatermark();initBackGuard();renderHome();','window.__V226_TEST__={packStore,unpackStore,capturePresentation,sanitizePresentation,itemStem,itemAnswers,sessionReviewGroups,startReviewRecords,historyReviewRecords,answerCorrect,renderResult,APP_VERSION,STORE_SCHEMA_VERSION,SESSION_SCHEMA_VERSION,BANK_SCHEMA_VERSION,normalizeSearchText,searchTextMatches,analyzeQuestionTimes,historyTimeAnalysis,sanitizeLastSession,sanitizeHistory,updateLearning,saveSession,getStore:()=>S,getSession:()=>session};updateWatermark();initBackGuard();renderHome();');
     vm.runInContext(source,c,{filename:f});
   }
   return {c,w:c.window,t:c.window.__V226_TEST__,main,nodes,store};

@@ -18,14 +18,12 @@ function decodeRgba(file){const png=fs.readFileSync(file);assert.equal(png.readU
   online=true;assert.equal(await (await fetchImage()).text(),'new-image','在线仍读旧图');revision='updated-same-name';assert.equal(await (await fetchImage()).text(),revision,'同名图片更新未生效');
   online=false;assert.equal(await (await fetchImage()).text(),revision,'离线未回退新版缓存');assert.equal((await fetchImage('never-viewed.webp')).status,503);
   const manifest=JSON.parse(fs.readFileSync('manifest.webmanifest','utf8'));
-  const anyHashes={192:'f3e3bb738c9c7483f599171dd62e68d6143856e0084f84cf289c13290c54cb5f',512:'acc9e7fb4d0e8b65313607ea451362581c49bbb4f525bd3f848afc03f3516765'};
   for(const size of [192,512]){
-    assert(manifest.icons.some(x=>x.src===`icon-${size}.png`&&x.purpose==='any'));
-    assert(manifest.icons.some(x=>x.src===`icon-${size}-maskable.png`&&x.purpose==='maskable'));
-    assert.equal(crypto.createHash('sha256').update(fs.readFileSync(`icon-${size}.png`)).digest('hex'),anyHashes[size],'原any图标被改动');
+    assert(manifest.icons.some(x=>x.src.split('?')[0]===`icon-${size}.png`&&x.purpose==='any'));
+    assert(manifest.icons.some(x=>x.src.split('?')[0]===`icon-${size}-maskable.png`&&x.purpose==='maskable'));
     const icon=decodeRgba(`icon-${size}-maskable.png`);assert.equal(icon.width,size);assert.equal(icon.height,size);let mark=0;
-    for(let y=0;y<size;y++)for(let x=0;x<size;x++){let i=(y*size+x)*4;assert.equal(icon.pixels[i+3],255,'maskable背景不透明');if(Math.min(icon.pixels[i],icon.pixels[i+1],icon.pixels[i+2])<240){mark++;assert(Math.hypot(x+.5-size/2,y+.5-size/2)<=size*.4,'品牌内容超出80%安全圆')}}
-    assert(mark>size*size*.1,'maskable图标内容缺失');
+    for(let y=0;y<size;y++)for(let x=0;x<size;x++){let i=(y*size+x)*4;assert.equal(icon.pixels[i+3],255,'maskable背景不透明');if(Math.min(icon.pixels[i],icon.pixels[i+1],icon.pixels[i+2])>220){mark++;assert(Math.hypot(x+.5-size/2,y+.5-size/2)<=size*.4,'品牌内容超出80%安全圆')}}
+    assert(mark>size*size*.04,'maskable图标内容缺失');
   }
-  console.log('v2.2.6 PWA回归通过：在线同名图更新、离线回退、旧图缓存迁移清理、零原图预缓存、any保留及两种maskable安全区。');
+  console.log('v2.2.6 PWA回归通过：在线同名图更新、离线回退、旧图缓存迁移清理、零原图预缓存、统一劉字any资源及两种maskable安全区。');
 })().catch(e=>{console.error(e);process.exit(1)});

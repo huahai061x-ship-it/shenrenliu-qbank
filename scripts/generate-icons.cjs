@@ -1,0 +1,4 @@
+// Rasterization of the committed vector master; no installed fonts needed.
+const sharp=require('sharp'),fs=require('fs'),path=require('path');
+const root=path.join(__dirname,'..'),source=fs.readFileSync(path.join(root,'icon-source.svg'),'utf8');
+(async()=>{for(const size of [16,32,48,64,128,192,256,512])await sharp(Buffer.from(source)).resize(size,size).ensureAlpha().png().toFile(path.join(root,`icon-${size}.png`));const maskable=source.replace('rx="112"','rx="0"').replace('<path','<g transform="translate(256 256) scale(.9) translate(-256 -256)"><path').replace('</svg>','</g></svg>');for(const size of [192,512])await sharp(Buffer.from(maskable)).resize(size,size).ensureAlpha().png().toFile(path.join(root,`icon-${size}-maskable.png`));console.log('劉 vector icons generated: 8 sizes + 2 full-bleed maskable assets');})().catch(e=>{console.error(e);process.exit(1)});

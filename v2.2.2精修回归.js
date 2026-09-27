@@ -22,6 +22,8 @@ ok(shuffleCandidates.some(i=>JSON.stringify(i.optionOrder)!==JSON.stringify(i.q.
 // 2) Redo-current-paper must preserve the exact option order actually used, not regenerate it.
 let target=shuffleCandidates[0];
 target.optionOrder=[...target.q.options].reverse();
+// This synthetic fixture overrides the final presentation; keep its frozen snapshot aligned.
+target.presentationSnapshot.options=[...target.optionOrder];
 const original=s.items.map(i=>({id:i.q.id,type:i.renderType,level:i.fillLevel,order:[...(i.optionOrder||i.q.options)]}));
 answerAll(x,true);
 x.c.window.redoCurrentPaper();

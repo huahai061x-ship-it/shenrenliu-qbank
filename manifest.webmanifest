@@ -1,9 +1,9 @@
 {
-  "id": "./",
+  "id": "/shenrenliu-qbank/",
   "name": "神人刘题库训练站",
   "short_name": "神人刘题库",
-  "description": "v2.2.8正式版：507道HOS应知应会题库，支持本场题型快照复盘、安卓/鸿蒙桌面安装与学习彩蛋。",
-  "start_url": "./index.html",
+  "description": "v2.2.9正式版：507道HOS应知应会题库，支持本场题型快照复盘、安卓/鸿蒙桌面安装与学习彩蛋。",
+  "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "display_override": [
@@ -20,25 +20,25 @@
   ],
   "icons": [
     {
-      "src": "icon-192.png?v=2.2.8",
+      "src": "icon-192.png?v=2.2.9",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "icon-512.png?v=2.2.8",
+      "src": "icon-512.png?v=2.2.9",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "icon-192-maskable.png?v=2.2.8",
+      "src": "icon-192-maskable.png?v=2.2.9",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "maskable"
     },
     {
-      "src": "icon-512-maskable.png?v=2.2.8",
+      "src": "icon-512-maskable.png?v=2.2.9",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"

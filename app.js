@@ -20,22 +20,22 @@ const MODE_REGISTRY=[
 {id:'today',icon:'📅',title:'今日复习',desc:'到期、错题和长期未见题优先',action:`renderTodayReviewSetup()`},
 {id:'real',icon:'🏁',title:'真实模拟',desc:'固定45题：15单选 + 10多选 + 10判断 + 10填空',action:`renderRealExamSetup('real')`},
 {id:'sequence',icon:'📖',title:'顺序背题',desc:'按原题号学习，可随时看解析和原图',action:`startStudy('sequence')`},
-{id:'wrong',icon:'❌',title:'错题本',desc:'按错因与纠正状态分类重练',action:`renderWrongBook()`},
+{id:'wrong',quickEligible:false,showInAllModes:false,icon:'❌',title:'错题本',desc:'按错因与纠正状态分类重练',action:`renderWrongBook()`},
 {id:'balanced',icon:'⚖️',title:'全库均衡复习',desc:'按覆盖度与薄弱程度均衡抽题',action:`startBalancedReview()`},
 {id:'random',icon:'🔀',title:'随机刷题',desc:'打乱顺序查漏补缺',action:`startStudy('random')`},
 {id:'fillStrong',icon:'🎯',title:'真实模拟PLUS',desc:'固定55题，含20道增强填空',action:`renderRealExamSetup('fillStrong')`},
 {id:'specialRecite',icon:'🧠',title:'专项背诵',desc:'按题型集中背诵，逐项突破',action:`renderSpecialSetup('recite')`},
 {id:'specialExam',icon:'⌨️',title:'专项模拟',desc:'按题型集中测试，针对性查缺补漏',action:`renderSpecialSetup('exam')`},
 {id:'review',icon:'!',title:'待复核清单',desc:'集中查看自己标记怀疑的题',action:`renderReviewList()`},
-{id:'favorites',icon:'⭐',title:'收藏夹',desc:'复习收藏题与解析',action:`openCollection('fav')`},
+{id:'favorites',quickEligible:false,showInAllModes:false,icon:'⭐',title:'收藏夹',desc:'复习收藏题与解析',action:`openCollection('fav')`},
 {id:'search',icon:'🔎',title:'题库搜索',desc:'按题号、内容、答案搜索',action:`renderSearch()`},
 {id:'history',icon:'📊',title:'学习记录',desc:'查看考试记录与薄弱知识点',action:`renderHistory()`},
 {id:'mastery',icon:'🗺️',title:'507题掌握地图',desc:'查看全库掌握状态',action:`renderMasteryMap()`}
 ];
-const MODE_PRIORITY={fillStrong:1,real:2,specialExam:3,specialRecite:4,today:5,random:6,balanced:7,wrong:8,favorites:9,review:10,search:11,history:12,mastery:13,sequence:14};
+const MODE_PRIORITY={fillStrong:1,real:2,specialExam:3,specialRecite:4,today:5,random:6,sequence:7,balanced:8,wrong:9,favorites:10,review:11,search:12,history:13,mastery:14};
 MODE_REGISTRY.sort((a,b)=>MODE_PRIORITY[a.id]-MODE_PRIORITY[b.id]);
-const SHORTCUTS=MODE_REGISTRY,SHORTCUT_MAP=Object.fromEntries(MODE_REGISTRY.map(x=>[x.id,x]));
-const normalizeShortcuts=v=>{let out=Array.isArray(v)&&v.length?v.map(id=>({sprint:'today',enhancedFillExam:'specialExam',enhancedFillStudy:'specialRecite'}[id]||id)).filter(id=>SHORTCUT_MAP[id]):[...DEFAULT_SHORTCUTS];out=[...new Set(out)].slice(0,4);for(const id of ['real',...DEFAULT_SHORTCUTS])if(out.length<4&&!out.includes(id))out.push(id);return out};
+const SHORTCUTS=MODE_REGISTRY.filter(x=>x.quickEligible!==false),SHORTCUT_MAP=Object.fromEntries(MODE_REGISTRY.map(x=>[x.id,x]));
+const normalizeShortcuts=v=>{let out=Array.isArray(v)&&v.length?v.map(id=>({sprint:'today',enhancedFillExam:'specialExam',enhancedFillStudy:'specialRecite'}[id]||id)).filter(id=>SHORTCUTS.some(x=>x.id===id)):[...DEFAULT_SHORTCUTS];out=[...new Set(out)].slice(0,4);for(const id of ['real',...DEFAULT_SHORTCUTS])if(out.length<4&&!out.includes(id))out.push(id);return out};
 const emptyAggregate=()=>({totalExams:0,totalAnswers:0,totalCorrect:0,totalStudyMs:0,highestScore:0,recentScores:[],byType:{},byQuestion:{},byTag:{},weeks:{}});
 const EGG_CATALOG={score100:{name:'满分登顶',icon:'🏆'},score90:{name:'会当凌绝顶',icon:'⛰️'},score80:{name:'行百里者半九十',icon:'🎯'},score70:{name:'知不足而自强',icon:'📚'},score60:{name:'低空过线',icon:'✈️'},scoreLow:{name:'精准打击',icon:'🛡️'},score40:{name:'知耻近乎勇',icon:'🔥'},score20:{name:'上涨空间',icon:'📈'},streak10:{name:'十连斩',icon:'⚡'},streak20:{name:'二十连斩',icon:'🌟'},wrong3:{name:'三而不竭',icon:'🧩'},wrong5:{name:'题库没坏',icon:'🔧'},wrong10:{name:'停止随机作答',icon:'🛑'},repeat3:{name:'又是你俩',icon:'🔁'},repeat5:{name:'缘分错题',icon:'🧲'},corrected:{name:'柳暗花明',icon:'🌱'},improved:{name:'更上一层楼',icon:'🚀'},comeback:{name:'逆风翻盘',icon:'🌤️'},rapidGuess:{name:'第六感答题法',icon:'🫰'},lateNight:{name:'三更灯火',icon:'🌙'},title:{name:'隐藏称号',icon:'👑'}};
 const emptyEggState=()=>({discovered:[],titles:[],lastShown:{},recent:[],recentCopyKeys:[],currentTitle:'初窥门径',answerStreak:{correct:0,wrong:0},lastNightAt:0});
@@ -245,8 +245,8 @@ ${backupReminder()}
 <div class="section-title shortcut-title"><div><h2>我的快捷入口</h2><p>这 4 个入口由你自己决定</p></div><button class="btn small" onclick="openShortcutSettings()">编辑快捷入口</button></div><section class="mode-grid core-mode-grid">
 ${shortcutCards()}
 </section><div class="section-title"><div><h2>错题与收藏</h2><p>高频复习入口，集中巩固个人薄弱点</p></div></div><section class="mode-grid personal-entry">${['wrong','favorites'].map(id=>{let x=SHORTCUT_MAP[id];return modeCard(x.icon,x.title,x.desc,x.action)}).join('')}</section>
-<details class="more-modes panel"><summary>所有训练模式</summary><p class="muted">全部学习与训练入口都可在这里找到</p><section class="mode-grid">
-${MODE_REGISTRY.map(x=>modeCard(x.icon,x.title,x.desc,x.action)).join('')}
+<details class="more-modes panel"><summary>所有训练模式</summary><p class="muted">训练与学习入口；错题本和收藏夹位于上方</p><section class="mode-grid">
+${MODE_REGISTRY.filter(x=>x.showInAllModes!==false).map(x=>modeCard(x.icon,x.title,x.desc,x.action)).join('')}
 </section></details>
 <div class="section-title"><div><h2>学习进度与备份</h2><p>数据仅保存在当前浏览器</p></div></div><section class="dashboard-grid"><div class="panel pad"><b>总体覆盖</b><div class="progressbar" style="margin:12px 0 7px"><i style="width:${Math.round(st.seen/Q.length*100)}%"></i></div><span class="muted">已练 ${st.seen}/${Q.length} 题 · ${Math.round(st.seen/Q.length*100)}%</span></div><div class="panel pad"><b>备份学习数据</b><p class="muted backup-status">${backupStatusText()} · 换手机或清浏览器前请先导出。</p><div class="backup-actions"><button class="btn small" onclick="exportData()">立即备份</button><button class="btn small" onclick="$('#importFile').click()">导入数据</button><input id="importFile" type="file" accept="application/json" hidden onchange="importData(this.files[0])"></div></div></section>`)}
 function modeCard(icon,title,desc,onclick,level=''){return `<div class="panel mode-card ${level?'mode-'+level:''}"><div class="mode-icon">${icon}</div><h3>${title}</h3><p>${desc}</p><button class="btn primary small" onclick="${onclick}">进入</button></div>`}
@@ -452,7 +452,7 @@ function sourcePrev(){if(sourcePage>1){sourcePage--;renderSource()}}
 function sourceNext(){if(sourcePage<111){sourcePage++;renderSource()}}
 
 function openSettings(){let m=$('#settingsModal');m.classList.remove('hidden');$('#themeSetting').value=S.settings.theme;$('#wmSetting').value=S.settings.watermark;if($('#shuffleSetting'))$('#shuffleSetting').value=S.settings.shuffleOptions===false?'off':'on';if($('#confidenceSetting'))$('#confidenceSetting').value=S.settings.confidenceRequired?'required':'optional';renderShortcutEditor();let standard=Q.filter(isFillEligible).length,enhanced=Q.filter(q=>isFillEligible(q,'enhanced')).length,added=enhanced-standard,multi=Q.filter(q=>q.type==='multiple'&&isFillEligible(q,'enhanced')).length,single=Q.filter(q=>q.type==='single'&&isFillEligible(q,'enhanced')).length,judge=Q.filter(q=>q.type==='judge'&&isFillEligible(q,'enhanced')).length;if($('#versionStats'))$('#versionStats').innerHTML=`<b>版本与完整性</b><br>${APP_VERSION} ${APP_EDITION} · ${Q.length}题 · 标准填空${standard} · 增强新增${added} · 合计${enhanced}<br>增强池来源：单选${single} + 多选${multi} + 判断${judge} · Schema ${STORE_SCHEMA_VERSION}<br>${backupStatusText()}`}
-function saveSettings(){let shortcuts=$$('.shortcutSetting').map(x=>x.value);if(shortcuts.length!==4||new Set(shortcuts).size!==4)return toast('四个快捷入口不能重复，请重新选择');S.settings.theme=$('#themeSetting').value;S.settings.watermark=$('#wmSetting').value;S.settings.shuffleOptions=$('#shuffleSetting')?.value!=='off';S.settings.confidenceRequired=$('#confidenceSetting')?.value==='required';S.settings.homeShortcuts=shortcuts;if(shortcutEditorChanged)S.settings.quickEntryCustomized=true;else if(shortcutEditorReset)S.settings.quickEntryCustomized=false;if(!saveStore())return;$('#settingsModal').classList.add('hidden');renderHome();toast('设置已保存，首页快捷入口已更新')}
+function saveSettings(){let shortcuts=$$('.shortcutSetting').map(x=>x.value);if(shortcuts.length!==4||new Set(shortcuts).size!==4||shortcuts.some(id=>!SHORTCUTS.some(x=>x.id===id)))return toast('请选择四个不同的有效快捷入口');S.settings.theme=$('#themeSetting').value;S.settings.watermark=$('#wmSetting').value;S.settings.shuffleOptions=$('#shuffleSetting')?.value!=='off';S.settings.confidenceRequired=$('#confidenceSetting')?.value==='required';S.settings.homeShortcuts=shortcuts;if(shortcutEditorChanged)S.settings.quickEntryCustomized=true;else if(shortcutEditorReset)S.settings.quickEntryCustomized=false;if(!saveStore())return;$('#settingsModal').classList.add('hidden');renderHome();toast('设置已保存，首页快捷入口已更新')}
 function resetData(){if(!confirm('确定清空错题、收藏、掌握状态和考试记录吗？'))return;S=freshDefaultStore();saveStore();$('#settingsModal').classList.add('hidden');document.body.classList.remove('sheet-open');renderHome();toast('学习数据已清空')}
 function exportData(){S.settings.lastBackup=Date.now();S.settings.backupDismissedUntil=0;S.settings.lastBackupMetrics=backupMetrics();saveStore();let blob=new Blob([JSON.stringify(S,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`神人刘题库学习数据_${new Date().toISOString().slice(0,10)}.json`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);toast('学习数据已备份')}
 function dismissBackupReminder(){S.settings.backupDismissedUntil=Date.now()+2*86400000;saveStore();renderHome();toast('将在两天后再次提醒')}

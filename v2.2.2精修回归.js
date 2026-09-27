@@ -55,7 +55,7 @@ let stats=boot();
 stats.c.window.beginRealExam('real');answerAll(stats,true);
 stats.c.window.beginExam('mixed');answerAll(stats,false);
 stats.c.window.renderHistory();
-ok(stats.main.innerHTML.includes('真实考试模拟 · 15单选 + 10多选 + 10判断 + 10填空'),'学习记录缺少真实考试独立统计区');
+ok(stats.main.innerHTML.includes('真实模拟 · 15单选 + 10多选 + 10判断 + 10填空'),'学习记录缺少真实考试独立统计区');
 ok(stats.main.innerHTML.includes('记录内场次</span><strong>1</strong>'),'真实考试场次混入普通模拟');
 ok(stats.main.innerHTML.includes('最近5场平均</span><strong>100分</strong>'),'真实考试平均分被普通模拟污染');
 

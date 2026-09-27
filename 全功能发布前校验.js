@@ -11,7 +11,7 @@ context.window.startStudy('sequence');
 if(!main.innerHTML.includes('class="quick-nav"')||!main.innerHTML.includes('题号 1/507'))throw Error('快捷导航未正确显示');
 context.window.nextQ();if(!main.innerHTML.includes('题号 2/507'))throw Error('下一题切换失败');
 context.window.renderRealExamSetup();context.window.beginRealExam();
-if(!main.innerHTML.includes('题号 1/55')||!main.innerHTML.includes('填空增强版真实模拟'))throw Error('55题真实模拟或考试快捷栏异常');
+if(!main.innerHTML.includes('题号 1/55')||!main.innerHTML.includes('真实模拟PLUS'))throw Error('55题真实模拟或考试快捷栏异常');
 context.window.jumpQ(54);if(!main.innerHTML.includes('题号 55/55')||!main.innerHTML.includes('检查/交卷'))throw Error('末题交卷快捷按钮异常');
 bodyClasses.add('sheet-open');context.window.submitExam();if(bodyClasses.has('sheet-open'))throw Error('移动端交卷后页面滚动锁未解除');
 if(JSON.parse(store.shenrenliu_qbank_v1).examRotation.round!==1)throw Error('交卷后轮换记录未准确写入一次');

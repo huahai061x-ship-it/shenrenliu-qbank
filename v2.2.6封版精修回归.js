@@ -44,7 +44,7 @@ const timingCases=[
   {ms:[50000,0,undefined],answered:[false,false,false],avg:0,high:0},
   {ms:[0,undefined,NaN,10000],answered:[true,true,true,true],avg:10000,high:0}
 ];
-for(const spec of timingCases){const y=boot();y.w.beginExam('mixed');const s=y.t.getSession();s.items=s.items.slice(0,spec.ms.length);s.items.forEach((i,k)=>{i.timeMs=spec.ms[k];i.answer=spec.answered[k]?(i.q.type==='multiple'?[...i.q.answers]:i.q.answers[0]):null});s.totalActiveMs=400000;
+for(const spec of timingCases){const y=boot();y.w.beginSpecialExam('single');const s=y.t.getSession();s.items=s.items.slice(0,spec.ms.length);s.items.forEach((i,k)=>{i.timeMs=spec.ms[k];i.answer=spec.answered[k]?(i.q.type==='multiple'?[...i.q.answers]:i.q.answers[0]):null});s.totalActiveMs=400000;
   const analysis=y.t.analyzeQuestionTimes(s.items);eq(analysis.avgMs,spec.avg);eq(analysis.highCount,spec.high);y.w.submitExam();const rec=y.t.getStore().history[0];eq(rec.avgMs,spec.avg);eq(rec.highCount,spec.high);eq(s.highTimeItems.length,spec.high);eq(rec.durationMs,400000,'整场计时被改变');
   const reloaded=boot(JSON.parse(y.store.shenrenliu_qbank_v1));const persisted=reloaded.t.getStore().history[0];eq(persisted.avgMs,spec.avg);eq(persisted.highCount,spec.high);reloaded.w.renderHistory();assert(reloaded.main.innerHTML.includes(`高耗时 ${spec.high}题`));assert(Number.isFinite(rec.avgMs));
 }

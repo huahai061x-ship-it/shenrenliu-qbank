@@ -13,7 +13,7 @@ function answerAll(x,good=true){const s=x.c.window.__V22_TEST__.getSession();for
 
 // 1) v2.2.2 version loads and ordinary simulation really honors option shuffle.
 let x=boot();
-x.c.window.beginExam('mixed');
+x.c.window.beginSpecialExam('single');
 let s=x.c.window.__V22_TEST__.getSession();
 ok(s.items.length===30,'普通模拟题量异常');
 let shuffleCandidates=s.items.filter(i=>i.renderType!=='fill'&&i.q.options.length>1);
@@ -38,7 +38,7 @@ for(let i=0;i<original.length;i++){
 
 // 3) Turning shuffle off must keep original option order in normal exams.
 let noShuffle=boot(JSON.stringify({schemaVersion:2,settings:{shuffleOptions:false}}));
-noShuffle.c.window.beginExam('mixed');
+noShuffle.c.window.beginSpecialExam('single');
 let ns=noShuffle.c.window.__V22_TEST__.getSession();
 ok(ns.items.filter(i=>i.renderType!=='fill').every(i=>JSON.stringify(i.optionOrder)===JSON.stringify(i.q.options)),'关闭选项乱序后普通模拟仍被打乱');
 
@@ -53,7 +53,7 @@ ok(slowNow.c.window.__V22_TEST__.wrongCategory(4)==='slow','高耗时状态被�
 // 5) Real-exam analytics must be separated from ordinary simulations in the history view.
 let stats=boot();
 stats.c.window.beginRealExam('real');answerAll(stats,true);
-stats.c.window.beginExam('mixed');answerAll(stats,false);
+stats.c.window.beginSpecialExam('single');answerAll(stats,false);
 stats.c.window.renderHistory();
 ok(stats.main.innerHTML.includes('真实模拟 · 15单选 + 10多选 + 10判断 + 10填空'),'学习记录缺少真实考试独立统计区');
 ok(stats.main.innerHTML.includes('记录内场次</span><strong>1</strong>'),'真实考试场次混入普通模拟');

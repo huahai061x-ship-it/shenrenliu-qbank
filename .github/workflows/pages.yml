@@ -44,6 +44,7 @@ jobs:
           node v2.2.8复盘快照与图标回归.js
           node v2.2.9安装与未答交卷回归.js
           node v2.2.9封神版专项训练回归.js
+          node v2.2.9封神版模式精简与排序回归.js
       - name: Configure Pages
         uses: actions/configure-pages@v6
       - name: Build site

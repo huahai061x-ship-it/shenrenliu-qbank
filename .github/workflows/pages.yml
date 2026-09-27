@@ -41,6 +41,7 @@ jobs:
           node v2.2.6封版精修回归.js
           node v2.2.6_PWA缓存与图标回归.js
           node 题库文本质量校验.js
+          node 原图文字修正与历史兼容校验.js
           node v2.2.8复盘快照与图标回归.js
           node v2.2.9安装与未答交卷回归.js
           node v2.2.9封神版专项训练回归.js

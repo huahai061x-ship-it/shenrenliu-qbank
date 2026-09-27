@@ -1,7 +1,7 @@
 from pathlib import Path
 import hashlib, sys
 ROOT=Path(__file__).resolve().parent
-EXPECTED={'questions.js': '1564742ccce3579c4a6606f8dacdbc2520fa57e93a9639f9f3512980ad95f328', 'pedagogy.js': 'e50381fde031ec09c6a0f4ccb3d928e7080e18ccd231ac819b9ff27b107e3f38', 'enhanced-fill.js': '31f0dba1af6d89534effe791e513f272d71897ba67de394a97a212ec0ea12206'}
+EXPECTED={'questions.js': 'b067d164a05d90947574ca3630547ecc597a2c391bb32b51409ad5131f02a09a', 'pedagogy.js': 'e50381fde031ec09c6a0f4ccb3d928e7080e18ccd231ac819b9ff27b107e3f38', 'enhanced-fill.js': 'a59db931d024e3c99e7d2e845e84746690c343b0a23fb50ddfba6091f015b98c'}
 EXPECTED_SOURCE_COUNT=111
 EXPECTED_SOURCE_DIGEST='08414f47b7af452c048da12079a14b565db2b331c3d3f095e0a258167c9abc56'
 
@@ -22,4 +22,4 @@ if failed:
     print('受保护文件校验失败：')
     print('\n'.join(failed))
     sys.exit(1)
-print('受保护文件校验通过：原题与原图未改动，填空题库与本版封版哈希一致。')
+print('受保护文件校验通过：原图未改动，原题文字修正及填空题库与本版封版哈希一致。')

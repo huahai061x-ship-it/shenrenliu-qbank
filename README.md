@@ -1,32 +1,41 @@
 # 神人刘题库训练站 v2.2.9 封神版
 
-网址保持：https://huahai061x-ship-it.github.io/shenrenliu-qbank/
+当前修订：r5，原图文字修正版（2026-09-27）。
 
+原网址：https://huahai061x-ship-it.github.io/shenrenliu-qbank/
 
-本轮专项重构与验收详见 [v2.2.9封神版验收报告](v2.2.9封神版验收报告.md)。
+原仓库：huahai061x-ship-it/shenrenliu-qbank
 
-最新r2模式精简与排序见 [验收报告](v2.2.9封神版模式精简与排序验收报告.md)：删除普通模拟入口，测试类模式优先，新默认快捷入口为真实模拟PLUS/真实模拟/随机刷题/错题本，旧自定义保留。
+r5功能版本提交：837055ebf3edbacc999413b407a21f0c243bd55e；后续文档整理不改变功能版本。
 
-当前r3首页架构与按钮审计见 [最新验收报告](v2.2.9封神版首页架构与按钮验收报告.md)。本轮按新要求强制迁移快捷入口一次，之后尊重自定义；全集目录、今日/冲刺策略页、错题与收藏重点区、未完成考试自绘放弃确认已上线。
+## 当前内容
 
-最新r4按用户要求去重：顺序背题位于随机后；错题本/收藏夹仅保留上方重点区，不再出现在训练目录和快捷候选中，详见 [r4验收](v2.2.9封神版入口去重验收报告.md)。
-本次补丁说明见 [v2.2.9安装与未答交卷验收报告.md](v2.2.9安装与未答交卷验收报告.md)，上一版复盘及图标说明见 [v2.2.8复盘与图标验收报告.md](v2.2.8复盘与图标验收报告.md)。原题507道、原图111张、填空池208道、18题60种轮换挖空及考试比例均保持不变。
+507道原题、111张原图、标准填空104题、增强填空共208题（标准104 + 独立增强104），18道动态题共60个挖空变体。已统一修正19道原题的20项文字差异，并同步相关填空、答案、解析及旧题目快照；详见 [当前修订验收报告](v2.2.9原图文字修正验收报告.md)。
 
-复盘优先展示本场错题/未答题，再展示已答对的慢题，不重复列出错题。默认使用本场实际呈现快照，可切换原题作对照；历史、错题本与断点保存挖空位置及答案。旧历史没有快照时回退原题。快照存盘去重，导出备份仍为完整独立数据。
+真实模拟45题、真实模拟PLUS55题；专项背诵与专项模拟按单选、多选、判断或填空选择，填空分标准与增强。默认快捷入口为真实模拟PLUS、真实模拟、今日复习、随机刷题，可自行编辑。
 
-品牌图标统一为繁体“劉”的路径式标志，保留网站名称“神人刘题库训练站”。资源来源及许可见 [licenses/ICON-SOURCE.md](licenses/ICON-SOURCE.md)。已有桌面快捷方式可能需移除后重新添加才能更新操作系统保存的图标，勿清除浏览器学习数据。
+所有训练模式中顺序背题紧跟随机刷题。错题本和收藏夹保留在首页重点入口，不再出现在所有训练模式及快捷候选中。复盘保留本场题型及挖空位置，也可切换原题对照。
 
-## 兼容与发布维护
+## 恢复、构建与发布
 
-- `APP_VERSION` 只控制应用显示版本。`STORE_SCHEMA_VERSION=2` 保持既有备份兼容；`SESSION_SCHEMA_VERSION=3`、`BANK_SCHEMA_VERSION=1` 分别控制断点与题库结构兼容。
-- 无schema或schema 1/2的旧断点按字段结构迁移，不依赖应用版本字符串枚举；新断点保存独立schema、应用版本及本次作答信心贡献元数据。
-- 题库文本只可凭原图证据改动，禁止根据扫描结果自动替换。#12已核对第3页，原图就是“办公会”，正确答案“更衣室”，因此保留原文。
-- 原图缓存仅缓存实际看过的图片；在线network-first，失败后回退缓存。旧images-v1迁移到images-v2后删除，保留离线已看图片。
-- 版本一致性测试检查核心常量及实际渲染的首页和设置页，不能只检测“文件中出现新版字符串”。
-- GitHub Pages构建缓存版本继续使用commit SHA。CI全部通过后才部署。
+本目录是项目根目录。继续更新现有仓库，不需要重新新建仓库；恢复备份时复制项目目录内容（包括隐藏的 .github），不要上传外层备份目录。恢复前保留当前仓库备份，不覆盖尚未合并的更新。
 
-## GitHub Actions 官方稳定版本复核（2026-09-26）
+GitHub仓库的 Settings → Pages → Source 应设为 GitHub Actions。GitHub Pages使用GitHub Actions发布，配置保存在 .github/workflows/pages.yml；24项JavaScript检查与两项Python检查通过后构建并部署。名字带旧版本号的检查脚本仍有效，不应按文件名删除。
 
-现有checkout v7、setup-python v7、configure-pages v6、upload-pages-artifact v5已是官方稳定新major，保留；deploy-pages从v4升级到官方稳定v5。checkout、setup-python、configure-pages和deploy-pages使用Node 24；upload-pages-artifact为composite。
+本地构建需安装Node.js（支持import.meta.dirname的现代版本），在本目录运行：
 
-官方依据：[checkout](https://github.com/actions/checkout/releases/tag/v7.0.1)、[setup-python](https://github.com/actions/setup-python/releases/tag/v7.0.0)、[configure-pages](https://github.com/actions/configure-pages/releases/tag/v6.0.0)、[upload-pages-artifact](https://github.com/actions/upload-pages-artifact/releases/tag/v5.0.0)、[deploy-pages](https://github.com/actions/deploy-pages/releases/tag/v5.0.1)。未编造不存在的新major。
+```sh
+node scripts/build-release.mjs
+```
+
+成品生成在 dist/，它是可重建产物，不纳入仓库。正式发布由工作流将提交编号作为 BUILD_VERSION 注入服务缓存；手动部署也应指定唯一 BUILD_VERSION。
+
+图标母版及已生成PNG全部保留。只有重新生成图标时才需要sharp依赖；使用、测试和正常发布不需要重新生成图标。
+
+## 学习数据与维护
+
+个人数据存储在对应设备浏览器，不包含在仓库或网站文件备份中。换设备或清理浏览器前，请在网站设置中导出学习数据；不要清空数据来刷新网站。
+
+APP_VERSION只控制显示版本；store/session/bank结构版本分别为2/3/1。原题文字改动必须逐题对照原图，不能根据机器扫描或常识批量猜改。原图保留原样；保护校验检查题库封版哈希和111张图片的完整性。
+
+首次联网后可离线使用核心题库；原图在实际查看后缓存。PWA安装依赖浏览器支持及HTTPS环境。本地文件预览不等同于原网址的安装、缓存和学习数据环境。

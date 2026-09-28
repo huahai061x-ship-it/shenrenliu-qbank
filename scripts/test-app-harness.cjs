@@ -7,7 +7,7 @@ function boot(initial={}){
   const store={shenrenliu_qbank_v1:JSON.stringify(initial)},localStorage={getItem:k=>store[k]||null,setItem:(k,v)=>store[k]=v};
   const c={window:{addEventListener(){},matchMedia:()=>({matches:false}),scrollTo(){},scrollY:0,isSecureContext:true},document,localStorage,location:{protocol:'https:',href:'https://example.test/'},navigator:{userAgent:'Mozilla/5.0',serviceWorker:null},history:{pushState(){},replaceState(){}},performance:{now:()=>1000},requestAnimationFrame:f=>f(),setTimeout:()=>0,clearTimeout(){},setInterval:()=>0,clearInterval(){},structuredClone:o=>JSON.parse(JSON.stringify(o)),confirm:()=>true,prompt(){},alert(){},Blob:function(){},URL:{createObjectURL:()=>'',revokeObjectURL(){}},FileReader:function(){}};
   Object.assign(c.window,{window:c.window,document,localStorage,location:c.location,navigator:c.navigator});vm.createContext(c);
-  for(const f of ['questions.js','pedagogy.js','enhanced-fill.js','transfer-code.js','app.js']){
+  for(const f of ['questions.js','pedagogy.js','enhanced-fill.js','transfer-code.js','lulu.js','app.js']){
     let source=fs.readFileSync(f,'utf8');
     if(f==='app.js')source=source.replace('updateWatermark();initBackGuard();renderHome();','window.__V226_TEST__={packStore,unpackStore,capturePresentation,sanitizePresentation,itemStem,itemAnswers,sessionReviewGroups,startReviewRecords,historyReviewRecords,answerCorrect,renderResult,APP_VERSION,STORE_SCHEMA_VERSION,SESSION_SCHEMA_VERSION,BANK_SCHEMA_VERSION,normalizeSearchText,searchTextMatches,analyzeQuestionTimes,historyTimeAnalysis,sanitizeLastSession,sanitizeHistory,updateLearning,saveSession,getStore:()=>S,getSession:()=>session};updateWatermark();initBackGuard();renderHome();');
     vm.runInContext(source,c,{filename:f});

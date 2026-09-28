@@ -44,6 +44,7 @@ jobs:
           node 原图文字修正与历史兼容校验.js
           node 迁移码与安全合并校验.js
           node v2.2.9七项体验精修回归.js
+          node 水豚噜噜交互校验.js
           node v2.2.8复盘快照与图标回归.js
           node v2.2.9安装与未答交卷回归.js
           node v2.2.9封神版专项训练回归.js

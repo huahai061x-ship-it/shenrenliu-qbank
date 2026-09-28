@@ -6,7 +6,7 @@ const output = path.join(root, 'dist');
 const version = (process.env.BUILD_VERSION || 'local').replace(/[^a-zA-Z0-9._-]/g, '-');
 const files = [
   'index.html', '①点我打开题库.html', 'styles.css', 'questions.js',
-  'pedagogy.js', 'enhanced-fill.js', 'transfer-code.js', 'app.js', 'pwa-install.js', 'manifest.webmanifest',
+  'pedagogy.js', 'enhanced-fill.js', 'transfer-code.js', 'lulu.js', 'lulu-mascot.png', 'app.js', 'pwa-install.js', 'manifest.webmanifest',
   'icon-source.svg', 'icon-16.png', 'icon-32.png', 'icon-48.png', 'icon-64.png', 'icon-128.png', 'icon-256.png', 'icon-192.png', 'icon-512.png', 'icon-192-maskable.png', 'icon-512-maskable.png'
 ];
 

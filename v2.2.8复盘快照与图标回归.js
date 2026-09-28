@@ -30,5 +30,5 @@ reloaded.w.startFillStudy('sequence','standard');const standard=reloaded.t.getSe
 const ancient=boot({history:[{ids:[judge.id],count:1,score:0}]});assert.equal(ancient.t.getStore().history[0].paperDamaged,false);ancient.w.reviewHistoryPaper(0);assert.equal(ancient.t.getSession().items[0].renderType,'judge');
 const svg=fs.readFileSync('icon-source.svg','utf8');assert(svg.includes('<path'));assert(!svg.includes('<text'),'图标依赖系统字体');assert(svg.includes('劉'));assert(!fs.readFileSync('index.html','utf8').includes('brand-badge">刘'));
 for(const n of [16,32,48,64,128,192,256,512]){let png=fs.readFileSync(`icon-${n}.png`);assert.equal(png.readUInt32BE(16),n);assert.equal(png.readUInt32BE(20),n)}
-assert(JSON.parse(fs.readFileSync('manifest.webmanifest')).icons.every(i=>i.src.endsWith('?v=2.2.9-fengshen-r8')));
+assert(JSON.parse(fs.readFileSync('manifest.webmanifest')).icons.every(i=>i.src.endsWith('?v=2.2.9-fengshen-r9')));
 console.log('v2.2.8回归通过：创建时全卷快照、单/多选转填空、判断、60变体不重抽、12次题型切换不重复统计、错慢去重及顺序、历史重载/重做/断点/错题本恢复、旧历史原题回退、8尺寸劉字矢量图标。');

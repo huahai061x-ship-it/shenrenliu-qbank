@@ -1,14 +1,14 @@
 const BUILD_VERSION = '__BUILD_VERSION__';
 const CACHE_PREFIX = 'shenrenliu-qbank-app-';
-const APP_CACHE = `${CACHE_PREFIX}v2.2.9-fengshen-r8-${BUILD_VERSION}`;
+const APP_CACHE = `${CACHE_PREFIX}v2.2.9-fengshen-r9-${BUILD_VERSION}`;
 const IMAGE_CACHE = 'shenrenliu-qbank-images-v2';
 const LEGACY_IMAGE_CACHE = 'shenrenliu-qbank-images-v1';
 const REQUIRED = [
   './', './index.html', './styles.css', './questions.js',
   './pedagogy.js', './enhanced-fill.js', './transfer-code.js', './lulu.js', './lulu-mascot.png', './app.js', './pwa-install.js',
-  './styles.css?v=2.2.9-fengshen-r8', './app.js?v=2.2.9-fengshen-r8', './pwa-install.js?v=2.2.9-fengshen-r8'
+  './styles.css?v=2.2.9-fengshen-r9', './app.js?v=2.2.9-fengshen-r9', './pwa-install.js?v=2.2.9-fengshen-r9'
 ];
-const OPTIONAL = ['./①点我打开题库.html', './manifest.webmanifest', './icon-source.svg', './icon-16.png', './icon-32.png', './icon-48.png', './icon-64.png', './icon-128.png', './icon-256.png', './icon-192.png', './icon-512.png', './icon-192-maskable.png', './icon-512-maskable.png', './manifest.webmanifest?v=2.2.9-fengshen-r8', ...[16,32,48,64,128,192,256,512].map(n=>`./icon-${n}.png?v=2.2.9-fengshen-r8`), './icon-192-maskable.png?v=2.2.9-fengshen-r8', './icon-512-maskable.png?v=2.2.9-fengshen-r8'];
+const OPTIONAL = ['./①点我打开题库.html', './manifest.webmanifest', './icon-source.svg', './icon-16.png', './icon-32.png', './icon-48.png', './icon-64.png', './icon-128.png', './icon-256.png', './icon-192.png', './icon-512.png', './icon-192-maskable.png', './icon-512-maskable.png', './manifest.webmanifest?v=2.2.9-fengshen-r9', ...[16,32,48,64,128,192,256,512].map(n=>`./icon-${n}.png?v=2.2.9-fengshen-r9`), './icon-192-maskable.png?v=2.2.9-fengshen-r9', './icon-512-maskable.png?v=2.2.9-fengshen-r9'];
 
 async function fetchFresh(request) {
   const response = await fetch(request, {cache: 'no-store'});

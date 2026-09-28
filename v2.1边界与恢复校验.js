@@ -18,7 +18,8 @@ function setExam(x,{n,type='all',level='standard',rule='normal'}={}){x.controls[
 function assert(v,m){if(!v)throw Error(m)}
 
 for(const tc of [
-  {name:'标准填空150',mode:'fill',n:150,level:'standard',allowed:false},
+  {name:'旧标准入口统一208池允许150',mode:'fill',n:150,level:'standard',allowed:true},
+  {name:'统一填空超过208',mode:'fill',n:209,level:'enhanced',allowed:false},
   {name:'增强填空150',mode:'fill',n:150,level:'enhanced',allowed:true},
   {name:'仅单选150',mode:'mixed',n:150,type:'single',allowed:false},
   {name:'仅多选150',mode:'mixed',n:150,type:'multiple',allowed:true},

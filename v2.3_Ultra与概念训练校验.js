@@ -2,14 +2,14 @@ const assert=require('node:assert/strict');
 const {boot}=require('./scripts/test-app-harness.cjs');
 
 let x=boot(),core=x.w.ULTRA_CORE,candidates=x.w.ULTRA_CANDIDATES;
-assert.equal(candidates.length,17);
-assert.equal(candidates.filter(c=>c.kind==='multi_blank').length,7);
+assert.equal(candidates.length,25);
+assert.equal(candidates.filter(c=>c.kind==='multi_blank').length,9);
 assert.equal(candidates.filter(c=>c.autoGrade===false).length,10);
 assert(candidates.every(c=>c.sourceReview.startsWith('已对照原图人工抽查')));
 for(const c of candidates){
   assert(c.sourceQuestionIds.every(id=>x.w.QUESTION_BANK.some(q=>q.id===id)));
   assert(c.sourceImages.every(page=>Number.isInteger(page)&&page>=1&&page<=111));
-  if(c.kind==='multi_blank'){
+  if(['multi_blank','concept_blank'].includes(c.kind)){
     const spec=core.candidateSpec(c);
     assert(spec&&spec.sourceChecked);
     assert.equal(spec.blanks.length,(spec.stem.match(/______/g)||[]).length);
@@ -29,16 +29,19 @@ assert(core.grade(m132,['',m132.blanks[1].canonical]).blankResults[1].correct);
 assert(!core.grade(m132,[m132.blanks[0].canonical+'kg',m132.blanks[1].canonical]).wholeCorrect,'单位、字词差异不能模糊判对');
 
 const multiSeen=new Set();
-for(let run=0;run<20;run++){
+for(let run=0;run<100;run++){
   x=boot();x.w.beginRealExam('real');
   const s=x.t.getSession();assert.equal(s.title,'真实模拟 Ultra');
   assert.equal(s.items.length,45);
   for(const [type,n] of [['single',15],['multiple',10],['judge',10],['fill',10]])assert.equal(s.items.filter(i=>i.renderType===type).length,n);
   assert.equal(new Set(s.items.map(i=>i.q.id)).size,45);
-  const multi=s.items.filter(i=>i.presentationSnapshot?.blankConfig?.gradeSpec);
+  assert(s.items.every(i=>![79,114,116,117,119,210,385,410,421].includes(i.q.id)),'近义泄题来源应留在专项，不与概念题同卷');
+  const multi=s.items.filter(i=>i.presentationSnapshot?.blankConfig?.gradeSpec?.kind==='multi_blank');
+  assert.equal(s.items.filter(i=>i.presentationSnapshot?.blankConfig?.gradeSpec?.kind==='concept_blank').length,3);
+  const keys=s.items.map(i=>i.presentationSnapshot?.blankConfig?.gradeSpec?.knowledgeKey||'Q'+i.q.id);assert.equal(new Set(keys).size,45);
   assert.equal(multi.length,4);
   multi.forEach(i=>multiSeen.add(i.q.id));
-  assert.equal(s.items.filter(i=>i.renderType==='fill'&&!i.presentationSnapshot?.blankConfig?.gradeSpec).length,6);
+  assert.equal(s.items.filter(i=>i.renderType==='fill'&&!i.presentationSnapshot?.blankConfig?.gradeSpec).length,3);
 }
 assert(multiSeen.size>=4);
 
@@ -80,4 +83,4 @@ const restored=boot(JSON.parse(draft.store.shenrenliu_qbank_v1));
 assert.equal(restored.t.getStore().openStudy['R-110'].state,'partial');
 restored.w.renderOpenStudy('review');
 assert(restored.main.innerHTML.includes('R-110')||restored.main.innerHTML.includes('原题 #110'));
-console.log('v2.3 Ultra校验通过：17条经核验候选、20场45题比例、逐空严格评分/换位/重复/部分正确、断点与历史、简答先答后看及自评恢复。');
+console.log('v2.3 Ultra校验通过：25条候选、100场45题比例、逐空严格评分/换位/重复/部分正确、断点与历史、简答先答后看及自评恢复。');

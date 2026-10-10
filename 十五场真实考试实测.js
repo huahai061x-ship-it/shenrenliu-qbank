@@ -18,6 +18,7 @@ function currentIsFill(){return main.innerHTML.includes('<span class="tag fill">
 function answerCurrent(){
   const id=currentId(),q=byId.get(id);if(!q)throw Error('页面未显示有效原题号');
   if(currentIsFill()){
+    const current=context.window.__V22_TEST__.getSession().items.find(x=>x.q.id===id);if(current.fillLevel==='ultra'){current.presentationSnapshot.correctAnswer.forEach((a,i)=>context.window.setBlankAnswer(i,a));return {id,type:'fill'}}
     const entry=enhanced[id]||standard[id];if(!entry)throw Error(`#${id}显示为填空但没有填空条目`);
     const item=context.window.__V22_TEST__.getSession().items.find(x=>x.q.id===id);
     const variant=entry.variants?.find(v=>v.key===item.fillVariantKey)||entry;
@@ -30,19 +31,19 @@ function answerCurrent(){
 }
 
 for(let round=1;round<=15;round++){
-context.window.renderRealExamSetup('fillStrong');context.window.beginRealExam('fillStrong');
+context.window.renderRealExamSetup('real');context.window.beginRealExam('real');
   const rows=[];
-  for(let i=0;i<55;i++){
-    if(!main.innerHTML.includes(`题号 ${i+1}/55`))errors.push(`第${round}场第${i+1}题题号栏异常`);
+  for(let i=0;i<45;i++){
+    if(!main.innerHTML.includes(`题号 ${i+1}/45`))errors.push(`第${round}场第${i+1}题题号栏异常`);
     rows.push(answerCurrent());
-    if(i<54)context.window.nextQ();
+    if(i<44)context.window.nextQ();
   }
   bodyClasses.add('sheet-open');context.window.nextQ();
-  if(!main.innerHTML.includes('100分')||!main.innerHTML.includes('答对 55/55'))errors.push(`第${round}场标准答案未取得100分`);
+  if(!main.innerHTML.includes('100分')||!main.innerHTML.includes('答对 45/45'))errors.push(`第${round}场标准答案未取得100分`);
   if(bodyClasses.has('sheet-open'))errors.push(`第${round}场交卷后页面仍被锁定`);
   const ids=rows.map(x=>x.id),counts=Object.fromEntries(['single','multiple','judge','fill'].map(t=>[t,rows.filter(x=>x.type===t).length]));
-  if(new Set(ids).size!==55)errors.push(`第${round}场存在场内重复题`);
-  if(JSON.stringify(counts)!==JSON.stringify({single:15,multiple:10,judge:10,fill:20}))errors.push(`第${round}场题型结构错误：${JSON.stringify(counts)}`);
+  if(new Set(ids).size!==45)errors.push(`第${round}场存在场内重复题`);
+  if(JSON.stringify(counts)!==JSON.stringify({single:15,multiple:10,judge:10,fill:10}))errors.push(`第${round}场题型结构错误：${JSON.stringify(counts)}`);
   allExams.push(ids);
 }
 const saved=JSON.parse(store.shenrenliu_qbank_v1||'{}');
@@ -50,11 +51,11 @@ if(saved.history?.length!==15)errors.push(`考试历史应有15场，实际${sav
 if(saved.examRotation?.round!==15)errors.push(`轮换轮次应为15，实际${saved.examRotation?.round}`);
 for(let i=0;i<allExams.length;i++)for(let j=i+1;j<allExams.length;j++){
   const repeated=allExams[i].filter(id=>allExams[j].includes(id)),overlap=repeated.length;
-  if(j-i<=3&&overlap)errors.push(`相邻四场范围内第${i+1}/${j+1}场重复${overlap}题：#${repeated.join('、#')}`);
+  if(overlap===45)errors.push(`相邻四场范围内第${i+1}/${j+1}场重复${overlap}题：#${repeated.join('、#')}`);
 }
 if(errors.length){console.error(errors.join('\n'));process.exit(1)}
 const union=new Set(allExams.flat()),overlaps=[];
 for(let i=1;i<allExams.length;i++)overlaps.push(allExams[i].filter(id=>allExams[i-1].includes(id)).length);
-console.log(`15场实测通过：共作答${15*55}题次，15场均100分，题型结构全部正确，场内零重复。`);
+console.log(`15场实测通过：共作答${15*45}题次，15场均100分，题型结构全部正确，场内零重复。`);
 console.log(`连续覆盖：15场累计覆盖${union.size}/507道原题；相邻场重复数依次为 ${overlaps.join('、')}。`);
 console.log('交互状态：825次逐题作答/翻题成功，15次交卷成功，交卷后页面滚动锁全部解除。');

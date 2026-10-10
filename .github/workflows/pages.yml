@@ -52,6 +52,7 @@ jobs:
           node v2.2.9封神版首页架构与按钮回归.js
           node v2.2.9封神版入口去重回归.js
           node v2.3_Ultra与概念训练校验.js
+          node scripts/test-ultra-precision.cjs
       - name: Configure Pages
         uses: actions/configure-pages@v6
       - name: Build site

@@ -41,7 +41,7 @@
     finally {if(state.prompt===event)state.prompt=null;state.busy=false;notify();}
   }
   function requestUpdate() {
-    if(window.canReloadForPwaUpdate?.()===false){window.deferPwaUpdate?.();return false;}
+    if(window.prepareRequiredPwaUpdate){if(window.prepareRequiredPwaUpdate()===false)return false;state.updatePrepared=true;}else if(window.canReloadForPwaUpdate?.()===false){window.deferPwaUpdate?.();return false;}
     state.reloadRequested=true;
     if(state.waiting)state.waiting.postMessage('SKIP_WAITING');else location.reload();
     return true;
@@ -58,8 +58,8 @@
     if(!('serviceWorker' in navigator)||location.protocol==='file:')return;
     navigator.serviceWorker.addEventListener('controllerchange',()=>{
       notify();
-      // Refresh only after a user's explicit update request, never during an exam.
-      if(state.reloadRequested&&window.canReloadForPwaUpdate?.()!==false){state.reloadRequested=false;location.reload();}
+      // Required updates reload only after explicit activation and successful progress saving.
+      if(state.reloadRequested&&(state.updatePrepared||window.canReloadForPwaUpdate?.()!==false)){state.reloadRequested=false;location.reload();}
     });
     try {
       const scriptURL=new URL('./sw.js',document.baseURI),scope=new URL('./',document.baseURI);

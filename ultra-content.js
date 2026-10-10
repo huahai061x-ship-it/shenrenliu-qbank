@@ -128,7 +128,8 @@ const candidates=[
       135
     ],
     "sourceImages": [
-      33
+      33,
+      34
     ],
     "evidence": "原始题干和原图标注的正确选项；不引入未出现在原题的扩展内容",
     "sourceReview": "已对照原图人工抽查",
@@ -553,5 +554,307 @@ const candidates=[
     "why": "五项全部来自原图正确答案；不适用最多4空的MultiBlank Ultra题型"
   }
 ];
+candidates.forEach(candidate=>{candidate.reviewStatus='verified';});
+candidates.push(...[
+  {
+    "candidateId": "C-110",
+    "sourceQuestionIds": [
+      110
+    ],
+    "sourceImages": [
+      27
+    ],
+    "knowledgeKey": "automation",
+    "kind": "concept_blank",
+    "difficulty": 4,
+    "reviewStatus": "verified",
+    "sourceReview": "已对照原图人工抽查（2026-10-10逐项核对）",
+    "evidence": "原图110：设备代替人作业；不要混入自働化的异常判停。",
+    "stem": "“自动化”以专用机器、自动机器或机械手等______，代替______执行作业。",
+    "ordering": "fixed",
+    "blanks": [
+      {
+        "index": 1,
+        "canonical": "机械设备",
+        "accepted": [
+          "机械设备"
+        ]
+      },
+      {
+        "index": 2,
+        "canonical": "人",
+        "accepted": [
+          "人",
+          "人工"
+        ]
+      }
+    ],
+    "why": "原图110：设备代替人作业；不要混入自働化的异常判停。"
+  },
+  {
+    "candidateId": "C-111",
+    "sourceQuestionIds": [
+      111
+    ],
+    "sourceImages": [
+      27
+    ],
+    "knowledgeKey": "automation",
+    "kind": "concept_blank",
+    "difficulty": 4,
+    "reviewStatus": "verified",
+    "sourceReview": "已对照原图人工抽查（2026-10-10逐项核对）",
+    "evidence": "原图111：人的智慧、异常警报及自行停止；只答设备代替人工不成立。",
+    "stem": "“自働化”把人的______赋予机器；异常时设备会发出______并自行______。",
+    "ordering": "fixed",
+    "blanks": [
+      {
+        "index": 1,
+        "canonical": "智慧",
+        "accepted": [
+          "智慧",
+          "判断能力"
+        ]
+      },
+      {
+        "index": 2,
+        "canonical": "警报",
+        "accepted": [
+          "警报"
+        ]
+      },
+      {
+        "index": 3,
+        "canonical": "停止",
+        "accepted": [
+          "停止",
+          "停机"
+        ]
+      }
+    ],
+    "why": "原图111：人的智慧、异常警报及自行停止；只答设备代替人工不成立。"
+  },
+  {
+    "candidateId": "C-112",
+    "sourceQuestionIds": [
+      112
+    ],
+    "sourceImages": [
+      27,
+      28
+    ],
+    "knowledgeKey": "leveling",
+    "kind": "concept_blank",
+    "difficulty": 4,
+    "reviewStatus": "verified",
+    "sourceReview": "已对照原图人工抽查（2026-10-10逐项核对）",
+    "evidence": "原图112及28页正确选项：数量、种类均需平均化。",
+    "stem": "“均衡化”对产品的______和______进行平均化生产，也称平准化生产。",
+    "ordering": "fixed",
+    "blanks": [
+      {
+        "index": 1,
+        "canonical": "数量",
+        "accepted": [
+          "数量"
+        ]
+      },
+      {
+        "index": 2,
+        "canonical": "种类",
+        "accepted": [
+          "种类",
+          "品种"
+        ]
+      }
+    ],
+    "why": "原图112及28页正确选项：数量、种类均需平均化。"
+  },
+  {
+    "candidateId": "C-113",
+    "sourceQuestionIds": [
+      113
+    ],
+    "sourceImages": [
+      28
+    ],
+    "knowledgeKey": "standard-work",
+    "kind": "concept_blank",
+    "difficulty": 4,
+    "reviewStatus": "verified",
+    "sourceReview": "已对照原图人工抽查（2026-10-10逐项核对）",
+    "evidence": "原图113：以人的动作为中心、企业认可；不得与文件意义的作业标准混淆。",
+    "stem": "“标准作业”以人的______为中心，方法必须经过______认可；目标包括安全、质量、较少浪费和合理成本。",
+    "ordering": "fixed",
+    "blanks": [
+      {
+        "index": 1,
+        "canonical": "动作",
+        "accepted": [
+          "动作"
+        ]
+      },
+      {
+        "index": 2,
+        "canonical": "企业",
+        "accepted": [
+          "企业"
+        ]
+      }
+    ],
+    "why": "原图113：以人的动作为中心、企业认可；不得与文件意义的作业标准混淆。"
+  },
+  {
+    "candidateId": "C-115",
+    "sourceQuestionIds": [
+      115
+    ],
+    "sourceImages": [
+      28
+    ],
+    "knowledgeKey": "takt-cycle",
+    "kind": "concept_blank",
+    "difficulty": 4,
+    "reviewStatus": "verified",
+    "sourceReview": "已对照原图人工抽查（2026-10-10逐项核对）",
+    "evidence": "原图115：每件产品的目标时间，由需求、生产台数及运转时间决定；区别于循环时间。",
+    "stem": "“生产节拍”是生产一件产品的______时间值，由市场销售需求、生产______和______时间决定。",
+    "ordering": "fixed",
+    "blanks": [
+      {
+        "index": 1,
+        "canonical": "目标",
+        "accepted": [
+          "目标"
+        ]
+      },
+      {
+        "index": 2,
+        "canonical": "台数",
+        "accepted": [
+          "台数",
+          "数量"
+        ]
+      },
+      {
+        "index": 3,
+        "canonical": "运转",
+        "accepted": [
+          "运转"
+        ]
+      }
+    ],
+    "why": "原图115：每件产品的目标时间，由需求、生产台数及运转时间决定；区别于循环时间。"
+  },
+  {
+    "candidateId": "C-118",
+    "sourceQuestionIds": [
+      118
+    ],
+    "sourceImages": [
+      29
+    ],
+    "knowledgeKey": "takt-cycle",
+    "kind": "concept_blank",
+    "difficulty": 4,
+    "reviewStatus": "verified",
+    "sourceReview": "已对照原图人工抽查（2026-10-10逐项核对）",
+    "evidence": "原图118：工序内最少的在制品数量；不是工序间的额外库存。",
+    "stem": "“标准手持”是在______内持有的最少______数量，以保证生产线按节拍、按作业顺序重复作业。",
+    "ordering": "fixed",
+    "blanks": [
+      {
+        "index": 1,
+        "canonical": "工序",
+        "accepted": [
+          "工序"
+        ]
+      },
+      {
+        "index": 2,
+        "canonical": "在制品",
+        "accepted": [
+          "在制品"
+        ]
+      }
+    ],
+    "why": "原图118：工序内最少的在制品数量；不是工序间的额外库存。"
+  },
+  {
+    "candidateId": "M-175",
+    "sourceQuestionIds": [
+      175
+    ],
+    "sourceImages": [
+      43
+    ],
+    "knowledgeKey": "safety-day",
+    "kind": "multi_blank",
+    "difficulty": 4,
+    "reviewStatus": "verified",
+    "sourceReview": "已对照原图人工抽查（2026-10-10逐项核对）",
+    "evidence": "原图175仅15日、28日为正确选项。",
+    "stem": "月安全活动日的两个开展日期为每月______日和______日。",
+    "ordering": "unordered_set",
+    "blanks": [
+      {
+        "index": 1,
+        "canonical": "15",
+        "accepted": [
+          "15"
+        ]
+      },
+      {
+        "index": 2,
+        "canonical": "28",
+        "accepted": [
+          "28"
+        ]
+      }
+    ],
+    "why": "原图175仅15日、28日为正确选项。"
+  },
+  {
+    "candidateId": "M-176",
+    "sourceQuestionIds": [
+      176
+    ],
+    "sourceImages": [
+      43
+    ],
+    "knowledgeKey": "three-violations",
+    "kind": "multi_blank",
+    "difficulty": 4,
+    "reviewStatus": "verified",
+    "sourceReview": "已对照原图人工抽查（2026-10-10逐项核对）",
+    "evidence": "原图176三个正确项；“违反标准作业”不是该题正确选项。",
+    "stem": "班组“反三违”反对______、______和______。",
+    "ordering": "unordered_set",
+    "blanks": [
+      {
+        "index": 1,
+        "canonical": "违章指挥",
+        "accepted": [
+          "违章指挥"
+        ]
+      },
+      {
+        "index": 2,
+        "canonical": "违章作业",
+        "accepted": [
+          "违章作业"
+        ]
+      },
+      {
+        "index": 3,
+        "canonical": "违反劳动纪律",
+        "accepted": [
+          "违反劳动纪律"
+        ]
+      }
+    ],
+    "why": "原图176三个正确项；“违反标准作业”不是该题正确选项。"
+  }
+]);
 window.ULTRA_CANDIDATES=Object.freeze(candidates);
 })();

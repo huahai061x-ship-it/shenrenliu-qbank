@@ -17,7 +17,7 @@ function boot(initial=''){
   }
   return {c,store,main,F:c.window.__FREEZE__};
 }
-const x=boot(),Q=x.c.window.QUESTION_BANK,standard=x.c.window.HOS_PEDAGOGY.fillBank,added=x.c.window.HOS_ENHANCED_FILL,full={...standard,...added};
+let x=boot();const Q=x.c.window.QUESTION_BANK,standard=x.c.window.HOS_PEDAGOGY.fillBank,added=x.c.window.HOS_ENHANCED_FILL,full={...standard,...added};
 const dynamicIds=[132,133,134,140,141,148,155,158,159,161,162,163,166,167,171,179,181,182],orderedStandard=[58,61,70,86,99,102,108,212],orderedEnhanced=[406,485];
 ok(Q.length===507,'原题数量错误');ok(Object.keys(standard).length===104,'标准填空数量错误');ok(Object.keys(added).length===104,'独立增强填空数量错误');ok(Object.keys(full).length===208,'增强填空总数错误');
 ok(JSON.stringify(Object.keys(added).filter(id=>added[id].variants).map(Number).sort((a,b)=>a-b))===JSON.stringify(dynamicIds),'动态题目编号不符');
@@ -62,14 +62,15 @@ const oldHistory=x.F.sanitizeHistory([{ids:[132],renderTypes:['fill'],fillLevels
 const newHistory=x.F.sanitizeHistory([{ids:[132],renderTypes:['fill'],fillLevels:['enhanced'],fillVariantKeys:[key],paperId:'new-test'}])[0];ok(newHistory.fillVariantKeys[0]===key,'新历史记录变体未保留');
 let strongSeen=new Set(),pureSeen=new Set(),variantSeen=new Set();
 for(let round=0;round<100;round++){
-  x.c.window.beginRealExam('fillStrong');let session=x.F.getSession();ok(session.items.length===55,`第${round+1}场强化考试题数错误`);
+  x.c.window.beginRealExam('real');let session=x.F.getSession();ok(session.items.length===45,`第${round+1}场强化考试题数错误`);
   let types={single:0,multiple:0,judge:0,fill:0};
-  for(const item of session.items){types[item.renderType]++;if(item.renderType==='fill'){strongSeen.add(item.q.id);const v=x.F.resolveFillEntry(item.q,item.fillLevel,item.fillVariantKey),answers=v?.answers||item.q.answers;ok(!!v&&answers.length>0,`强化考试#${item.q.id}无变体答案`);if(item.fillVariantKey)variantSeen.add(`${item.q.id}/${item.fillVariantKey}`);item.answer=answers.join('、')}else item.answer=item.q.type==='multiple'?[...item.q.answers]:item.q.answers[0];item.timeMs=5000}
-  ok(JSON.stringify(types)===JSON.stringify({single:15,multiple:10,judge:10,fill:20}),`第${round+1}场比例错误`);session.totalActiveMs=275000;x.c.window.submitExam();ok(x.F.getStore().history[0].score===100,`第${round+1}场强化考试未得满分`);
+  for(const item of session.items){types[item.renderType]++;if(item.renderType==='fill'){strongSeen.add(item.q.id);const v=x.F.resolveFillEntry(item.q,item.fillLevel,item.fillVariantKey),answers=v?.answers||item.q.answers;ok(!!v&&answers.length>0,`强化考试#${item.q.id}无变体答案`);if(item.fillVariantKey)variantSeen.add(`${item.q.id}/${item.fillVariantKey}`);item.answer=item.fillLevel==='ultra'?[...answers]:answers.join('、')}else item.answer=item.q.type==='multiple'?[...item.q.answers]:item.q.answers[0];item.timeMs=5000}
+  ok(JSON.stringify(types)===JSON.stringify({single:15,multiple:10,judge:10,fill:10}),`第${round+1}场比例错误`);session.totalActiveMs=275000;x.c.window.submitExam();ok(x.F.getStore().history[0].score===100,`第${round+1}场强化考试未得满分`);
 }
+x=boot(); // Isolate whole-pool rotation from the deliberately repeated Ultra candidate pool.
 for(let round=0;round<100;round++){
   x.c.window.renderExamSetup('fill','enhanced');x.c.window.beginExam('fill');let session=x.F.getSession();ok(session.items.length===30,`第${round+1}场纯填空题数错误`);
-  for(const item of session.items){ok(item.renderType==='fill',`第${round+1}场混入非填空`);pureSeen.add(item.q.id);const v=x.F.resolveFillEntry(item.q,item.fillLevel,item.fillVariantKey),answers=v?.answers||item.q.answers;ok(!!v&&answers.length>0,`纯填空#${item.q.id}无变体答案`);if(item.fillVariantKey)variantSeen.add(`${item.q.id}/${item.fillVariantKey}`);item.answer=answers.join('、');item.timeMs=5000}
+  for(const item of session.items){ok(item.renderType==='fill',`第${round+1}场混入非填空`);pureSeen.add(item.q.id);const v=x.F.resolveFillEntry(item.q,item.fillLevel,item.fillVariantKey),answers=v?.answers||item.q.answers;ok(!!v&&answers.length>0,`纯填空#${item.q.id}无变体答案`);if(item.fillVariantKey)variantSeen.add(`${item.q.id}/${item.fillVariantKey}`);item.answer=item.fillLevel==='ultra'?[...answers]:answers.join('、');item.timeMs=5000}
   session.totalActiveMs=150000;x.c.window.submitExam();ok(x.F.getStore().history[0].score===100,`第${round+1}场纯填空未得满分`);
 }
 ok(pureSeen.size===208,`纯填空仅覆盖${pureSeen.size}/208题`);ok(variantSeen.size===60,`模拟考试仅覆盖${variantSeen.size}/60种变体`);

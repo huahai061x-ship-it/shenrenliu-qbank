@@ -1,6 +1,6 @@
 (() => {
 'use strict';
-const normalize = value => String(value ?? '').normalize('NFKC').trim().replace(/\s+/gu, '').toLowerCase();
+const normalize = value => String(value ?? '').replace(/[！-～]/g, c => String.fromCharCode(c.charCodeAt(0)-0xFEE0)).replace(/　/g, ' ').trim().replace(/\s+/gu, '').toLowerCase();
 function validSpec(spec) {
   return !!spec && ['fixed','unordered_set'].includes(spec.ordering) && Array.isArray(spec.blanks) && spec.blanks.length >= 1 && spec.blanks.length <= 5 && spec.blanks.every(blank => typeof blank.canonical === 'string' && blank.canonical.trim() && Array.isArray(blank.accepted) && blank.accepted.length && blank.accepted.every(a => typeof a === 'string' && a.trim()) && blank.accepted.some(a => normalize(a) === normalize(blank.canonical)));
 }
@@ -32,8 +32,8 @@ function grade(spec, values) {
   return {correctBlanks,totalBlanks:spec.blanks.length,blankResults,wholeCorrect:correctBlanks===spec.blanks.length};
 }
 function candidateSpec(candidate) {
-  if (!candidate || candidate.kind !== 'multi_blank' || !candidate.sourceReview?.startsWith('已对照原图人工抽查')) return null;
-  const spec = {candidateId:candidate.candidateId,sourceQuestionIds:[...candidate.sourceQuestionIds],sourceImages:[...candidate.sourceImages],sourceChecked:true,stem:candidate.stem,ordering:candidate.ordering,blanks:candidate.blanks.map(b=>({canonical:b.canonical,accepted:[...b.accepted]})),why:candidate.why||''};
+  if (!candidate || !['multi_blank','concept_blank'].includes(candidate.kind) || !candidate.sourceReview?.startsWith('已对照原图人工抽查') || candidate.reviewStatus!=='verified' || !Array.isArray(candidate.sourceQuestionIds) || !candidate.sourceQuestionIds.length || !candidate.sourceQuestionIds.every(Number.isInteger) || !Array.isArray(candidate.sourceImages) || !candidate.sourceImages.length || !candidate.sourceImages.every(p=>Number.isInteger(p)&&p>=1&&p<=111) || !validSpec(candidate) || typeof candidate.stem!=='string') return null;
+  const spec = {candidateId:candidate.candidateId,kind:candidate.kind,knowledgeKey:candidate.knowledgeKey||`Q${candidate.sourceQuestionIds[0]}`,reviewStatus:'verified',sourceQuestionIds:[...candidate.sourceQuestionIds],sourceImages:[...candidate.sourceImages],sourceChecked:true,stem:candidate.stem,ordering:candidate.ordering,blanks:candidate.blanks.map(b=>({canonical:b.canonical,accepted:[...b.accepted]})),why:candidate.why||''};
   return validSpec(spec) && (spec.stem.match(/______/g)||[]).length===spec.blanks.length ? spec : null;
 }
 window.ULTRA_CORE=Object.freeze({normalize,validSpec,grade,candidateSpec});

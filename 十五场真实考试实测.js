@@ -8,7 +8,7 @@ const localStorage={getItem:k=>store[k]||null,setItem:(k,v)=>store[k]=v};
 const context={window:{addEventListener(){},matchMedia:()=>({matches:false}),scrollTo(){},scrollY:0,isSecureContext:false},document,localStorage,location:{protocol:'file:',href:'file:///test'},navigator:{},history:{pushState(){},replaceState(){}},performance:{now:()=>0},requestAnimationFrame:f=>f(),setTimeout:()=>0,clearTimeout(){},setInterval:()=>0,clearInterval(){},structuredClone:o=>JSON.parse(JSON.stringify(o)),confirm:()=>true,prompt(){},alert(){},Blob:function(){},URL:{createObjectURL:()=>'',revokeObjectURL(){}},FileReader:function(){}};
 Object.assign(context.window,{window:context.window,document,localStorage,location:context.location,navigator:context.navigator});
 vm.createContext(context);
-for(const file of ['questions.js','pedagogy.js','enhanced-fill.js','app.js'])vm.runInContext(fs.readFileSync(file,'utf8'),context,{filename:file});
+for(const file of ['questions.js','pedagogy.js','enhanced-fill.js','ultra-content.js','ultra-core.js','app.js'])vm.runInContext(fs.readFileSync(file,'utf8'),context,{filename:file});
 
 const Q=context.window.QUESTION_BANK,byId=new Map(Q.map(q=>[q.id,q]));
 const standard=context.window.HOS_PEDAGOGY.fillBank,enhanced=context.window.HOS_ENHANCED_FILL;
@@ -30,7 +30,7 @@ function answerCurrent(){
 }
 
 for(let round=1;round<=15;round++){
-  context.window.renderRealExamSetup();context.window.beginRealExam();
+context.window.renderRealExamSetup('fillStrong');context.window.beginRealExam('fillStrong');
   const rows=[];
   for(let i=0;i<55;i++){
     if(!main.innerHTML.includes(`题号 ${i+1}/55`))errors.push(`第${round}场第${i+1}题题号栏异常`);

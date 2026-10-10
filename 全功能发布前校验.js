@@ -5,12 +5,12 @@ const document={hidden:false,documentElement:{dataset:{}},body:{classList,append
 const localStorage={getItem:k=>store[k]||null,setItem:(k,v)=>store[k]=v};
 const context={window:{addEventListener(){},matchMedia:()=>({matches:false}),scrollTo(){},scrollY:0,isSecureContext:false},document,localStorage,location:{protocol:'file:',href:'file:///test'},navigator:{},history:{pushState(){},replaceState(){}},performance:{now:()=>0},requestAnimationFrame:f=>f(),setTimeout:()=>0,clearTimeout(){},setInterval:()=>0,clearInterval(){},structuredClone:o=>JSON.parse(JSON.stringify(o)),confirm:()=>true,prompt(){},alert(){},Blob:function(){},URL:{createObjectURL:()=>'',revokeObjectURL(){}},FileReader:function(){}};
 context.window.window=context.window;context.window.document=document;context.window.localStorage=localStorage;context.window.location=context.location;context.window.navigator=context.navigator;vm.createContext(context);
-for(const file of ['questions.js','pedagogy.js','enhanced-fill.js','app.js'])vm.runInContext(fs.readFileSync(file,'utf8'),context,{filename:file});
+for(const file of ['questions.js','pedagogy.js','enhanced-fill.js','ultra-content.js','ultra-core.js','app.js'])vm.runInContext(fs.readFileSync(file,'utf8'),context,{filename:file});
 if(!main.innerHTML.includes('题库数据自检通过'))throw Error('首页题库自检未通过');
 context.window.startStudy('sequence');
 if(!main.innerHTML.includes('class="quick-nav"')||!main.innerHTML.includes('题号 1/507'))throw Error('快捷导航未正确显示');
 context.window.nextQ();if(!main.innerHTML.includes('题号 2/507'))throw Error('下一题切换失败');
-context.window.renderRealExamSetup();context.window.beginRealExam();
+context.window.renderRealExamSetup('fillStrong');context.window.beginRealExam('fillStrong');
 if(!main.innerHTML.includes('题号 1/55')||!main.innerHTML.includes('真实模拟PLUS'))throw Error('55题真实模拟或考试快捷栏异常');
 context.window.jumpQ(54);if(!main.innerHTML.includes('题号 55/55')||!main.innerHTML.includes('检查/交卷'))throw Error('末题交卷快捷按钮异常');
 bodyClasses.add('sheet-open');context.window.submitExam();if(bodyClasses.has('sheet-open'))throw Error('移动端交卷后页面滚动锁未解除');

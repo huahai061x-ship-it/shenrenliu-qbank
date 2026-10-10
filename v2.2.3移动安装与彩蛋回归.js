@@ -6,7 +6,7 @@ function boot(initial=''){
   const store={shenrenliu_qbank_v1:initial},localStorage={getItem:k=>store[k]||null,setItem:(k,v)=>store[k]=v};
   const navigator={userAgent:'Mozilla/5.0',serviceWorker:null};
   const c={window:{addEventListener(){},matchMedia:()=>({matches:false}),scrollTo(){},scrollY:0,isSecureContext:true},document,localStorage,location:{protocol:'https:',href:'https://example.test/'},navigator,history:{pushState(){},replaceState(){}},performance:{now:()=>1000},requestAnimationFrame:f=>f(),setTimeout:()=>0,clearTimeout(){},setInterval:()=>0,clearInterval(){},structuredClone:o=>JSON.parse(JSON.stringify(o)),confirm:()=>true,prompt(){},alert(){},Blob:function(){},URL:{createObjectURL:()=>'',revokeObjectURL(){}},FileReader:function(){}};
-  Object.assign(c.window,{window:c.window,document,localStorage,location:c.location,navigator});vm.createContext(c);for(const f of ['questions.js','pedagogy.js','enhanced-fill.js','app.js'])vm.runInContext(fs.readFileSync(f,'utf8'),c,{filename:f});return {c,store};
+  Object.assign(c.window,{window:c.window,document,localStorage,location:c.location,navigator});vm.createContext(c);for(const f of ['questions.js','pedagogy.js','enhanced-fill.js','ultra-content.js','ultra-core.js','app.js'])vm.runInContext(fs.readFileSync(f,'utf8'),c,{filename:f});return {c,store};
 }
 function ok(v,m){if(!v)throw Error(m)}
 const x=boot(JSON.stringify({schemaVersion:2,easterEggs:{discovered:['score100'],titles:['胸有成竹'],currentTitle:'胸有成竹'}})),t=x.c.window.__V223_TEST__;

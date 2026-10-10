@@ -11,7 +11,7 @@ function boot(){
   const navigator={userAgent:'Mozilla/5.0',serviceWorker:null},location={protocol:'https:',href:'https://example.test/'};
   const c={window:{addEventListener(){},matchMedia:()=>({matches:false}),scrollTo(){},scrollY:0,isSecureContext:true},document,localStorage,location,navigator,history:{pushState(){},replaceState(){}},performance:{now:()=>1000},requestAnimationFrame:f=>f(),setTimeout:()=>0,clearTimeout(){},setInterval:()=>0,clearInterval(){},structuredClone:o=>JSON.parse(JSON.stringify(o)),confirm:()=>true,prompt(){},alert(){},Blob:function(){},URL:{createObjectURL:()=>'',revokeObjectURL(){}},FileReader:function(){}};
   Object.assign(c.window,{window:c.window,document,localStorage,location,navigator});
-  vm.createContext(c);for(const f of ['questions.js','pedagogy.js','enhanced-fill.js','app.js']){
+  vm.createContext(c);for(const f of ['questions.js','pedagogy.js','enhanced-fill.js','ultra-content.js','ultra-core.js','app.js']){
     let source=fs.readFileSync(f,'utf8');
     if(f==='app.js'){
       const marker='updateWatermark();initBackGuard();renderHome();';

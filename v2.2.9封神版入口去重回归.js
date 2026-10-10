@@ -1,7 +1,7 @@
 const assert=require('assert/strict'),{boot}=require('./scripts/test-app-harness.cjs');
 const key='quick-entry-migrated-v2.2.9-fengshen-r3';
 const x=boot({favorites:[12],wrong:{13:{count:2}},settings:{quickEntryMigration:key,quickEntryCustomized:true,homeShortcuts:['search','wrong','sequence','favorites']}});
-assert.deepEqual(JSON.parse(JSON.stringify(x.t.getStore().settings.homeShortcuts)),['search','sequence','real','fillStrong']);
+assert.deepEqual(JSON.parse(JSON.stringify(x.t.getStore().settings.homeShortcuts)),['search','sequence','real','today']);
 assert(x.t.getStore().favorites.includes(12));assert(x.t.getStore().wrong[13]);
 const html=x.main.innerHTML,all=html.match(/<details class="more-modes[\s\S]*?<\/details>/)[0],titles=[...all.matchAll(/<h3>(.*?)<\/h3>/g)].map(m=>m[1]);
 assert.equal(titles.indexOf('顺序背题'),titles.indexOf('随机刷题')+1);assert.equal(titles.length,9);assert(!titles.includes('错题本'));assert(!titles.includes('收藏夹'));assert(html.match(/personal-entry[\s\S]*?错题本[\s\S]*?收藏夹/));

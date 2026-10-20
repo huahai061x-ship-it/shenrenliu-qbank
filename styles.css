@@ -106,5 +106,5 @@ body:has(.quick-nav) .container{padding-bottom:112px}
 .hero-bank-label{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:16px;font-weight:800;line-height:1.4;color:var(--brand)}
 .hero-bank-arrow{font-size:25px;line-height:20px;font-weight:500}
 .hero-bank-current{display:block;font-size:13px;line-height:1.5;overflow-wrap:anywhere;color:var(--text)}
-.hero-bank-error{font-size:12px;color:var(--danger)}
+.hero-bank-error{font-size:12px;color:var(--bad)}
 @media(max-width:560px){.hero-bank-picker{padding:10px 12px;border-radius:13px;min-height:74px}.hero-bank-label{font-size:15px}.hero-bank-current{font-size:12px}}

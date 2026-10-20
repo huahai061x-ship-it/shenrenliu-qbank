@@ -13,7 +13,7 @@ const JUDGE_REASONS=PED.judgeReasons||{};
 const OPTION_NOTES=PED.optionNotes||{};
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
 const STORE_KEY=BANK_RUNTIME?'shenrenliu_qbank_workspace_v1':'shenrenliu_qbank_v1';
-const APP_VERSION='v2.3',APP_EDITION='封神版',STORE_SCHEMA_VERSION=2,SESSION_SCHEMA_VERSION=3,BANK_SCHEMA_VERSION=1,VALID_IDS=new Set(ALL_Q.map(q=>q.id));
+const APP_VERSION='v3.0',APP_EDITION='神中神版',STORE_SCHEMA_VERSION=2,SESSION_SCHEMA_VERSION=3,BANK_SCHEMA_VERSION=1,VALID_IDS=new Set(ALL_Q.map(q=>q.id));
 const DUPLICATE_GROUPS=[[63,121],[71,109],[101,450],[197,230],[203,281],[208,286],[225,245],[236,284],[244,287],[379,465],[384,466]];
 const DUPLICATE_GROUP_BY_ID=Object.fromEntries(DUPLICATE_GROUPS.flatMap((ids,i)=>ids.map(id=>[id,`D${i+1}`])));
 const DEFAULT_SHORTCUTS=['real','today','random','specialRecite'];

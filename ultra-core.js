@@ -2,12 +2,13 @@
 'use strict';
 const normalize = value => String(value ?? '').replace(/[！-～]/g, c => String.fromCharCode(c.charCodeAt(0)-0xFEE0)).replace(/　/g, ' ').trim().replace(/\s+/gu, '').toLowerCase();
 function validSpec(spec) {
-  return !!spec && ['fixed','unordered_set'].includes(spec.ordering) && Array.isArray(spec.blanks) && spec.blanks.length >= 1 && spec.blanks.length <= 5 && spec.blanks.every(blank => typeof blank.canonical === 'string' && blank.canonical.trim() && Array.isArray(blank.accepted) && blank.accepted.length && blank.accepted.every(a => typeof a === 'string' && a.trim()) && blank.accepted.some(a => normalize(a) === normalize(blank.canonical)));
+  return !!spec && ['fixed','unordered_set'].includes(spec.ordering) && Array.isArray(spec.blanks) && spec.blanks.length >= 1 && spec.blanks.length <= (spec.kind === 'native_fill' ? 7 : 5) && spec.blanks.every(blank => typeof blank.canonical === 'string' && blank.canonical.trim() && Array.isArray(blank.accepted) && blank.accepted.length && blank.accepted.every(a => typeof a === 'string' && a.trim()) && blank.accepted.some(a => normalize(a) === normalize(blank.canonical)));
 }
 function grade(spec, values) {
   if (!validSpec(spec)) throw Error('题目评分配置无效');
   if (!Array.isArray(values) || values.length !== spec.blanks.length || values.some(v => typeof v !== 'string')) throw Error('逐空作答格式无效');
-  const matches = values.map(value => spec.blanks.map(blank => !!normalize(value) && blank.accepted.some(a => normalize(a) === normalize(value))));
+  const norm = spec.kind === 'native_fill' ? value => normalize(String(value ?? '').normalize('NFKC')).replace(/[“”"'‘’。.!！?？,，、;；:：()（）\[\]【】·•∙・]/gu, '') : normalize;
+  const matches = values.map(value => spec.blanks.map(blank => !!norm(value) && blank.accepted.some(a => norm(a) === norm(value))));
   const assigned = Array(spec.blanks.length).fill(-1);
   if (spec.ordering === 'fixed') {
     for (let i = 0; i < values.length; i++) if (matches[i][i]) assigned[i] = i;

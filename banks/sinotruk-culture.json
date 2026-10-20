@@ -1,0 +1,1485 @@
+{
+  "format": "qbank-data/v1",
+  "meta": {
+    "id": "sinotruk_culture_2026",
+    "name": "中国重汽企业文化知识",
+    "version": "2026.10.20",
+    "expectedQuestionCount": 35,
+    "sourcePageCount": 0,
+    "sourceDocument": "中国重汽集团企业文化填空题35题_题干精简版.docx",
+    "asOf": "2026-10-20"
+  },
+  "questions": [
+    {
+      "id": 1,
+      "type": "fill",
+      "stem": "中国重汽集团的使命是“______，______”。",
+      "options": [],
+      "answers": [
+        "科技赋能",
+        "装备美好"
+      ],
+      "tags": [
+        "使命愿景与核心理念"
+      ],
+      "blankGrading": {
+        "kind": "native_fill",
+        "ordering": "fixed",
+        "blanks": [
+          {
+            "canonical": "科技赋能",
+            "accepted": [
+              "科技赋能"
+            ]
+          },
+          {
+            "canonical": "装备美好",
+            "accepted": [
+              "装备美好"
+            ]
+          }
+        ]
+      },
+      "explanation": "按空位顺序作答，逐空核对。",
+      "sourceNote": "资料截至2026年10月20日；官网1137文化体系图 对应栏目",
+      "sourceReferences": [
+        {
+          "title": "企业文化及1137文化体系图",
+          "url": "https://www.cnhtc.com.cn/sinotruk/gyzq/qywh/index.html",
+          "date": "页面未标注发布日期",
+          "accessed": "2026-10-20"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "fill",
+      "stem": "中国重汽集团的愿景是“______”。",
+      "options": [],
+      "answers": [
+        "打造世界一流的全系列商用车集团"
+      ],
+      "tags": [
+        "使命愿景与核心理念"
+      ],
+      "blankGrading": {
+        "kind": "native_fill",
+        "ordering": "fixed",
+        "blanks": [
+          {
+            "canonical": "打造世界一流的全系列商用车集团",
+            "accepted": [
+              "打造世界一流的全系列商用车集团"
+            ]
+          }
+        ]
+      },
+      "explanation": "按空位顺序作答，逐空核对。",
+      "sourceNote": "资料截至2026年10月20日；官网1137文化体系图 对应栏目",
+      "sourceReferences": [
+        {
+          "title": "企业文化及1137文化体系图",
+          "url": "https://www.cnhtc.com.cn/sinotruk/gyzq/qywh/index.html",
+          "date": "页面未标注发布日期",
+          "accessed": "2026-10-20"
+        },
+        {
+          "title": "品牌战略",
+          "url": "https://www.cnhtc.com.cn/sinotruk/ppycp/ppzl/index.html",
+          "date": "页面未标注发布日期",
+          "accessed": "2026-10-20"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "type": "fill",
+      "stem": "中国重汽集团的文化体系简称为“______”。",
+      "options": [],
+      "answers": [
+        "1137"
+      ],
+      "tags": [
+        "使命愿景与核心理念"
+      ],
+      "blankGrading": {
+        "kind": "native_fill",
+        "ordering": "fixed",
+        "blanks": [
+          {
+            "canonical": "1137",
+            "accepted": [
+              "1137"
+            ]
+          }
+        ]
+      },
+      "explanation": "按空位顺序作答，逐空核对。",
+      "sourceNote": "资料截至2026年10月20日；官网1137文化体系图 对应栏目",
+      "sourceReferences": [
+        {
+          "title": "企业文化及1137文化体系图",
+          "url": "https://www.cnhtc.com.cn/sinotruk/gyzq/qywh/index.html",
+          "date": "页面未标注发布日期",
+          "accessed": "2026-10-20"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "type": "fill",
+      "stem": "1137对应______个使命、______个愿景、______项核心理念、______项行为准则。",
+      "options": [],
+      "answers": [
+        "1",
+        "1",
+        "3",
+        "7"
+      ],
+      "tags": [
+        "使命愿景与核心理念"
+      ],
+      "blankGrading": {
+        "kind": "native_fill",
+        "ordering": "fixed",
+        "blanks": [
+          {
+            "canonical": "1",
+            "accepted": [
+              "1",
+              "一"
+            ]
+          },
+          {
+            "canonical": "1",
+            "accepted": [
+              "1",
+              "一"
+            ]
+          },
+          {
+            "canonical": "3",
+            "accepted": [
+              "3",
+              "三"
+            ]
+          },
+          {
+            "canonical": "7",
+            "accepted": [
+              "7",
+              "七"
+            ]
+          }
+        ]
+      },
+      "explanation": "按空位顺序作答，逐空核对。",
+      "sourceNote": "资料截至2026年10月20日；官网1137文化体系图 对应栏目",
+      "sourceReferences": [
+        {
+          "title": "企业文化及1137文化体系图",
+          "url": "https://www.cnhtc.com.cn/sinotruk/gyzq/qywh/index.html",
+          "date": "页面未标注发布日期",
+          "accessed": "2026-10-20"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "type": "fill",
+      "stem": "三项核心理念对应的关键词依次为“______”“______”“______”。",
+      "options": [],
+      "answers": [
+        "战略聚焦",
+        "追求卓越",
+        "以人为本"
+      ],
+      "tags": [
+        "使命愿景与核心理念"
+      ],
+      "blankGrading": {
+        "kind": "native_fill",
+        "ordering": "fixed",
+        "blanks": [
+          {
+            "canonical": "战略聚焦",
+            "accepted": [
+              "战略聚焦"
+            ]
+          },
+          {
+            "canonical": "追求卓越",
+            "accepted": [
+              "追求卓越"
+            ]
+          },
+          {
+            "canonical": "以人为本",
+            "accepted": [
+              "以人为本"
+            ]
+          }
+        ]
+      },
+      "explanation": "按空位顺序作答，逐空核对。",
+      "sourceNote": "资料截至2026年10月20日；官网1137文化体系图 对应栏目",
+      "sourceReferences": [
+        {
+          "title": "企业文化及1137文化体系图",
+          "url": "https://www.cnhtc.com.cn/sinotruk/gyzq/qywh/index.html",
+          "date": "页面未标注发布日期",
+          "accessed": "2026-10-20"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "type": "fill",
+      "stem": "七项行为准则依次为______、______、______、______、______、______、______。",
+      "options": [],
+      "answers": [
+        "客户",
+        "创新",
+        "质量",
+        "团队",
+        "廉洁",
+        "实干",
+        "服务"
+      ],
+      "tags": [
+        "使命愿景与核心理念"
+      ],
+      "blankGrading": {
+        "kind": "native_fill",
+        "ordering": "fixed",
+        "blanks": [
+          {
+            "canonical": "客户",
+            "accepted": [
+              "客户"
+            ]
+          },
+          {
+            "canonical": "创新",
+            "accepted": [
+              "创新"
+            ]
+          },
+          {
+            "canonical": "质量",
+            "accepted": [
+              "质量"
+            ]
+          },
+          {
+            "canonical": "团队",
+            "accepted": [
+              "团队"
+            ]
+          },
+          {
+            "canonical": "廉洁",
+            "accepted": [
+              "廉洁"
+            ]
+          },
+          {
+            "canonical": "实干",
+            "accepted": [
+              "实干"
+            ]
+          },
+          {
+            "canonical": "服务",
+            "accepted": [
+              "服务"
+            ]
+          }
+        ]
+      },
+      "explanation": "按空位顺序作答，逐空核对。 按文化图从左至右、先上后下的展示顺序逐空计分；一处填错不使其余正确空失分。 顺序为文化图从左至右、先上后下：客户、创新、质量、团队、廉洁、实干、服务。",
+      "sourceNote": "资料截至2026年10月20日；官网文化图 行为准则 七大关键要素",
+      "sourceReferences": [
+        {
+          "title": "企业文化及1137文化体系图",
+          "url": "https://www.cnhtc.com.cn/sinotruk/gyzq/qywh/index.html",
+          "date": "页面未标注发布日期",
+          "accessed": "2026-10-20"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "type": "fill",
+      "stem": "“战略聚焦”对应的核心理念是“______”。",
+      "options": [],
+      "answers": [
+        "心无旁骛攻主业"
+      ],
+      "tags": [
+        "使命愿景与核心理念"
+      ],
+      "blankGrading": {
+        "kind": "native_fill",
+        "ordering": "fixed",
+        "blanks": [
+          {
+            "canonical": "心无旁骛攻主业",
+            "accepted": [
+              "心无旁骛攻主业"
+            ]
+          }
+        ]
+      },
+      "explanation": "按空位顺序作答，逐空核对。",
+      "sourceNote": "资料截至2026年10月20日；官网1137文化体系图 对应栏目",
+      "sourceReferences": [
+        {
+          "title": "企业文化及1137文化体系图",
+          "url": "https://www.cnhtc.com.cn/sinotruk/gyzq/qywh/index.html",
+          "date": "页面未标注发布日期",
+          "accessed": "2026-10-20"
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "type": "fill",
+      "stem": "“追求卓越”对应的核心理念是“______、______、______”。",
+      "options": [],
+      "answers": [
+        "永不懈怠",
+        "永立潮头",
+        "永争第一"
+      ],
+      "tags": [
+        "使命愿景与核心理念"
+      ],
+      "blankGrading": {
+        "kind": "native_fill",
+        "ordering": "fixed",
+        "blanks": [
+          {
+            "canonical": "永不懈怠",
+            "accepted": [
+              "永不懈怠"
+            ]
+          },
+          {
+            "canonical": "永立潮头",
+            "accepted": [
+              "永立潮头"
+            ]
+          },
+          {
+            "canonical": "永争第一",
+            "accepted": [
+              "永争第一"
+            ]
+          }
+        ]
+      },
+      "explanation": "按空位顺序作答，逐空核对。",
+      "sourceNote": "资料截至2026年10月20日；官网1137文化体系图 对应栏目",
+      "sourceReferences": [
+        {
+          "title": "企业文化及1137文化体系图",
+          "url": "https://www.cnhtc.com.cn/sinotruk/gyzq/qywh/index.html",
+          "date": "页面未标注发布日期",
+          "accessed": "2026-10-20"
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "type": "fill",
+      "stem": "“以人为本”对应的核心理念是“______、______、______”。",
+      "options": [],
+      "answers": [
+        "重于德",
+        "工于匠",
+        "成于行"
+      ],
+      "tags": [
+        "使命愿景与核心理念"
+      ],
+      "blankGrading": {
+        "kind": "native_fill",
+        "ordering": "fixed",
+        "blanks": [
+          {
+            "canonical": "重于德",
+            "accepted": [
+              "重于德"
+            ]
+          },
+          {
+            "canonical": "工于匠",
+            "accepted": [
+              "工于匠"
+            ]
+          },
+          {
+            "canonical": "成于行",
+            "accepted": [
+              "成于行"
+            ]
+          }
+        ]
+      },
+      "explanation": "按空位顺序作答，逐空核对。",
+      "sourceNote": "资料截至2026年10月20日；官网1137文化体系图 对应栏目",
+      "sourceReferences": [
+        {
+          "title": "企业文化及1137文化体系图",
+          "url": "https://www.cnhtc.com.cn/sinotruk/gyzq/qywh/index.html",
+          "date": "页面未标注发布日期",
+          "accessed": "2026-10-20"
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "type": "fill",
+      "stem": "客户行为准则是“______”。",
+      "options": [],
+      "answers": [
+        "客户满意是我们的宗旨"
+      ],
+      "tags": [
+        "使命愿景与核心理念"
+      ],
+      "blankGrading": {
+        "kind": "native_fill",
+        "ordering": "fixed",
+        "blanks": [
+          {
+            "canonical": "客户满意是我们的宗旨",
+            "accepted": [
+              "客户满意是我们的宗旨"
+            ]
+          }
+        ]
+      },
+      "explanation": "按空位顺序作答，逐空核对。",
+      "sourceNote": "资料截至2026年10月20日；官网1137文化体系图 对应栏目",
+      "sourceReferences": [
+        {
+          "title": "企业文化及1137文化体系图",
+          "url": "https://www.cnhtc.com.cn/sinotruk/gyzq/qywh/index.html",
+          "date": "页面未标注发布日期",
+          "accessed": "2026-10-20"
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "type": "fill",
+      "stem": "创新行为准则是“______，______”。",
+      "options": [],
+      "answers": [
+        "链合创新",
+        "勇攀高峰"
+      ],
+      "tags": [
+        "使命愿景与核心理念"
+      ],
+      "blankGrading": {
+        "kind": "native_fill",
+        "ordering": "fixed",
+        "blanks": [
+          {
+            "canonical": "链合创新",
+            "accepted": [
+              "链合创新"
+            ]
+          },
+          {
+            "canonical": "勇攀高峰",
+            "accepted": [
+              "勇攀高峰"
+            ]
+          }
+        ]
+      },
+      "explanation": "按空位顺序作答，逐空核对。 “链合”不能写成“联合”。",
+      "sourceNote": "资料截至2026年10月20日；官网1137文化体系图 对应栏目",
+      "sourceReferences": [
+        {
+          "title": "企业文化及1137文化体系图",
+          "url": "https://www.cnhtc.com.cn/sinotruk/gyzq/qywh/index.html",
+          "date": "页面未标注发布日期",
+          "accessed": "2026-10-20"
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "type": "fill",
+      "stem": "质量行为准则是“______，______”。",
+      "options": [],
+      "answers": [
+        "我生产的产品",
+        "我向客户保证"
+      ],
+      "tags": [
+        "使命愿景与核心理念"
+      ],
+      "blankGrading": {
+        "kind": "native_fill",
+        "ordering": "fixed",
+        "blanks": [
+          {
+            "canonical": "我生产的产品",
+            "accepted": [
+              "我生产的产品"
+            ]
+          },
+          {
+            "canonical": "我向客户保证",
+            "accepted": [
+              "我向客户保证"
+            ]
+          }
+        ]
+      },
+      "explanation": "按空位顺序作答，逐空核对。",
+      "sourceNote": "资料截至2026年10月20日；官网1137文化体系图 对应栏目",
+      "sourceReferences": [
+        {
+          "title": "企业文化及1137文化体系图",
+          "url": "https://www.cnhtc.com.cn/sinotruk/gyzq/qywh/index.html",
+          "date": "页面未标注发布日期",
+          "accessed": "2026-10-20"
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "type": "fill",
+      "stem": "团队行为准则是“______、______、______、______”。",
+      "options": [],
+      "answers": [
+        "一家人",
+        "一条心",
+        "一起干",
+        "一定成"
+      ],
+      "tags": [
+        "行为准则与品牌辨析"
+      ],
+      "blankGrading": {
+        "kind": "native_fill",
+        "ordering": "fixed",
+        "blanks": [
+          {
+            "canonical": "一家人",
+            "accepted": [
+              "一家人"
+            ]
+          },
+          {
+            "canonical": "一条心",
+            "accepted": [
+              "一条心"
+            ]
+          },
+          {
+            "canonical": "一起干",
+            "accepted": [
+              "一起干"
+            ]
+          },
+          {
+            "canonical": "一定成",
+            "accepted": [
+              "一定成"
+            ]
+          }
+        ]
+      },
+      "explanation": "按空位顺序作答，逐空核对。",
+      "sourceNote": "资料截至2026年10月20日；官网1137文化体系图 对应栏目",
+      "sourceReferences": [
+        {
+          "title": "企业文化及1137文化体系图",
+          "url": "https://www.cnhtc.com.cn/sinotruk/gyzq/qywh/index.html",
+          "date": "页面未标注发布日期",
+          "accessed": "2026-10-20"
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "type": "fill",
+      "stem": "廉洁行为准则是“______、______、______”。",
+      "options": [],
+      "answers": [
+        "重德",
+        "重勤",
+        "重廉"
+      ],
+      "tags": [
+        "行为准则与品牌辨析"
+      ],
+      "blankGrading": {
+        "kind": "native_fill",
+        "ordering": "fixed",
+        "blanks": [
+          {
+            "canonical": "重德",
+            "accepted": [
+              "重德"
+            ]
+          },
+          {
+            "canonical": "重勤",
+            "accepted": [
+              "重勤"
+            ]
+          },
+          {
+            "canonical": "重廉",
+            "accepted": [
+              "重廉"
+            ]
+          }
+        ]
+      },
+      "explanation": "按空位顺序作答，逐空核对。",
+      "sourceNote": "资料截至2026年10月20日；官网1137文化体系图 对应栏目",
+      "sourceReferences": [
+        {
+          "title": "企业文化及1137文化体系图",
+          "url": "https://www.cnhtc.com.cn/sinotruk/gyzq/qywh/index.html",
+          "date": "页面未标注发布日期",
+          "accessed": "2026-10-20"
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "type": "fill",
+      "stem": "实干行为准则是“______，______”。",
+      "options": [],
+      "answers": [
+        "向一线聚焦",
+        "在一线成长"
+      ],
+      "tags": [
+        "行为准则与品牌辨析"
+      ],
+      "blankGrading": {
+        "kind": "native_fill",
+        "ordering": "fixed",
+        "blanks": [
+          {
+            "canonical": "向一线聚焦",
+            "accepted": [
+              "向一线聚焦"
+            ]
+          },
+          {
+            "canonical": "在一线成长",
+            "accepted": [
+              "在一线成长"
+            ]
+          }
+        ]
+      },
+      "explanation": "按空位顺序作答，逐空核对。",
+      "sourceNote": "资料截至2026年10月20日；官网1137文化体系图 对应栏目",
+      "sourceReferences": [
+        {
+          "title": "企业文化及1137文化体系图",
+          "url": "https://www.cnhtc.com.cn/sinotruk/gyzq/qywh/index.html",
+          "date": "页面未标注发布日期",
+          "accessed": "2026-10-20"
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "type": "fill",
+      "stem": "服务行为准则是“______”。",
+      "options": [],
+      "answers": [
+        "亲人服务"
+      ],
+      "tags": [
+        "行为准则与品牌辨析"
+      ],
+      "blankGrading": {
+        "kind": "native_fill",
+        "ordering": "fixed",
+        "blanks": [
+          {
+            "canonical": "亲人服务",
+            "accepted": [
+              "亲人服务"
+            ]
+          }
+        ]
+      },
+      "explanation": "按空位顺序作答，逐空核对。",
+      "sourceNote": "资料截至2026年10月20日；官网1137文化体系图 对应栏目",
+      "sourceReferences": [
+        {
+          "title": "企业文化及1137文化体系图",
+          "url": "https://www.cnhtc.com.cn/sinotruk/gyzq/qywh/index.html",
+          "date": "页面未标注发布日期",
+          "accessed": "2026-10-20"
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "type": "fill",
+      "stem": "核心理念被称为“三项______”。",
+      "options": [],
+      "answers": [
+        "价值基石"
+      ],
+      "tags": [
+        "行为准则与品牌辨析"
+      ],
+      "blankGrading": {
+        "kind": "native_fill",
+        "ordering": "fixed",
+        "blanks": [
+          {
+            "canonical": "价值基石",
+            "accepted": [
+              "价值基石"
+            ]
+          }
+        ]
+      },
+      "explanation": "按空位顺序作答，逐空核对。 依据官网图中的括注原字填写。",
+      "sourceNote": "资料截至2026年10月20日；官网文化图 核心理念标题下括注 三项价值基石",
+      "sourceReferences": [
+        {
+          "title": "企业文化及1137文化体系图",
+          "url": "https://www.cnhtc.com.cn/sinotruk/gyzq/qywh/index.html",
+          "date": "页面未标注发布日期",
+          "accessed": "2026-10-20"
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "type": "fill",
+      "stem": "行为准则被称为“七大______”。",
+      "options": [],
+      "answers": [
+        "关键要素"
+      ],
+      "tags": [
+        "行为准则与品牌辨析"
+      ],
+      "blankGrading": {
+        "kind": "native_fill",
+        "ordering": "fixed",
+        "blanks": [
+          {
+            "canonical": "关键要素",
+            "accepted": [
+              "关键要素"
+            ]
+          }
+        ]
+      },
+      "explanation": "按空位顺序作答，逐空核对。",
+      "sourceNote": "资料截至2026年10月20日；官网文化图 行为准则标题下括注 七大关键要素",
+      "sourceReferences": [
+        {
+          "title": "企业文化及1137文化体系图",
+          "url": "https://www.cnhtc.com.cn/sinotruk/gyzq/qywh/index.html",
+          "date": "页面未标注发布日期",
+          "accessed": "2026-10-20"
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "type": "fill",
+      "stem": "“客户满意是我们的宗旨”既是______，也是客户______。",
+      "options": [],
+      "answers": [
+        "核心价值观",
+        "行为准则"
+      ],
+      "tags": [
+        "行为准则与品牌辨析"
+      ],
+      "blankGrading": {
+        "kind": "native_fill",
+        "ordering": "fixed",
+        "blanks": [
+          {
+            "canonical": "核心价值观",
+            "accepted": [
+              "核心价值观"
+            ]
+          },
+          {
+            "canonical": "行为准则",
+            "accepted": [
+              "行为准则"
+            ]
+          }
+        ]
+      },
+      "explanation": "按空位顺序作答，逐空核对。 并列说明两个栏目，不擅自认定某一称谓已被废止。",
+      "sourceNote": "资料截至2026年10月20日；官网1137文化体系图 对应栏目",
+      "sourceReferences": [
+        {
+          "title": "企业文化及1137文化体系图",
+          "url": "https://www.cnhtc.com.cn/sinotruk/gyzq/qywh/index.html",
+          "date": "页面未标注发布日期",
+          "accessed": "2026-10-20"
+        },
+        {
+          "title": "品牌战略",
+          "url": "https://www.cnhtc.com.cn/sinotruk/ppycp/ppzl/index.html",
+          "date": "页面未标注发布日期",
+          "accessed": "2026-10-20"
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "type": "fill",
+      "stem": "“重于德 工于匠 成于行”属于三项______；“重德 重勤 重廉”属于______行为准则。",
+      "options": [],
+      "answers": [
+        "核心理念",
+        "廉洁"
+      ],
+      "tags": [
+        "行为准则与品牌辨析"
+      ],
+      "blankGrading": {
+        "kind": "native_fill",
+        "ordering": "fixed",
+        "blanks": [
+          {
+            "canonical": "核心理念",
+            "accepted": [
+              "核心理念"
+            ]
+          },
+          {
+            "canonical": "廉洁",
+            "accepted": [
+              "廉洁"
+            ]
+          }
+        ]
+      },
+      "explanation": "按空位顺序作答，逐空核对。",
+      "sourceNote": "资料截至2026年10月20日；官网1137文化体系图 对应栏目",
+      "sourceReferences": [
+        {
+          "title": "企业文化及1137文化体系图",
+          "url": "https://www.cnhtc.com.cn/sinotruk/gyzq/qywh/index.html",
+          "date": "页面未标注发布日期",
+          "accessed": "2026-10-20"
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "type": "fill",
+      "stem": "黄河精神是“______，______”。",
+      "options": [],
+      "answers": [
+        "奔腾向前",
+        "自强不息"
+      ],
+      "tags": [
+        "行为准则与品牌辨析"
+      ],
+      "blankGrading": {
+        "kind": "native_fill",
+        "ordering": "fixed",
+        "blanks": [
+          {
+            "canonical": "奔腾向前",
+            "accepted": [
+              "奔腾向前"
+            ]
+          },
+          {
+            "canonical": "自强不息",
+            "accepted": [
+              "自强不息"
+            ]
+          }
+        ]
+      },
+      "explanation": "按空位顺序作答，逐空核对。 使用“黄河精神”这一专门称谓，不改称集团唯一企业精神。",
+      "sourceNote": "资料截至2026年10月20日；官网品牌战略页 对应正文或品牌分类",
+      "sourceReferences": [
+        {
+          "title": "品牌战略",
+          "url": "https://www.cnhtc.com.cn/sinotruk/ppycp/ppzl/index.html",
+          "date": "页面未标注发布日期",
+          "accessed": "2026-10-20"
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "type": "fill",
+      "stem": "“中国重汽”是企业品牌，黄河等属于______品牌，“亲人”属于______品牌。",
+      "options": [],
+      "answers": [
+        "产品",
+        "服务"
+      ],
+      "tags": [
+        "行为准则与品牌辨析"
+      ],
+      "blankGrading": {
+        "kind": "native_fill",
+        "ordering": "fixed",
+        "blanks": [
+          {
+            "canonical": "产品",
+            "accepted": [
+              "产品"
+            ]
+          },
+          {
+            "canonical": "服务",
+            "accepted": [
+              "服务"
+            ]
+          }
+        ]
+      },
+      "explanation": "按空位顺序作答，逐空核对。",
+      "sourceNote": "资料截至2026年10月20日；官网品牌战略页 对应正文或品牌分类",
+      "sourceReferences": [
+        {
+          "title": "品牌战略",
+          "url": "https://www.cnhtc.com.cn/sinotruk/ppycp/ppzl/index.html",
+          "date": "页面未标注发布日期",
+          "accessed": "2026-10-20"
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "type": "fill",
+      "stem": "按品牌战略中的列举顺序，商用汽车品牌为黄河、______、______等。",
+      "options": [],
+      "answers": [
+        "汕德卡",
+        "豪沃"
+      ],
+      "tags": [
+        "行为准则与品牌辨析"
+      ],
+      "blankGrading": {
+        "kind": "native_fill",
+        "ordering": "fixed",
+        "blanks": [
+          {
+            "canonical": "汕德卡",
+            "accepted": [
+              "汕德卡"
+            ]
+          },
+          {
+            "canonical": "豪沃",
+            "accepted": [
+              "豪沃"
+            ]
+          }
+        ]
+      },
+      "explanation": "按空位顺序作答，逐空核对。 只复现该页面正文的列举顺序，不要求任举两个品牌，也不表示集团只有三个产品品牌。",
+      "sourceNote": "资料截至2026年10月20日；官网品牌战略正文首段 拥有黄河 汕德卡 豪沃等全系列商用汽车品牌",
+      "sourceReferences": [
+        {
+          "title": "品牌战略",
+          "url": "https://www.cnhtc.com.cn/sinotruk/ppycp/ppzl/index.html",
+          "date": "页面未标注发布日期",
+          "accessed": "2026-10-20"
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "type": "fill",
+      "stem": "“亲人”是中国重汽专属的______服务品牌。",
+      "options": [],
+      "answers": [
+        "售后"
+      ],
+      "tags": [
+        "行为准则与品牌辨析"
+      ],
+      "blankGrading": {
+        "kind": "native_fill",
+        "ordering": "fixed",
+        "blanks": [
+          {
+            "canonical": "售后",
+            "accepted": [
+              "售后"
+            ]
+          }
+        ]
+      },
+      "explanation": "按空位顺序作答，逐空核对。",
+      "sourceNote": "资料截至2026年10月20日；官网品牌战略页 对应正文或品牌分类",
+      "sourceReferences": [
+        {
+          "title": "品牌战略",
+          "url": "https://www.cnhtc.com.cn/sinotruk/ppycp/ppzl/index.html",
+          "date": "页面未标注发布日期",
+          "accessed": "2026-10-20"
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "type": "fill",
+      "stem": "中国重汽集团的党建主品牌是“______”。",
+      "options": [],
+      "answers": [
+        "红心领航·中国重器"
+      ],
+      "tags": [
+        "集团党建创新与绿色实践"
+      ],
+      "blankGrading": {
+        "kind": "native_fill",
+        "ordering": "fixed",
+        "blanks": [
+          {
+            "canonical": "红心领航·中国重器",
+            "accepted": [
+              "红心领航·中国重器"
+            ]
+          }
+        ]
+      },
+      "explanation": "按空位顺序作答，逐空核对。",
+      "sourceNote": "资料截至2026年10月20日；官网报道正文 对应品牌名称",
+      "sourceReferences": [
+        {
+          "title": "中国重汽以实绩检验政绩以实干诠释担当",
+          "url": "https://www.cnhtc.com.cn/sinotruk/2026-09/08/article_2026090808333343977.html",
+          "date": "2026-09-08",
+          "accessed": "2026-10-20"
+        }
+      ]
+    },
+    {
+      "id": 26,
+      "type": "fill",
+      "stem": "中国重汽集团的党建主品牌与特色子品牌构成“______”党建品牌矩阵。",
+      "options": [],
+      "answers": [
+        "1+N"
+      ],
+      "tags": [
+        "集团党建创新与绿色实践"
+      ],
+      "blankGrading": {
+        "kind": "native_fill",
+        "ordering": "fixed",
+        "blanks": [
+          {
+            "canonical": "1+N",
+            "accepted": [
+              "1+N"
+            ]
+          }
+        ]
+      },
+      "explanation": "按空位顺序作答，逐空核对。 1+N中的加号不可省略。",
+      "sourceNote": "资料截至2026年10月20日；官网报道正文 对应品牌名称",
+      "sourceReferences": [
+        {
+          "title": "中国重汽以实绩检验政绩以实干诠释担当",
+          "url": "https://www.cnhtc.com.cn/sinotruk/2026-09/08/article_2026090808333343977.html",
+          "date": "2026-09-08",
+          "accessed": "2026-10-20"
+        }
+      ]
+    },
+    {
+      "id": 27,
+      "type": "fill",
+      "stem": "中国重汽集团的工会服务品牌是“______”。",
+      "options": [],
+      "answers": [
+        "工会码上办"
+      ],
+      "tags": [
+        "集团党建创新与绿色实践"
+      ],
+      "blankGrading": {
+        "kind": "native_fill",
+        "ordering": "fixed",
+        "blanks": [
+          {
+            "canonical": "工会码上办",
+            "accepted": [
+              "工会码上办"
+            ]
+          }
+        ]
+      },
+      "explanation": "按空位顺序作答，逐空核对。",
+      "sourceNote": "资料截至2026年10月20日；官网报道正文 工会品牌建设相关段落",
+      "sourceReferences": [
+        {
+          "title": "中国重汽以实绩检验政绩以实干诠释担当",
+          "url": "https://www.cnhtc.com.cn/sinotruk/2026-09/08/article_2026090808333343977.html",
+          "date": "2026-09-08",
+          "accessed": "2026-10-20"
+        }
+      ]
+    },
+    {
+      "id": 28,
+      "type": "fill",
+      "stem": "中国重汽集团的技能竞赛品牌为“______杯”，体育活动品牌为“______杯”。",
+      "options": [],
+      "answers": [
+        "黄河",
+        "中国重汽"
+      ],
+      "tags": [
+        "集团党建创新与绿色实践"
+      ],
+      "blankGrading": {
+        "kind": "native_fill",
+        "ordering": "fixed",
+        "blanks": [
+          {
+            "canonical": "黄河",
+            "accepted": [
+              "黄河"
+            ]
+          },
+          {
+            "canonical": "中国重汽",
+            "accepted": [
+              "中国重汽"
+            ]
+          }
+        ]
+      },
+      "explanation": "按空位顺序作答，逐空核对。",
+      "sourceNote": "资料截至2026年10月20日；官网报道正文 对应品牌名称",
+      "sourceReferences": [
+        {
+          "title": "中国重汽以实绩检验政绩以实干诠释担当",
+          "url": "https://www.cnhtc.com.cn/sinotruk/2026-09/08/article_2026090808333343977.html",
+          "date": "2026-09-08",
+          "accessed": "2026-10-20"
+        }
+      ]
+    },
+    {
+      "id": 29,
+      "type": "fill",
+      "stem": "中国重汽集团的员工婚恋品牌是“______”。",
+      "options": [],
+      "answers": [
+        "重情重意"
+      ],
+      "tags": [
+        "集团党建创新与绿色实践"
+      ],
+      "blankGrading": {
+        "kind": "native_fill",
+        "ordering": "fixed",
+        "blanks": [
+          {
+            "canonical": "重情重意",
+            "accepted": [
+              "重情重意"
+            ]
+          }
+        ]
+      },
+      "explanation": "按空位顺序作答，逐空核对。",
+      "sourceNote": "资料截至2026年10月20日；官网报道正文 对应品牌名称",
+      "sourceReferences": [
+        {
+          "title": "中国重汽以实绩检验政绩以实干诠释担当",
+          "url": "https://www.cnhtc.com.cn/sinotruk/2026-09/08/article_2026090808333343977.html",
+          "date": "2026-09-08",
+          "accessed": "2026-10-20"
+        }
+      ]
+    },
+    {
+      "id": 30,
+      "type": "fill",
+      "stem": "中国重汽提出打造全系列商用车______、______、______、______竞争力。",
+      "options": [],
+      "answers": [
+        "技术",
+        "质量",
+        "成本",
+        "服务"
+      ],
+      "tags": [
+        "集团党建创新与绿色实践"
+      ],
+      "blankGrading": {
+        "kind": "native_fill",
+        "ordering": "fixed",
+        "blanks": [
+          {
+            "canonical": "技术",
+            "accepted": [
+              "技术"
+            ]
+          },
+          {
+            "canonical": "质量",
+            "accepted": [
+              "质量"
+            ]
+          },
+          {
+            "canonical": "成本",
+            "accepted": [
+              "成本"
+            ]
+          },
+          {
+            "canonical": "服务",
+            "accepted": [
+              "服务"
+            ]
+          }
+        ]
+      },
+      "explanation": "按空位顺序作答，逐空核对。 按新闻原文顺序填写；这是工作要求，不表示目标已全部完成。",
+      "sourceNote": "资料截至2026年10月20日；官网新闻正文 研发工作要求",
+      "sourceReferences": [
+        {
+          "title": "中国重汽召开研发人员座谈会",
+          "url": "https://m.weichaipower.com/media_center/mt_news/202608/t20260821_126379.html",
+          "date": "2026-08-21",
+          "accessed": "2026-10-20"
+        }
+      ]
+    },
+    {
+      "id": 31,
+      "type": "fill",
+      "stem": "中国重汽提出深化“______体系变革”和“______工程”。",
+      "options": [],
+      "answers": [
+        "正向研发",
+        "人才转型"
+      ],
+      "tags": [
+        "集团党建创新与绿色实践"
+      ],
+      "blankGrading": {
+        "kind": "native_fill",
+        "ordering": "fixed",
+        "blanks": [
+          {
+            "canonical": "正向研发",
+            "accepted": [
+              "正向研发"
+            ]
+          },
+          {
+            "canonical": "人才转型",
+            "accepted": [
+              "人才转型"
+            ]
+          }
+        ]
+      },
+      "explanation": "按空位顺序作答，逐空核对。",
+      "sourceNote": "资料截至2026年10月20日；官网新闻正文 研发工作要求",
+      "sourceReferences": [
+        {
+          "title": "中国重汽召开研发人员座谈会",
+          "url": "https://m.weichaipower.com/media_center/mt_news/202608/t20260821_126379.html",
+          "date": "2026-08-21",
+          "accessed": "2026-10-20"
+        }
+      ]
+    },
+    {
+      "id": 32,
+      "type": "fill",
+      "stem": "中国重汽持续推进生产______升级、节能技术改造、______替代和绿色管理体系______建设。",
+      "options": [],
+      "answers": [
+        "工艺",
+        "清洁能源",
+        "标准化"
+      ],
+      "tags": [
+        "集团党建创新与绿色实践"
+      ],
+      "blankGrading": {
+        "kind": "native_fill",
+        "ordering": "fixed",
+        "blanks": [
+          {
+            "canonical": "工艺",
+            "accepted": [
+              "工艺"
+            ]
+          },
+          {
+            "canonical": "清洁能源",
+            "accepted": [
+              "清洁能源"
+            ]
+          },
+          {
+            "canonical": "标准化",
+            "accepted": [
+              "标准化"
+            ]
+          }
+        ]
+      },
+      "explanation": "按空位顺序作答，逐空核对。",
+      "sourceNote": "资料截至2026年10月20日；官网报道正文 绿色制造举措",
+      "sourceReferences": [
+        {
+          "title": "省级绿色工厂再加3中国重汽绿色制造矩阵持续扩容",
+          "url": "https://www.cnhtc.com.cn/sinotruk/2026-09/24/article_2026092408260336749.html",
+          "date": "2026-09-24",
+          "accessed": "2026-10-20"
+        }
+      ]
+    },
+    {
+      "id": 33,
+      "type": "fill",
+      "stem": "中国重汽发挥链主企业作用，带动上下游企业协同______。",
+      "options": [],
+      "answers": [
+        "降碳"
+      ],
+      "tags": [
+        "集团党建创新与绿色实践"
+      ],
+      "blankGrading": {
+        "kind": "native_fill",
+        "ordering": "fixed",
+        "blanks": [
+          {
+            "canonical": "降碳",
+            "accepted": [
+              "降碳"
+            ]
+          }
+        ]
+      },
+      "explanation": "按空位顺序作答，逐空核对。",
+      "sourceNote": "资料截至2026年10月20日；官网报道正文 绿色制造举措",
+      "sourceReferences": [
+        {
+          "title": "省级绿色工厂再加3中国重汽绿色制造矩阵持续扩容",
+          "url": "https://www.cnhtc.com.cn/sinotruk/2026-09/24/article_2026092408260336749.html",
+          "date": "2026-09-24",
+          "accessed": "2026-10-20"
+        }
+      ]
+    },
+    {
+      "id": 34,
+      "type": "fill",
+      "stem": "中国重汽集团的公司全称是“______”。",
+      "options": [],
+      "answers": [
+        "中国重型汽车集团有限公司"
+      ],
+      "tags": [
+        "集团主体与文化体系辨析"
+      ],
+      "blankGrading": {
+        "kind": "native_fill",
+        "ordering": "fixed",
+        "blanks": [
+          {
+            "canonical": "中国重型汽车集团有限公司",
+            "accepted": [
+              "中国重型汽车集团有限公司"
+            ]
+          }
+        ]
+      },
+      "explanation": "按空位顺序作答，逐空核对。 答案填写完整公司名称。",
+      "sourceNote": "资料截至2026年10月20日；官网中国重汽简介 公司名称",
+      "sourceReferences": [
+        {
+          "title": "中国重汽简介",
+          "url": "https://www.cnhtc.com.cn/sinotruk/gyzq/jtjj/index.html",
+          "date": "页面未标注发布日期 含2025年业绩",
+          "accessed": "2026-10-20"
+        }
+      ]
+    },
+    {
+      "id": 35,
+      "type": "fill",
+      "stem": "113X是______集团的文化体系；1137是______集团的文化体系。",
+      "options": [],
+      "answers": [
+        "山东重工",
+        "中国重汽"
+      ],
+      "tags": [
+        "集团主体与文化体系辨析"
+      ],
+      "blankGrading": {
+        "kind": "native_fill",
+        "ordering": "fixed",
+        "blanks": [
+          {
+            "canonical": "山东重工",
+            "accepted": [
+              "山东重工"
+            ]
+          },
+          {
+            "canonical": "中国重汽",
+            "accepted": [
+              "中国重汽"
+            ]
+          }
+        ]
+      },
+      "explanation": "按空位顺序作答，逐空核对。 山东重工113X已核对其官网说明正文；中国重汽1137依据集团文化图，不能混用。",
+      "sourceNote": "资料截至2026年10月20日；官网1137文化体系图 对应栏目",
+      "sourceReferences": [
+        {
+          "title": "企业文化及1137文化体系图",
+          "url": "https://www.cnhtc.com.cn/sinotruk/gyzq/qywh/index.html",
+          "date": "页面未标注发布日期",
+          "accessed": "2026-10-20"
+        },
+        {
+          "title": "文化品牌及113X企业文化体系说明",
+          "url": "https://www.shig.com.cn/aboutus/cu.html",
+          "date": "页面未标注发布日期",
+          "accessed": "2026-10-20"
+        }
+      ]
+    }
+  ]
+}

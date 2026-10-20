@@ -4,7 +4,7 @@ const APP_CACHE = `${CACHE_PREFIX}v2.3-fengshen-r1-${BUILD_VERSION}`;
 const IMAGE_CACHE = 'shenrenliu-qbank-images-v2';
 const LEGACY_IMAGE_CACHE = 'shenrenliu-qbank-images-v1';
 const REQUIRED = [
-  './', './index.html', './styles.css', './questions.js',
+  './', './index.html', './styles.css', './banks/catalog.js', './banks/sinotruk-culture.js', './bank-core.js', './bank-runtime.js', './questions.js',
   './pedagogy.js', './enhanced-fill.js', './transfer-code.js', './lulu.js', './ultra-content.js', './ultra-core.js', './lulu-mascot.png', './app.js', './pwa-install.js',
   './styles.css?v=2.3-fengshen-r1', './app.js?v=2.3-fengshen-r1', './pwa-install.js?v=2.3-fengshen-r1'
 ];
@@ -82,7 +82,7 @@ self.addEventListener('fetch', event => {
         await cache.put(request, response.clone());
         return response;
       } catch (_) {
-        const cached = await cache.match(request);
+        const cached = await cache.match(request) || await caches.match(request);
         if (cached) return cached;
         return new Response('原题图片暂不可用', {status: 503, headers: {'Content-Type': 'text/plain; charset=utf-8'}});
       }
@@ -90,6 +90,7 @@ self.addEventListener('fetch', event => {
     return;
   }
 
+  if (url.pathname.includes('/banks/')) {event.respondWith(appCacheFirst(request));return;}
   if (request.mode === 'navigate') {
     event.respondWith(appCacheFirst(request, './index.html'));
     return;

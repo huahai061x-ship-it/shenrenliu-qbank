@@ -55,6 +55,8 @@ jobs:
           node scripts/test-ultra-precision.cjs
           node scripts/test-mastery-scope.cjs
           node scripts/test-think-before-select.cjs
+          node tests/multibank-core.cjs
+          node tests/culture-core.cjs
       - name: Configure Pages
         uses: actions/configure-pages@v6
       - name: Build site

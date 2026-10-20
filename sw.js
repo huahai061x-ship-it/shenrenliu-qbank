@@ -4,7 +4,7 @@ const APP_CACHE = `${CACHE_PREFIX}v3.0-shenzhongshen-r1-${BUILD_VERSION}`;
 const IMAGE_CACHE = 'shenrenliu-qbank-images-v2';
 const LEGACY_IMAGE_CACHE = 'shenrenliu-qbank-images-v1';
 const REQUIRED = [
-  './', './index.html', './styles.css', './banks/catalog.js', './banks/sinotruk-culture.js', './bank-core.js', './bank-runtime.js', './questions.js',
+  './', './index.html', './styles.css', './banks/catalog.js', './banks/sinotruk-culture.js', './hos-analysis.js', './explanation-core.js', './backup-core.js', './backup-ui.js', './bank-core.js', './bank-runtime.js', './questions.js',
   './pedagogy.js', './enhanced-fill.js', './transfer-code.js', './lulu.js', './ultra-content.js', './ultra-core.js', './lulu-mascot.png', './app.js', './pwa-install.js',
   './styles.css?v=3.0-shenzhongshen-r1', './app.js?v=3.0-shenzhongshen-r1', './pwa-install.js?v=3.0-shenzhongshen-r1'
 ];

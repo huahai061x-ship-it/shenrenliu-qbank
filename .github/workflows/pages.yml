@@ -24,6 +24,10 @@ jobs:
         run: |
           python 受保护文件校验.py
           python 题库数据校验.py
+          python scripts/build-explanations.py
+          git diff --exit-code -- hos-analysis.js explanations/hos-analysis.json
+          node tests/explanations-core.cjs
+          node tests/backup-core.cjs
           node 全功能发布前校验.js
           node 增强填空与轮换校验.js
           node v2.1边界与恢复校验.js

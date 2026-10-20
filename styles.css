@@ -108,3 +108,13 @@ body:has(.quick-nav) .container{padding-bottom:112px}
 .hero-bank-current{display:block;font-size:13px;line-height:1.5;overflow-wrap:anywhere;color:var(--text)}
 .hero-bank-error{font-size:12px;color:var(--bad)}
 @media(max-width:560px){.hero-bank-picker{padding:10px 12px;border-radius:13px;min-height:74px}.hero-bank-label{font-size:15px}.hero-bank-current{font-size:12px}}
+/* One backup workflow, comfortable on small touch screens. */
+.backup-dialog{max-width:680px;width:calc(100% - 28px);max-height:90dvh;overflow:auto;box-sizing:border-box}
+.backup-heading{display:flex;justify-content:space-between;align-items:center;gap:12px}.backup-heading h2{margin:0}
+.backup-step{position:relative;margin:20px 0;padding:20px 18px 18px 52px;border:1px solid var(--line,#d8deea);border-radius:18px}
+.backup-step h3{margin:0 0 10px}.backup-step p{line-height:1.7}.backup-step small{display:block;line-height:1.6;margin-top:12px;color:var(--muted,#687286)}
+.backup-step-number{position:absolute;left:16px;top:20px;width:25px;height:25px;display:grid;place-items:center;border-radius:50%;background:#e7edff;color:#244aa5;font-weight:800}
+.backup-preview{margin:16px 0;padding:14px;border-radius:12px;background:var(--bg,#f3f6fc);overflow-wrap:anywhere}.backup-preview dl{margin:10px 0}.backup-preview dt{font-size:13px;color:var(--muted,#687286);margin-top:10px}.backup-preview dd{margin:4px 0;line-height:1.6}
+.backup-advanced{margin:18px 0}.backup-advanced summary{cursor:pointer;padding:10px 0;font-weight:600}.backup-advanced .btn{margin:6px 0}.backup-dialog #backupStatus:empty{display:none}.backup-dialog #backupStatus{line-height:1.7;overflow-wrap:anywhere}
+.structured-explanation h3{margin-top:22px}.structured-explanation .option-analysis{padding:14px 18px;list-style:none}.structured-explanation .option-analysis li{padding:12px 0}.structured-explanation .option-analysis li+li{border-top:1px solid var(--line,#d8deea)}.structured-explanation .option-analysis span{display:block;line-height:1.8;margin-top:7px}
+@media(max-width:480px){.backup-dialog{padding:20px 14px}.backup-step{padding:18px 12px 16px 44px}.backup-step-number{left:10px;top:18px}.backup-actions{display:flex;gap:10px;flex-wrap:wrap}.backup-step .btn{white-space:normal;min-height:44px}.backup-step h3{font-size:18px}.backup-step .muted{font-size:13px}}

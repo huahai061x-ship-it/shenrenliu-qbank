@@ -96,5 +96,15 @@ body:has(.quick-nav) .container{padding-bottom:112px}
 
 .think-select-toggle{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin:12px 0;color:var(--text);font-weight:600;cursor:pointer}.think-select-toggle input{width:18px;height:18px;margin:0;accent-color:var(--brand);flex-shrink:0}.think-select-toggle small{font-size:12px;font-weight:400;color:var(--muted)}.think-select-prompt{margin:16px 0}.think-select-prompt .btn{min-height:44px}
 
-.bank-range-bar{margin-top:14px}.bank-range-bar small{display:block;margin-top:8px}.bank-range-bar .btn{margin-left:10px}.bank-dialog{width:min(720px,calc(100vw - 24px));max-height:90dvh;overflow:auto;padding:24px;border:1px solid var(--line);border-radius:20px;background:var(--panel);color:var(--text)}.bank-dialog::backdrop{background:#101a35bb;backdrop-filter:blur(4px)}.bank-cards{display:grid;gap:10px}.bank-choice{display:flex;gap:12px;align-items:center;padding:14px;border:1px solid var(--line);border-radius:12px;cursor:pointer}.bank-choice input{width:20px;height:20px;flex-shrink:0}.bank-choice small{display:block;color:var(--muted);margin-top:6px}.bank-dialog input[type=file]{max-width:100%;margin:8px 0}
-.bank-range-bar .notice,.bank-choice span{min-width:0;overflow-wrap:anywhere}
+.bank-dialog{width:min(720px,calc(100vw - 24px));max-height:90dvh;overflow:auto;padding:24px;border:1px solid var(--line);border-radius:20px;background:var(--panel);color:var(--text)}.bank-dialog::backdrop{background:#101a35bb;backdrop-filter:blur(4px)}.bank-cards{display:grid;gap:10px}.bank-choice{display:flex;gap:12px;align-items:center;padding:14px;border:1px solid var(--line);border-radius:12px;cursor:pointer}.bank-choice input{width:20px;height:20px;flex-shrink:0}.bank-choice small{display:block;color:var(--muted);margin-top:6px}.bank-dialog input[type=file]{max-width:100%;margin:8px 0}
+.bank-choice span{min-width:0;overflow-wrap:anywhere}
+
+/* Put the bank selector in the home hero rather than a separate top banner. */
+.hero-bank-picker{display:flex;flex-direction:column;gap:6px;width:100%;max-width:360px;min-width:0;min-height:76px;padding:12px 16px;border:1px solid color-mix(in srgb,var(--brand) 32%,var(--line));border-radius:16px;background:color-mix(in srgb,var(--brand) 7%,var(--panel));color:var(--text);font:inherit;text-align:left;cursor:pointer;transition:background .15s,border-color .15s}
+.hero-bank-picker:hover{background:color-mix(in srgb,var(--brand) 12%,var(--panel));border-color:var(--brand)}
+.hero-bank-picker:focus-visible{outline:3px solid var(--brand);outline-offset:3px}
+.hero-bank-label{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:16px;font-weight:800;line-height:1.4;color:var(--brand)}
+.hero-bank-arrow{font-size:25px;line-height:20px;font-weight:500}
+.hero-bank-current{display:block;font-size:13px;line-height:1.5;overflow-wrap:anywhere;color:var(--text)}
+.hero-bank-error{font-size:12px;color:var(--danger)}
+@media(max-width:560px){.hero-bank-picker{padding:10px 12px;border-radius:13px;min-height:74px}.hero-bank-label{font-size:15px}.hero-bank-current{font-size:12px}}

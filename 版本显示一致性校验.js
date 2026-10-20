@@ -12,12 +12,12 @@ const home=x.main.innerHTML;x.w.openSettings();
 const displays={
   pageTitle:html.match(/<title>[^<]*(v\d+\.\d+ 神中神版)<\/title>/)?.[1],
   pageHeader:html.match(/SHENREN LIU · HOS 应知应会 · (v\d+\.\d+ 神中神版)/)?.[1],
-  homeHero:home.match(/class="pill">HOS 应知应会 · (v\d+\.\d+ 神中神版)/)?.[1],
   settings:x.nodes['#versionStats'].innerHTML.match(/<b>版本与完整性<\/b><br>(v\d+\.\d+ 神中神版)/)?.[1],
   manifest:manifest.description.match(/^(v\d+\.\d+) 神中神版/)?.[1],
   help:help.match(/^(?:神人刘题库训练站 )?(v\d+\.\d+ 神中神版)/)?.[1]
 };
 for(const [place,version] of Object.entries(displays))assert.equal(version,place==='manifest'?'v3.0':expected,`${place}版本不一致`);
+assert(home.includes('class="hero-bank-picker"')&&home.includes('选择题库'),'首页应显示题库选择入口');
 assert(!/v2\.2\.[245] ?封神版/.test(app+html),'仍有旧版显示文字');
 assert(!/\bBANK_VERSION\s*=/.test(app),'仍使用应用版本字符串作为数据兼容标识');
-console.log('版本一致性校验通过：标题、页眉、实际首页/设置、安装清单、说明及核心APP_VERSION为v3.0；独立session/bank/store schema为3/1/2。');
+console.log('版本一致性校验通过：标题、页眉、实际设置与首页题库入口、安装清单、说明及核心APP_VERSION为v3.0；独立session/bank/store schema为3/1/2。');

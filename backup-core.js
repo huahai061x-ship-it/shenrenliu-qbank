@@ -7,12 +7,13 @@ function validate(e){
  if(!plain(e)||e.format!=='shenrenliu-workspace'||e.version!==1||!plain(e.data)||!Array.isArray(e.includedBankIds)||!e.includedBankIds.length||new Set(e.includedBankIds).size!==e.includedBankIds.length||e.includedBankIds.some(n=>typeof n!=='string'||!/^[a-z][a-z0-9_-]{0,47}$/.test(n)))throw Error('备份身份或版本不正确');
  const d=e.data;
  if(d.schemaVersion!=null&&d.schemaVersion>2)throw Error('备份来自更新的数据版本，请先更新网站');
- for(const k of ['wrong','mastery','reviewFlags','seen','learning','difficultyProgress','openStudy'])if(d[k]!=null&&!plain(d[k]))throw Error('备份字段无效：'+k);
+ for(const k of ['wrong','mastery','reviewFlags','seen','learning','difficultyProgress','reviewNotes','pendingPractice','openStudy'])if(d[k]!=null&&!plain(d[k]))throw Error('备份字段无效：'+k);
  for(const k of ['favorites','history'])if(d[k]!=null&&!Array.isArray(d[k]))throw Error('备份字段无效：'+k);
  if((d.favorites||[]).some(n=>!Number.isSafeInteger(n)||n<1))throw Error('收藏题号无效');
  if((d.history||[]).some(h=>!plain(h)||!Array.isArray(h.ids)||h.ids.some(n=>!Number.isSafeInteger(n)||n<1)))throw Error('历史试卷格式无效');
- for(const k of ['wrong','learning','difficultyProgress','openStudy'])if(Object.values(d[k]||{}).some(v=>!plain(v)))throw Error('备份记录无效：'+k);
+ for(const k of ['wrong','learning','difficultyProgress','reviewNotes','pendingPractice','openStudy'])if(Object.values(d[k]||{}).some(v=>!plain(v)))throw Error('备份记录无效：'+k);
  for(const k of ['wrong','learning'])for(const v of Object.values(d[k]||{}))for(const f of ['count','wrongTotal','attempts','correct','wrong','totalMs','timedAttempts','last','lastWrong','lastCorrect','due'])if(v[f]!=null&&(!Number.isFinite(v[f])||v[f]<0))throw Error('备份计数或时间无效：'+k+'.'+f);
+ for(const k of ['reviewNotes','pendingPractice'])for(const v of Object.values(d[k]||{}))if(v.time!=null&&(!Number.isFinite(v.time)||v.time<0))throw Error('备份时间无效：'+k);
  for(const k of ['seen','reviewFlags'])if(Object.values(d[k]||{}).some(v=>!Number.isFinite(v)||v<0))throw Error('备份时间无效：'+k);
  if(Object.values(d.mastery||{}).some(v=>!['','new','fuzzy','mastered'].includes(v)))throw Error('掌握状态无效');
  if(d.settings!=null&&!plain(d.settings)||e.scopeSessions!=null&&!plain(e.scopeSessions)||e.bundles!=null&&!Array.isArray(e.bundles))throw Error('备份设置、未交试卷或题库格式无效');
@@ -45,6 +46,7 @@ function mergeRecord(a,b){
   const cumulative=(b.attempts||0)>(a.attempts||0)?b:(a.attempts||0)>(b.attempts||0)?a:recent;
   for(const k of ['attempts','correct','wrong','totalMs','timedAttempts','assistedCorrect','lowConfidenceCorrect'])if(typeof cumulative[k]==='number')out[k]=cumulative[k];
  }
+ const understood=(b.understandingAt||0)>(a.understandingAt||0)?b:a;if(understood.understandingAt){out.understandingAt=understood.understandingAt;out.understanding=understood.understanding}
  for(const k of ['wrongTotal','totalExposure','regularExposure','fillExposure'])if(typeof a[k]==='number'||typeof b[k]==='number')out[k]=Math.max(a[k]||0,b[k]||0);
  return out;
 }
@@ -52,10 +54,11 @@ function histories(a=[],b=[]){let seen=new Set;return [...a,...b].sort((x,y)=>(y
 function maxTree(a,b){if(typeof a==='number'&&typeof b==='number')return Math.max(a,b);if(plain(a)&&plain(b)){let o={...b};for(const k of Object.keys(a))o[k]=k in b?maxTree(a[k],b[k]):a[k];return o}return a??b}
 function merge(local,incoming){
  validate(local);validate(incoming);let e=clone(local),a=e.data,b=incoming.data;
- for(const key of ['learning','wrong','difficultyProgress','openStudy']){a[key]||={};for(const [n,r] of Object.entries(b[key]||{}))a[key][n]=mergeRecord(a[key][n],r)}
+ for(const key of ['learning','wrong','difficultyProgress','reviewNotes','pendingPractice','openStudy']){a[key]||={};for(const [n,r] of Object.entries(b[key]||{}))a[key][n]=mergeRecord(a[key][n],r)}
  for(const key of ['seen','reviewFlags']){a[key]||={};for(const [n,v] of Object.entries(b[key]||{}))a[key][n]=Math.max(a[key][n]||0,v)}
  // Without dedicated timestamps, preserve explicit local mastery on conflicts.
  a.mastery={...b.mastery,...a.mastery};a.favorites=[...new Set([...(a.favorites||[]),...(b.favorites||[])])];
+ for(const [n,r] of Object.entries(a.pendingPractice||{}))if((a.learning?.[n]?.last||0)>=(r.time||0))delete a.pendingPractice[n];
  a.history=histories(a.history,b.history);a.aggregateStats=maxTree(a.aggregateStats,b.aggregateStats);
  a.examRotation=maxTree(a.examRotation,b.examRotation);
  if((b.examRotation?.round||0)>(local.data.examRotation?.round||0))a.examRotation.recent=clone(b.examRotation.recent||[]);

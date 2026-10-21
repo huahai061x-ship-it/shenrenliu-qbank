@@ -28,6 +28,7 @@ jobs:
           git diff --exit-code -- hos-analysis.js explanations/hos-analysis.json
           node tests/explanations-core.cjs
           node tests/backup-core.cjs
+          node tests/experience-core.cjs
           node 全功能发布前校验.js
           node 增强填空与轮换校验.js
           node v2.1边界与恢复校验.js

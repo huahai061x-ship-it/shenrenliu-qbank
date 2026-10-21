@@ -34,7 +34,7 @@ let a=boot();a.c.window.renderRealExamSetup('real');a.c.window.beginRealExam('re
 let bad=JSON.parse(saved);bad.lastSession.schemaVersion=999;let rejected=boot(JSON.stringify(bad));assert(!rejected.main.innerHTML.includes('继续上次考试'),'未来断点schema未被安全拒绝');
 let pages=a.c.window.getSourcePages(a.c.window.QUESTION_BANK.find(q=>q.id===302));assert(pages.join(',')==='72,73','第302题跨页数据丢失');let report=a.c.window.reviewReportText([a.c.window.QUESTION_BANK.find(q=>q.id===302)]);assert(report.includes('原题第72、73页'),'第302题待复核导出丢失第73页');
 
-let hostile=boot(JSON.stringify({favorites:[302,999999],reviewFlags:{302:1,999999:1},history:[{mode:'<img src=x onerror=alert(1)>',score:999,count:-3,durationMs:-5}],schemaVersion:1}));hostile.c.window.renderHistory();let migrated=JSON.parse(hostile.store.shenrenliu_qbank_v1);assert(migrated.favorites.length===1&&!migrated.reviewFlags['999999'],'非法题号未过滤');assert(!hostile.main.innerHTML.includes('<img src=x'),'历史文本未转义');assert(hostile.main.innerHTML.includes('&lt;img'),'恶意历史文本未安全显示');
+let hostile=boot(JSON.stringify({favorites:[302,999999],reviewFlags:{302:1,999999:1},history:[{mode:'<img src=x onerror=alert(1)>',score:999,count:-3,durationMs:-5}],schemaVersion:1}));hostile.c.window.renderHistory('all');let migrated=JSON.parse(hostile.store.shenrenliu_qbank_v1);assert(migrated.favorites.length===1&&!migrated.reviewFlags['999999'],'非法题号未过滤');assert(!hostile.main.innerHTML.includes('<img src=x'),'历史文本未转义');assert(hostile.main.innerHTML.includes('&lt;img'),'恶意历史文本未安全显示');
 
 // A/B：恢复答案类型损坏时必须安全清洗，交卷不得抛异常。
 let snapshot=JSON.parse(saved),multiAt=snapshot.lastSession.renderTypes.indexOf('multiple'),singleAt=snapshot.lastSession.renderTypes.indexOf('single'),fillAt=snapshot.lastSession.renderTypes.indexOf('fill');

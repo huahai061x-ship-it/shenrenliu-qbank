@@ -13,16 +13,16 @@ eq(saved.lastSession.schemaVersion,3);eq(saved.lastSession.bankSchemaVersion,1);
 let restore=boot({...saved,favorites:[q.id],wrong:{[q.id]:{count:2}},mastery:{[q.id]:'fuzzy'}});restore.w.resumeLastSession();
 eq(restore.t.getSession().items.length,45);assert(restore.t.getStore().favorites.includes(q.id));eq(restore.t.getStore().wrong[q.id].count,2);
 
-// Same attempt contributes only 0/1, without subtracting seven historical contributions.
-x=boot({schemaVersion:2,learning:{[q.id]:{lowConfidenceCorrect:7}}});x.w.startStudy('sequence',[q]);let item=x.t.getSession().items[0];item.answer=q.answers[0];x.w.checkStudy();
-for(let i=0;i<12;i++){x.w.setConfidence('guess');eq(x.t.getStore().learning[q.id].lowConfidenceCorrect,8);x.w.setConfidence('hesitant');eq(x.t.getStore().learning[q.id].lowConfidenceCorrect,8);x.w.setConfidence('sure');eq(x.t.getStore().learning[q.id].lowConfidenceCorrect,7)}
-x.w.setConfidence('guess');eq(x.t.getStore().learning[q.id].lowConfidenceCorrect,8);
-// A persisted checked attempt keeps its contribution ownership across resume.
+// Pre-answer confidence contributes once; revealed answers cannot rewrite prior confidence.
+x=boot({schemaVersion:2,learning:{[q.id]:{lowConfidenceCorrect:7}}});x.w.startStudy('sequence',[q]);let item=x.t.getSession().items[0];item.answer=q.answers[0];
+for(let i=0;i<12;i++){x.w.setConfidence('guess');eq(x.t.getStore().learning[q.id].lowConfidenceCorrect,7);x.w.setConfidence('sure');eq(x.t.getStore().learning[q.id].lowConfidenceCorrect,7)}
+x.w.setConfidence('hesitant');x.w.checkStudy();eq(x.t.getStore().learning[q.id].lowConfidenceCorrect,8);eq(item.confidencePhase,'before');
+for(let i=0;i<12;i++){x.w.setConfidence('sure');eq(item.confidence,'hesitant');eq(x.t.getStore().learning[q.id].lowConfidenceCorrect,8)}
+// A persisted checked attempt keeps phase and contribution ownership across resume.
 x.w.beginRealExam('real');item=x.t.getSession().items[0];const id=item.q.id;x.t.getStore().learning[id]={attempts:0,correct:0,wrong:0,streak:0,totalMs:0,timedAttempts:0,lowConfidenceCorrect:7};
-item.answer=item.q.type==='multiple'?[...item.q.answers]:item.q.answers[0];item.correct=true;item.checked=true;x.t.updateLearning(item,true);x.w.setConfidence('guess');x.t.saveSession();
-restore=boot(JSON.parse(x.store.shenrenliu_qbank_v1));restore.w.resumeLastSession();eq(restore.t.getSession().items[0].lowConfidenceContribution,true);
-for(let i=0;i<12;i++){restore.w.setConfidence('sure');eq(restore.t.getStore().learning[id].lowConfidenceCorrect,7);restore.w.setConfidence('guess');eq(restore.t.getStore().learning[id].lowConfidenceCorrect,8)}
-restore.w.setConfidence('sure');eq(restore.t.getStore().learning[id].lowConfidenceCorrect,7);
+item.answer=item.q.type==='multiple'?[...item.q.answers]:item.q.answers[0];x.w.setConfidence('guess');item.correct=true;item.checked=true;x.t.updateLearning(item,true);x.t.saveSession();
+restore=boot(JSON.parse(x.store.shenrenliu_qbank_v1));restore.w.resumeLastSession();eq(restore.t.getSession().items[0].lowConfidenceContribution,true);eq(restore.t.getSession().items[0].confidencePhase,'before');
+restore.w.setConfidence('sure');eq(restore.t.getStore().learning[id].lowConfidenceCorrect,8);eq(restore.t.getSession().items[0].confidence,'guess');
 
 // Search normalization applies equally to original/visible content and user input.
 x=boot();for(const [hay,query] of [['作业要 领书','作业要领书'],['作业要领书','作业要 领书'],['Standard Work','standard work'],['Standard  Work','standard work'],['60N·m','60N·m'],['5Why','5why'],['2T','２Ｔ'],['质量管理','质量 管理']])assert(x.t.searchTextMatches(hay,query),`${hay} 未匹配 ${query}`);

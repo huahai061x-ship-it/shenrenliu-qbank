@@ -2,7 +2,7 @@ const assert=require('assert/strict'),fs=require('fs'),{boot:rawBoot}=require('.
 function boot(initial={}){return rawBoot({...initial,settings:{...initial.settings,quickEntryMigration:'quick-entry-migrated-v2.2.9-fengshen-r3'}})}
 const equal=(a,b)=>assert.equal(JSON.stringify(a),JSON.stringify(b)),defaults=['real','today','random','specialRecite'];
 let x=boot();equal(x.t.getStore().settings.homeShortcuts,defaults);assert.equal(x.t.getStore().settings.quickEntryCustomized,false);
-const more=x.main.innerHTML.match(/<details class="more-modes[\s\S]*?<\/details>/)[0];equal([...more.matchAll(/<h3>(.*?)<\/h3>/g)].map(m=>m[1]),['真实模拟 Ultra','专项模拟','专项背诵','概念释义与简答训练','今日复习','随机刷题','顺序背题','待复核清单','题库搜索']);
+const more=x.main.innerHTML.match(/<details class="more-modes[\s\S]*?<\/details>/)[0];equal([...more.matchAll(/<h3>(.*?)<\/h3>/g)].map(m=>m[1]),['专项模拟','概念释义与简答训练','顺序背题','待复核清单','题库搜索']);
 assert(!x.w.__V22_TEST__.shortcutCatalog.some(s=>s.id==='mixedExam'));assert(!more.includes('模拟考试'));assert(!fs.readFileSync('index.html','utf8').includes('ratioSetting'));
 for(const spec of [
  {settings:{},want:defaults,flag:false},

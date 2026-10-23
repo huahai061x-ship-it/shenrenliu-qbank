@@ -1,1 +1,1 @@
-window.QBANK_BANKS=[{id:'hos_2026',name:'HOS 应知应会',version:'2026.10',sourceBase:'source',sourcePageCount:111},{id:'sinotruk_culture_2026',name:'中国重汽企业文化知识',version:'2026.10.20',file:'banks/sinotruk-culture.js',sourcePageCount:0}];
+window.QBANK_BANKS=[{id:'hos_2026',name:'HOS 应知应会',version:'2026.10',sourceBase:'source',sourcePageCount:111},{id:'sinotruk_culture_2025_official',name:'中国重汽企业文化正式题库',version:'2026.10.23',file:'banks/sinotruk-culture-official.js',sourcePageCount:0}];

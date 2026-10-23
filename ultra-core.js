@@ -7,7 +7,7 @@ function validSpec(spec) {
 function grade(spec, values) {
   if (!validSpec(spec)) throw Error('题目评分配置无效');
   if (!Array.isArray(values) || values.length !== spec.blanks.length || values.some(v => typeof v !== 'string')) throw Error('逐空作答格式无效');
-  const norm = spec.kind === 'native_fill' ? value => normalize(String(value ?? '').normalize('NFKC')).replace(/[“”"'‘’。.!！?？,，、;；:：()（）\[\]【】·•∙・]/gu, '') : normalize;
+  const norm = ['native_fill','official_fill'].includes(spec.kind) ? value => normalize(String(value ?? '').normalize('NFKC')).replace(/[“”"'‘’。.!！?？,，、;；:：()（）\[\]【】·•∙・]/gu, '') : normalize;
   const matches = values.map(value => spec.blanks.map(blank => !!norm(value) && blank.accepted.some(a => norm(a) === norm(value))));
   const assigned = Array(spec.blanks.length).fill(-1);
   if (spec.ordering === 'fixed') {

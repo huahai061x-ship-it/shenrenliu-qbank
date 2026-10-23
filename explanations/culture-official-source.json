@@ -1,0 +1,7760 @@
+{
+  "sourceDocument": "重汽企业文化试题2025_.docx",
+  "sourceSHA256": "fd1a60f41117677c3bfa7b4598476f6b4df1dd661cba72cb8e9885d1f9ba4f3b",
+  "questions": [
+    {
+      "type": "single",
+      "typeName": "单选题",
+      "sourceNumber": 1,
+      "key": "single-001",
+      "stem": "中国重汽的企业愿景：打造（ ）一流的全系列商用车集团。",
+      "sourceStemWithAnswer": "1.中国重汽的企业愿景：打造（A）一流的全系列商用车集团。【单选题】",
+      "answerLabels": [
+        "A"
+      ],
+      "answerTexts": [
+        "世界"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "世界",
+          "sourceParagraph": 5,
+          "rawText": "A.世界",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "中国",
+          "sourceParagraph": 6,
+          "rawText": "B.中国",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "山东",
+          "sourceParagraph": 7,
+          "rawText": "C.山东",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "行业",
+          "sourceParagraph": 8,
+          "rawText": "D.行业",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "single",
+      "typeName": "单选题",
+      "sourceNumber": 2,
+      "key": "single-002",
+      "stem": "山东重工的企业使命：（ ）",
+      "sourceStemWithAnswer": "2.山东重工的企业使命：（B）【单选题】",
+      "answerLabels": [
+        "B"
+      ],
+      "answerTexts": [
+        "科技赋能 装备美好"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "科技美好 装备赋能",
+          "sourceParagraph": 11,
+          "rawText": "A.科技美好 装备赋能",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "科技赋能 装备美好",
+          "sourceParagraph": 12,
+          "rawText": "B.科技赋能 装备美好",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "激情干事 造车强国",
+          "sourceParagraph": 13,
+          "rawText": "C.激情干事 造车强国",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "牢记使命 勇攀高峰",
+          "sourceParagraph": 14,
+          "rawText": "D.牢记使命 勇攀高峰",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        10,
+        11,
+        12,
+        13,
+        14
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "single",
+      "typeName": "单选题",
+      "sourceNumber": 3,
+      "key": "single-003",
+      "stem": "企业客户行为准则是：（ ）满意是我们的宗旨。",
+      "sourceStemWithAnswer": "3.企业客户行为准则是：（C）满意是我们的宗旨。【单选题】",
+      "answerLabels": [
+        "C"
+      ],
+      "answerTexts": [
+        "客户"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "用户",
+          "sourceParagraph": 17,
+          "rawText": "A.用户",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "员工",
+          "sourceParagraph": 18,
+          "rawText": "B.员工",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "客户",
+          "sourceParagraph": 19,
+          "rawText": "C.客户",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "股东",
+          "sourceParagraph": 20,
+          "rawText": "D.股东",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "single",
+      "typeName": "单选题",
+      "sourceNumber": 4,
+      "key": "single-004",
+      "stem": "2007年，中国重汽在香港主板上市，是我国制造业第一支上市的（ ），初步搭建起国际化发展的平台。",
+      "sourceStemWithAnswer": "4.2007年，中国重汽在香港主板上市，是我国制造业第一支上市的（A），初步搭建起国际化发展的平台。【单选题】",
+      "answerLabels": [
+        "A"
+      ],
+      "answerTexts": [
+        "红筹股"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "红筹股",
+          "sourceParagraph": 23,
+          "rawText": "A.红筹股",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "B股",
+          "sourceParagraph": 24,
+          "rawText": "B.B股",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "H股",
+          "sourceParagraph": 25,
+          "rawText": "C.H股",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "科创股",
+          "sourceParagraph": 26,
+          "rawText": "D.科创股",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        22,
+        23,
+        24,
+        25,
+        26
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "single",
+      "typeName": "单选题",
+      "sourceNumber": 5,
+      "key": "single-005",
+      "stem": "2017年，豪沃重卡第（ ）辆车正式下线，创造了中国重卡史上的新纪录。",
+      "sourceStemWithAnswer": "5.2017年，豪沃重卡第（D）辆车正式下线，创造了中国重卡史上的新纪录。【单选题】",
+      "answerLabels": [
+        "D"
+      ],
+      "answerTexts": [
+        "100万"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "50",
+          "sourceParagraph": 29,
+          "rawText": "A.50",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "50万",
+          "sourceParagraph": 30,
+          "rawText": "B.50万",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "100",
+          "sourceParagraph": 31,
+          "rawText": "C.100",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "100万",
+          "sourceParagraph": 32,
+          "rawText": "D.100万",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        28,
+        29,
+        30,
+        31,
+        32
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "single",
+      "typeName": "单选题",
+      "sourceNumber": 6,
+      "key": "single-006",
+      "stem": "企业战略聚焦的核心理念是：（ ）",
+      "sourceStemWithAnswer": "6.企业战略聚焦的核心理念是：（A）【单选题】",
+      "answerLabels": [
+        "A"
+      ],
+      "answerTexts": [
+        "心无旁骛攻主业"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "心无旁骛攻主业",
+          "sourceParagraph": 35,
+          "rawText": "A.心无旁骛攻主业",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "客户满意是我们的宗旨",
+          "sourceParagraph": 36,
+          "rawText": "B.客户满意是我们的宗旨",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "永不懈怠 永立潮头 永争第一",
+          "sourceParagraph": 37,
+          "rawText": "C.永不懈怠 永立潮头 永争第一",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "重于德 工于匠 成于行",
+          "sourceParagraph": 38,
+          "rawText": "D.重于德 工于匠 成于行",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        34,
+        35,
+        36,
+        37,
+        38
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "single",
+      "typeName": "单选题",
+      "sourceNumber": 7,
+      "key": "single-007",
+      "stem": "1960年，生产制造了中国第一辆重型汽车——黄河牌（ ）八吨载重汽车，结束了中国不能生产重型汽车的历史。",
+      "sourceStemWithAnswer": "7.1960年，生产制造了中国第一辆重型汽车——黄河牌（C）八吨载重汽车，结束了中国不能生产重型汽车的历史。【单选题】",
+      "answerLabels": [
+        "C"
+      ],
+      "answerTexts": [
+        "JN150"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "JN252",
+          "sourceParagraph": 41,
+          "rawText": "A.JN252",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "JN220",
+          "sourceParagraph": 42,
+          "rawText": "B.JN220",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "JN150",
+          "sourceParagraph": 43,
+          "rawText": "C.JN150",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "JN160",
+          "sourceParagraph": 44,
+          "rawText": "D.JN160",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        40,
+        41,
+        42,
+        43,
+        44
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "single",
+      "typeName": "单选题",
+      "sourceNumber": 8,
+      "key": "single-008",
+      "stem": "企业追求卓越的核心理念是：（ ）",
+      "sourceStemWithAnswer": "8.企业追求卓越的核心理念是：（C）【单选题】",
+      "answerLabels": [
+        "C"
+      ],
+      "answerTexts": [
+        "永不懈怠 永立潮头 永争第一"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "心无旁骛攻主业",
+          "sourceParagraph": 47,
+          "rawText": "A.心无旁骛攻主业",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "客户满意是我们的宗旨",
+          "sourceParagraph": 48,
+          "rawText": "B.客户满意是我们的宗旨",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "永不懈怠 永立潮头 永争第一",
+          "sourceParagraph": 49,
+          "rawText": "C.永不懈怠 永立潮头 永争第一",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "重于德 工于匠 成于行",
+          "sourceParagraph": 50,
+          "rawText": "D.重于德 工于匠 成于行",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        46,
+        47,
+        48,
+        49,
+        50
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "single",
+      "typeName": "单选题",
+      "sourceNumber": 9,
+      "key": "single-009",
+      "stem": "1966年，朱德委员长来济汽视察，亲笔为黄河汽车题写“（ ）”二字。",
+      "sourceStemWithAnswer": "9.1966年，朱德委员长来济汽视察，亲笔为黄河汽车题写“（D）”二字。【单选题】",
+      "answerLabels": [
+        "D"
+      ],
+      "answerTexts": [
+        "黄河"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "长江",
+          "sourceParagraph": 53,
+          "rawText": "A.长江",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "斯太尔",
+          "sourceParagraph": 54,
+          "rawText": "B.斯太尔",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "济汽",
+          "sourceParagraph": 55,
+          "rawText": "C.济汽",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "黄河",
+          "sourceParagraph": 56,
+          "rawText": "D.黄河",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        52,
+        53,
+        54,
+        55,
+        56
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "single",
+      "typeName": "单选题",
+      "sourceNumber": 10,
+      "key": "single-010",
+      "stem": "企业以人为本的核心理念是：（ ）",
+      "sourceStemWithAnswer": "10.企业以人为本的核心理念是：（D）【单选题】",
+      "answerLabels": [
+        "D"
+      ],
+      "answerTexts": [
+        "重于德 工于匠 成于行"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "心无旁骛攻主业",
+          "sourceParagraph": 59,
+          "rawText": "A.心无旁骛攻主业",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "一家人 一条心 一起干 一定成",
+          "sourceParagraph": 60,
+          "rawText": "B.一家人 一条心 一起干 一定成",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "永不懈怠 永立潮头 永争第一",
+          "sourceParagraph": 61,
+          "rawText": "C.永不懈怠 永立潮头 永争第一",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "重于德 工于匠 成于行",
+          "sourceParagraph": 62,
+          "rawText": "D.重于德 工于匠 成于行",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        58,
+        59,
+        60,
+        61,
+        62
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "single",
+      "typeName": "单选题",
+      "sourceNumber": 11,
+      "key": "single-011",
+      "stem": "1983年，成功引进（ ）项目，是国内第一家全面引进国外重型汽车整车制造技术的企业。",
+      "sourceStemWithAnswer": "11.1983年，成功引进（A）项目，是国内第一家全面引进国外重型汽车整车制造技术的企业。【单选题】",
+      "answerLabels": [
+        "A"
+      ],
+      "answerTexts": [
+        "斯太尔"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "斯太尔",
+          "sourceParagraph": 65,
+          "rawText": "A.斯太尔",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "沃尔沃",
+          "sourceParagraph": 66,
+          "rawText": "B.沃尔沃",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "曼",
+          "sourceParagraph": 67,
+          "rawText": "C.曼",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "汕德卡",
+          "sourceParagraph": 68,
+          "rawText": "D.汕德卡",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        64,
+        65,
+        66,
+        67,
+        68
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "single",
+      "typeName": "单选题",
+      "sourceNumber": 12,
+      "key": "single-012",
+      "stem": "企业创新行为准则是：（ ）。",
+      "sourceStemWithAnswer": "12.企业创新行为准则是：（D）。【单选题】",
+      "answerLabels": [
+        "D"
+      ],
+      "answerTexts": [
+        "链合创新 勇攀高峰"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "创新领先 严谨高效",
+          "sourceParagraph": 71,
+          "rawText": "A.创新领先 严谨高效",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "人才第一 责任为本",
+          "sourceParagraph": 72,
+          "rawText": "B.人才第一 责任为本",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "高效协同 流程完备",
+          "sourceParagraph": 73,
+          "rawText": "C.高效协同 流程完备",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "链合创新 勇攀高峰",
+          "sourceParagraph": 74,
+          "rawText": "D.链合创新 勇攀高峰",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        70,
+        71,
+        72,
+        73,
+        74
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "single",
+      "typeName": "单选题",
+      "sourceNumber": 13,
+      "key": "single-013",
+      "stem": "中国重汽的前身最早可追溯至（ ）年。",
+      "sourceStemWithAnswer": "13.中国重汽的前身最早可追溯至（B）年。【单选题】",
+      "answerLabels": [
+        "B"
+      ],
+      "answerTexts": [
+        "1930"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "1920",
+          "sourceParagraph": 77,
+          "rawText": "A.1920",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "1930",
+          "sourceParagraph": 78,
+          "rawText": "B.1930",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "1956",
+          "sourceParagraph": 79,
+          "rawText": "C.1956",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "1960",
+          "sourceParagraph": 80,
+          "rawText": "D.1960",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        76,
+        77,
+        78,
+        79,
+        80
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "single",
+      "typeName": "单选题",
+      "sourceNumber": 14,
+      "key": "single-014",
+      "stem": "企业质量行为准则是：（ ）",
+      "sourceStemWithAnswer": "14.企业质量行为准则是：（B）【单选题】",
+      "answerLabels": [
+        "B"
+      ],
+      "answerTexts": [
+        "我生产的产品 我向客户保证"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "质量零缺陷",
+          "sourceParagraph": 83,
+          "rawText": "A.质量零缺陷",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "我生产的产品 我向客户保证",
+          "sourceParagraph": 84,
+          "rawText": "B.我生产的产品 我向客户保证",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "永不懈怠 永立潮头 永争第一",
+          "sourceParagraph": 85,
+          "rawText": "C.永不懈怠 永立潮头 永争第一",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "重德 重勤 重廉",
+          "sourceParagraph": 86,
+          "rawText": "D.重德 重勤 重廉",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        82,
+        83,
+        84,
+        85,
+        86
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "single",
+      "typeName": "单选题",
+      "sourceNumber": 15,
+      "key": "single-015",
+      "stem": "企业团队行为准则是：（ ）",
+      "sourceStemWithAnswer": "15.企业团队行为准则是：（C）【单选题】",
+      "answerLabels": [
+        "C"
+      ],
+      "answerTexts": [
+        "一家人 一条心 一起干 一定成"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "团结就是力量",
+          "sourceParagraph": 89,
+          "rawText": "A.团结就是力量",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "我生产的产品 我向客户保证",
+          "sourceParagraph": 90,
+          "rawText": "B.我生产的产品 我向客户保证",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "一家人 一条心 一起干 一定成",
+          "sourceParagraph": 91,
+          "rawText": "C.一家人 一条心 一起干 一定成",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "重德 重勤 重廉",
+          "sourceParagraph": 92,
+          "rawText": "D.重德 重勤 重廉",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        88,
+        89,
+        90,
+        91,
+        92
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "single",
+      "typeName": "单选题",
+      "sourceNumber": 16,
+      "key": "single-016",
+      "stem": "企业实干行为准则是：（ ）",
+      "sourceStemWithAnswer": "16.企业实干行为准则是：（B）【单选题】",
+      "answerLabels": [
+        "B"
+      ],
+      "answerTexts": [
+        "向一线聚焦 在一线成长"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "我生产的产品 我向客户保证",
+          "sourceParagraph": 95,
+          "rawText": "A.我生产的产品 我向客户保证",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "向一线聚焦 在一线成长",
+          "sourceParagraph": 96,
+          "rawText": "B.向一线聚焦 在一线成长",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "心无旁骛攻主业",
+          "sourceParagraph": 97,
+          "rawText": "C.心无旁骛攻主业",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "永不懈怠 永立潮头 永争第一",
+          "sourceParagraph": 98,
+          "rawText": "D.永不懈怠 永立潮头 永争第一",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        94,
+        95,
+        96,
+        97,
+        98
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "single",
+      "typeName": "单选题",
+      "sourceNumber": 17,
+      "key": "single-017",
+      "stem": "企业服务行为准则是：（ ）",
+      "sourceStemWithAnswer": "17.企业服务行为准则是：（A）【单选题】",
+      "answerLabels": [
+        "A"
+      ],
+      "answerTexts": [
+        "亲人服务"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "亲人服务",
+          "sourceParagraph": 101,
+          "rawText": "A.亲人服务",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "客户满意是我们的宗旨",
+          "sourceParagraph": 102,
+          "rawText": "B.客户满意是我们的宗旨",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "我生产的产品 我向客户保证",
+          "sourceParagraph": 103,
+          "rawText": "C.我生产的产品 我向客户保证",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "诚实守信 合作共赢",
+          "sourceParagraph": 104,
+          "rawText": "D.诚实守信 合作共赢",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        100,
+        101,
+        102,
+        103,
+        104
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "single",
+      "typeName": "单选题",
+      "sourceNumber": 18,
+      "key": "single-018",
+      "stem": "2025年10月28日，中国重汽与福建宏途1000台（ ）战略签约暨首批500台交车仪式在福建福州圆满举行。",
+      "sourceStemWithAnswer": "18.2025年10月28日，中国重汽与福建宏途1000台（B）战略签约暨首批500台交车仪式在福建福州圆满举行。【单选题】",
+      "answerLabels": [
+        "B"
+      ],
+      "answerTexts": [
+        "豪沃TX7-PRO渣土车"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "汕德卡G7M燃气牵引车",
+          "sourceParagraph": 107,
+          "rawText": "A.汕德卡G7M燃气牵引车",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "豪沃TX7-PRO渣土车",
+          "sourceParagraph": 108,
+          "rawText": "B.豪沃TX7-PRO渣土车",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "豪沃TS7燃气车",
+          "sourceParagraph": 109,
+          "rawText": "C.豪沃TS7燃气车",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "汕德卡新能源建筑垃圾运输车",
+          "sourceParagraph": 110,
+          "rawText": "D.汕德卡新能源建筑垃圾运输车",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        106,
+        107,
+        108,
+        109,
+        110
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "single",
+      "typeName": "单选题",
+      "sourceNumber": 19,
+      "key": "single-019",
+      "stem": "2007年11月28日，在香港联合交易所，中国制造业第一支上市的红筹股中国重汽（香港）有限公司成功实现主板上市，股份代号（ ）。",
+      "sourceStemWithAnswer": "19.2007年11月28日，在香港联合交易所，中国制造业第一支上市的红筹股中国重汽（香港）有限公司成功实现主板上市，股份代号（C）。【单选题】",
+      "answerLabels": [
+        "C"
+      ],
+      "answerTexts": [
+        "HK3808"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "HK3888",
+          "sourceParagraph": 113,
+          "rawText": "A.HK3888",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "00951",
+          "sourceParagraph": 114,
+          "rawText": "B.00951",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "HK3808",
+          "sourceParagraph": 115,
+          "rawText": "C.HK3808",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "HK3008",
+          "sourceParagraph": 116,
+          "rawText": "D.HK3008",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        112,
+        113,
+        114,
+        115,
+        116
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "single",
+      "typeName": "单选题",
+      "sourceNumber": 20,
+      "key": "single-020",
+      "stem": "2009年4月26日，经国家批准，（ ）在中国重汽正式揭牌成立，承担着我国重型汽车行业技术研发、应用示范、成果推广和技术服务的职能。",
+      "sourceStemWithAnswer": "20.2009年4月26日，经国家批准，（B）在中国重汽正式揭牌成立，承担着我国重型汽车行业技术研发、应用示范、成果推广和技术服务的职能。【单选题】",
+      "answerLabels": [
+        "B"
+      ],
+      "answerTexts": [
+        "国家重型汽车工程技术研究中心"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "国家汽车工程技术研究中心",
+          "sourceParagraph": 119,
+          "rawText": "A.国家汽车工程技术研究中心",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "国家重型汽车工程技术研究中心",
+          "sourceParagraph": 120,
+          "rawText": "B.国家重型汽车工程技术研究中心",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "国家工程技术研究中心",
+          "sourceParagraph": 121,
+          "rawText": "C.国家工程技术研究中心",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "技术研究中心",
+          "sourceParagraph": 122,
+          "rawText": "D.技术研究中心",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        118,
+        119,
+        120,
+        121,
+        122
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "single",
+      "typeName": "单选题",
+      "sourceNumber": 21,
+      "key": "single-021",
+      "stem": "2019年，中国重汽（ ）牵引车用5年200万公里无大修的高效运营，诠释了中国重汽曼技术产品的高可靠性和高出勤率。",
+      "sourceStemWithAnswer": "21.2019年，中国重汽（C）牵引车用5年200万公里无大修的高效运营，诠释了中国重汽曼技术产品的高可靠性和高出勤率。【单选题】",
+      "answerLabels": [
+        "C"
+      ],
+      "answerTexts": [
+        "汕德卡"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "黄河",
+          "sourceParagraph": 125,
+          "rawText": "A.黄河",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "豪沃",
+          "sourceParagraph": 126,
+          "rawText": "B.豪沃",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "汕德卡",
+          "sourceParagraph": 127,
+          "rawText": "C.汕德卡",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "斯太尔",
+          "sourceParagraph": 128,
+          "rawText": "D.斯太尔",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        124,
+        125,
+        126,
+        127,
+        128
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "single",
+      "typeName": "单选题",
+      "sourceNumber": 22,
+      "key": "single-022",
+      "stem": "2018年4月12日，中国重汽集团联合天津港集团公司和天津主线科技公司三方携手打造的全球首款（ ）级“无人驾驶电动港口牵引车”在天津港投入试运营。",
+      "sourceStemWithAnswer": "22.2018年4月12日，中国重汽集团联合天津港集团公司和天津主线科技公司三方携手打造的全球首款（A）级“无人驾驶电动港口牵引车”在天津港投入试运营。【单选题】",
+      "answerLabels": [
+        "A"
+      ],
+      "answerTexts": [
+        "L4"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "L4",
+          "sourceParagraph": 131,
+          "rawText": "A.L4",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "L3",
+          "sourceParagraph": 132,
+          "rawText": "B.L3",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "L2",
+          "sourceParagraph": 133,
+          "rawText": "C.L2",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "L1",
+          "sourceParagraph": 134,
+          "rawText": "D.L1",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        130,
+        131,
+        132,
+        133,
+        134
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "single",
+      "typeName": "单选题",
+      "sourceNumber": 23,
+      "key": "single-023",
+      "stem": "（ ）中国重汽黄河品牌暨新产品发布仪式盛大启幕，正式推出全新一代高端民族自主品牌——“黄河”重卡。",
+      "sourceStemWithAnswer": "23.（C）中国重汽黄河品牌暨新产品发布仪式盛大启幕，正式推出全新一代高端民族自主品牌——“黄河”重卡。【单选题】",
+      "answerLabels": [
+        "C"
+      ],
+      "answerTexts": [
+        "2020年9月16日"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "2020年9月1日",
+          "sourceParagraph": 137,
+          "rawText": "A.2020年9月1日",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "2019年9月16日",
+          "sourceParagraph": 138,
+          "rawText": "B.2019年9月16日",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "2020年9月16日",
+          "sourceParagraph": 139,
+          "rawText": "C.2020年9月16日",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "2019年10月1日",
+          "sourceParagraph": 140,
+          "rawText": "D.2019年10月1日",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        136,
+        137,
+        138,
+        139,
+        140
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "single",
+      "typeName": "单选题",
+      "sourceNumber": 24,
+      "key": "single-024",
+      "stem": "2021年，中国重汽集团济南卡车股份有限公司荣获国家级“（ ）”服务认证，标志着中国重汽售后服务能力始终引领行业最高标准。",
+      "sourceStemWithAnswer": "24.2021年，中国重汽集团济南卡车股份有限公司荣获国家级“（C）”服务认证，标志着中国重汽售后服务能力始终引领行业最高标准。【单选题】",
+      "answerLabels": [
+        "C"
+      ],
+      "answerTexts": [
+        "七星级"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "五星级",
+          "sourceParagraph": 143,
+          "rawText": "A.五星级",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "六星级",
+          "sourceParagraph": 144,
+          "rawText": "B.六星级",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "七星级",
+          "sourceParagraph": 145,
+          "rawText": "C.七星级",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "八星级",
+          "sourceParagraph": 146,
+          "rawText": "D.八星级",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        142,
+        143,
+        144,
+        145,
+        146
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "single",
+      "typeName": "单选题",
+      "sourceNumber": 25,
+      "key": "single-025",
+      "stem": "2020年12月29日上午10时，中国重汽集团又迎来新的里程碑时刻——年产销商用车突破（ ）万辆，创造了新的历史纪录！标志着中国重汽改革发展取得重大阶段性成果，成功迈向中国商用车行业一流水平。",
+      "sourceStemWithAnswer": "25.2020年12月29日上午10时，中国重汽集团又迎来新的里程碑时刻——年产销商用车突破（C）万辆，创造了新的历史纪录！标志着中国重汽改革发展取得重大阶段性成果，成功迈向中国商用车行业一流水平。【单选题】",
+      "answerLabels": [
+        "C"
+      ],
+      "answerTexts": [
+        "50"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "30",
+          "sourceParagraph": 149,
+          "rawText": "A.30",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "40",
+          "sourceParagraph": 150,
+          "rawText": "B.40",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "50",
+          "sourceParagraph": 151,
+          "rawText": "C.50",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "60",
+          "sourceParagraph": 152,
+          "rawText": "D.60",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        148,
+        149,
+        150,
+        151,
+        152
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "single",
+      "typeName": "单选题",
+      "sourceNumber": 26,
+      "key": "single-026",
+      "stem": "2019年10月1日，在庆祝中华人民共和国成立70周年大会上，承载着“重汽人”使命担当、光荣梦想以及对祖国美好祝福的山东“国泰民安”彩车驶过天安门广场。该彩车选用（ ）8*4底盘，额定载荷44吨，完全满足彩车要求。",
+      "sourceStemWithAnswer": "26.2019年10月1日，在庆祝中华人民共和国成立70周年大会上，承载着“重汽人”使命担当、光荣梦想以及对祖国美好祝福的山东“国泰民安”彩车驶过天安门广场。该彩车选用（A）8*4底盘，额定载荷44吨，完全满足彩车要求。【单选题】",
+      "answerLabels": [
+        "A"
+      ],
+      "answerTexts": [
+        "HOWO-T7H"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "HOWO-T7H",
+          "sourceParagraph": 155,
+          "rawText": "A.HOWO-T7H",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "SITRAK-A7",
+          "sourceParagraph": 156,
+          "rawText": "B.SITRAK-A7",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "HOHAN",
+          "sourceParagraph": 157,
+          "rawText": "C.HOHAN",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "STR",
+          "sourceParagraph": 158,
+          "rawText": "D.STR",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        154,
+        155,
+        156,
+        157,
+        158
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "single",
+      "typeName": "单选题",
+      "sourceNumber": 27,
+      "key": "single-027",
+      "stem": "1958年，试制成功第一辆“黄河”JN220型越野汽车，填补了济南汽车工业的空白，也结束了山东省不能制造汽车的历史，并于当年更名为（ ），拉开了研发制造汽车的序幕。",
+      "sourceStemWithAnswer": "27.1958年，试制成功第一辆“黄河”JN220型越野汽车，填补了济南汽车工业的空白，也结束了山东省不能制造汽车的历史，并于当年更名为（A），拉开了研发制造汽车的序幕。【单选题】",
+      "answerLabels": [
+        "A"
+      ],
+      "answerTexts": [
+        "济南汽车制造厂"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "济南汽车制造厂",
+          "sourceParagraph": 161,
+          "rawText": "A.济南汽车制造厂",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "济南汽车配件制造厂",
+          "sourceParagraph": 162,
+          "rawText": "B.济南汽车配件制造厂",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "联营公司",
+          "sourceParagraph": 163,
+          "rawText": "C.联营公司",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "中国重型汽车集团有限公司",
+          "sourceParagraph": 164,
+          "rawText": "D.中国重型汽车集团有限公司",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        160,
+        161,
+        162,
+        163,
+        164
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "single",
+      "typeName": "单选题",
+      "sourceNumber": 28,
+      "key": "single-028",
+      "stem": "坚定中国特色社会主义道路自信、理论自信、制度自信，说到底是要坚定（ ）。",
+      "sourceStemWithAnswer": "28.坚定中国特色社会主义道路自信、理论自信、制度自信，说到底是要坚定（D）。【单选题】",
+      "answerLabels": [
+        "D"
+      ],
+      "answerTexts": [
+        "文化自信"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "道路自信",
+          "sourceParagraph": 167,
+          "rawText": "A.道路自信",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "理论自信",
+          "sourceParagraph": 168,
+          "rawText": "B.理论自信",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "制度自信",
+          "sourceParagraph": 169,
+          "rawText": "C.制度自信",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "文化自信",
+          "sourceParagraph": 170,
+          "rawText": "D.文化自信",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        166,
+        167,
+        168,
+        169,
+        170
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "single",
+      "typeName": "单选题",
+      "sourceNumber": 29,
+      "key": "single-029",
+      "stem": "（ ）指员工与企业在目标、方向上形成共识，愿意为集体目标克服困难，而非单纯的被动执行。",
+      "sourceStemWithAnswer": "29.（A）指员工与企业在目标、方向上形成共识，愿意为集体目标克服困难，而非单纯的被动执行。【单选题】",
+      "answerLabels": [
+        "A"
+      ],
+      "answerTexts": [
+        "共同意志"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "共同意志",
+          "sourceParagraph": 173,
+          "rawText": "A.共同意志",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "共同意愿",
+          "sourceParagraph": 174,
+          "rawText": "B.共同意愿",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "集体意志",
+          "sourceParagraph": 175,
+          "rawText": "C.集体意志",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "一致意志",
+          "sourceParagraph": 176,
+          "rawText": "D.一致意志",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        172,
+        173,
+        174,
+        175,
+        176
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "single",
+      "typeName": "单选题",
+      "sourceNumber": 30,
+      "key": "single-030",
+      "stem": "（ ），成功引进斯太尔项目，是国内第一家全面引进国外重型汽车整车制造技术的企业。",
+      "sourceStemWithAnswer": "30.（A），成功引进斯太尔项目，是国内第一家全面引进国外重型汽车整车制造技术的企业。【单选题】",
+      "answerLabels": [
+        "A"
+      ],
+      "answerTexts": [
+        "1983年"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "1983年",
+          "sourceParagraph": 179,
+          "rawText": "A.1983年",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "2001年",
+          "sourceParagraph": 180,
+          "rawText": "B.2001年",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "2013年",
+          "sourceParagraph": 181,
+          "rawText": "C.2013年",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "1960年",
+          "sourceParagraph": 182,
+          "rawText": "D.1960年",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        178,
+        179,
+        180,
+        181,
+        182
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "single",
+      "typeName": "单选题",
+      "sourceNumber": 31,
+      "key": "single-031",
+      "stem": "2013年，中国重汽与德国曼公司强强合作的（ ）品牌正式启动。",
+      "sourceStemWithAnswer": "31.2013年，中国重汽与德国曼公司强强合作的（C）品牌正式启动。【单选题】",
+      "answerLabels": [
+        "C"
+      ],
+      "answerTexts": [
+        "SITRAK"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "HOHAN",
+          "sourceParagraph": 185,
+          "rawText": "A.HOHAN",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "STR",
+          "sourceParagraph": 186,
+          "rawText": "B.STR",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "SITRAK",
+          "sourceParagraph": 187,
+          "rawText": "C.SITRAK",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "HOWO",
+          "sourceParagraph": 188,
+          "rawText": "D.HOWO",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        184,
+        185,
+        186,
+        187,
+        188
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "single",
+      "typeName": "单选题",
+      "sourceNumber": 32,
+      "key": "single-032",
+      "stem": "“1137”企业文化体系不仅仅是挂在墙上的标语，更是日常工作的行为准则。执行它，需要将文化理念拆解为具体的行为规范：在研发环节，以（ ）态度钻研核心技术，攻克“卡脖子”难题。",
+      "sourceStemWithAnswer": "32.“1137”企业文化体系不仅仅是挂在墙上的标语，更是日常工作的行为准则。执行它，需要将文化理念拆解为具体的行为规范：在研发环节，以（B）态度钻研核心技术，攻克“卡脖子”难题。【单选题】",
+      "answerLabels": [
+        "B"
+      ],
+      "answerTexts": [
+        "链合创新 勇攀高峰"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "心无旁骛攻主业",
+          "sourceParagraph": 191,
+          "rawText": "A.心无旁骛攻主业",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "链合创新 勇攀高峰",
+          "sourceParagraph": 192,
+          "rawText": "B.链合创新 勇攀高峰",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "科技领先、绿色发展、争创一流",
+          "sourceParagraph": 193,
+          "rawText": "C.科技领先、绿色发展、争创一流",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "科技赋能 装备美好",
+          "sourceParagraph": 194,
+          "rawText": "D.科技赋能 装备美好",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        190,
+        191,
+        192,
+        193,
+        194
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "single",
+      "typeName": "单选题",
+      "sourceNumber": 33,
+      "key": "single-033",
+      "stem": "“1137”企业文化体系不仅仅是挂在墙上的标语，更是日常工作的行为准则。执行它，需要将文化理念拆解为具体的行为规范：在生产环节，以（ ）精神严控产品质量，每一步都精益求精。",
+      "sourceStemWithAnswer": "33.“1137”企业文化体系不仅仅是挂在墙上的标语，更是日常工作的行为准则。执行它，需要将文化理念拆解为具体的行为规范：在生产环节，以（C）精神严控产品质量，每一步都精益求精。【单选题】",
+      "answerLabels": [
+        "C"
+      ],
+      "answerTexts": [
+        "我生产的产品 我向客户保证"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "心无旁骛攻主业",
+          "sourceParagraph": 197,
+          "rawText": "A.心无旁骛攻主业",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "客户满意是我们的宗旨",
+          "sourceParagraph": 198,
+          "rawText": "B.客户满意是我们的宗旨",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "我生产的产品 我向客户保证",
+          "sourceParagraph": 199,
+          "rawText": "C.我生产的产品 我向客户保证",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "向一线聚焦 在一线成长",
+          "sourceParagraph": 200,
+          "rawText": "D.向一线聚焦 在一线成长",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        196,
+        197,
+        198,
+        199,
+        200
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "single",
+      "typeName": "单选题",
+      "sourceNumber": 34,
+      "key": "single-034",
+      "stem": "2025年9月份，中国重汽重卡出口首次突破（ ）辆，创造了中国重卡行业单月出口新纪录。",
+      "sourceStemWithAnswer": "34.2025年9月份，中国重汽重卡出口首次突破（A）辆，创造了中国重卡行业单月出口新纪录。【单选题】",
+      "answerLabels": [
+        "A"
+      ],
+      "answerTexts": [
+        "1.5万"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "1.5万",
+          "sourceParagraph": 203,
+          "rawText": "1.5万",
+          "labelSource": "word-auto-numbering",
+          "numbering": {
+            "numId": "1",
+            "level": "0",
+            "format": "upperLetter",
+            "pattern": "%1.",
+            "start": 1
+          }
+        },
+        {
+          "label": "B",
+          "text": "11.1万",
+          "sourceParagraph": 204,
+          "rawText": "11.1万",
+          "labelSource": "word-auto-numbering",
+          "numbering": {
+            "numId": "1",
+            "level": "0",
+            "format": "upperLetter",
+            "pattern": "%1.",
+            "start": 1
+          }
+        },
+        {
+          "label": "C",
+          "text": "1万",
+          "sourceParagraph": 205,
+          "rawText": "1万",
+          "labelSource": "word-auto-numbering",
+          "numbering": {
+            "numId": "1",
+            "level": "0",
+            "format": "upperLetter",
+            "pattern": "%1.",
+            "start": 1
+          }
+        },
+        {
+          "label": "D",
+          "text": "8000",
+          "sourceParagraph": 206,
+          "rawText": "8000",
+          "labelSource": "word-auto-numbering",
+          "numbering": {
+            "numId": "1",
+            "level": "0",
+            "format": "upperLetter",
+            "pattern": "%1.",
+            "start": 1
+          }
+        }
+      ],
+      "sourceParagraphs": [
+        202,
+        203,
+        204,
+        205,
+        206
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "single",
+      "typeName": "单选题",
+      "sourceNumber": 35,
+      "key": "single-035",
+      "stem": "2018年3月8日，习近平总书记参加十三届全国人大一次会议山东代表团审议时作出重要指示：“凡是成功的企业，要攀登到事业顶峰，都要靠（ ）。”",
+      "sourceStemWithAnswer": "35.2018年3月8日，习近平总书记参加十三届全国人大一次会议山东代表团审议时作出重要指示：“凡是成功的企业，要攀登到事业顶峰，都要靠（A）。”【单选题】",
+      "answerLabels": [
+        "A"
+      ],
+      "answerTexts": [
+        "心无旁骛攻主业"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "心无旁骛攻主业",
+          "sourceParagraph": 209,
+          "rawText": "A.心无旁骛攻主业",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "专精特新",
+          "sourceParagraph": 210,
+          "rawText": "B.专精特新",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "坚持党对国有企业的领导不动摇",
+          "sourceParagraph": 211,
+          "rawText": "C.坚持党对国有企业的领导不动摇",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "做强做优做大",
+          "sourceParagraph": 212,
+          "rawText": "D.做强做优做大",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        208,
+        209,
+        210,
+        211,
+        212
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "single",
+      "typeName": "单选题",
+      "sourceNumber": 36,
+      "key": "single-036",
+      "stem": "近日，朱雀三号遥一运载火箭飞行试验任务已顺利完成第一阶段工作。中国重汽（ ）牵引车承载着朱雀三号以毫米级误差穿越隧道、匝道与桥梁的重重考验，创造了中国公路运输史上又一个里程碑式的壮举。",
+      "sourceStemWithAnswer": "36.近日，朱雀三号遥一运载火箭飞行试验任务已顺利完成第一阶段工作。中国重汽（B）牵引车承载着朱雀三号以毫米级误差穿越隧道、匝道与桥梁的重重考验，创造了中国公路运输史上又一个里程碑式的壮举。【单选题】",
+      "answerLabels": [
+        "B"
+      ],
+      "answerTexts": [
+        "汕德卡"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "豪沃",
+          "sourceParagraph": 215,
+          "rawText": "A.豪沃",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "汕德卡",
+          "sourceParagraph": 216,
+          "rawText": "B.汕德卡",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "新黄河",
+          "sourceParagraph": 217,
+          "rawText": "C.新黄河",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "斯太尔",
+          "sourceParagraph": 218,
+          "rawText": "D.斯太尔",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        214,
+        215,
+        216,
+        217,
+        218
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "single",
+      "typeName": "单选题",
+      "sourceNumber": 37,
+      "key": "single-037",
+      "stem": "中国重汽产品出口150多个国家和地区，截至目前，出口连续（ ）年稳居行业第一。",
+      "sourceStemWithAnswer": "37.中国重汽产品出口150多个国家和地区，截至目前，出口连续（D）年稳居行业第一。【单选题】",
+      "answerLabels": [
+        "D"
+      ],
+      "answerTexts": [
+        "21"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "18",
+          "sourceParagraph": 221,
+          "rawText": "A.18",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "19",
+          "sourceParagraph": 222,
+          "rawText": "B.19",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "20",
+          "sourceParagraph": 223,
+          "rawText": "C.20",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "21",
+          "sourceParagraph": 224,
+          "rawText": "D.21",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        220,
+        221,
+        222,
+        223,
+        224
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "single",
+      "typeName": "单选题",
+      "sourceNumber": 38,
+      "key": "single-038",
+      "stem": "2025年以来，面对复杂多变的国际形势和日趋激烈的行业竞争，中国重汽与全球合作伙伴携手并进，共同创造了重卡产销量（ ）的亮眼成绩。",
+      "sourceStemWithAnswer": "38.2025年以来，面对复杂多变的国际形势和日趋激烈的行业竞争，中国重汽与全球合作伙伴携手并进，共同创造了重卡产销量（A）的亮眼成绩。【单选题】",
+      "answerLabels": [
+        "A"
+      ],
+      "answerTexts": [
+        "全球第一"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "全球第一",
+          "sourceParagraph": 227,
+          "rawText": "A.全球第一",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "中国第一",
+          "sourceParagraph": 228,
+          "rawText": "B.中国第一",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "海外第一",
+          "sourceParagraph": 229,
+          "rawText": "C.海外第一",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "行业第一",
+          "sourceParagraph": 230,
+          "rawText": "D.行业第一",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        226,
+        227,
+        228,
+        229,
+        230
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "single",
+      "typeName": "单选题",
+      "sourceNumber": 39,
+      "key": "single-039",
+      "stem": "2025年1-9月份，中国重汽集团实现汇总收入（ ）美元，同比增长14.9%。",
+      "sourceStemWithAnswer": "39.2025年1-9月份，中国重汽集团实现汇总收入（B）美元，同比增长14.9%。【单选题】",
+      "answerLabels": [
+        "B"
+      ],
+      "answerTexts": [
+        "228.9亿"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "220亿",
+          "sourceParagraph": 233,
+          "rawText": "A.220亿",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "228.9亿",
+          "sourceParagraph": 234,
+          "rawText": "B.228.9亿",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "238.9亿",
+          "sourceParagraph": 235,
+          "rawText": "C.238.9亿",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "259.9亿",
+          "sourceParagraph": 236,
+          "rawText": "D.259.9亿",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        232,
+        233,
+        234,
+        235,
+        236
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "single",
+      "typeName": "单选题",
+      "sourceNumber": 40,
+      "key": "single-040",
+      "stem": "2025年5月28日，中国重汽集团召开“（ ）”动员大会，全面宣贯集团公司向销售、生产一线聚焦的战略政策，动员广大员工主动到基层一线锻炼成长成材。",
+      "sourceStemWithAnswer": "40.2025年5月28日，中国重汽集团召开“（A）”动员大会，全面宣贯集团公司向销售、生产一线聚焦的战略政策，动员广大员工主动到基层一线锻炼成长成材。【单选题】",
+      "answerLabels": [
+        "A"
+      ],
+      "answerTexts": [
+        "向一线聚焦·在一线成长"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "向一线聚焦·在一线成长",
+          "sourceParagraph": 239,
+          "rawText": "A.向一线聚焦·在一线成长",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "客户满意是我们的宗旨",
+          "sourceParagraph": 240,
+          "rawText": "B.客户满意是我们的宗旨",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "链合创新 勇攀高峰",
+          "sourceParagraph": 241,
+          "rawText": "C.链合创新 勇攀高峰",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "我生产的产品，我向客户保证",
+          "sourceParagraph": 242,
+          "rawText": "D.我生产的产品，我向客户保证",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        238,
+        239,
+        240,
+        241,
+        242
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "single",
+      "typeName": "单选题",
+      "sourceNumber": 41,
+      "key": "single-041",
+      "stem": "（ ）品牌创立于1999年，是中国重汽专属售后服务品牌，也是国内重卡行业首个服务品牌。",
+      "sourceStemWithAnswer": "41.（A）品牌创立于1999年，是中国重汽专属售后服务品牌，也是国内重卡行业首个服务品牌。【单选题】",
+      "answerLabels": [
+        "A"
+      ],
+      "answerTexts": [
+        "“亲人”服务"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "“亲人”服务",
+          "sourceParagraph": 245,
+          "rawText": "A.“亲人”服务",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "“客户”服务",
+          "sourceParagraph": 246,
+          "rawText": "B.“客户”服务",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "“同心智行”",
+          "sourceParagraph": 247,
+          "rawText": "C.“同心智行”",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "“智领”",
+          "sourceParagraph": 248,
+          "rawText": "D.“智领”",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        244,
+        245,
+        246,
+        247,
+        248
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "single",
+      "typeName": "单选题",
+      "sourceNumber": 42,
+      "key": "single-042",
+      "stem": "中国重汽集团建立了（ ）邮箱机制，为每一名爱企护企的员工提供建言献策、反馈暴露问题的渠道，助力企业补缺漏、查短板、再提升，进一步增强员工的主人翁精神，为企业长远健康高质量发展保驾护航。",
+      "sourceStemWithAnswer": "42.中国重汽集团建立了（A）邮箱机制，为每一名爱企护企的员工提供建言献策、反馈暴露问题的渠道，助力企业补缺漏、查短板、再提升，进一步增强员工的主人翁精神，为企业长远健康高质量发展保驾护航。【单选题】",
+      "answerLabels": [
+        "A"
+      ],
+      "answerTexts": [
+        "董事长直通车"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "董事长直通车",
+          "sourceParagraph": 251,
+          "rawText": "A.董事长直通车",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "员工社区",
+          "sourceParagraph": 252,
+          "rawText": "B.员工社区",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "董事长邮箱",
+          "sourceParagraph": 253,
+          "rawText": "C.董事长邮箱",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "董事长曝光台",
+          "sourceParagraph": 254,
+          "rawText": "D.董事长曝光台",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        250,
+        251,
+        252,
+        253,
+        254
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "single",
+      "typeName": "单选题",
+      "sourceNumber": 43,
+      "key": "single-043",
+      "stem": "2024年9月17日，德国汉诺威国际商用车展，全新升级的黄河低风阻零排放节能列车风阻系数降至0.286，中国重汽再一次突破了全球商用重卡的低风阻边界。新黄河重卡研发攻关团队始终铭记“自力更生 奋发图强”的老一代黄河人的誓言，在圆梦的道路上（ ）。",
+      "sourceStemWithAnswer": "43.2024年9月17日，德国汉诺威国际商用车展，全新升级的黄河低风阻零排放节能列车风阻系数降至0.286，中国重汽再一次突破了全球商用重卡的低风阻边界。新黄河重卡研发攻关团队始终铭记“自力更生 奋发图强”的老一代黄河人的誓言，在圆梦的道路上（D）。【单选题】",
+      "answerLabels": [
+        "D"
+      ],
+      "answerTexts": [
+        "永不懈怠、永立潮头、永争第一"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "重于德、工于匠、成于行",
+          "sourceParagraph": 257,
+          "rawText": "A.重于德、工于匠、成于行",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "重德、重勤、重廉",
+          "sourceParagraph": 258,
+          "rawText": "B.重德、重勤、重廉",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "一家人、一条心、一起干、一定成",
+          "sourceParagraph": 259,
+          "rawText": "C.一家人、一条心、一起干、一定成",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "永不懈怠、永立潮头、永争第一",
+          "sourceParagraph": 260,
+          "rawText": "D.永不懈怠、永立潮头、永争第一",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        256,
+        257,
+        258,
+        259,
+        260
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "single",
+      "typeName": "单选题",
+      "sourceNumber": 44,
+      "key": "single-044",
+      "stem": "面对非洲客户对中国卡车的成见，王荣瑞带领团队实地调研客户用车现场，针对当地环境设计了一款非洲版牵引车，前后七次登门拜访修改方案，满足客户需求，成功敲开了中国重汽通往西非市场的大门。这体现了中国重汽“1137”企业文化体系中（ ）的精神。",
+      "sourceStemWithAnswer": "44.面对非洲客户对中国卡车的成见，王荣瑞带领团队实地调研客户用车现场，针对当地环境设计了一款非洲版牵引车，前后七次登门拜访修改方案，满足客户需求，成功敲开了中国重汽通往西非市场的大门。这体现了中国重汽“1137”企业文化体系中（B）的精神。【单选题】",
+      "answerLabels": [
+        "B"
+      ],
+      "answerTexts": [
+        "客户满意是我们的宗旨"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "心无旁骛攻主业",
+          "sourceParagraph": 263,
+          "rawText": "A.心无旁骛攻主业",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "客户满意是我们的宗旨",
+          "sourceParagraph": 264,
+          "rawText": "B.客户满意是我们的宗旨",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "一家人、一条心、一起干、一定成",
+          "sourceParagraph": 265,
+          "rawText": "C.一家人、一条心、一起干、一定成",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "永不懈怠、永立潮头、永争第一",
+          "sourceParagraph": 266,
+          "rawText": "D.永不懈怠、永立潮头、永争第一",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        262,
+        263,
+        264,
+        265,
+        266
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "single",
+      "typeName": "单选题",
+      "sourceNumber": 45,
+      "key": "single-045",
+      "stem": "济南商用车制造公司焊装团队的于培杰无意中发现车间地面上的一根螺柱，这颗不起眼的螺柱，却引起了他的警觉，并通过彻底排查杜绝了质量隐患。螺柱虽小，彰显的却是对于岗位责任的坚定履行和对质量问题零容忍的坚决态度，这体现了中国重汽“1137”企业文化体系中（ ）的精神。",
+      "sourceStemWithAnswer": "45.济南商用车制造公司焊装团队的于培杰无意中发现车间地面上的一根螺柱，这颗不起眼的螺柱，却引起了他的警觉，并通过彻底排查杜绝了质量隐患。螺柱虽小，彰显的却是对于岗位责任的坚定履行和对质量问题零容忍的坚决态度，这体现了中国重汽“1137”企业文化体系中（B）的精神。【单选题】",
+      "answerLabels": [
+        "B"
+      ],
+      "answerTexts": [
+        "我生产的产品，我向客户保证"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "心无旁骛攻主业",
+          "sourceParagraph": 269,
+          "rawText": "A.心无旁骛攻主业",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "我生产的产品，我向客户保证",
+          "sourceParagraph": 270,
+          "rawText": "B.我生产的产品，我向客户保证",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "重德、重勤、重廉",
+          "sourceParagraph": 271,
+          "rawText": "C.重德、重勤、重廉",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "重于德、工于匠、成于行",
+          "sourceParagraph": 272,
+          "rawText": "D.重于德、工于匠、成于行",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        268,
+        269,
+        270,
+        271,
+        272
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "single",
+      "typeName": "单选题",
+      "sourceNumber": 46,
+      "key": "single-046",
+      "stem": "2024年8月30日凌晨，中国重汽400坐席接到客户报修电话，全球客户服务中心服务团队始终将客户放在第一位，立即展开紧急救援行动，历经2个多小时于凌晨5点发现困在洪水中的车辆，并冒雨涉水救人，成功将司机带离险区。这体现了中国重汽“1137”企业文化体系中（ ）的精神。",
+      "sourceStemWithAnswer": "46.2024年8月30日凌晨，中国重汽400坐席接到客户报修电话，全球客户服务中心服务团队始终将客户放在第一位，立即展开紧急救援行动，历经2个多小时于凌晨5点发现困在洪水中的车辆，并冒雨涉水救人，成功将司机带离险区。这体现了中国重汽“1137”企业文化体系中（B）的精神。【单选题】",
+      "answerLabels": [
+        "B"
+      ],
+      "answerTexts": [
+        "亲人服务"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "心无旁骛攻主业",
+          "sourceParagraph": 275,
+          "rawText": "A.心无旁骛攻主业",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "亲人服务",
+          "sourceParagraph": 276,
+          "rawText": "B.亲人服务",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "重德 重勤 重廉",
+          "sourceParagraph": 277,
+          "rawText": "C.重德 重勤 重廉",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "重于德 工于匠 成于行",
+          "sourceParagraph": 278,
+          "rawText": "D.重于德 工于匠 成于行",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        274,
+        275,
+        276,
+        277,
+        278
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "single",
+      "typeName": "单选题",
+      "sourceNumber": 47,
+      "key": "single-047",
+      "stem": "企业廉洁行为准则是：（ ）",
+      "sourceStemWithAnswer": "47.企业廉洁行为准则是：（B）【单选题】",
+      "answerLabels": [
+        "B"
+      ],
+      "answerTexts": [
+        "重德 重勤 重廉"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "心无旁骛攻主业",
+          "sourceParagraph": 281,
+          "rawText": "A.心无旁骛攻主业",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "重德 重勤 重廉",
+          "sourceParagraph": 282,
+          "rawText": "B.重德 重勤 重廉",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "永不懈怠 永立潮头 永争第一",
+          "sourceParagraph": 283,
+          "rawText": "C.永不懈怠 永立潮头 永争第一",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "重于德 工于匠 成于行",
+          "sourceParagraph": 284,
+          "rawText": "D.重于德 工于匠 成于行",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        280,
+        281,
+        282,
+        283,
+        284
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "single",
+      "typeName": "单选题",
+      "sourceNumber": 48,
+      "key": "single-048",
+      "stem": "2024年9月17日，德国汉诺威国际商用车展，全新升级的黄河低风阻零排放节能列车风阻系数降至（ ），中国重汽再一次突破了全球商用重卡的低风阻边界。",
+      "sourceStemWithAnswer": "48.2024年9月17日，德国汉诺威国际商用车展，全新升级的黄河低风阻零排放节能列车风阻系数降至（D），中国重汽再一次突破了全球商用重卡的低风阻边界。【单选题】",
+      "answerLabels": [
+        "D"
+      ],
+      "answerTexts": [
+        "0.286"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "0.349",
+          "sourceParagraph": 287,
+          "rawText": "A.0.349",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "0.266",
+          "sourceParagraph": 288,
+          "rawText": "B.0.266",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "0.339",
+          "sourceParagraph": 289,
+          "rawText": "C.0.339",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "0.286",
+          "sourceParagraph": 290,
+          "rawText": "D.0.286",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        286,
+        287,
+        288,
+        289,
+        290
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "single",
+      "typeName": "单选题",
+      "sourceNumber": 49,
+      "key": "single-049",
+      "stem": "2004年10月28日，中国重汽自主开发、拥有自主知识产权的（ ）卡车下线。",
+      "sourceStemWithAnswer": "49.2004年10月28日，中国重汽自主开发、拥有自主知识产权的（B）卡车下线。【单选题】",
+      "answerLabels": [
+        "B"
+      ],
+      "answerTexts": [
+        "豪沃"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "黄河",
+          "sourceParagraph": 293,
+          "rawText": "A.黄河",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "豪沃",
+          "sourceParagraph": 294,
+          "rawText": "B.豪沃",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "斯太尔",
+          "sourceParagraph": 295,
+          "rawText": "C.斯太尔",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "汕德卡",
+          "sourceParagraph": 296,
+          "rawText": "D.汕德卡",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        292,
+        293,
+        294,
+        295,
+        296
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "single",
+      "typeName": "单选题",
+      "sourceNumber": 50,
+      "key": "single-050",
+      "stem": "2001年1月18日，（ ）在济南正式宣告成立。",
+      "sourceStemWithAnswer": "50.2001年1月18日，（A）在济南正式宣告成立。【单选题】",
+      "answerLabels": [
+        "A"
+      ],
+      "answerTexts": [
+        "中国重型汽车集团有限公司"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "中国重型汽车集团有限公司",
+          "sourceParagraph": 299,
+          "rawText": "A.中国重型汽车集团有限公司",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "济南汽车制造总厂",
+          "sourceParagraph": 300,
+          "rawText": "B.济南汽车制造总厂",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "济南汽车修理组",
+          "sourceParagraph": 301,
+          "rawText": "C.济南汽车修理组",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "济南汽车制造厂",
+          "sourceParagraph": 302,
+          "rawText": "D.济南汽车制造厂",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        298,
+        299,
+        300,
+        301,
+        302
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "single",
+      "typeName": "单选题",
+      "sourceNumber": 51,
+      "key": "single-051",
+      "stem": "2013年具有自主知识产权的（ ）系列产品正式推向市场。",
+      "sourceStemWithAnswer": "51.2013年具有自主知识产权的（D）系列产品正式推向市场。【单选题】",
+      "answerLabels": [
+        "D"
+      ],
+      "answerTexts": [
+        "汕德卡"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "斯太尔",
+          "sourceParagraph": 305,
+          "rawText": "A.斯太尔",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "豪沃",
+          "sourceParagraph": 306,
+          "rawText": "B.豪沃",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "黄河",
+          "sourceParagraph": 307,
+          "rawText": "C.黄河",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "汕德卡",
+          "sourceParagraph": 308,
+          "rawText": "D.汕德卡",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        304,
+        305,
+        306,
+        307,
+        308
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "single",
+      "typeName": "单选题",
+      "sourceNumber": 52,
+      "key": "single-052",
+      "stem": "1958年4月，全厂职工奋战17天，以测绘仿造前苏联嘎斯69型样车为主，试制成功第一辆黄河牌（ ）型越野汽车，填补了济南汽车工业的空白，也结束了山东省不能制造汽车的历史。",
+      "sourceStemWithAnswer": "52.1958年4月，全厂职工奋战17天，以测绘仿造前苏联嘎斯69型样车为主，试制成功第一辆黄河牌（B）型越野汽车，填补了济南汽车工业的空白，也结束了山东省不能制造汽车的历史。 【单选题】",
+      "answerLabels": [
+        "B"
+      ],
+      "answerTexts": [
+        "JN220"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "JN252",
+          "sourceParagraph": 311,
+          "rawText": "A.JN252",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "JN220",
+          "sourceParagraph": 312,
+          "rawText": "B.JN220",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "JN150",
+          "sourceParagraph": 313,
+          "rawText": "C.JN150",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "JN160",
+          "sourceParagraph": 314,
+          "rawText": "D.JN160",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        310,
+        311,
+        312,
+        313,
+        314
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "single",
+      "typeName": "单选题",
+      "sourceNumber": 53,
+      "key": "single-053",
+      "stem": "企业使命（ ）阐明了企业在社会发展中的独特角色与核心责任，深刻诠释了“企业为何而存在”这一根本命题，更鲜明展现出有别于其他企业的价值内核。",
+      "sourceStemWithAnswer": "53.企业使命（C）阐明了企业在社会发展中的独特角色与核心责任，深刻诠释了“企业为何而存在”这一根本命题，更鲜明展现出有别于其他企业的价值内核。【单选题】",
+      "answerLabels": [
+        "C"
+      ],
+      "answerTexts": [
+        "科技赋能 装备美好"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "心无旁骛攻主业",
+          "sourceParagraph": 317,
+          "rawText": "A.心无旁骛攻主业",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "打造世界一流的全系列商用车集团",
+          "sourceParagraph": 318,
+          "rawText": "B.打造世界一流的全系列商用车集团",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "科技赋能 装备美好",
+          "sourceParagraph": 319,
+          "rawText": "C.科技赋能 装备美好",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "客户满意是我们的宗旨",
+          "sourceParagraph": 320,
+          "rawText": "D.客户满意是我们的宗旨",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        316,
+        317,
+        318,
+        319,
+        320
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "single",
+      "typeName": "单选题",
+      "sourceNumber": 54,
+      "key": "single-054",
+      "stem": "企业愿景（ ）是其对未来发展蓝图的高度凝练，代表了集团矢志不渝的长期追求和期望达到的卓越状态。",
+      "sourceStemWithAnswer": "54.企业愿景（B）是其对未来发展蓝图的高度凝练，代表了集团矢志不渝的长期追求和期望达到的卓越状态。【单选题】",
+      "answerLabels": [
+        "B"
+      ],
+      "answerTexts": [
+        "打造世界一流的全系列商用车集团"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "心无旁骛攻主业",
+          "sourceParagraph": 323,
+          "rawText": "A.心无旁骛攻主业",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "打造世界一流的全系列商用车集团",
+          "sourceParagraph": 324,
+          "rawText": "B.打造世界一流的全系列商用车集团",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "科技赋能 装备美好",
+          "sourceParagraph": 325,
+          "rawText": "C.科技赋能 装备美好",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "客户满意是我们的宗旨",
+          "sourceParagraph": 326,
+          "rawText": "D.客户满意是我们的宗旨",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        322,
+        323,
+        324,
+        325,
+        326
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "single",
+      "typeName": "单选题",
+      "sourceNumber": 55,
+      "key": "single-055",
+      "stem": "2025年3月21日，世界顶级赛车盛事——F1中国大奖赛在上海国际赛车场激情开赛！全球首发的中国重汽（ ）赛道版重卡成为全场最耀眼的主角，现场嘉宾惊叹：“这完全打破了商用车设计的传统框架，简直是从未来驶来的机械艺术品！”",
+      "sourceStemWithAnswer": "55.2025年3月21日，世界顶级赛车盛事——F1中国大奖赛在上海国际赛车场激情开赛！全球首发的中国重汽（A）赛道版重卡成为全场最耀眼的主角，现场嘉宾惊叹：“这完全打破了商用车设计的传统框架，简直是从未来驶来的机械艺术品！”【单选题】",
+      "answerLabels": [
+        "A"
+      ],
+      "answerTexts": [
+        "SITRAK"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "SITRAK",
+          "sourceParagraph": 329,
+          "rawText": "A.SITRAK",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "黄河",
+          "sourceParagraph": 330,
+          "rawText": "B.黄河",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "豪沃",
+          "sourceParagraph": 331,
+          "rawText": "C.豪沃",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "斯太尔",
+          "sourceParagraph": 332,
+          "rawText": "D.斯太尔",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        328,
+        329,
+        330,
+        331,
+        332
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "single",
+      "typeName": "单选题",
+      "sourceNumber": 56,
+      "key": "single-056",
+      "stem": "2025年4月30日，山东省庆祝“五一”国际劳动节暨省五一劳动奖获得者表彰大会在济南举行。大会宣读了《山东省总工会关于表彰山东省五一劳动奖和山东省工人先锋号的决定》，中国重汽集团济南动力有限公司发动机厂产品验证岗首席技师（ ）荣获山东省五一劳动奖章称号。",
+      "sourceStemWithAnswer": "56.2025年4月30日，山东省庆祝“五一”国际劳动节暨省五一劳动奖获得者表彰大会在济南举行。大会宣读了《山东省总工会关于表彰山东省五一劳动奖和山东省工人先锋号的决定》，中国重汽集团济南动力有限公司发动机厂产品验证岗首席技师（C）荣获山东省五一劳动奖章称号。【单选题】",
+      "answerLabels": [
+        "C"
+      ],
+      "answerTexts": [
+        "张仁普"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "刁统武",
+          "sourceParagraph": 335,
+          "rawText": "A.刁统武",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "于伟",
+          "sourceParagraph": 336,
+          "rawText": "B.于伟",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "张仁普",
+          "sourceParagraph": 337,
+          "rawText": "C.张仁普",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "贾相波",
+          "sourceParagraph": 338,
+          "rawText": "D.贾相波",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        334,
+        335,
+        336,
+        337,
+        338
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "single",
+      "typeName": "单选题",
+      "sourceNumber": 57,
+      "key": "single-057",
+      "stem": "山东重工集团的企业愿景：打造科技领先、绿色发展、世界一流的（ ）。",
+      "sourceStemWithAnswer": "57.山东重工集团的企业愿景：打造科技领先、绿色发展、世界一流的（A）。【单选题】",
+      "answerLabels": [
+        "A"
+      ],
+      "answerTexts": [
+        "高端装备跨国集团"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "高端装备跨国集团",
+          "sourceParagraph": 341,
+          "rawText": "A.高端装备跨国集团",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "跨国集团",
+          "sourceParagraph": 342,
+          "rawText": "B.跨国集团",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "高端商用车跨国集团",
+          "sourceParagraph": 343,
+          "rawText": "C.高端商用车跨国集团",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "高端装备集团",
+          "sourceParagraph": 344,
+          "rawText": "D.高端装备集团",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        340,
+        341,
+        342,
+        343,
+        344
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "single",
+      "typeName": "单选题",
+      "sourceNumber": 58,
+      "key": "single-058",
+      "stem": "“我生产的产品 我向客户保证”是从质量角度落实“（ ）”的郑重宣言，是对质量责任的主动认领与刚性承诺，体现了员工打造一流产品、争创一流业绩的文化自信和行动自觉。",
+      "sourceStemWithAnswer": "58.“我生产的产品 我向客户保证”是从质量角度落实“（B）”的郑重宣言，是对质量责任的主动认领与刚性承诺，体现了员工打造一流产品、争创一流业绩的文化自信和行动自觉。【单选题】",
+      "answerLabels": [
+        "B"
+      ],
+      "answerTexts": [
+        "客户满意是我们的宗旨"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "链合创新 勇攀高峰",
+          "sourceParagraph": 347,
+          "rawText": "A.链合创新 勇攀高峰",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "客户满意是我们的宗旨",
+          "sourceParagraph": 348,
+          "rawText": "B.客户满意是我们的宗旨",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "永不懈怠 永立潮头 永争第一",
+          "sourceParagraph": 349,
+          "rawText": "C.永不懈怠 永立潮头 永争第一",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "亲人服务",
+          "sourceParagraph": 350,
+          "rawText": "D.亲人服务",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        346,
+        347,
+        348,
+        349,
+        350
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "single",
+      "typeName": "单选题",
+      "sourceNumber": 59,
+      "key": "single-059",
+      "stem": "（ ）是一套指引企业、员工及客户行为的原则标准。",
+      "sourceStemWithAnswer": "59.（D）是一套指引企业、员工及客户行为的原则标准。【单选题】",
+      "answerLabels": [
+        "D"
+      ],
+      "answerTexts": [
+        "企业文化"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "行为规范",
+          "sourceParagraph": 353,
+          "rawText": "A.行为规范",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "价值追求",
+          "sourceParagraph": 354,
+          "rawText": "B.价值追求",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "利益原则",
+          "sourceParagraph": 355,
+          "rawText": "C.利益原则",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "企业文化",
+          "sourceParagraph": 356,
+          "rawText": "D.企业文化",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        352,
+        353,
+        354,
+        355,
+        356
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "single",
+      "typeName": "单选题",
+      "sourceNumber": 60,
+      "key": "single-060",
+      "stem": "10月29日，中国重汽集团召开党建与企业文化建设工作会议，从企业文化的本质要义、国有企业文化的责任与使命、让重汽文化迸发强劲动能等方面系统宣贯了中国重汽（ ）企业文化体系。",
+      "sourceStemWithAnswer": "60.10月29日，中国重汽集团召开党建与企业文化建设工作会议，从企业文化的本质要义、国有企业文化的责任与使命、让重汽文化迸发强劲动能等方面系统宣贯了中国重汽（B）企业文化体系。【单选题】",
+      "answerLabels": [
+        "B"
+      ],
+      "answerTexts": [
+        "1137"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "113X",
+          "sourceParagraph": 359,
+          "rawText": "A.113X",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "1137",
+          "sourceParagraph": 360,
+          "rawText": "B.1137",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "1173",
+          "sourceParagraph": 361,
+          "rawText": "C.1173",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "117X",
+          "sourceParagraph": 362,
+          "rawText": "D.117X",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        358,
+        359,
+        360,
+        361,
+        362
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "single",
+      "typeName": "单选题",
+      "sourceNumber": 61,
+      "key": "single-061",
+      "stem": "企业文化对外部社会的辐射功能主要通过产品、企业理念和（ ）等途径实现。",
+      "sourceStemWithAnswer": "61.企业文化对外部社会的辐射功能主要通过产品、企业理念和（C）等途径实现。【单选题】",
+      "answerLabels": [
+        "C"
+      ],
+      "answerTexts": [
+        "员工"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "广告",
+          "sourceParagraph": 365,
+          "rawText": "A.广告",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "股东",
+          "sourceParagraph": 366,
+          "rawText": "B.股东",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "员工",
+          "sourceParagraph": 367,
+          "rawText": "C.员工",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "客户",
+          "sourceParagraph": 368,
+          "rawText": "D.客户",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        364,
+        365,
+        366,
+        367,
+        368
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "single",
+      "typeName": "单选题",
+      "sourceNumber": 62,
+      "key": "single-062",
+      "stem": "企业文化一旦形成，就会对整个组织产生影响，员工在从众心理压力和动力的作用下自觉遵守企业规范，这是指企业文化的（ ）。",
+      "sourceStemWithAnswer": "62.企业文化一旦形成，就会对整个组织产生影响，员工在从众心理压力和动力的作用下自觉遵守企业规范，这是指企业文化的（C）。【单选题】",
+      "answerLabels": [
+        "C"
+      ],
+      "answerTexts": [
+        "约束功能"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "激励功能",
+          "sourceParagraph": 371,
+          "rawText": "A.激励功能",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "导向功能",
+          "sourceParagraph": 372,
+          "rawText": "B.导向功能",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "约束功能",
+          "sourceParagraph": 373,
+          "rawText": "C.约束功能",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "渗透功能",
+          "sourceParagraph": 374,
+          "rawText": "D.渗透功能",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        370,
+        371,
+        372,
+        373,
+        374
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "single",
+      "typeName": "单选题",
+      "sourceNumber": 63,
+      "key": "single-063",
+      "stem": "现代企业文化强调以人为本，从而有效调动员工的积极性，其所体现的功能是（ ）。",
+      "sourceStemWithAnswer": "63.现代企业文化强调以人为本，从而有效调动员工的积极性，其所体现的功能是（D）。【单选题】",
+      "answerLabels": [
+        "D"
+      ],
+      "answerTexts": [
+        "激励功能"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "融合功能",
+          "sourceParagraph": 377,
+          "rawText": "A.融合功能",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "塑造功能",
+          "sourceParagraph": 378,
+          "rawText": "B.塑造功能",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "约束功能",
+          "sourceParagraph": 379,
+          "rawText": "C.约束功能",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "激励功能",
+          "sourceParagraph": 380,
+          "rawText": "D.激励功能",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        376,
+        377,
+        378,
+        379,
+        380
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "single",
+      "typeName": "单选题",
+      "sourceNumber": 64,
+      "key": "single-064",
+      "stem": "企业文化的核心层是（ ）。",
+      "sourceStemWithAnswer": "64.企业文化的核心层是（B）。【单选题】",
+      "answerLabels": [
+        "B"
+      ],
+      "answerTexts": [
+        "精神文化"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "制度文化",
+          "sourceParagraph": 383,
+          "rawText": "A.制度文化",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "精神文化",
+          "sourceParagraph": 384,
+          "rawText": "B.精神文化",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "物质文化",
+          "sourceParagraph": 385,
+          "rawText": "C.物质文化",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "行为文化",
+          "sourceParagraph": 386,
+          "rawText": "D.行为文化",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        382,
+        383,
+        384,
+        385,
+        386
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "single",
+      "typeName": "单选题",
+      "sourceNumber": 65,
+      "key": "single-065",
+      "stem": "作为国内兼具公信力、独立性与专业性的权威测评平台，2025年11月11日，中汽测评重磅揭晓中国商用车专项评价结果，中国重汽（ ）以“五星+”成绩强势登榜。",
+      "sourceStemWithAnswer": "65.作为国内兼具公信力、独立性与专业性的权威测评平台，2025年11月11日，中汽测评重磅揭晓中国商用车专项评价结果，中国重汽（A）以“五星+”成绩强势登榜。【单选题】",
+      "answerLabels": [
+        "A"
+      ],
+      "answerTexts": [
+        "汕德卡C9H牵引车"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "汕德卡C9H牵引车",
+          "sourceParagraph": 389,
+          "rawText": "A.汕德卡C9H牵引车",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "汕德卡G7M燃气牵引车",
+          "sourceParagraph": 390,
+          "rawText": "B.汕德卡G7M燃气牵引车",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "豪沃TS7燃气车",
+          "sourceParagraph": 391,
+          "rawText": "C.豪沃TS7燃气车",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "豪沃TH7-N燃气牵引车",
+          "sourceParagraph": 392,
+          "rawText": "D.豪沃TH7-N燃气牵引车",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        388,
+        389,
+        390,
+        391,
+        392
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "single",
+      "typeName": "单选题",
+      "sourceNumber": 66,
+      "key": "single-066",
+      "stem": "中国重汽在国内拥有（ ）大整车生产基地。",
+      "sourceStemWithAnswer": "66.中国重汽在国内拥有（C）大整车生产基地。【单选题】",
+      "answerLabels": [
+        "C"
+      ],
+      "answerTexts": [
+        "10"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "8",
+          "sourceParagraph": 395,
+          "rawText": "A.8",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "9",
+          "sourceParagraph": 396,
+          "rawText": "B.9",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "10",
+          "sourceParagraph": 397,
+          "rawText": "C.10",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "12",
+          "sourceParagraph": 398,
+          "rawText": "D.12",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        394,
+        395,
+        396,
+        397,
+        398
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "judge",
+      "typeName": "判断题",
+      "sourceNumber": 1,
+      "key": "judge-001",
+      "stem": "文化是一个国家、一个民族的灵魂。文化兴国运兴，文化强民族强。没有高度的文化自信，没有文化的繁荣兴盛，就没有中华民族伟大复兴。",
+      "sourceStemWithAnswer": "1.文化是一个国家、一个民族的灵魂。文化兴国运兴，文化强民族强。没有高度的文化自信，没有文化的繁荣兴盛，就没有中华民族伟大复兴。（A）【判断题】",
+      "answerLabels": [
+        "A"
+      ],
+      "answerTexts": [
+        "对"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "对",
+          "sourceParagraph": 402,
+          "rawText": "A.对",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "错",
+          "sourceParagraph": 403,
+          "rawText": "B.错",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        401,
+        402,
+        403
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "judge",
+      "typeName": "判断题",
+      "sourceNumber": 2,
+      "key": "judge-002",
+      "stem": "企业廉洁行为准则是“重德 重勤 重廉”。",
+      "sourceStemWithAnswer": "2.企业廉洁行为准则是“重德 重勤 重廉”。（A）【判断题】",
+      "answerLabels": [
+        "A"
+      ],
+      "answerTexts": [
+        "对"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "对",
+          "sourceParagraph": 406,
+          "rawText": "A.对",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "错",
+          "sourceParagraph": 407,
+          "rawText": "B.错",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        405,
+        406,
+        407
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "judge",
+      "typeName": "判断题",
+      "sourceNumber": 3,
+      "key": "judge-003",
+      "stem": "2024年9月17日，德国汉诺威国际商用车展，全新升级的黄河低风阻零排放节能列车风阻系数降至0.286，中国重汽再一次突破了全球商用重卡的低风阻边界。",
+      "sourceStemWithAnswer": "3.2024年9月17日，德国汉诺威国际商用车展，全新升级的黄河低风阻零排放节能列车风阻系数降至0.286，中国重汽再一次突破了全球商用重卡的低风阻边界。（A）【判断题】",
+      "answerLabels": [
+        "A"
+      ],
+      "answerTexts": [
+        "对"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "对",
+          "sourceParagraph": 410,
+          "rawText": "A.对",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "错",
+          "sourceParagraph": 411,
+          "rawText": "B.错",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        409,
+        410,
+        411
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "judge",
+      "typeName": "判断题",
+      "sourceNumber": 4,
+      "key": "judge-004",
+      "stem": "中国重汽的企业愿景是打造行业一流的全系列商用车集团。",
+      "sourceStemWithAnswer": "4.中国重汽的企业愿景是打造行业一流的全系列商用车集团。（B）【判断题】",
+      "answerLabels": [
+        "B"
+      ],
+      "answerTexts": [
+        "错"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "对",
+          "sourceParagraph": 414,
+          "rawText": "A.对",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "错",
+          "sourceParagraph": 415,
+          "rawText": "B.错",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        413,
+        414,
+        415
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "judge",
+      "typeName": "判断题",
+      "sourceNumber": 5,
+      "key": "judge-005",
+      "stem": "2004年10月28日，中国重汽自主开发、拥有自主知识产权的豪沃卡车下线。",
+      "sourceStemWithAnswer": "5.2004年10月28日，中国重汽自主开发、拥有自主知识产权的豪沃卡车下线。（A）【判断题】",
+      "answerLabels": [
+        "A"
+      ],
+      "answerTexts": [
+        "对"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "对",
+          "sourceParagraph": 418,
+          "rawText": "A.对",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "错",
+          "sourceParagraph": 419,
+          "rawText": "B.错",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        417,
+        418,
+        419
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "judge",
+      "typeName": "判断题",
+      "sourceNumber": 6,
+      "key": "judge-006",
+      "stem": "让股东满意是一切工作的出发点和落脚点，是每一名员工的行为标准和行动指南。",
+      "sourceStemWithAnswer": "6.让股东满意是一切工作的出发点和落脚点，是每一名员工的行为标准和行动指南。（B）【判断题】",
+      "answerLabels": [
+        "B"
+      ],
+      "answerTexts": [
+        "错"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "对",
+          "sourceParagraph": 422,
+          "rawText": "A.对",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "错",
+          "sourceParagraph": 423,
+          "rawText": "B.错",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        421,
+        422,
+        423
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "judge",
+      "typeName": "判断题",
+      "sourceNumber": 7,
+      "key": "judge-007",
+      "stem": "2001年1月18日，中国重型汽车集团有限公司在济南正式宣告成立。",
+      "sourceStemWithAnswer": "7.2001年1月18日，中国重型汽车集团有限公司在济南正式宣告成立。（A）【判断题】",
+      "answerLabels": [
+        "A"
+      ],
+      "answerTexts": [
+        "对"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "对",
+          "sourceParagraph": 426,
+          "rawText": "A.对",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "错",
+          "sourceParagraph": 427,
+          "rawText": "B.错",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        425,
+        426,
+        427
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "judge",
+      "typeName": "判断题",
+      "sourceNumber": 8,
+      "key": "judge-008",
+      "stem": "2013年具有自主知识产权的汕德卡系列产品正式推向市场。",
+      "sourceStemWithAnswer": "8.2013年具有自主知识产权的汕德卡系列产品正式推向市场。（A）【判断题】",
+      "answerLabels": [
+        "A"
+      ],
+      "answerTexts": [
+        "对"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "对",
+          "sourceParagraph": 430,
+          "rawText": "A.对",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "错",
+          "sourceParagraph": 431,
+          "rawText": "B.错",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        429,
+        430,
+        431
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "judge",
+      "typeName": "判断题",
+      "sourceNumber": 9,
+      "key": "judge-009",
+      "stem": "1960年5月4日，毛主席到济南视察，参观了黄河八吨载重汽车并给予高度评价。“这就是咱们中国人自力更生、艰苦奋斗的志气。”",
+      "sourceStemWithAnswer": "9.1960年5月4日，毛主席到济南视察，参观了黄河八吨载重汽车并给予高度评价。“这就是咱们中国人自力更生、艰苦奋斗的志气。”（A）【判断题】",
+      "answerLabels": [
+        "A"
+      ],
+      "answerTexts": [
+        "对"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "对",
+          "sourceParagraph": 434,
+          "rawText": "A.对",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "错",
+          "sourceParagraph": 435,
+          "rawText": "B.错",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        433,
+        434,
+        435
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "judge",
+      "typeName": "判断题",
+      "sourceNumber": 10,
+      "key": "judge-010",
+      "stem": "1960年试制成功第一辆黄河JN220型越野汽车，结束了山东省不能制造汽车的历史。",
+      "sourceStemWithAnswer": "10.1960年试制成功第一辆黄河JN220型越野汽车，结束了山东省不能制造汽车的历史。（B）【判断题】",
+      "answerLabels": [
+        "B"
+      ],
+      "answerTexts": [
+        "错"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "对",
+          "sourceParagraph": 438,
+          "rawText": "A.对",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "错",
+          "sourceParagraph": 439,
+          "rawText": "B.错",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        437,
+        438,
+        439
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "judge",
+      "typeName": "判断题",
+      "sourceNumber": 11,
+      "key": "judge-011",
+      "stem": "2020年，推出全新一代高端民族自主品牌黄河重卡，引领中国重卡迈向世界一流。",
+      "sourceStemWithAnswer": "11.2020年，推出全新一代高端民族自主品牌黄河重卡，引领中国重卡迈向世界一流。（A）【判断题】",
+      "answerLabels": [
+        "A"
+      ],
+      "answerTexts": [
+        "对"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "对",
+          "sourceParagraph": 442,
+          "rawText": "A.对",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "错",
+          "sourceParagraph": 443,
+          "rawText": "B.错",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        441,
+        442,
+        443
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "judge",
+      "typeName": "判断题",
+      "sourceNumber": 12,
+      "key": "judge-012",
+      "stem": "2024年，中国重汽连续三年重卡销量、市占率双第一。",
+      "sourceStemWithAnswer": "12.2024年，中国重汽连续三年重卡销量、市占率双第一。（A）【判断题】",
+      "answerLabels": [
+        "A"
+      ],
+      "answerTexts": [
+        "对"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "对",
+          "sourceParagraph": 446,
+          "rawText": "A.对",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "错",
+          "sourceParagraph": 447,
+          "rawText": "B.错",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        445,
+        446,
+        447
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "judge",
+      "typeName": "判断题",
+      "sourceNumber": 13,
+      "key": "judge-013",
+      "stem": "中国重汽产品遍布6大洲、150多个国家和地区，全球市场保有量超100万辆。",
+      "sourceStemWithAnswer": "13.中国重汽产品遍布6大洲、150多个国家和地区，全球市场保有量超100万辆。（A）【判断题】",
+      "answerLabels": [
+        "A"
+      ],
+      "answerTexts": [
+        "对"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "对",
+          "sourceParagraph": 450,
+          "rawText": "A.对",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "错",
+          "sourceParagraph": 451,
+          "rawText": "B.错",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        449,
+        450,
+        451
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "judge",
+      "typeName": "判断题",
+      "sourceNumber": 14,
+      "key": "judge-014",
+      "stem": "2024年7月，山东重工集团党委会指出，集团党委要率先垂范勇担当。永不懈怠、永立潮头、永争第一，跳出重工看重工、换个角度看重工、站在高处看重工、放眼全球看重工、着眼未来看重工，加强前瞻性思考、全局性谋划、战略性布局、整体性推进。",
+      "sourceStemWithAnswer": "14.2024年7月，山东重工集团党委会指出，集团党委要率先垂范勇担当。永不懈怠、永立潮头、永争第一，跳出重工看重工、换个角度看重工、站在高处看重工、放眼全球看重工、着眼未来看重工，加强前瞻性思考、全局性谋划、战略性布局、整体性推进。（A）【判断题】",
+      "answerLabels": [
+        "A"
+      ],
+      "answerTexts": [
+        "对"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "对",
+          "sourceParagraph": 454,
+          "rawText": "A.对",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "错",
+          "sourceParagraph": 455,
+          "rawText": "B.错",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        453,
+        454,
+        455
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "judge",
+      "typeName": "判断题",
+      "sourceNumber": 15,
+      "key": "judge-015",
+      "stem": "2025年，山东重工集团第一届一次职工代表大会上提出“重于德 工于匠 成于行”的文化理念，要始终将德放在第一位。",
+      "sourceStemWithAnswer": "15.2025年，山东重工集团第一届一次职工代表大会上提出“重于德 工于匠 成于行”的文化理念，要始终将德放在第一位。（A）【判断题】",
+      "answerLabels": [
+        "A"
+      ],
+      "answerTexts": [
+        "对"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "对",
+          "sourceParagraph": 458,
+          "rawText": "A.对",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "错",
+          "sourceParagraph": 459,
+          "rawText": "B.错",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        457,
+        458,
+        459
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "judge",
+      "typeName": "判断题",
+      "sourceNumber": 16,
+      "key": "judge-016",
+      "stem": "1958年4月，全厂职工奋战17天，以测绘仿造前苏联嘎斯69型样车为主，试制成功第一辆黄河牌JN220型越野汽车，填补了济南汽车工业的空白，也结束了山东省不能制造汽车的历史。",
+      "sourceStemWithAnswer": "16.1958年4月，全厂职工奋战17天，以测绘仿造前苏联嘎斯69型样车为主，试制成功第一辆黄河牌JN220型越野汽车，填补了济南汽车工业的空白，也结束了山东省不能制造汽车的历史。（A）【判断题】",
+      "answerLabels": [
+        "A"
+      ],
+      "answerTexts": [
+        "对"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "对",
+          "sourceParagraph": 462,
+          "rawText": "A.对",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "错",
+          "sourceParagraph": 463,
+          "rawText": "B.错",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        461,
+        462,
+        463
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "judge",
+      "typeName": "判断题",
+      "sourceNumber": 17,
+      "key": "judge-017",
+      "stem": "作为中国重卡迈向高端的引领者，中国重汽汕德卡成为国内上市最早、销量最大的高端重卡品牌。",
+      "sourceStemWithAnswer": "17.作为中国重卡迈向高端的引领者，中国重汽汕德卡成为国内上市最早、销量最大的高端重卡品牌。（A）【判断题】",
+      "answerLabels": [
+        "A"
+      ],
+      "answerTexts": [
+        "对"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "对",
+          "sourceParagraph": 466,
+          "rawText": "A.对",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "错",
+          "sourceParagraph": 467,
+          "rawText": "B.错",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        465,
+        466,
+        467
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "judge",
+      "typeName": "判断题",
+      "sourceNumber": 18,
+      "key": "judge-018",
+      "stem": "中国重汽研发的具有完全自主知识产权的“黄河”氢燃料电池雪蜡车，填补了我国空白，2022年1月4日习近平总书记在视察北京冬奥会期间登上了我们中国人自己造的雪蜡车。",
+      "sourceStemWithAnswer": "18.中国重汽研发的具有完全自主知识产权的“黄河”氢燃料电池雪蜡车，填补了我国空白，2022年1月4日习近平总书记在视察北京冬奥会期间登上了我们中国人自己造的雪蜡车。（A）【判断题】",
+      "answerLabels": [
+        "A"
+      ],
+      "answerTexts": [
+        "对"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "对",
+          "sourceParagraph": 470,
+          "rawText": "A.对",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "错",
+          "sourceParagraph": 471,
+          "rawText": "B.错",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        469,
+        470,
+        471
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "judge",
+      "typeName": "判断题",
+      "sourceNumber": 19,
+      "key": "judge-019",
+      "stem": "文化具有历史性与阶级性，文化是特定历史时期的产物，是随着社会的变迁而不断变化的。",
+      "sourceStemWithAnswer": "19.文化具有历史性与阶级性，文化是特定历史时期的产物，是随着社会的变迁而不断变化的。（A）【判断题】",
+      "answerLabels": [
+        "A"
+      ],
+      "answerTexts": [
+        "对"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "对",
+          "sourceParagraph": 474,
+          "rawText": "A.对",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "错",
+          "sourceParagraph": 475,
+          "rawText": "B.错",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        473,
+        474,
+        475
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "judge",
+      "typeName": "判断题",
+      "sourceNumber": 20,
+      "key": "judge-020",
+      "stem": "广义的文化是人类创造的包括物质、精神等在内的一切文明成果，狭义的文化则特指精神文化。",
+      "sourceStemWithAnswer": "20.广义的文化是人类创造的包括物质、精神等在内的一切文明成果，狭义的文化则特指精神文化。（A）【判断题】",
+      "answerLabels": [
+        "A"
+      ],
+      "answerTexts": [
+        "对"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "对",
+          "sourceParagraph": 478,
+          "rawText": "A.对",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "错",
+          "sourceParagraph": 479,
+          "rawText": "B.错",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        477,
+        478,
+        479
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "judge",
+      "typeName": "判断题",
+      "sourceNumber": 21,
+      "key": "judge-021",
+      "stem": "经济是基础，政治是经济的集中体现，文化是政治和经济的反映。",
+      "sourceStemWithAnswer": "21.经济是基础，政治是经济的集中体现，文化是政治和经济的反映。（A）【判断题】",
+      "answerLabels": [
+        "A"
+      ],
+      "answerTexts": [
+        "对"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "对",
+          "sourceParagraph": 482,
+          "rawText": "A.对",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "错",
+          "sourceParagraph": 483,
+          "rawText": "B.错",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        481,
+        482,
+        483
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "judge",
+      "typeName": "判断题",
+      "sourceNumber": 22,
+      "key": "judge-022",
+      "stem": "2023年4月8日，民族重卡黄河X7在车货总重49吨情况下，一箱油以4871.18千米最远行驶距离，创造了“半挂式卡车单次加油行驶最远距离”吉尼斯世界纪录。",
+      "sourceStemWithAnswer": "22.2023年4月8日，民族重卡黄河X7在车货总重49吨情况下，一箱油以4871.18千米最远行驶距离，创造了“半挂式卡车单次加油行驶最远距离”吉尼斯世界纪录。（A）【判断题】",
+      "answerLabels": [
+        "A"
+      ],
+      "answerTexts": [
+        "对"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "对",
+          "sourceParagraph": 486,
+          "rawText": "A.对",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "错",
+          "sourceParagraph": 487,
+          "rawText": "B.错",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        485,
+        486,
+        487
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "judge",
+      "typeName": "判断题",
+      "sourceNumber": 23,
+      "key": "judge-023",
+      "stem": "2025年5月28日，中国重汽集团召开“向一线聚焦·在一线成长”动员大会，全面宣贯集团公司向销售、生产一线聚焦的战略政策，动员广大员工主动到基层一线锻炼成长成材。",
+      "sourceStemWithAnswer": "23.2025年5月28日，中国重汽集团召开“向一线聚焦·在一线成长”动员大会，全面宣贯集团公司向销售、生产一线聚焦的战略政策，动员广大员工主动到基层一线锻炼成长成材。（A）【判断题】",
+      "answerLabels": [
+        "A"
+      ],
+      "answerTexts": [
+        "对"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "对",
+          "sourceParagraph": 490,
+          "rawText": "A.对",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "错",
+          "sourceParagraph": 491,
+          "rawText": "B.错",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        489,
+        490,
+        491
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "judge",
+      "typeName": "判断题",
+      "sourceNumber": 24,
+      "key": "judge-024",
+      "stem": "“亲人”服务品牌创立于1999年，是中国重汽专属售后服务品牌，也是国内重卡行业首个服务品牌。",
+      "sourceStemWithAnswer": "24.“亲人”服务品牌创立于1999年，是中国重汽专属售后服务品牌，也是国内重卡行业首个服务品牌。（A）【判断题】",
+      "answerLabels": [
+        "A"
+      ],
+      "answerTexts": [
+        "对"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "对",
+          "sourceParagraph": 494,
+          "rawText": "A.对",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "错",
+          "sourceParagraph": 495,
+          "rawText": "B.错",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        493,
+        494,
+        495
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "judge",
+      "typeName": "判断题",
+      "sourceNumber": 25,
+      "key": "judge-025",
+      "stem": "重汽文化是企业历经90余年风雨形成的精神共识，要做好文化内核的传承。只有守住核心、灵活应变，创新传承才能让重汽文化在时代浪潮中既保持本色，又焕发新彩。",
+      "sourceStemWithAnswer": "25.重汽文化是企业历经90余年风雨形成的精神共识，要做好文化内核的传承。只有守住核心、灵活应变，创新传承才能让重汽文化在时代浪潮中既保持本色，又焕发新彩。（A）【判断题】",
+      "answerLabels": [
+        "A"
+      ],
+      "answerTexts": [
+        "对"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "对",
+          "sourceParagraph": 498,
+          "rawText": "A.对",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "错",
+          "sourceParagraph": 499,
+          "rawText": "B.错",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        497,
+        498,
+        499
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "judge",
+      "typeName": "判断题",
+      "sourceNumber": 26,
+      "key": "judge-026",
+      "stem": "2025年1-9月份，中国重汽整车销量33.5万辆，同比增长22.8%。其中，重卡出口销量11.1万辆，同比增长24.5%。",
+      "sourceStemWithAnswer": "26.2025年1-9月份，中国重汽整车销量33.5万辆，同比增长22.8%。其中，重卡出口销量11.1万辆，同比增长24.5%。（A）【判断题】",
+      "answerLabels": [
+        "A"
+      ],
+      "answerTexts": [
+        "对"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "对",
+          "sourceParagraph": 502,
+          "rawText": "A.对",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "错",
+          "sourceParagraph": 503,
+          "rawText": "B.错",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        501,
+        502,
+        503
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "judge",
+      "typeName": "判断题",
+      "sourceNumber": 27,
+      "key": "judge-027",
+      "stem": "到2030年，中国重汽计划实现出口重卡25万辆、轻卡10万辆、轻型车5万辆、矿卡3000辆。海外后市场收入目标10亿美元。",
+      "sourceStemWithAnswer": "27.到2030年，中国重汽计划实现出口重卡25万辆、轻卡10万辆、轻型车5万辆、矿卡3000辆。海外后市场收入目标10亿美元。（A）【判断题】",
+      "answerLabels": [
+        "A"
+      ],
+      "answerTexts": [
+        "对"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "对",
+          "sourceParagraph": 506,
+          "rawText": "A.对",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "错",
+          "sourceParagraph": 507,
+          "rawText": "B.错",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        505,
+        506,
+        507
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "judge",
+      "typeName": "判断题",
+      "sourceNumber": 28,
+      "key": "judge-028",
+      "stem": "2025年9月23日至26日，“匠心筑梦 向新而行”第三届大国工匠创新交流大会暨大国工匠论坛在重庆举办，公布了2025年大国工匠人才认定结果，中国重汽集团济南卡车股份有限公司夹具维修工，高级工程师、首席技师刁统武光荣入选。",
+      "sourceStemWithAnswer": "28.2025年9月23日至26日，“匠心筑梦 向新而行”第三届大国工匠创新交流大会暨大国工匠论坛在重庆举办，公布了2025年大国工匠人才认定结果，中国重汽集团济南卡车股份有限公司夹具维修工，高级工程师、首席技师刁统武光荣入选。（A）【判断题】",
+      "answerLabels": [
+        "A"
+      ],
+      "answerTexts": [
+        "对"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "对",
+          "sourceParagraph": 510,
+          "rawText": "A.对",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "错",
+          "sourceParagraph": 511,
+          "rawText": "B.错",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        509,
+        510,
+        511
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "judge",
+      "typeName": "判断题",
+      "sourceNumber": 29,
+      "key": "judge-029",
+      "stem": "2025年9月15日，中国企业联合会、中国企业家协会发布“2025年中国企业500强”榜单，中国重汽荣登榜单第143位，连续第24年上榜。",
+      "sourceStemWithAnswer": "29.2025年9月15日，中国企业联合会、中国企业家协会发布“2025年中国企业500强”榜单，中国重汽荣登榜单第143位，连续第24年上榜。（A）【判断题】",
+      "answerLabels": [
+        "A"
+      ],
+      "answerTexts": [
+        "对"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "对",
+          "sourceParagraph": 514,
+          "rawText": "A.对",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "错",
+          "sourceParagraph": 515,
+          "rawText": "B.错",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        513,
+        514,
+        515
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "judge",
+      "typeName": "判断题",
+      "sourceNumber": 30,
+      "key": "judge-030",
+      "stem": "2024年中国重汽重卡销量24.5万辆，成为行业唯一销量超过20万辆的企业，市占率连续三年行业第一。",
+      "sourceStemWithAnswer": "30.2024年中国重汽重卡销量24.5万辆，成为行业唯一销量超过20万辆的企业，市占率连续三年行业第一。（A）【判断题】",
+      "answerLabels": [
+        "A"
+      ],
+      "answerTexts": [
+        "对"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "对",
+          "sourceParagraph": 518,
+          "rawText": "A.对",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "错",
+          "sourceParagraph": 519,
+          "rawText": "B.错",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        517,
+        518,
+        519
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "judge",
+      "typeName": "判断题",
+      "sourceNumber": 31,
+      "key": "judge-031",
+      "stem": "2025年10月18日，中国重汽2025年全球合作伙伴大会在青岛国际会展中心成功举办，会议主题为“跨越·共联·引领——We leap We link We lead”。",
+      "sourceStemWithAnswer": "31.2025年10月18日，中国重汽2025年全球合作伙伴大会在青岛国际会展中心成功举办，会议主题为“跨越·共联·引领——We leap We link We lead”。（A）【判断题】",
+      "answerLabels": [
+        "A"
+      ],
+      "answerTexts": [
+        "对"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "对",
+          "sourceParagraph": 522,
+          "rawText": "A.对",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "错",
+          "sourceParagraph": 523,
+          "rawText": "B.错",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        521,
+        522,
+        523
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "judge",
+      "typeName": "判断题",
+      "sourceNumber": 32,
+      "key": "judge-032",
+      "stem": "企业文化并非一成不变的教条，而是需要在传承中不断丰富内涵、拓展外延。在内涵上，要结合时代发展与实际情况赋予新的意义；在外延上，要打破行业壁垒，将文化影响力延伸至产业链上下游，甚至将文化融入社会责任，让重汽文化成为引领行业进步的精神旗帜。",
+      "sourceStemWithAnswer": "32.企业文化并非一成不变的教条，而是需要在传承中不断丰富内涵、拓展外延。在内涵上，要结合时代发展与实际情况赋予新的意义；在外延上，要打破行业壁垒，将文化影响力延伸至产业链上下游，甚至将文化融入社会责任，让重汽文化成为引领行业进步的精神旗帜。（A）【判断题】",
+      "answerLabels": [
+        "A"
+      ],
+      "answerTexts": [
+        "对"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "对",
+          "sourceParagraph": 526,
+          "rawText": "A.对",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "错",
+          "sourceParagraph": 527,
+          "rawText": "B.错",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        525,
+        526,
+        527
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "judge",
+      "typeName": "判断题",
+      "sourceNumber": 33,
+      "key": "judge-033",
+      "stem": "企业廉洁行为准则是“重于德 工于匠  成于行”。",
+      "sourceStemWithAnswer": "33.企业廉洁行为准则是“重于德 工于匠  成于行”。（B）【判断题】",
+      "answerLabels": [
+        "B"
+      ],
+      "answerTexts": [
+        "错"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "对",
+          "sourceParagraph": 530,
+          "rawText": "A.对",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "错",
+          "sourceParagraph": 531,
+          "rawText": "B.错",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        529,
+        530,
+        531
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "judge",
+      "typeName": "判断题",
+      "sourceNumber": 34,
+      "key": "judge-034",
+      "stem": "1965年，中国第一辆十吨载重汽车——黄河牌JN162正式通过国家鉴定。",
+      "sourceStemWithAnswer": "34.1965年，中国第一辆十吨载重汽车——黄河牌JN162正式通过国家鉴定。（B）【判断题】",
+      "answerLabels": [
+        "B"
+      ],
+      "answerTexts": [
+        "错"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "对",
+          "sourceParagraph": 534,
+          "rawText": "A.对",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "错",
+          "sourceParagraph": 535,
+          "rawText": "B.错",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        533,
+        534,
+        535
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "judge",
+      "typeName": "判断题",
+      "sourceNumber": 35,
+      "key": "judge-035",
+      "stem": "2009年具有自主知识产权的汕德卡系列产品正式推向市场。",
+      "sourceStemWithAnswer": "35.2009年具有自主知识产权的汕德卡系列产品正式推向市场。（B）【判断题】",
+      "answerLabels": [
+        "B"
+      ],
+      "answerTexts": [
+        "错"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "对",
+          "sourceParagraph": 538,
+          "rawText": "A.对",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "错",
+          "sourceParagraph": 539,
+          "rawText": "B.错",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        537,
+        538,
+        539
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "judge",
+      "typeName": "判断题",
+      "sourceNumber": 36,
+      "key": "judge-036",
+      "stem": "2019年，推出全新一代高端民族自主品牌黄河重卡，引领中国重卡迈向世界一流。",
+      "sourceStemWithAnswer": "36.2019年，推出全新一代高端民族自主品牌黄河重卡，引领中国重卡迈向世界一流。（B）【判断题】",
+      "answerLabels": [
+        "B"
+      ],
+      "answerTexts": [
+        "错"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "对",
+          "sourceParagraph": 542,
+          "rawText": "A.对",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "错",
+          "sourceParagraph": 543,
+          "rawText": "B.错",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        541,
+        542,
+        543
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "judge",
+      "typeName": "判断题",
+      "sourceNumber": 37,
+      "key": "judge-037",
+      "stem": "2025年，山东重工集团第一届一次职工代表大会上提出“重于德 工于匠 成于行”的文化理念，要始终将勤放在第一位。",
+      "sourceStemWithAnswer": "37.2025年，山东重工集团第一届一次职工代表大会上提出“重于德 工于匠 成于行”的文化理念，要始终将勤放在第一位。（B）【判断题】",
+      "answerLabels": [
+        "B"
+      ],
+      "answerTexts": [
+        "错"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "对",
+          "sourceParagraph": 546,
+          "rawText": "A.对",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "错",
+          "sourceParagraph": 547,
+          "rawText": "B.错",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        545,
+        546,
+        547
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "judge",
+      "typeName": "判断题",
+      "sourceNumber": 38,
+      "key": "judge-038",
+      "stem": "作为中国重卡迈向高端的引领者，中国重汽新黄河成为国内上市最早、销量最大的高端重卡品牌。",
+      "sourceStemWithAnswer": "38.作为中国重卡迈向高端的引领者，中国重汽新黄河成为国内上市最早、销量最大的高端重卡品牌。（B）【判断题】",
+      "answerLabels": [
+        "B"
+      ],
+      "answerTexts": [
+        "错"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "对",
+          "sourceParagraph": 550,
+          "rawText": "A.对",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "错",
+          "sourceParagraph": 551,
+          "rawText": "B.错",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        549,
+        550,
+        551
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "judge",
+      "typeName": "判断题",
+      "sourceNumber": 39,
+      "key": "judge-039",
+      "stem": "文化虽然具有历史性与阶级性，但是是符合特定历史时期的产物，因此不会随着社会的变迁而不断变化。",
+      "sourceStemWithAnswer": "39.文化虽然具有历史性与阶级性，但是是符合特定历史时期的产物，因此不会随着社会的变迁而不断变化。（B）【判断题】",
+      "answerLabels": [
+        "B"
+      ],
+      "answerTexts": [
+        "错"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "对",
+          "sourceParagraph": 554,
+          "rawText": "A.对",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "错",
+          "sourceParagraph": 555,
+          "rawText": "B.错",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        553,
+        554,
+        555
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "judge",
+      "typeName": "判断题",
+      "sourceNumber": 40,
+      "key": "judge-040",
+      "stem": "文化是人类创造的包括物质、精神等在内的一切文明成果，没有广义狭义之分。",
+      "sourceStemWithAnswer": "40.文化是人类创造的包括物质、精神等在内的一切文明成果，没有广义狭义之分。（B）【判断题】",
+      "answerLabels": [
+        "B"
+      ],
+      "answerTexts": [
+        "错"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "对",
+          "sourceParagraph": 558,
+          "rawText": "A.对",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "错",
+          "sourceParagraph": 559,
+          "rawText": "B.错",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        557,
+        558,
+        559
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "judge",
+      "typeName": "判断题",
+      "sourceNumber": 41,
+      "key": "judge-041",
+      "stem": "文化建设是基础，经济是文化和政治的反映。",
+      "sourceStemWithAnswer": "41.文化建设是基础，经济是文化和政治的反映。（B）【判断题】",
+      "answerLabels": [
+        "B"
+      ],
+      "answerTexts": [
+        "错"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "对",
+          "sourceParagraph": 562,
+          "rawText": "A.对",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "错",
+          "sourceParagraph": 563,
+          "rawText": "B.错",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        561,
+        562,
+        563
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "judge",
+      "typeName": "判断题",
+      "sourceNumber": 42,
+      "key": "judge-042",
+      "stem": "2023年4月8日，汕德卡在车货总重49吨情况下，一箱油以4871.18千米最远行驶距离，创造了“半挂式卡车单次加油行驶最远距离”吉尼斯世界纪录。",
+      "sourceStemWithAnswer": "42.2023年4月8日，汕德卡在车货总重49吨情况下，一箱油以4871.18千米最远行驶距离，创造了“半挂式卡车单次加油行驶最远距离”吉尼斯世界纪录。（B）【判断题】",
+      "answerLabels": [
+        "B"
+      ],
+      "answerTexts": [
+        "错"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "对",
+          "sourceParagraph": 566,
+          "rawText": "A.对",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "错",
+          "sourceParagraph": 567,
+          "rawText": "B.错",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        565,
+        566,
+        567
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "judge",
+      "typeName": "判断题",
+      "sourceNumber": 43,
+      "key": "judge-043",
+      "stem": "“亲人”服务品牌创立于1999年，是中国重汽专属售后服务品牌，也是国内汽车行业首个服务品牌。",
+      "sourceStemWithAnswer": "43.“亲人”服务品牌创立于1999年，是中国重汽专属售后服务品牌，也是国内汽车行业首个服务品牌。（B）【判断题】",
+      "answerLabels": [
+        "B"
+      ],
+      "answerTexts": [
+        "错"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "对",
+          "sourceParagraph": 570,
+          "rawText": "A.对",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "错",
+          "sourceParagraph": 571,
+          "rawText": "B.错",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        569,
+        570,
+        571
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "judge",
+      "typeName": "判断题",
+      "sourceNumber": 44,
+      "key": "judge-044",
+      "stem": "2025年1-9月份，中国重汽整车销量33.5万辆，同比增长22.8%。其中，国内重卡销量11.1万辆，同比增长24.5%。",
+      "sourceStemWithAnswer": "44.2025年1-9月份，中国重汽整车销量33.5万辆，同比增长22.8%。其中，国内重卡销量11.1万辆，同比增长24.5%。（B）【判断题】",
+      "answerLabels": [
+        "B"
+      ],
+      "answerTexts": [
+        "错"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "对",
+          "sourceParagraph": 574,
+          "rawText": "A.对",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "错",
+          "sourceParagraph": 575,
+          "rawText": "B.错",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        573,
+        574,
+        575
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "judge",
+      "typeName": "判断题",
+      "sourceNumber": 45,
+      "key": "judge-045",
+      "stem": "2024年中国重汽重卡销量24.5万辆，成为行业唯一销量超过20万辆的企业，市占率连续两年行业第一。",
+      "sourceStemWithAnswer": "45.2024年中国重汽重卡销量24.5万辆，成为行业唯一销量超过20万辆的企业，市占率连续两年行业第一。（B）【判断题】",
+      "answerLabels": [
+        "B"
+      ],
+      "answerTexts": [
+        "错"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "对",
+          "sourceParagraph": 578,
+          "rawText": "A.对",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "错",
+          "sourceParagraph": 579,
+          "rawText": "B.错",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        577,
+        578,
+        579
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "judge",
+      "typeName": "判断题",
+      "sourceNumber": 46,
+      "key": "judge-046",
+      "stem": "企业文化是企业内部的事，仅需要给员工宣贯，不要求将文化输出给合作伙伴，也不需要融入社会责任。",
+      "sourceStemWithAnswer": "46.企业文化是企业内部的事，仅需要给员工宣贯，不要求将文化输出给合作伙伴，也不需要融入社会责任。（B）【判断题】",
+      "answerLabels": [
+        "B"
+      ],
+      "answerTexts": [
+        "错"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "对",
+          "sourceParagraph": 582,
+          "rawText": "A.对",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "错",
+          "sourceParagraph": 583,
+          "rawText": "B.错",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        581,
+        582,
+        583
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "judge",
+      "typeName": "判断题",
+      "sourceNumber": 47,
+      "key": "judge-047",
+      "stem": "2024年9月17日，德国汉诺威国际商用车展，全新升级的黄河低风阻零排放节能列车风阻系数降至0.349，中国重汽再一次突破了全球商用重卡的低风阻边界。",
+      "sourceStemWithAnswer": "47.2024年9月17日，德国汉诺威国际商用车展，全新升级的黄河低风阻零排放节能列车风阻系数降至0.349，中国重汽再一次突破了全球商用重卡的低风阻边界。（B）【判断题】",
+      "answerLabels": [
+        "B"
+      ],
+      "answerTexts": [
+        "错"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "对",
+          "sourceParagraph": 586,
+          "rawText": "A.对",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "错",
+          "sourceParagraph": 587,
+          "rawText": "B.错",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        585,
+        586,
+        587
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "judge",
+      "typeName": "判断题",
+      "sourceNumber": 48,
+      "key": "judge-048",
+      "stem": "国有企业是中国特色社会主义的重要物质基础和政治基础。",
+      "sourceStemWithAnswer": "48.国有企业是中国特色社会主义的重要物质基础和政治基础。（A）【判断题】",
+      "answerLabels": [
+        "A"
+      ],
+      "answerTexts": [
+        "对"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "对",
+          "sourceParagraph": 590,
+          "rawText": "A.对",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "错",
+          "sourceParagraph": 591,
+          "rawText": "B.错",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        589,
+        590,
+        591
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "judge",
+      "typeName": "判断题",
+      "sourceNumber": 49,
+      "key": "judge-049",
+      "stem": "2025年3月21日，世界顶级赛车盛事——F1中国大奖赛在上海国际赛车场激情开赛！全球首发的中国重汽新黄河赛道版重卡成为全场最耀眼的主角。",
+      "sourceStemWithAnswer": "49.2025年3月21日，世界顶级赛车盛事——F1中国大奖赛在上海国际赛车场激情开赛！全球首发的中国重汽新黄河赛道版重卡成为全场最耀眼的主角。（B）【判断题】",
+      "answerLabels": [
+        "B"
+      ],
+      "answerTexts": [
+        "错"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "对",
+          "sourceParagraph": 594,
+          "rawText": "A.对",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "错",
+          "sourceParagraph": 595,
+          "rawText": "B.错",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        593,
+        594,
+        595
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "judge",
+      "typeName": "判断题",
+      "sourceNumber": 50,
+      "key": "judge-050",
+      "stem": "2025年4月30日，山东省庆祝“五一”国际劳动节暨省五一劳动奖获得者表彰大会在济南举行。大会宣读了《山东省总工会关于表彰山东省五一劳动奖和山东省工人先锋号的决定》，中国重汽集团济南卡车股份有限公司总装一部装配现场分部荣获“山东省工人先锋号”。",
+      "sourceStemWithAnswer": "50.2025年4月30日，山东省庆祝“五一”国际劳动节暨省五一劳动奖获得者表彰大会在济南举行。大会宣读了《山东省总工会关于表彰山东省五一劳动奖和山东省工人先锋号的决定》，中国重汽集团济南卡车股份有限公司总装一部装配现场分部荣获“山东省工人先锋号”。（A）【判断题】",
+      "answerLabels": [
+        "A"
+      ],
+      "answerTexts": [
+        "对"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "对",
+          "sourceParagraph": 598,
+          "rawText": "A.对",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "错",
+          "sourceParagraph": 599,
+          "rawText": "B.错",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        597,
+        598,
+        599
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "judge",
+      "typeName": "判断题",
+      "sourceNumber": 51,
+      "key": "judge-051",
+      "stem": "“我生产的产品 我向客户保证”是从质量角度落实“客户满意是我们的宗旨”的郑重宣言，是对质量责任的主动认领与刚性承诺，体现了员工打造一流产品、争创一流业绩的文化自信和行动自觉。",
+      "sourceStemWithAnswer": "51.“我生产的产品 我向客户保证”是从质量角度落实“客户满意是我们的宗旨”的郑重宣言，是对质量责任的主动认领与刚性承诺，体现了员工打造一流产品、争创一流业绩的文化自信和行动自觉。（A）【判断题】",
+      "answerLabels": [
+        "A"
+      ],
+      "answerTexts": [
+        "对"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "对",
+          "sourceParagraph": 602,
+          "rawText": "A.对",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "错",
+          "sourceParagraph": 603,
+          "rawText": "B.错",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        601,
+        602,
+        603
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "judge",
+      "typeName": "判断题",
+      "sourceNumber": 52,
+      "key": "judge-052",
+      "stem": "2025年9月份，中国重汽重卡出口首次突破1.5万辆，创造了中国重卡行业单月出口新纪录。",
+      "sourceStemWithAnswer": "52.2025年9月份，中国重汽重卡出口首次突破1.5万辆，创造了中国重卡行业单月出口新纪录。（A）【判断题】",
+      "answerLabels": [
+        "A"
+      ],
+      "answerTexts": [
+        "对"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "对",
+          "sourceParagraph": 606,
+          "rawText": "A.对",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "错",
+          "sourceParagraph": 607,
+          "rawText": "B.错",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        605,
+        606,
+        607
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "judge",
+      "typeName": "判断题",
+      "sourceNumber": 53,
+      "key": "judge-053",
+      "stem": "2025年10月18日，中国重汽2025年全球合作伙伴大会在青岛国际会展中心成功举办，会议主题为“We Are One”。",
+      "sourceStemWithAnswer": "53.2025年10月18日，中国重汽2025年全球合作伙伴大会在青岛国际会展中心成功举办，会议主题为“We Are One”。（B）【判断题】",
+      "answerLabels": [
+        "B"
+      ],
+      "answerTexts": [
+        "错"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "对",
+          "sourceParagraph": 610,
+          "rawText": "A.对",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "错",
+          "sourceParagraph": 611,
+          "rawText": "B.错",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        609,
+        610,
+        611
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "judge",
+      "typeName": "判断题",
+      "sourceNumber": 54,
+      "key": "judge-054",
+      "stem": "为持续推动“重德、重勤、重廉”廉洁文化建设走深走实，以清廉之力助推企业高质量发展，凝聚冲刺全年目标任务的奋进力量，2025年10月21日，中国重汽集团以“文化聚力 齐心同行”为主题，举办廉洁文化广场启用暨职工竞走接力赛。",
+      "sourceStemWithAnswer": "54.为持续推动“重德、重勤、重廉”廉洁文化建设走深走实，以清廉之力助推企业高质量发展，凝聚冲刺全年目标任务的奋进力量，2025年10月21日，中国重汽集团以“文化聚力 齐心同行”为主题，举办廉洁文化广场启用暨职工竞走接力赛。（A）【判断题】",
+      "answerLabels": [
+        "A"
+      ],
+      "answerTexts": [
+        "对"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "对",
+          "sourceParagraph": 614,
+          "rawText": "A.对",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "错",
+          "sourceParagraph": 615,
+          "rawText": "B.错",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        613,
+        614,
+        615
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "multiple",
+      "typeName": "多选题",
+      "sourceNumber": 1,
+      "key": "multiple-001",
+      "stem": "2025年，山东重工集团第一届一次职工代表大会上提出：面向2030，要坚定打造“六个重工”：（）。",
+      "sourceStemWithAnswer": "1.2025年，山东重工集团第一届一次职工代表大会上提出：面向2030，要坚定打造“六个重工”：（）。（ABCDEF）【多选题】",
+      "answerLabels": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F"
+      ],
+      "answerTexts": [
+        "厚重重工",
+        "创新重工",
+        "绿色重工",
+        "国际重工",
+        "激情重工",
+        "幸福重工"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "厚重重工",
+          "sourceParagraph": 619,
+          "rawText": "A.厚重重工",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "创新重工",
+          "sourceParagraph": 620,
+          "rawText": "B.创新重工",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "绿色重工",
+          "sourceParagraph": 621,
+          "rawText": "C.绿色重工",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "国际重工",
+          "sourceParagraph": 622,
+          "rawText": "D.国际重工",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "E",
+          "text": "激情重工",
+          "sourceParagraph": 623,
+          "rawText": "E.激情重工",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "F",
+          "text": "幸福重工",
+          "sourceParagraph": 624,
+          "rawText": "F.幸福重工",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        618,
+        619,
+        620,
+        621,
+        622,
+        623,
+        624
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "multiple",
+      "typeName": "多选题",
+      "sourceNumber": 2,
+      "key": "multiple-002",
+      "stem": "山东重工的企业愿景：打造（）的高端装备跨国集团。",
+      "sourceStemWithAnswer": "2.山东重工的企业愿景：打造（）的高端装备跨国集团。（ACD）【多选题】",
+      "answerLabels": [
+        "A",
+        "C",
+        "D"
+      ],
+      "answerTexts": [
+        "科技领先",
+        "绿色发展",
+        "世界一流"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "科技领先",
+          "sourceParagraph": 627,
+          "rawText": "A.科技领先",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "自力更生",
+          "sourceParagraph": 628,
+          "rawText": "B.自力更生",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "绿色发展",
+          "sourceParagraph": 629,
+          "rawText": "C.绿色发展",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "世界一流",
+          "sourceParagraph": 630,
+          "rawText": "D.世界一流",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        626,
+        627,
+        628,
+        629,
+        630
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "multiple",
+      "typeName": "多选题",
+      "sourceNumber": 3,
+      "key": "multiple-003",
+      "stem": "以下属于企业核心理念的是：（）。",
+      "sourceStemWithAnswer": "3.以下属于企业核心理念的是：（）。（ACD）【多选题】",
+      "answerLabels": [
+        "A",
+        "C",
+        "D"
+      ],
+      "answerTexts": [
+        "心无旁骛攻主业",
+        "永不懈怠 永立潮头 永争第一",
+        "重于德 工于匠 成于行"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "心无旁骛攻主业",
+          "sourceParagraph": 633,
+          "rawText": "A.心无旁骛攻主业",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "科技赋能 装备美好",
+          "sourceParagraph": 634,
+          "rawText": "B.科技赋能 装备美好",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "永不懈怠 永立潮头 永争第一",
+          "sourceParagraph": 635,
+          "rawText": "C.永不懈怠 永立潮头 永争第一",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "重于德 工于匠 成于行",
+          "sourceParagraph": 636,
+          "rawText": "D.重于德 工于匠 成于行",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        632,
+        633,
+        634,
+        635,
+        636
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "multiple",
+      "typeName": "多选题",
+      "sourceNumber": 4,
+      "key": "multiple-004",
+      "stem": "2025年11月8日，中国重汽召开交付保障系统动员大会。会议强调，当前商用车行业正处在技术迭代、市场重构的关键节点，推动企业高质量发展，核心遵循就是以三个中心不动摇，坚持推进六化战略。其中，三个中心指（）。",
+      "sourceStemWithAnswer": "4.2025年11月8日，中国重汽召开交付保障系统动员大会。会议强调，当前商用车行业正处在技术迭代、市场重构的关键节点，推动企业高质量发展，核心遵循就是以三个中心不动摇，坚持推进六化战略。其中，三个中心指（）。（ACD）【多选题】",
+      "answerLabels": [
+        "A",
+        "C",
+        "D"
+      ],
+      "answerTexts": [
+        "以质量为中心",
+        "以成本为中心",
+        "以人才为中心"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "以质量为中心",
+          "sourceParagraph": 639,
+          "rawText": "A.以质量为中心",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "以交付为中心",
+          "sourceParagraph": 640,
+          "rawText": "B.以交付为中心",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "以成本为中心",
+          "sourceParagraph": 641,
+          "rawText": "C.以成本为中心",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "以人才为中心",
+          "sourceParagraph": 642,
+          "rawText": "D.以人才为中心",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        638,
+        639,
+        640,
+        641,
+        642
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "multiple",
+      "typeName": "多选题",
+      "sourceNumber": 5,
+      "key": "multiple-005",
+      "stem": "2024年10月9日，山东重工集团党委召开“重德、重勤、重廉”廉洁文化建设动员会，明确“重德”是（），“重勤”是（），“重廉”是（），廉洁文化建设是推进集团全面从严治党的迫切需要，是支撑集团高质量发展的重要保障。",
+      "sourceStemWithAnswer": "5.2024年10月9日，山东重工集团党委召开“重德、重勤、重廉”廉洁文化建设动员会，明确“重德”是（），“重勤”是（），“重廉”是（），廉洁文化建设是推进集团全面从严治党的迫切需要，是支撑集团高质量发展的重要保障。（ABC）【多选题】",
+      "answerLabels": [
+        "A",
+        "B",
+        "C"
+      ],
+      "answerTexts": [
+        "以德为先、德才兼备",
+        "勤勉尽责、实干担当",
+        "干净做人、廉洁从业"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "以德为先、德才兼备",
+          "sourceParagraph": 645,
+          "rawText": "A.以德为先、德才兼备",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "勤勉尽责、实干担当",
+          "sourceParagraph": 646,
+          "rawText": "B.勤勉尽责、实干担当",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "干净做人、廉洁从业",
+          "sourceParagraph": 647,
+          "rawText": "C.干净做人、廉洁从业",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "干净做人、廉洁担当",
+          "sourceParagraph": 648,
+          "rawText": "D.干净做人、廉洁担当",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        644,
+        645,
+        646,
+        647,
+        648
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported",
+      "note": "原题含多个空位，但题型仍按原文保留为多选题；原文只提供整题选项集合，未另建逐空评分。"
+    },
+    {
+      "type": "multiple",
+      "typeName": "多选题",
+      "sourceNumber": 6,
+      "key": "multiple-006",
+      "stem": "为保证发动机的可靠性，做好发动机标定试验，中国重汽定期进行“三高”试验。“三高”试验指的是（）。",
+      "sourceStemWithAnswer": "6.为保证发动机的可靠性，做好发动机标定试验，中国重汽定期进行“三高”试验。“三高”试验指的是（）。（ACD）【多选题】",
+      "answerLabels": [
+        "A",
+        "C",
+        "D"
+      ],
+      "answerTexts": [
+        "高温试验",
+        "高原试验",
+        "高寒试验"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "高温试验",
+          "sourceParagraph": 651,
+          "rawText": "A.高温试验",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "高压试验",
+          "sourceParagraph": 652,
+          "rawText": "B.高压试验",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "高原试验",
+          "sourceParagraph": 653,
+          "rawText": "C.高原试验",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "高寒试验",
+          "sourceParagraph": 654,
+          "rawText": "D.高寒试验",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        650,
+        651,
+        652,
+        653,
+        654
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "multiple",
+      "typeName": "多选题",
+      "sourceNumber": 7,
+      "key": "multiple-007",
+      "stem": "目前，中国重汽主要研发、生产、销售各种载重汽车、特种汽车、专用车及发动机、变速箱、车桥等总成和汽车零部件，拥有（）、（）、（）等全系列商用汽车品牌，是我国重卡行业驱动形式和功率覆盖最全的重卡企业。",
+      "sourceStemWithAnswer": "7.目前，中国重汽主要研发、生产、销售各种载重汽车、特种汽车、专用车及发动机、变速箱、车桥等总成和汽车零部件，拥有（）、（）、（）等全系列商用汽车品牌，是我国重卡行业驱动形式和功率覆盖最全的重卡企业。（ABC）【多选题】",
+      "answerLabels": [
+        "A",
+        "B",
+        "C"
+      ],
+      "answerTexts": [
+        "黄河",
+        "汕德卡",
+        "豪沃"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "黄河",
+          "sourceParagraph": 657,
+          "rawText": "A.黄河",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "汕德卡",
+          "sourceParagraph": 658,
+          "rawText": "B.汕德卡",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "豪沃",
+          "sourceParagraph": 659,
+          "rawText": "C.豪沃",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "豪瀚",
+          "sourceParagraph": 660,
+          "rawText": "D.豪瀚",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        656,
+        657,
+        658,
+        659,
+        660
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported",
+      "note": "原题含多个空位，但题型仍按原文保留为多选题；原文只提供整题选项集合，未另建逐空评分。"
+    },
+    {
+      "type": "multiple",
+      "typeName": "多选题",
+      "sourceNumber": 8,
+      "key": "multiple-008",
+      "stem": "为拓宽集团文化传播渠道，增强基层员工的文化建设参与度，提高集团文化理念的认知度及认同度，在集团OA首页开设“重汽文化视窗”专栏，下设（）三个模块。",
+      "sourceStemWithAnswer": "8.为拓宽集团文化传播渠道，增强基层员工的文化建设参与度，提高集团文化理念的认知度及认同度，在集团OA首页开设“重汽文化视窗”专栏，下设（）三个模块。（ABC）【多选题】",
+      "answerLabels": [
+        "A",
+        "B",
+        "C"
+      ],
+      "answerTexts": [
+        "点赞身边人",
+        "文化动态",
+        "文化创意作品"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "点赞身边人",
+          "sourceParagraph": 663,
+          "rawText": "A.点赞身边人",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "文化动态",
+          "sourceParagraph": 664,
+          "rawText": "B.文化动态",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "文化创意作品",
+          "sourceParagraph": 665,
+          "rawText": "C.文化创意作品",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "我身边的榜样",
+          "sourceParagraph": 666,
+          "rawText": "D.我身边的榜样",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        662,
+        663,
+        664,
+        665,
+        666
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "multiple",
+      "typeName": "多选题",
+      "sourceNumber": 9,
+      "key": "multiple-009",
+      "stem": "目前，中国重汽主要研发、生产、销售各种载重汽车、特种汽车、专用车及发动机、变速箱、车桥等总成和汽车零部件，拥有黄河、汕德卡、豪沃等全系列商用汽车品牌，是我国重卡行业（）和（）最全的重卡企业。",
+      "sourceStemWithAnswer": "9.目前，中国重汽主要研发、生产、销售各种载重汽车、特种汽车、专用车及发动机、变速箱、车桥等总成和汽车零部件，拥有黄河、汕德卡、豪沃等全系列商用汽车品牌，是我国重卡行业（）和（）最全的重卡企业。（AC）【多选题】",
+      "answerLabels": [
+        "A",
+        "C"
+      ],
+      "answerTexts": [
+        "驱动形式",
+        "功率覆盖"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "驱动形式",
+          "sourceParagraph": 669,
+          "rawText": "A.驱动形式",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "产品种类",
+          "sourceParagraph": 670,
+          "rawText": "B.产品种类",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "功率覆盖",
+          "sourceParagraph": 671,
+          "rawText": "C.功率覆盖",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "产品数量",
+          "sourceParagraph": 672,
+          "rawText": "D.产品数量",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        668,
+        669,
+        670,
+        671,
+        672
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported",
+      "note": "原题含多个空位，但题型仍按原文保留为多选题；原文只提供整题选项集合，未另建逐空评分。"
+    },
+    {
+      "type": "multiple",
+      "typeName": "多选题",
+      "sourceNumber": 10,
+      "key": "multiple-010",
+      "stem": "山东重工是一家人，无论肤色深浅，职位高低，每名员工都是大家庭里不可或缺的一员，山东重工集团始终把（）贯穿各项工作全过程。",
+      "sourceStemWithAnswer": "10.山东重工是一家人，无论肤色深浅，职位高低，每名员工都是大家庭里不可或缺的一员，山东重工集团始终把（）贯穿各项工作全过程。（ABCD）【多选题】",
+      "answerLabels": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answerTexts": [
+        "尊重职工",
+        "理解职工",
+        "依靠职工",
+        "为了职工"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "尊重职工",
+          "sourceParagraph": 675,
+          "rawText": "A.尊重职工",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "理解职工",
+          "sourceParagraph": 676,
+          "rawText": "B.理解职工",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "依靠职工",
+          "sourceParagraph": 677,
+          "rawText": "C.依靠职工",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "为了职工",
+          "sourceParagraph": 678,
+          "rawText": "D.为了职工",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        674,
+        675,
+        676,
+        677,
+        678
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "multiple",
+      "typeName": "多选题",
+      "sourceNumber": 11,
+      "key": "multiple-011",
+      "stem": "使命是企业存在的根本意义，回答（）；愿景是对未来的长远规划，回答（）。",
+      "sourceStemWithAnswer": "11.使命是企业存在的根本意义，回答（）；愿景是对未来的长远规划，回答（）。（AD）【多选题】",
+      "answerLabels": [
+        "A",
+        "D"
+      ],
+      "answerTexts": [
+        "为什么而做",
+        "要成为什么"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "为什么而做",
+          "sourceParagraph": 681,
+          "rawText": "A.为什么而做",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "应该怎么做",
+          "sourceParagraph": 682,
+          "rawText": "B.应该怎么做",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "目标是什么",
+          "sourceParagraph": 683,
+          "rawText": "C.目标是什么",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "要成为什么",
+          "sourceParagraph": 684,
+          "rawText": "D.要成为什么",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        680,
+        681,
+        682,
+        683,
+        684
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported",
+      "note": "原题含多个空位，但题型仍按原文保留为多选题；原文只提供整题选项集合，未另建逐空评分。"
+    },
+    {
+      "type": "multiple",
+      "typeName": "多选题",
+      "sourceNumber": 12,
+      "key": "multiple-012",
+      "stem": "企业文化通过（）、（），将个体差异转化为团队合力，让员工在追求个人成长的同时，同步推动企业目标实现。",
+      "sourceStemWithAnswer": "12.企业文化通过（）、（），将个体差异转化为团队合力，让员工在追求个人成长的同时，同步推动企业目标实现。（AC）【多选题】",
+      "answerLabels": [
+        "A",
+        "C"
+      ],
+      "answerTexts": [
+        "价值观引导",
+        "情感共鸣"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "价值观引导",
+          "sourceParagraph": 687,
+          "rawText": "A.价值观引导",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "宣贯培训",
+          "sourceParagraph": 688,
+          "rawText": "B.宣贯培训",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "情感共鸣",
+          "sourceParagraph": 689,
+          "rawText": "C.情感共鸣",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "思想凝聚",
+          "sourceParagraph": 690,
+          "rawText": "D.思想凝聚",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        686,
+        687,
+        688,
+        689,
+        690
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported",
+      "note": "原题含多个空位，但题型仍按原文保留为多选题；原文只提供整题选项集合，未另建逐空评分。"
+    },
+    {
+      "type": "multiple",
+      "typeName": "多选题",
+      "sourceNumber": 13,
+      "key": "multiple-013",
+      "stem": "（）是团队的“精神契约”，明确什么是对的、什么是错的；（）是“行动指南”，将价值观转化为可执行的具体要求。二者如同军队的纪律，确保团队在复杂环境中步调一致，避免内耗。",
+      "sourceStemWithAnswer": "13.（）是团队的“精神契约”，明确什么是对的、什么是错的；（）是“行动指南”，将价值观转化为可执行的具体要求。二者如同军队的纪律，确保团队在复杂环境中步调一致，避免内耗。（AC）【多选题】",
+      "answerLabels": [
+        "A",
+        "C"
+      ],
+      "answerTexts": [
+        "价值观",
+        "行为规范"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "价值观",
+          "sourceParagraph": 693,
+          "rawText": "A.价值观",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "团队精神",
+          "sourceParagraph": 694,
+          "rawText": "B.团队精神",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "行为规范",
+          "sourceParagraph": 695,
+          "rawText": "C.行为规范",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "行动准则",
+          "sourceParagraph": 696,
+          "rawText": "D.行动准则",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        692,
+        693,
+        694,
+        695,
+        696
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported",
+      "note": "原题含多个空位，但题型仍按原文保留为多选题；原文只提供整题选项集合，未另建逐空评分。"
+    },
+    {
+      "type": "multiple",
+      "typeName": "多选题",
+      "sourceNumber": 14,
+      "key": "multiple-014",
+      "stem": "企业文化的重要作用有（）。",
+      "sourceStemWithAnswer": "14.企业文化的重要作用有（）。（ABCD）【多选题】",
+      "answerLabels": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answerTexts": [
+        "凝聚人心，增强团队协作",
+        "引导行为，规范企业管理",
+        "塑造形象，提升市场竞争力",
+        "支撑战略，驱动长远发展"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "凝聚人心，增强团队协作",
+          "sourceParagraph": 699,
+          "rawText": "A.凝聚人心，增强团队协作",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "引导行为，规范企业管理",
+          "sourceParagraph": 700,
+          "rawText": "B.引导行为，规范企业管理",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "塑造形象，提升市场竞争力",
+          "sourceParagraph": 701,
+          "rawText": "C.塑造形象，提升市场竞争力",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "支撑战略，驱动长远发展",
+          "sourceParagraph": 702,
+          "rawText": "D.支撑战略，驱动长远发展",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        698,
+        699,
+        700,
+        701,
+        702
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "multiple",
+      "typeName": "多选题",
+      "sourceNumber": 15,
+      "key": "multiple-015",
+      "stem": "中国重汽拥有（）、（）、（）等科研平台。",
+      "sourceStemWithAnswer": "15.中国重汽拥有（）、（）、（）等科研平台。（ABC）【多选题】",
+      "answerLabels": [
+        "A",
+        "B",
+        "C"
+      ],
+      "answerTexts": [
+        "国家认定企业技术中心",
+        "国家重型汽车工程技术研究中心",
+        "国家重型汽车质量监督检验检测中心"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "国家认定企业技术中心",
+          "sourceParagraph": 705,
+          "rawText": "A.国家认定企业技术中心",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "国家重型汽车工程技术研究中心",
+          "sourceParagraph": 706,
+          "rawText": "B.国家重型汽车工程技术研究中心",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "国家重型汽车质量监督检验检测中心",
+          "sourceParagraph": 707,
+          "rawText": "C.国家重型汽车质量监督检验检测中心",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "国家技术创新中心",
+          "sourceParagraph": 708,
+          "rawText": "D.国家技术创新中心",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        704,
+        705,
+        706,
+        707,
+        708
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported",
+      "note": "原题含多个空位，但题型仍按原文保留为多选题；原文只提供整题选项集合，未另建逐空评分。"
+    },
+    {
+      "type": "multiple",
+      "typeName": "多选题",
+      "sourceNumber": 16,
+      "key": "multiple-016",
+      "stem": "2025年11月8日，中国重汽召开交付保障系统动员大会。会议强调，当前商用车行业正处在技术迭代、市场重构的关键节点，推动企业高质量发展，核心遵循就是以三个中心不动摇，坚持推进六化战略。其中，六化战略指（）。",
+      "sourceStemWithAnswer": "16.2025年11月8日，中国重汽召开交付保障系统动员大会。会议强调，当前商用车行业正处在技术迭代、市场重构的关键节点，推动企业高质量发展，核心遵循就是以三个中心不动摇，坚持推进六化战略。其中，六化战略指（）。（ABCDEF）【多选题】",
+      "answerLabels": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F"
+      ],
+      "answerTexts": [
+        "智能化",
+        "绿色化",
+        "数字化",
+        "多元化",
+        "国际化",
+        "新型服务化"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "智能化",
+          "sourceParagraph": 711,
+          "rawText": "A.智能化",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "绿色化",
+          "sourceParagraph": 712,
+          "rawText": "B.绿色化",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "数字化",
+          "sourceParagraph": 713,
+          "rawText": "C.数字化",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "多元化",
+          "sourceParagraph": 714,
+          "rawText": "D.多元化",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "E",
+          "text": "国际化",
+          "sourceParagraph": 715,
+          "rawText": "E.国际化",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "F",
+          "text": "新型服务化",
+          "sourceParagraph": 716,
+          "rawText": "F.新型服务化",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        710,
+        711,
+        712,
+        713,
+        714,
+        715,
+        716
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "multiple",
+      "typeName": "多选题",
+      "sourceNumber": 17,
+      "key": "multiple-017",
+      "stem": "我国第一辆具有完全自主知识产权的智能雪蜡车——黄河重卡雪蜡车，驰骋赛场、不负所托。中国重汽厚植深厚技术积淀，仅用11个月就完成了开发试制任务，达到了（）、（）、（）的科技新高度。",
+      "sourceStemWithAnswer": "17.我国第一辆具有完全自主知识产权的智能雪蜡车——黄河重卡雪蜡车，驰骋赛场、不负所托。中国重汽厚植深厚技术积淀，仅用11个月就完成了开发试制任务，达到了（）、（）、（）的科技新高度。（ABC）【多选题】",
+      "answerLabels": [
+        "A",
+        "B",
+        "C"
+      ],
+      "answerTexts": [
+        "中国首创",
+        "世界领先",
+        "完全国产"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "中国首创",
+          "sourceParagraph": 719,
+          "rawText": "A.中国首创",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "世界领先",
+          "sourceParagraph": 720,
+          "rawText": "B.世界领先",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "完全国产",
+          "sourceParagraph": 721,
+          "rawText": "C.完全国产",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "绿色能源",
+          "sourceParagraph": 722,
+          "rawText": "D.绿色能源",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        718,
+        719,
+        720,
+        721,
+        722
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported",
+      "note": "原题含多个空位，但题型仍按原文保留为多选题；原文只提供整题选项集合，未另建逐空评分。"
+    },
+    {
+      "type": "multiple",
+      "typeName": "多选题",
+      "sourceNumber": 18,
+      "key": "multiple-018",
+      "stem": "（），产品指的是一切的工作成果。（），是落实质量责任的主动承诺。",
+      "sourceStemWithAnswer": "18.（），产品指的是一切的工作成果。（），是落实质量责任的主动承诺。（AC）【多选题】",
+      "answerLabels": [
+        "A",
+        "C"
+      ],
+      "answerTexts": [
+        "我生产的产品",
+        "我向客户保证"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "我生产的产品",
+          "sourceParagraph": 725,
+          "rawText": "A.我生产的产品",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "高质量的产品",
+          "sourceParagraph": 726,
+          "rawText": "B.高质量的产品",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "我向客户保证",
+          "sourceParagraph": 727,
+          "rawText": "C.我向客户保证",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "我向客户承诺",
+          "sourceParagraph": 728,
+          "rawText": "D.我向客户承诺",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        724,
+        725,
+        726,
+        727,
+        728
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported",
+      "note": "原题含多个空位，但题型仍按原文保留为多选题；原文只提供整题选项集合，未另建逐空评分。"
+    },
+    {
+      "type": "multiple",
+      "typeName": "多选题",
+      "sourceNumber": 19,
+      "key": "multiple-019",
+      "stem": "2024年9月30日，山东重工集团党委召开座谈会，正式启动“一家人、一条心、一起干、一定成”主题教育活动。大力营造（）的浓厚氛围，打造利益命运共同体；全面形成（）的思想共识，提升集团文化软实力；持续凝聚（）的团队合力，激发干事创业强动能；始终坚定（）的必胜信念，建设世界一流新重工。",
+      "sourceStemWithAnswer": "19.2024年9月30日，山东重工集团党委召开座谈会，正式启动“一家人、一条心、一起干、一定成”主题教育活动。大力营造（）的浓厚氛围，打造利益命运共同体；全面形成（）的思想共识，提升集团文化软实力；持续凝聚（）的团队合力，激发干事创业强动能；始终坚定（）的必胜信念，建设世界一流新重工。（ABCD）【多选题】",
+      "answerLabels": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answerTexts": [
+        "一家人",
+        "一条心",
+        "一起干",
+        "一定成"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "一家人",
+          "sourceParagraph": 731,
+          "rawText": "A.一家人",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "一条心",
+          "sourceParagraph": 732,
+          "rawText": "B.一条心",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "一起干",
+          "sourceParagraph": 733,
+          "rawText": "C.一起干",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "一定成",
+          "sourceParagraph": 734,
+          "rawText": "D.一定成",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        730,
+        731,
+        732,
+        733,
+        734
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported",
+      "note": "原题含多个空位，但题型仍按原文保留为多选题；原文只提供整题选项集合，未另建逐空评分。"
+    },
+    {
+      "type": "multiple",
+      "typeName": "多选题",
+      "sourceNumber": 20,
+      "key": "multiple-020",
+      "stem": "2025年5月28日，中国重汽集团召开“向一线聚焦·在一线成长”动员大会，全面宣贯集团公司向销售、生产一线聚焦的战略政策，动员广大员工主动到基层一线锻炼成长成材。向一线聚焦的主要措施有（）。",
+      "sourceStemWithAnswer": "20.2025年5月28日，中国重汽集团召开“向一线聚焦·在一线成长”动员大会，全面宣贯集团公司向销售、生产一线聚焦的战略政策，动员广大员工主动到基层一线锻炼成长成材。向一线聚焦的主要措施有（）。（ABCD）【多选题】",
+      "answerLabels": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answerTexts": [
+        "强化人才聚焦，提升一线综合能力",
+        "强化资源聚焦，夯实一线攻坚底气",
+        "强化培养聚焦，拓宽一线发展前景",
+        "强化文化聚焦，凝聚一线奋进力量"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "强化人才聚焦，提升一线综合能力",
+          "sourceParagraph": 737,
+          "rawText": "A.强化人才聚焦，提升一线综合能力",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "强化资源聚焦，夯实一线攻坚底气",
+          "sourceParagraph": 738,
+          "rawText": "B.强化资源聚焦，夯实一线攻坚底气",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "强化培养聚焦，拓宽一线发展前景",
+          "sourceParagraph": 739,
+          "rawText": "C.强化培养聚焦，拓宽一线发展前景",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "强化文化聚焦，凝聚一线奋进力量",
+          "sourceParagraph": 740,
+          "rawText": "D.强化文化聚焦，凝聚一线奋进力量",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        736,
+        737,
+        738,
+        739,
+        740
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "multiple",
+      "typeName": "多选题",
+      "sourceNumber": 21,
+      "key": "multiple-021",
+      "stem": "亲人服务即“（），（）”，以“客户价值最大化”为基本出发点和判断标准，以“用户第一、质量第一、信誉第一”为宗旨，实现“让重汽车一路平安”的目标。",
+      "sourceStemWithAnswer": "21.亲人服务即“（），（）”，以“客户价值最大化”为基本出发点和判断标准，以“用户第一、质量第一、信誉第一”为宗旨，实现“让重汽车一路平安”的目标。（AD）【多选题】",
+      "answerLabels": [
+        "A",
+        "D"
+      ],
+      "answerTexts": [
+        "车在用户手中",
+        "更在亲人心中"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "车在用户手中",
+          "sourceParagraph": 743,
+          "rawText": "A.车在用户手中",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "车在用户心中",
+          "sourceParagraph": 744,
+          "rawText": "B.车在用户心中",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "更在亲人手中",
+          "sourceParagraph": 745,
+          "rawText": "C.更在亲人手中",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "更在亲人心中",
+          "sourceParagraph": 746,
+          "rawText": "D.更在亲人心中",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        742,
+        743,
+        744,
+        745,
+        746
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported",
+      "note": "原题含多个空位，但题型仍按原文保留为多选题；原文只提供整题选项集合，未另建逐空评分。"
+    },
+    {
+      "type": "multiple",
+      "typeName": "多选题",
+      "sourceNumber": 22,
+      "key": "multiple-022",
+      "stem": "“1137”企业文化体系不仅仅是挂在墙上的标语，更是日常工作的行为准则。执行它，需要将文化理念拆解为具体的行为规范：在服务环节，以（）理念响应客户需求，用专业高效的行动赢得信任，让（）贯穿行为始终。",
+      "sourceStemWithAnswer": "22.“1137”企业文化体系不仅仅是挂在墙上的标语，更是日常工作的行为准则。执行它，需要将文化理念拆解为具体的行为规范：在服务环节，以（）理念响应客户需求，用专业高效的行动赢得信任，让（）贯穿行为始终。（BC）【多选题】",
+      "answerLabels": [
+        "B",
+        "C"
+      ],
+      "answerTexts": [
+        "客户满意是我们的宗旨",
+        "亲人服务"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "心无旁骛攻主业",
+          "sourceParagraph": 749,
+          "rawText": "A.心无旁骛攻主业",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "客户满意是我们的宗旨",
+          "sourceParagraph": 750,
+          "rawText": "B.客户满意是我们的宗旨",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "亲人服务",
+          "sourceParagraph": 751,
+          "rawText": "C.亲人服务",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "打造世界一流的全系列商用车集团",
+          "sourceParagraph": 752,
+          "rawText": "D.打造世界一流的全系列商用车集团",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        748,
+        749,
+        750,
+        751,
+        752
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported",
+      "note": "原题含多个空位，但题型仍按原文保留为多选题；原文只提供整题选项集合，未另建逐空评分。"
+    },
+    {
+      "type": "multiple",
+      "typeName": "多选题",
+      "sourceNumber": 23,
+      "key": "multiple-023",
+      "stem": "计划到2030年，出口重卡25万辆、轻卡10万辆、轻型车5万辆、矿卡3000辆，海外后市场收入目标10亿美元。为确保目标顺利实现，中国重汽将携手广大合作伙伴实现（）、（）以及（）。",
+      "sourceStemWithAnswer": "23.计划到2030年，出口重卡25万辆、轻卡10万辆、轻型车5万辆、矿卡3000辆，海外后市场收入目标10亿美元。为确保目标顺利实现，中国重汽将携手广大合作伙伴实现（）、（）以及（）。（ABC）【多选题】",
+      "answerLabels": [
+        "A",
+        "B",
+        "C"
+      ],
+      "answerTexts": [
+        "全系列产品突破升级",
+        "全生命周期共赢升级",
+        "营销体系全方位升级"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "全系列产品突破升级",
+          "sourceParagraph": 755,
+          "rawText": "A.全系列产品突破升级",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "全生命周期共赢升级",
+          "sourceParagraph": 756,
+          "rawText": "B.全生命周期共赢升级",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "营销体系全方位升级",
+          "sourceParagraph": 757,
+          "rawText": "C.营销体系全方位升级",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "双品牌战略引领价值升级",
+          "sourceParagraph": 758,
+          "rawText": "D.双品牌战略引领价值升级",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        754,
+        755,
+        756,
+        757,
+        758
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported",
+      "note": "原题含多个空位，但题型仍按原文保留为多选题；原文只提供整题选项集合，未另建逐空评分。"
+    },
+    {
+      "type": "multiple",
+      "typeName": "多选题",
+      "sourceNumber": 24,
+      "key": "multiple-024",
+      "stem": "2025年10月18日，以“跨越·共联·引领——We leap We link We lead”为主题的中国重汽2025年全球合作伙伴大会在青岛国际会展中心成功举办。在产品推介环节，中国重汽重点推出（）、（）、（）、（）四大领域的全场景解决方案，展现出全系列商用车的技术硬实力。",
+      "sourceStemWithAnswer": "24.2025年10月18日，以“跨越·共联·引领——We leap We link We lead”为主题的中国重汽2025年全球合作伙伴大会在青岛国际会展中心成功举办。在产品推介环节，中国重汽重点推出（）、（）、（）、（）四大领域的全场景解决方案，展现出全系列商用车的技术硬实力。（ABCD）【多选题】",
+      "answerLabels": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answerTexts": [
+        "新能源",
+        "物流车",
+        "工程车",
+        "轻型车"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "新能源",
+          "sourceParagraph": 761,
+          "rawText": "A.新能源",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "物流车",
+          "sourceParagraph": 762,
+          "rawText": "B.物流车",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "工程车",
+          "sourceParagraph": 763,
+          "rawText": "C.工程车",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "轻型车",
+          "sourceParagraph": 764,
+          "rawText": "D.轻型车",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        760,
+        761,
+        762,
+        763,
+        764
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported",
+      "note": "原题含多个空位，但题型仍按原文保留为多选题；原文只提供整题选项集合，未另建逐空评分。"
+    },
+    {
+      "type": "multiple",
+      "typeName": "多选题",
+      "sourceNumber": 25,
+      "key": "multiple-025",
+      "stem": "一线实践是人才培养最扎实、最有效的路径。要积极营造有利于青年员工立足一线成长成才的良好环境，健全保障措施、畅通晋升渠道、增强绩效激励，将一线的实践成果作为晋升的重要导向，将一线的工作经验作为晋升的必要条件，真正建立起“（）、（）、（）、（）”的长效机制。",
+      "sourceStemWithAnswer": "25.一线实践是人才培养最扎实、最有效的路径。要积极营造有利于青年员工立足一线成长成才的良好环境，健全保障措施、畅通晋升渠道、增强绩效激励，将一线的实践成果作为晋升的重要导向，将一线的工作经验作为晋升的必要条件，真正建立起“（）、（）、（）、（）”的长效机制。（ABCD）【多选题】",
+      "answerLabels": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answerTexts": [
+        "下得去",
+        "留得住",
+        "干得好",
+        "流得动"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "下得去",
+          "sourceParagraph": 767,
+          "rawText": "A.下得去",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "留得住",
+          "sourceParagraph": 768,
+          "rawText": "B.留得住",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "干得好",
+          "sourceParagraph": 769,
+          "rawText": "C.干得好",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "流得动",
+          "sourceParagraph": 770,
+          "rawText": "D.流得动",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        766,
+        767,
+        768,
+        769,
+        770
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported",
+      "note": "原题含多个空位，但题型仍按原文保留为多选题；原文只提供整题选项集合，未另建逐空评分。"
+    },
+    {
+      "type": "multiple",
+      "typeName": "多选题",
+      "sourceNumber": 26,
+      "key": "multiple-026",
+      "stem": "中国重汽“1137”企业文化理念体系指的是（）。",
+      "sourceStemWithAnswer": "26.中国重汽“1137”企业文化理念体系指的是（）。\n（ABCD）【多选题】",
+      "answerLabels": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answerTexts": [
+        "企业使命",
+        "企业愿景",
+        "3条核心理念",
+        "7条行为准则"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "企业使命",
+          "sourceParagraph": 774,
+          "rawText": "A.企业使命",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "企业愿景",
+          "sourceParagraph": 775,
+          "rawText": "B.企业愿景",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "3条核心理念",
+          "sourceParagraph": 776,
+          "rawText": "C.3条核心理念",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "7条行为准则",
+          "sourceParagraph": 777,
+          "rawText": "D.7条行为准则",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        772,
+        773,
+        774,
+        775,
+        776,
+        777
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "multiple",
+      "typeName": "多选题",
+      "sourceNumber": 27,
+      "key": "multiple-027",
+      "stem": "中国重汽“1137”企业文化理念体系中，哪几条是重汽特色？",
+      "sourceStemWithAnswer": "27.中国重汽“1137”企业文化理念体系中，哪几条是重汽特色？（CD）【多选题】",
+      "answerLabels": [
+        "C",
+        "D"
+      ],
+      "answerTexts": [
+        "向一线聚焦，在一线成长",
+        "亲人服务"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "客户满意是我们的宗旨",
+          "sourceParagraph": 780,
+          "rawText": "A.客户满意是我们的宗旨",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "我生产的产品，我向客户保证",
+          "sourceParagraph": 781,
+          "rawText": "B.我生产的产品，我向客户保证",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "向一线聚焦，在一线成长",
+          "sourceParagraph": 782,
+          "rawText": "C.向一线聚焦，在一线成长",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "亲人服务",
+          "sourceParagraph": 783,
+          "rawText": "D.亲人服务",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        779,
+        780,
+        781,
+        782,
+        783
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "multiple",
+      "typeName": "多选题",
+      "sourceNumber": 28,
+      "key": "multiple-028",
+      "stem": "中国重汽“1137”企业文化理念体系中，以下属于行为准则的是（）？",
+      "sourceStemWithAnswer": "28.中国重汽“1137”企业文化理念体系中，以下属于行为准则的是（）？（ABCDEFG）【多选题】",
+      "answerLabels": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F",
+        "G"
+      ],
+      "answerTexts": [
+        "客户满意是我们的宗旨",
+        "链合创新 勇攀高峰",
+        "我生产的产品 我向客户保证",
+        "一家人 一条心 一起干 一定成",
+        "重德 重勤 重廉",
+        "向一线聚焦 在一线成长",
+        "亲人服务"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "客户满意是我们的宗旨",
+          "sourceParagraph": 786,
+          "rawText": "A.客户满意是我们的宗旨",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "链合创新 勇攀高峰",
+          "sourceParagraph": 787,
+          "rawText": "B.链合创新 勇攀高峰",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "我生产的产品 我向客户保证",
+          "sourceParagraph": 788,
+          "rawText": "C.我生产的产品 我向客户保证",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "一家人 一条心 一起干 一定成",
+          "sourceParagraph": 789,
+          "rawText": "D.一家人 一条心 一起干 一定成",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "E",
+          "text": "重德 重勤 重廉",
+          "sourceParagraph": 790,
+          "rawText": "E.重德 重勤 重廉",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "F",
+          "text": "向一线聚焦 在一线成长",
+          "sourceParagraph": 791,
+          "rawText": "F.向一线聚焦 在一线成长",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "G",
+          "text": "亲人服务",
+          "sourceParagraph": 792,
+          "rawText": "G.亲人服务",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        785,
+        786,
+        787,
+        788,
+        789,
+        790,
+        791,
+        792
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "multiple",
+      "typeName": "多选题",
+      "sourceNumber": 29,
+      "key": "multiple-029",
+      "stem": "（）是我们历久弥坚的精神状态，是我们事业成功的必然要求；（）是我们保持引领的强大动力，是我们事业成功的必由之路；（）是我们矢志不移的愿景目标，是我们事业成功的重要准绳。",
+      "sourceStemWithAnswer": "29.（）是我们历久弥坚的精神状态，是我们事业成功的必然要求；（）是我们保持引领的强大动力，是我们事业成功的必由之路；（）是我们矢志不移的愿景目标，是我们事业成功的重要准绳。（ACD）【多选题】",
+      "answerLabels": [
+        "A",
+        "C",
+        "D"
+      ],
+      "answerTexts": [
+        "永不懈怠",
+        "永立潮头",
+        "永争第一"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "永不懈怠",
+          "sourceParagraph": 795,
+          "rawText": "A.永不懈怠",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "党的领导",
+          "sourceParagraph": 796,
+          "rawText": "B.党的领导",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "永立潮头",
+          "sourceParagraph": 797,
+          "rawText": "C.永立潮头",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "永争第一",
+          "sourceParagraph": 798,
+          "rawText": "D.永争第一",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        794,
+        795,
+        796,
+        797,
+        798
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported",
+      "note": "原题含多个空位，但题型仍按原文保留为多选题；原文只提供整题选项集合，未另建逐空评分。"
+    },
+    {
+      "type": "multiple",
+      "typeName": "多选题",
+      "sourceNumber": 30,
+      "key": "multiple-030",
+      "stem": "让中国重汽企业文化迸发强劲动能，就要（）。",
+      "sourceStemWithAnswer": "30.让中国重汽企业文化迸发强劲动能，就要（）。（ABCDE）【多选题】",
+      "answerLabels": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E"
+      ],
+      "answerTexts": [
+        "认识TA",
+        "尊重TA",
+        "执行TA ",
+        "发展TA",
+        "传承TA "
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "认识TA",
+          "sourceParagraph": 801,
+          "rawText": "A.认识TA",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "尊重TA",
+          "sourceParagraph": 802,
+          "rawText": "B.尊重TA",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "执行TA ",
+          "sourceParagraph": 803,
+          "rawText": "C.执行TA ",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "发展TA",
+          "sourceParagraph": 804,
+          "rawText": "D.发展TA",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "E",
+          "text": "传承TA ",
+          "sourceParagraph": 805,
+          "rawText": "E.传承TA ",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        800,
+        801,
+        802,
+        803,
+        804,
+        805
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "multiple",
+      "typeName": "多选题",
+      "sourceNumber": 31,
+      "key": "multiple-031",
+      "stem": "企业使命的诠释是：坚持“绿色+( )”为核心的技术创新，以领先的工业科技优势，推动产业转型升级，（）效率提升与价值创造，聚焦高端（）制造及服务核心主业，致力于企业与人、社会及环境和谐共生的（）图景。",
+      "sourceStemWithAnswer": "31.企业使命的诠释是：坚持“绿色+( )”为核心的技术创新，以领先的工业科技优势，推动产业转型升级，（）效率提升与价值创造，聚焦高端（）制造及服务核心主业，致力于企业与人、社会及环境和谐共生的（）图景。（ABCD）【多选题】",
+      "answerLabels": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answerTexts": [
+        "科技",
+        "赋能",
+        "装备",
+        "美好"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "科技",
+          "sourceParagraph": 808,
+          "rawText": "A.科技",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "赋能",
+          "sourceParagraph": 809,
+          "rawText": "B.赋能",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "装备",
+          "sourceParagraph": 810,
+          "rawText": "C.装备",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "美好",
+          "sourceParagraph": 811,
+          "rawText": "D.美好",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        807,
+        808,
+        809,
+        810,
+        811
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported",
+      "note": "原题含多个空位，但题型仍按原文保留为多选题；原文只提供整题选项集合，未另建逐空评分。"
+    },
+    {
+      "type": "multiple",
+      "typeName": "多选题",
+      "sourceNumber": 32,
+      "key": "multiple-032",
+      "stem": "2025年4月28日，在中国北京市人民大会堂举行庆祝中华全国总工会成立100周年暨全国劳动模范和先进工作者表彰大会，中国重汽集团（ ）等人，光荣当选2025年全国劳动模范。",
+      "sourceStemWithAnswer": "32.2025年4月28日，在中国北京市人民大会堂举行庆祝中华全国总工会成立100周年暨全国劳动模范和先进工作者表彰大会，中国重汽集团（ ）等人，光荣当选2025年全国劳动模范。（AB）【多选题】",
+      "answerLabels": [
+        "A",
+        "B"
+      ],
+      "answerTexts": [
+        "总工程师、首席科学家丁惟云",
+        "济南商用车制造公司首席技师、高级技师贾相波"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "总工程师、首席科学家丁惟云",
+          "sourceParagraph": 814,
+          "rawText": "A.总工程师、首席科学家丁惟云",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "济南商用车制造公司首席技师、高级技师贾相波",
+          "sourceParagraph": 815,
+          "rawText": "B.济南商用车制造公司首席技师、高级技师贾相波",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "大同齿轮公司齿轴加工部车工徐玉成",
+          "sourceParagraph": 816,
+          "rawText": "C.大同齿轮公司齿轴加工部车工徐玉成",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "福建海西公司质量部部长赖志永",
+          "sourceParagraph": 817,
+          "rawText": "D.福建海西公司质量部部长赖志永",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        813,
+        814,
+        815,
+        816,
+        817
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "multiple",
+      "typeName": "多选题",
+      "sourceNumber": 33,
+      "key": "multiple-033",
+      "stem": "以下哪几项是企业使命“科技赋能 装备美好”的核心内涵（）。",
+      "sourceStemWithAnswer": "33.以下哪几项是企业使命“科技赋能 装备美好”的核心内涵（）。（ABCDE）【多选题】",
+      "answerLabels": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E"
+      ],
+      "answerTexts": [
+        "推动国家战略发展",
+        "促进行业转型升级",
+        "满足客户实现高效成长的需要",
+        "助力员工实现自身价值",
+        "构建和谐共生的美好社会"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "推动国家战略发展",
+          "sourceParagraph": 820,
+          "rawText": "A.推动国家战略发展",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "促进行业转型升级",
+          "sourceParagraph": 821,
+          "rawText": "B.促进行业转型升级",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "满足客户实现高效成长的需要",
+          "sourceParagraph": 822,
+          "rawText": "C.满足客户实现高效成长的需要",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "助力员工实现自身价值",
+          "sourceParagraph": 823,
+          "rawText": "D.助力员工实现自身价值",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "E",
+          "text": "构建和谐共生的美好社会",
+          "sourceParagraph": 824,
+          "rawText": "E.构建和谐共生的美好社会",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        819,
+        820,
+        821,
+        822,
+        823,
+        824
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "multiple",
+      "typeName": "多选题",
+      "sourceNumber": 34,
+      "key": "multiple-034",
+      "stem": "中国重汽企业文化行为准则“亲人服务”的内核要求是“（）、（）、（）、（）”，聚焦服务的“速度、精度、深度、高度、广度”提出更高要求和更具体的实施方式。",
+      "sourceStemWithAnswer": "34.中国重汽企业文化行为准则“亲人服务”的内核要求是“（）、（）、（）、（）”，聚焦服务的“速度、精度、深度、高度、广度”提出更高要求和更具体的实施方式。（ABCD）【多选题】",
+      "answerLabels": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answerTexts": [
+        "亲情服务",
+        "主动服务",
+        "及时服务",
+        "终身服务"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "亲情服务",
+          "sourceParagraph": 827,
+          "rawText": "A.亲情服务",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "主动服务",
+          "sourceParagraph": 828,
+          "rawText": "B.主动服务",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "及时服务",
+          "sourceParagraph": 829,
+          "rawText": "C.及时服务",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "终身服务",
+          "sourceParagraph": 830,
+          "rawText": "D.终身服务",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        826,
+        827,
+        828,
+        829,
+        830
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported",
+      "note": "原题含多个空位，但题型仍按原文保留为多选题；原文只提供整题选项集合，未另建逐空评分。"
+    },
+    {
+      "type": "multiple",
+      "typeName": "多选题",
+      "sourceNumber": 35,
+      "key": "multiple-035",
+      "stem": "企业文化是一套指引（）、（）及（）行为的原则标准。",
+      "sourceStemWithAnswer": "35.企业文化是一套指引（）、（）及（）行为的原则标准。（ABC）【多选题】",
+      "answerLabels": [
+        "A",
+        "B",
+        "C"
+      ],
+      "answerTexts": [
+        "企业",
+        "员工",
+        "客户"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "企业",
+          "sourceParagraph": 833,
+          "rawText": "A.企业",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "员工",
+          "sourceParagraph": 834,
+          "rawText": "B.员工",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "客户",
+          "sourceParagraph": 835,
+          "rawText": "C.客户",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "股东",
+          "sourceParagraph": 836,
+          "rawText": "D.股东",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        832,
+        833,
+        834,
+        835,
+        836
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported",
+      "note": "原题含多个空位，但题型仍按原文保留为多选题；原文只提供整题选项集合，未另建逐空评分。"
+    },
+    {
+      "type": "multiple",
+      "typeName": "多选题",
+      "sourceNumber": 36,
+      "key": "multiple-036",
+      "stem": "中国重汽的产品品牌有（）。",
+      "sourceStemWithAnswer": "36.中国重汽的产品品牌有（）。（ABCD）【多选题】",
+      "answerLabels": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "answerTexts": [
+        "黄河",
+        "汕德卡",
+        "豪沃",
+        "豪沃轻卡"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "黄河",
+          "sourceParagraph": 839,
+          "rawText": "A.黄河",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "汕德卡",
+          "sourceParagraph": 840,
+          "rawText": "B.汕德卡",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "豪沃",
+          "sourceParagraph": 841,
+          "rawText": "C.豪沃",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "豪沃轻卡",
+          "sourceParagraph": 842,
+          "rawText": "D.豪沃轻卡",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        838,
+        839,
+        840,
+        841,
+        842
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported"
+    },
+    {
+      "type": "multiple",
+      "typeName": "多选题",
+      "sourceNumber": 37,
+      "key": "multiple-037",
+      "stem": "为持续完善职工福利待遇，构建更加完善的养老和医疗保障制度，增强员工归属感、获得感、幸福感、安全感，中国重汽集团自2025年1月1日起正式实施（）、（）。",
+      "sourceStemWithAnswer": "37.为持续完善职工福利待遇，构建更加完善的养老和医疗保障制度，增强员工归属感、获得感、幸福感、安全感，中国重汽集团自2025年1月1日起正式实施（）、（）。（BC）【多选题】",
+      "answerLabels": [
+        "B",
+        "C"
+      ],
+      "answerTexts": [
+        "企业年金",
+        "补充医疗保险"
+      ],
+      "options": [
+        {
+          "label": "A",
+          "text": "意外伤害险",
+          "sourceParagraph": 845,
+          "rawText": "A.意外伤害险",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "B",
+          "text": "企业年金",
+          "sourceParagraph": 846,
+          "rawText": "B.企业年金",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "C",
+          "text": "补充医疗保险",
+          "sourceParagraph": 847,
+          "rawText": "C.补充医疗保险",
+          "labelSource": "explicit"
+        },
+        {
+          "label": "D",
+          "text": "商业保险",
+          "sourceParagraph": 848,
+          "rawText": "D.商业保险",
+          "labelSource": "explicit"
+        }
+      ],
+      "sourceParagraphs": [
+        844,
+        845,
+        846,
+        847,
+        848
+      ],
+      "answerBasis": "原文明确标注，未另行事实核验",
+      "importStatus": "extracted-not-imported",
+      "note": "原题含多个空位，但题型仍按原文保留为多选题；原文只提供整题选项集合，未另建逐空评分。"
+    }
+  ]
+}

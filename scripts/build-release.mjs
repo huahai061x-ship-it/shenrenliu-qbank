@@ -15,6 +15,8 @@ await mkdir(output, {recursive: true});
 for (const file of files) await cp(path.join(root, file), path.join(output, file));
 await cp(path.join(root, 'source'), path.join(output, 'source'), {recursive: true});
 await cp(path.join(root, 'banks'), path.join(output, 'banks'), {recursive: true});
+// Retired 35-question bank stays only as a migration test fixture, not a deployed bank.
+for(const f of ['sinotruk-culture.js','sinotruk-culture.json'])await rm(path.join(output,'banks',f),{force:true});
 await cp(path.join(root, 'licenses'), path.join(output, 'licenses'), {recursive: true});
 await writeFile(path.join(output, '.nojekyll'), '', 'utf8');
 

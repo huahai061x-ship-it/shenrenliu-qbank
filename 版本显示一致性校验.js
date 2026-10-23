@@ -11,7 +11,7 @@ assert.equal(x.t.SESSION_SCHEMA_VERSION,3);assert.equal(x.t.BANK_SCHEMA_VERSION,
 const home=x.main.innerHTML;x.w.openSettings();
 const displays={
   pageTitle:html.match(/<title>[^<]*(v\d+\.\d+ 神中神版)<\/title>/)?.[1],
-  pageHeader:html.match(/SHENREN LIU · HOS 应知应会 · (v\d+\.\d+ 神中神版)/)?.[1],
+  pageHeader:html.match(/SHENREN LIU · (v\d+\.\d+ 神中神版)/)?.[1],
   settings:x.nodes['#versionStats'].innerHTML.match(/<b>版本与完整性<\/b><br>(v\d+\.\d+ 神中神版)/)?.[1],
   manifest:manifest.description.match(/^(v\d+\.\d+) 神中神版/)?.[1],
   help:help.match(/^(?:神人刘题库训练站 )?(v\d+\.\d+ 神中神版)/)?.[1]

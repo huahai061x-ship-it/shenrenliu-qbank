@@ -1,5 +1,7 @@
 // Loaded in <head>, before the manifest and the question-bank scripts.
 (() => {
+  // Keep the compatibility entry marker out of the address bar without reloading or changing scope.
+  try{const url=new URL(location.href);if(url.searchParams.get('entry')==='ShenRenLiu'){url.searchParams.delete('entry');window.history.replaceState(window.history.state,'',url.href);}}catch(_){}
   const state = {prompt:null, installed:false, busy:false, controlled:false, manifest:null, manifestOK:false, manifestError:'', waiting:null, updateAvailable:false, reloadRequested:false, registration:null, swError:'', checking:false, updateStatus:'idle', updateMessage:'自动检查已开启', checkedAt:0, currentVersion:document.querySelector('meta[name="build-version"]')?.content||'', latestVersion:'', downloadDone:0, downloadTotal:0};
   const appBase = new URL('./',document.baseURI);
   const watchedRegistrations=new WeakSet(),watchedWorkers=new WeakSet();

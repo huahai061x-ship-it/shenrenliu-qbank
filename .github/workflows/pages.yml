@@ -30,6 +30,7 @@ jobs:
           node tests/backup-core.cjs
           node tests/experience-core.cjs
           node tests/continuity-core.cjs
+          node tests/pwa-update-core.cjs
           node 全功能发布前校验.js
           node 增强填空与轮换校验.js
           node v2.1边界与恢复校验.js

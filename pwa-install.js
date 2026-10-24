@@ -1,8 +1,11 @@
 // Loaded in <head>, before the manifest and the question-bank scripts.
 (() => {
-  const state = {prompt:null, installed:false, busy:false, controlled:false, manifest:null, manifestOK:false, manifestError:'', waiting:null, updateAvailable:false, reloadRequested:false, registration:null, swError:''};
+  const state = {prompt:null, installed:false, busy:false, controlled:false, manifest:null, manifestOK:false, manifestError:'', waiting:null, updateAvailable:false, reloadRequested:false, registration:null, swError:'', checking:false, updateStatus:'idle', updateMessage:'自动检查已开启', checkedAt:0, currentVersion:document.querySelector('meta[name="build-version"]')?.content||'', latestVersion:'', downloadDone:0, downloadTotal:0};
+  const appBase = new URL('./',document.baseURI);
+  const watchedRegistrations=new WeakSet(),watchedWorkers=new WeakSet();
+  let registrationPromise=null,checkPromise=null,lastAttempt=0;
   const standalone = () => !!(window.matchMedia?.('(display-mode: standalone)').matches || navigator.standalone);
-  const notify = () => {state.controlled=!!navigator.serviceWorker?.controller;window.updateInstallUI?.();window.updatePwaNotice?.();};
+  const notify = () => {state.controlled=!!navigator.serviceWorker?.controller;const button=document.querySelector('#siteUpdateButton'),status=document.querySelector('#siteUpdateStatus');if(button){button.disabled=state.checking;button.textContent=state.updateAvailable?'↻ 发现新版本':state.checking?'↻ 正在检查…':'↻ 检查更新';button.setAttribute?.('aria-busy',String(state.checking));}if(status){status.textContent=state.updateMessage;status.title=state.updateMessage;if(status.dataset)status.dataset.state=state.updateStatus;}window.updateInstallUI?.();window.updatePwaNotice?.();};
   window.addEventListener('beforeinstallprompt', event => {
     event.preventDefault();state.prompt=event;state.installed=false;notify();
   });
@@ -41,34 +44,109 @@
     finally {if(state.prompt===event)state.prompt=null;state.busy=false;notify();}
   }
   function requestUpdate() {
+    state.updatePrepared=false;state.reloadRequested=false;
     if(window.prepareRequiredPwaUpdate){if(window.prepareRequiredPwaUpdate()===false)return false;state.updatePrepared=true;}else if(window.canReloadForPwaUpdate?.()===false){window.deferPwaUpdate?.();return false;}
     state.reloadRequested=true;
-    if(state.waiting)state.waiting.postMessage('SKIP_WAITING');else location.reload();
+    if(state.waiting&&(!state.waiting.state||state.waiting.state==='installed'))state.waiting.postMessage('SKIP_WAITING');else if(state.reloadOnly&&!navigator.serviceWorker){const url=new URL(location.href);url.searchParams.set('_site_update',state.latestVersion);location.replace(url.href);}else location.reload();
     return true;
+  }
+  function report(status,message) {state.updateStatus=status;state.updateMessage=message;notify();return status;}
+  function bounded(promise,ms,message) {
+    let timer;return Promise.race([promise,new Promise((_,reject)=>{timer=setTimeout(()=>reject(Error(message)),ms);})]).finally(()=>clearTimeout(timer));
+  }
+  function foundWaiting(registration,worker=registration.waiting) {
+    if(!worker||(!registration.active&&!navigator.serviceWorker.controller)||worker===registration.active||['activating','activated','redundant'].includes(worker.state))return false;
+    state.waiting=worker;state.updateAvailable=true;report('available','新版本已下载，点击更新后生效');return true;
+  }
+  function watchWorker(registration,worker) {
+    if(!worker||watchedWorkers.has(worker))return;watchedWorkers.add(worker);
+    const changed=()=>{
+      if(worker.state==='installed'&&(registration.waiting||registration.active&&registration.active!==worker))foundWaiting(registration,registration.waiting||worker);
+      else if(worker.state==='redundant'&&!state.updateAvailable)report('error','更新包未下载完整，请检查网络后重试');
+    };
+    worker.addEventListener('statechange',changed);changed();
   }
   function monitorRegistration(registration) {
     state.registration=registration;
-    if(registration.waiting){state.waiting=registration.waiting;state.updateAvailable=true;notify();}
+    foundWaiting(registration);watchWorker(registration,registration.installing);
+    if(watchedRegistrations.has(registration))return;watchedRegistrations.add(registration);
     registration.addEventListener('updatefound',()=>{
       const worker=registration.installing;if(!worker)return;
-      worker.addEventListener('statechange',()=>{if(worker.state==='installed'&&navigator.serviceWorker.controller){state.waiting=registration.waiting||worker;state.updateAvailable=true;notify();}});
+      if(navigator.serviceWorker.controller)report('downloading','发现更新，正在下载完整更新包…');
+      watchWorker(registration,worker);
     });
   }
-  async function registerWorker() {
-    if(!('serviceWorker' in navigator)||location.protocol==='file:')return;
+  function registerWorker() {
+    if(!navigator.serviceWorker||location.protocol==='file:')return Promise.resolve(null);
+    if(registrationPromise)return registrationPromise;
+    registrationPromise=navigator.serviceWorker.register(new URL('sw.js',appBase).href,{scope:appBase.href,updateViaCache:'none'}).then(registration=>{monitorRegistration(registration);notify();return registration;}).catch(error=>{registrationPromise=null;state.swError=error.message;throw error;});
+    return registrationPromise;
+  }
+  async function workerVersion(worker) {
+    if(!worker||typeof MessageChannel==='undefined')return '';
+    const channel=new MessageChannel();
+    try{return await bounded(new Promise(resolve=>{channel.port1.onmessage=e=>resolve(e.data?.version||'');worker.postMessage({type:'GET_VERSION'},[channel.port2]);}),2000,'版本确认超时');}catch(_){return '';}finally{channel.port1.close();channel.port2.close();}
+  }
+  async function finishInstallation(registration) {
+    const worker=registration.installing;if(!worker)return;
+    watchWorker(registration,worker);report('downloading','发现更新，正在下载完整更新包…');
+    let changed;
+    try{await bounded(new Promise((resolve,reject)=>{changed=()=>{if(worker.state==='installed'||worker.state==='activated')resolve();else if(worker.state==='redundant')reject(Error('更新包未下载完整，请稍后重试'));};worker.addEventListener('statechange',changed);changed();}),45000,'更新包仍在下载，可稍后再次检查');}finally{worker.removeEventListener?.('statechange',changed);}
+  }
+  function checkUpdate({manual=false,force=false}={}) {
+    if(checkPromise)return checkPromise;
+    if(!manual&&!force&&(document.hidden||Date.now()-lastAttempt<30000))return Promise.resolve(state.updateStatus);
+    lastAttempt=Date.now();state.checking=true;state.swError='';report('checking','正在联网核对最新版本…');
+    checkPromise=(async()=>{
+      if(location.protocol==='file:')return report('unsupported','请打开在线网址后检查更新');
+      if(navigator.onLine===false)return report('offline','当前离线，无法确认最新版本；联网后可重试');
+      try{
+        const versionURL=new URL('release.json',appBase);versionURL.searchParams.set('_check',Date.now().toString(36));
+        const abort=typeof AbortController!=='undefined'?new AbortController():null;
+        let response;
+        try{response=await bounded(fetch(versionURL.href,{cache:'no-store',...(abort?{signal:abort.signal}:{}),headers:{'Cache-Control':'no-cache'}}).then(async r=>{if(!r.ok)throw Error('版本服务暂不可用');return r.json();}),12000,'联网检查超时，请检查网络后重试');}finally{abort?.abort();}
+        if(response?.schemaVersion!==1||typeof response.version!=='string'||!response.version||response.version.length>100)throw Error('版本信息不完整，请稍后重试');
+        state.latestVersion=response.version;
+        const registration=await bounded(registerWorker(),15000,'更新服务连接超时，请重试');
+        if(!registration){
+          if(state.currentVersion&&state.currentVersion!==state.latestVersion){state.reloadOnly=true;state.updateAvailable=true;return report('available','发现新版本，点击更新后生效');}
+          if(!state.currentVersion)throw Error('当前浏览器无法核对本机版本，请使用系统浏览器打开');
+        }else{
+          if(foundWaiting(registration))return 'available';
+          await bounded(registration.update(),15000,'更新包检查超时，请重试');
+          monitorRegistration(registration);
+          if(foundWaiting(registration))return 'available';
+          await finishInstallation(registration);
+          if(foundWaiting(registration))return 'available';
+          if(state.currentVersion!==state.latestVersion){
+            if(await workerVersion(registration.active)===state.latestVersion){state.reloadOnly=true;state.updateAvailable=true;return report('available','新版本已就绪，点击更新后生效');}
+            throw Error('服务器已有新版本，更新包尚未就绪，请稍后重试');
+          }
+        }
+        state.checkedAt=Date.now();state.updateAvailable=false;state.waiting=null;return report('latest','已联网确认：当前为最新版本');
+      }catch(error){if(state.updateAvailable)return report('available','新版本已下载，点击更新后生效');state.swError=error.message;return report(navigator.onLine===false?'offline':'error',error.message||'检查未完成，请稍后重试');}
+    })().finally(()=>{state.checking=false;checkPromise=null;notify();});
+    return checkPromise;
+  }
+  if(navigator.serviceWorker){
     navigator.serviceWorker.addEventListener('controllerchange',()=>{
       notify();
       // Required updates reload only after explicit activation and successful progress saving.
       if(state.reloadRequested&&(state.updatePrepared||window.canReloadForPwaUpdate?.()!==false)){state.reloadRequested=false;location.reload();}
     });
-    try {
-      const scriptURL=new URL('./sw.js',document.baseURI),scope=new URL('./',document.baseURI);
-      const registration=await navigator.serviceWorker.register(scriptURL.href,{scope:scope.href,updateViaCache:'none'});
-      monitorRegistration(registration);await registration.update();notify();
-      navigator.serviceWorker.ready.then(notify).catch(()=>{});
-    }catch(error){state.swError=error.message;notify();}
+    navigator.serviceWorker.addEventListener('message',event=>{
+      const data=event.data;if(data?.type!=='UPDATE_PROGRESS'||data.version===state.currentVersion)return;
+      state.downloadDone=data.done;state.downloadTotal=data.total;
+      if(!state.updateAvailable)report('downloading',`正在下载更新包 ${data.done}/${data.total}，可继续学习`);
+    });
   }
-  window.PWA_INSTALL={state,standalone,notify,inspectManifest,promptInstall,requestUpdate};
-  const start=()=>{registerWorker();inspectManifest();notify();};
+  window.PWA_INSTALL={state,standalone,notify,inspectManifest,promptInstall,requestUpdate,checkUpdate};
+  const autoCheck=()=>checkUpdate();
+  window.addEventListener('pageshow',event=>checkUpdate({force:!!event.persisted}));
+  window.addEventListener('focus',autoCheck);
+  window.addEventListener('online',()=>checkUpdate({force:true}));
+  document.addEventListener('visibilitychange',()=>{if(!document.hidden)autoCheck();});
+  document.addEventListener('resume',autoCheck);
+  const start=()=>{registerWorker().catch(error=>{state.swError=error.message;notify();});checkUpdate({force:true});inspectManifest();notify();setInterval(()=>{if(!document.hidden)autoCheck();},120000);};
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();
 })();

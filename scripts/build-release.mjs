@@ -13,6 +13,9 @@ const files = [
 await rm(output, {recursive: true, force: true});
 await mkdir(output, {recursive: true});
 for (const file of files) await cp(path.join(root, file), path.join(output, file));
+const html = (await readFile(path.join(output,'index.html'),'utf8')).replaceAll('__BUILD_VERSION__',version);
+await writeFile(path.join(output,'index.html'),html,'utf8');
+await writeFile(path.join(output,'release.json'),JSON.stringify({schemaVersion:1,version,appVersion:'v3.0',publishedAt:new Date().toISOString()}),'utf8');
 await cp(path.join(root, 'source'), path.join(output, 'source'), {recursive: true});
 await cp(path.join(root, 'banks'), path.join(output, 'banks'), {recursive: true});
 // Retired 35-question bank stays only as a migration test fixture, not a deployed bank.

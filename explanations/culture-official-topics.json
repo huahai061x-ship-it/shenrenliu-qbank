@@ -1,0 +1,808 @@
+{
+  "reviewedAt": "2026-10-24",
+  "policy": "逐题按实际提问及答案目标归类；不按背景长短或关键词自动分类。每题一个主要侧重，原题与答案不变。",
+  "groups": [
+    {
+      "id": "culture_core",
+      "name": "企业文化核心知识",
+      "description": "使命、愿景、核心理念、行为准则及其含义、践行与传播。"
+    },
+    {
+      "id": "company_development",
+      "name": "企业发展与经营背景",
+      "description": "企业历史、年份节点、品牌产品、经营数据、发展战略与具体事件制度。"
+    },
+    {
+      "id": "theory_policy",
+      "name": "文化基础与政策背景",
+      "description": "一般文化理论、文化自信及国家政策与国企背景。"
+    }
+  ],
+  "assignments": {
+    "single-001": {
+      "group": "culture_core",
+      "contentSHA256": "417a651b3a1c80302dea7a8e6848c6ebf0a84bd04db8e64fd90737b773867107",
+      "reason": "实际考点：重汽愿景的目标层级。使命、愿景、核心理念、行为准则及其含义、践行与传播。"
+    },
+    "single-002": {
+      "group": "culture_core",
+      "contentSHA256": "306320f8991568704fd5ca7bd6e6a213a0abdca1176da984b6db7cb5eb59a311",
+      "reason": "实际考点：山东重工企业使命。使命、愿景、核心理念、行为准则及其含义、践行与传播。"
+    },
+    "single-003": {
+      "group": "culture_core",
+      "contentSHA256": "d9faa4cffd336c9d181b885b04ff3c1617824911867393e5bba0e2f24fc467ee",
+      "reason": "实际考点：客户行为准则的对象。使命、愿景、核心理念、行为准则及其含义、践行与传播。"
+    },
+    "single-004": {
+      "group": "company_development",
+      "contentSHA256": "97e9bc7b5caf842dadb8a7b2662ed74f9fa448ae9468490676ac27548359727b",
+      "reason": "实际考点：2007年香港上市的股份类别。企业历史、年份节点、品牌产品、经营数据、发展战略与具体事件制度。"
+    },
+    "single-005": {
+      "group": "company_development",
+      "contentSHA256": "68445ecd87348527dd28750847585fdfcd4ca07075edb3665b48050ed43f078c",
+      "reason": "实际考点：豪沃第100万辆下线。企业历史、年份节点、品牌产品、经营数据、发展战略与具体事件制度。"
+    },
+    "single-006": {
+      "group": "culture_core",
+      "contentSHA256": "1a6eff942900c79d4b379e645dda57b188b0f72f2f18a4687d9d5560d419d5ce",
+      "reason": "实际考点：战略聚焦核心理念。使命、愿景、核心理念、行为准则及其含义、践行与传播。"
+    },
+    "single-007": {
+      "group": "company_development",
+      "contentSHA256": "c8b56be3b85395ac9fb15120efde2cbb09c524dbca9a85d397a9c753ea422dbe",
+      "reason": "实际考点：1960年八吨重型汽车型号。企业历史、年份节点、品牌产品、经营数据、发展战略与具体事件制度。"
+    },
+    "single-008": {
+      "group": "culture_core",
+      "contentSHA256": "2a990b10ac3797bd7af5a3d4d55fdbaebcb4bd250a1771be559709cf5fbb2dcd",
+      "reason": "实际考点：追求卓越核心理念。使命、愿景、核心理念、行为准则及其含义、践行与传播。"
+    },
+    "single-009": {
+      "group": "company_development",
+      "contentSHA256": "c4505fe1120d6fbb05f329ae29fad86c398fcf0249e86581003cf75ce0053e7f",
+      "reason": "实际考点：朱德题写黄河二字。企业历史、年份节点、品牌产品、经营数据、发展战略与具体事件制度。"
+    },
+    "single-010": {
+      "group": "culture_core",
+      "contentSHA256": "c0e9ae38dd049d6bf74c6e0c8dd9a445c822f9e7df370d5d05c4802a38d5499f",
+      "reason": "实际考点：以人为本核心理念。使命、愿景、核心理念、行为准则及其含义、践行与传播。"
+    },
+    "single-011": {
+      "group": "company_development",
+      "contentSHA256": "dfe920f333c65c4086ea2e5a94d73142fdc265fed41565914892f91fef8db54f",
+      "reason": "实际考点：1983年斯太尔技术引进。企业历史、年份节点、品牌产品、经营数据、发展战略与具体事件制度。"
+    },
+    "single-012": {
+      "group": "culture_core",
+      "contentSHA256": "ec25926eb737764b67f11ceb886cd4cf34ca69fab4aa8f03a40a834fef772240",
+      "reason": "实际考点：创新行为准则。使命、愿景、核心理念、行为准则及其含义、践行与传播。"
+    },
+    "single-013": {
+      "group": "company_development",
+      "contentSHA256": "3fb25d7eb3b68b5ef3c183ac34f60968de0c283893da9837df543bc31f174ba8",
+      "reason": "实际考点：企业前身追溯年份。企业历史、年份节点、品牌产品、经营数据、发展战略与具体事件制度。"
+    },
+    "single-014": {
+      "group": "culture_core",
+      "contentSHA256": "c0545e9f1ffb6fd55424a8e0b092ebe02eba0e658495ca5d7ab7c150eee1e507",
+      "reason": "实际考点：质量行为准则。使命、愿景、核心理念、行为准则及其含义、践行与传播。"
+    },
+    "single-015": {
+      "group": "culture_core",
+      "contentSHA256": "f305496ee9f32de839d4264a56ccade2138f92d3105444caed177a23e3a46dd1",
+      "reason": "实际考点：团队行为准则。使命、愿景、核心理念、行为准则及其含义、践行与传播。"
+    },
+    "single-016": {
+      "group": "culture_core",
+      "contentSHA256": "248612d8d507eb769aade35f31fdb9ce06399edf13c888639d9c59218c1b3866",
+      "reason": "实际考点：实干行为准则。使命、愿景、核心理念、行为准则及其含义、践行与传播。"
+    },
+    "single-017": {
+      "group": "culture_core",
+      "contentSHA256": "5a5915815a2a44e80aa45cf3f9cadc37f8a5720518f745d9cf5f8e3f6e637e82",
+      "reason": "实际考点：服务行为准则。使命、愿景、核心理念、行为准则及其含义、践行与传播。"
+    },
+    "single-018": {
+      "group": "company_development",
+      "contentSHA256": "07613843f07c76bc849eb8bda06145039e7412998471701bb312679985a496f0",
+      "reason": "实际考点：福建宏途签约车型。企业历史、年份节点、品牌产品、经营数据、发展战略与具体事件制度。"
+    },
+    "single-019": {
+      "group": "company_development",
+      "contentSHA256": "2dbc9d14fe3a4fcce4eec34adc09c6032414dab8b1d86991831a3a6d0b83102f",
+      "reason": "实际考点：香港上市股份代号。企业历史、年份节点、品牌产品、经营数据、发展战略与具体事件制度。"
+    },
+    "single-020": {
+      "group": "company_development",
+      "contentSHA256": "71ed1cd446b205aff2867a2a320ff9722962726124cd01cdce5e3915993c9728",
+      "reason": "实际考点：国家重型汽车工程技术研究中心。企业历史、年份节点、品牌产品、经营数据、发展战略与具体事件制度。"
+    },
+    "single-021": {
+      "group": "company_development",
+      "contentSHA256": "2c069a02aeacead09a1d8a101992a97f56a5885412f2008461a3a31a0e9b8891",
+      "reason": "实际考点：汕德卡五年二百万公里案例。企业历史、年份节点、品牌产品、经营数据、发展战略与具体事件制度。"
+    },
+    "single-022": {
+      "group": "company_development",
+      "contentSHA256": "44697a447184fc1ad92b6597670de261e6ffc392be50500306e080bbb73c99bc",
+      "reason": "实际考点：无人驾驶港口牵引车等级。企业历史、年份节点、品牌产品、经营数据、发展战略与具体事件制度。"
+    },
+    "single-023": {
+      "group": "company_development",
+      "contentSHA256": "4f255c09167dc888a4cfb3eaaf1836e3af6b5a2deb4c46488205579a71bfa489",
+      "reason": "实际考点：新一代黄河品牌发布日。企业历史、年份节点、品牌产品、经营数据、发展战略与具体事件制度。"
+    },
+    "single-024": {
+      "group": "company_development",
+      "contentSHA256": "d8628ca6961b8eef1187e0e735d7e3b71f43f2831cf29fb2ce27a7237255cdc4",
+      "reason": "实际考点：七星级售后服务认证。企业历史、年份节点、品牌产品、经营数据、发展战略与具体事件制度。"
+    },
+    "single-025": {
+      "group": "company_development",
+      "contentSHA256": "dfcc083f9b83b7f2c012bfcba67d1a684432b6b7d39f8b93aa267f25b00c954a",
+      "reason": "实际考点：2020年商用车年产销里程碑。企业历史、年份节点、品牌产品、经营数据、发展战略与具体事件制度。"
+    },
+    "single-026": {
+      "group": "company_development",
+      "contentSHA256": "81f43843a657cfe8afd4b8741cb11e5bbf15bf6a34c7a0d6aed47ad7279d18e1",
+      "reason": "实际考点：国泰民安彩车底盘。企业历史、年份节点、品牌产品、经营数据、发展战略与具体事件制度。"
+    },
+    "single-027": {
+      "group": "company_development",
+      "contentSHA256": "9f21e7cf9935126818bafad405b3a7de8795b24c351d8b1c0617eeeab72657e2",
+      "reason": "实际考点：1958年企业更名。企业历史、年份节点、品牌产品、经营数据、发展战略与具体事件制度。"
+    },
+    "single-028": {
+      "group": "theory_policy",
+      "contentSHA256": "9d02df5d328a77b55eb294040c702d9090c43297bc8d28d08e6c13d57e6bf3ca",
+      "reason": "实际考点：文化自信的基础意义。一般文化理论、文化自信及国家政策与国企背景。"
+    },
+    "single-029": {
+      "group": "culture_core",
+      "contentSHA256": "9e3adbc010aa17924ea4af80f16418a519cbc170e2bbd3a1eaac32ed181e66b8",
+      "reason": "实际考点：共同意志与主动认同。使命、愿景、核心理念、行为准则及其含义、践行与传播。"
+    },
+    "single-030": {
+      "group": "company_development",
+      "contentSHA256": "fde62a70a0c6eb99af21836cb06ddc7ac5ba4c77934341b8984d68c40d61258f",
+      "reason": "实际考点：斯太尔引进年份。企业历史、年份节点、品牌产品、经营数据、发展战略与具体事件制度。"
+    },
+    "single-031": {
+      "group": "company_development",
+      "contentSHA256": "adf778831beebb100725d3d7eceff584abe142c662490033c689fa47e37ec3ec",
+      "reason": "实际考点：曼合作品牌的英文名称。企业历史、年份节点、品牌产品、经营数据、发展战略与具体事件制度。"
+    },
+    "single-032": {
+      "group": "culture_core",
+      "contentSHA256": "563c5109d85227a70055207d6185f6eff74960b6fd107958579bd8207b92643d",
+      "reason": "实际考点：研发场景的创新准则。使命、愿景、核心理念、行为准则及其含义、践行与传播。"
+    },
+    "single-033": {
+      "group": "culture_core",
+      "contentSHA256": "e064a8e3378b234f6aac4a0c8893df146adeaec95464b35b8ecaef01cfc134fc",
+      "reason": "实际考点：生产场景的质量责任。使命、愿景、核心理念、行为准则及其含义、践行与传播。"
+    },
+    "single-034": {
+      "group": "company_development",
+      "contentSHA256": "c934769ea9e5d2b047fc38554bdf62e8419052686e10c5c7a032db77f8d5132c",
+      "reason": "实际考点：2025年9月单月出口。企业历史、年份节点、品牌产品、经营数据、发展战略与具体事件制度。"
+    },
+    "single-035": {
+      "group": "culture_core",
+      "contentSHA256": "b62b02e06b2af9113675f1fee494da0713f66f8d4f672f48b03513af8b5a136b",
+      "reason": "虽引述2018年讲话，实际问的是“心无旁骛攻主业”理念表达，不考日期或讲话人。"
+    },
+    "single-036": {
+      "group": "company_development",
+      "contentSHA256": "4ecc0c4e2e594ceb096b33df396443507ba616cdbcc4493f8c895b66dd54934d",
+      "reason": "实际考点：运载火箭运输案例车型。企业历史、年份节点、品牌产品、经营数据、发展战略与具体事件制度。"
+    },
+    "single-037": {
+      "group": "company_development",
+      "contentSHA256": "9e44016c8d6af6ec9c9ed411ccf2b2507862bf1e9a4fe6dcb1bbd5782f166ea4",
+      "reason": "实际考点：题库时点的出口连续领先年数。企业历史、年份节点、品牌产品、经营数据、发展战略与具体事件制度。"
+    },
+    "single-038": {
+      "group": "company_development",
+      "contentSHA256": "c914f486fecc44d394df3b2885702439156b8451d0e806aa215ae84ec777dab1",
+      "reason": "实际考点：题库所载重卡产销量范围。企业历史、年份节点、品牌产品、经营数据、发展战略与具体事件制度。"
+    },
+    "single-039": {
+      "group": "company_development",
+      "contentSHA256": "1164c305ad1e8a65141bc624ed31bb9e69687f4166a304fd244b4de3949c28cd",
+      "reason": "实际考点：2025年前三季度汇总收入。企业历史、年份节点、品牌产品、经营数据、发展战略与具体事件制度。"
+    },
+    "single-040": {
+      "group": "culture_core",
+      "contentSHA256": "3d5ccdc2cdbfc5cdcc01c58e96110806ee3084ae477e3fd93b418b2fffa788e8",
+      "reason": "虽有会议背景，实际问的是“向一线聚焦、在一线成长”行为准则对应的主题表达。"
+    },
+    "single-041": {
+      "group": "company_development",
+      "contentSHA256": "14ab62799fc11007d6dff590c343089d8fef3a3ecf40d51ca5fd00d017baf478",
+      "reason": "考查“亲人”服务品牌创立年份与行业范围，属于品牌发展史。"
+    },
+    "single-042": {
+      "group": "company_development",
+      "contentSHA256": "97b736bc986758cd0fca347952bc14a158839fdc174b7e0696c706ecae6622db",
+      "reason": "考查董事长直通车邮箱这一具体管理渠道，未等同于1137文化理念本身。"
+    },
+    "single-043": {
+      "group": "culture_core",
+      "contentSHA256": "8b6f72fd5c1535638d1b81802e170d86997651062c1d16d5c638e54e34aee72e",
+      "reason": "背景案例较长，但实际要求识别永争第一对应的文化理念或行为要求；按考点归入核心知识。"
+    },
+    "single-044": {
+      "group": "culture_core",
+      "contentSHA256": "3be0a5cb1d3b73fc75d1761a57798ab3cea471ace97c8091c5a7a4294256ec70",
+      "reason": "背景案例较长，但实际要求识别客户满意对应的文化理念或行为要求；按考点归入核心知识。"
+    },
+    "single-045": {
+      "group": "culture_core",
+      "contentSHA256": "17bf1c88e210f525fe05f91a73fd9f44747f26d8d3fb2c85252415850135f652",
+      "reason": "背景案例较长，但实际要求识别人品精品对应的文化理念或行为要求；按考点归入核心知识。"
+    },
+    "single-046": {
+      "group": "culture_core",
+      "contentSHA256": "f9e80d325125fab277c7bce4827d7a88664e7099ad1ead6388fcae4abef9e1b1",
+      "reason": "背景案例较长，但实际要求识别亲人服务对应的文化理念或行为要求；按考点归入核心知识。"
+    },
+    "single-047": {
+      "group": "culture_core",
+      "contentSHA256": "77a91b90229b0933d4676ce6c691fe47ea17b5e31db96d27b66460ad5a2258eb",
+      "reason": "实际考点：廉洁行为准则。使命、愿景、核心理念、行为准则及其含义、践行与传播。"
+    },
+    "single-048": {
+      "group": "company_development",
+      "contentSHA256": "76bdea41057b5ed86bd65352207f9eb4f4910f79ceec11a4b1512e48b1064d5b",
+      "reason": "实际考点：黄河低风阻系数。企业历史、年份节点、品牌产品、经营数据、发展战略与具体事件制度。"
+    },
+    "single-049": {
+      "group": "company_development",
+      "contentSHA256": "20f2e1c2b976d9465afd39789fc5a9d0f0189fae0e78d0e2ed1ef6ac7d1e9c28",
+      "reason": "实际考点：2004年豪沃卡车下线。企业历史、年份节点、品牌产品、经营数据、发展战略与具体事件制度。"
+    },
+    "single-050": {
+      "group": "company_development",
+      "contentSHA256": "efe8d93a866f806837be6b3ab88cf051f57f2bcb758fce6bad01894dab3df885",
+      "reason": "实际考点：2001年集团公司成立。企业历史、年份节点、品牌产品、经营数据、发展战略与具体事件制度。"
+    },
+    "single-051": {
+      "group": "company_development",
+      "contentSHA256": "4d36654c9a0b2455418395128d294d98da2cb8523b5c8bde504bfb36cf51ffe3",
+      "reason": "实际考点：2013年系列产品上市。企业历史、年份节点、品牌产品、经营数据、发展战略与具体事件制度。"
+    },
+    "single-052": {
+      "group": "company_development",
+      "contentSHA256": "acf2d67453fea4e315834cec7581e7ff8a383bf5aea2374450b78b9f71632794",
+      "reason": "实际考点：1958年越野汽车型号。企业历史、年份节点、品牌产品、经营数据、发展战略与具体事件制度。"
+    },
+    "single-053": {
+      "group": "culture_core",
+      "contentSHA256": "33bd5219cc84cb66ef98c4d7efd44ff20d373fbb6e96dc4fa7264dd33879f7f1",
+      "reason": "实际考点：使命与其他文化层次。使命、愿景、核心理念、行为准则及其含义、践行与传播。"
+    },
+    "single-054": {
+      "group": "culture_core",
+      "contentSHA256": "dfed80a2f2a257db9e283434e1a8b1b98292638b0a9a7c2382cf2b54925171ab",
+      "reason": "实际考点：愿景与其他文化层次。使命、愿景、核心理念、行为准则及其含义、践行与传播。"
+    },
+    "single-055": {
+      "group": "company_development",
+      "contentSHA256": "e8b96cb03e2d6c9f0112776d4dad262f06e0b100427ac728aac08271e429122c",
+      "reason": "实际考点：F1中国大奖赛赛道版重卡。企业历史、年份节点、品牌产品、经营数据、发展战略与具体事件制度。"
+    },
+    "single-056": {
+      "group": "company_development",
+      "contentSHA256": "14292ba41ca1c676a928d5c902f058c4399ae75f5767e6f8e0b842144285b731",
+      "reason": "实际考点：省五一劳动奖章获得者。企业历史、年份节点、品牌产品、经营数据、发展战略与具体事件制度。"
+    },
+    "single-057": {
+      "group": "culture_core",
+      "contentSHA256": "41515426a7a457f4b02ef8129c3f78487725e560cfc7f846113d41df58d8127c",
+      "reason": "实际考点：山东重工愿景的组织对象。使命、愿景、核心理念、行为准则及其含义、践行与传播。"
+    },
+    "single-058": {
+      "group": "culture_core",
+      "contentSHA256": "42b1720fed3ef3ce2f25aeb61ce5999d0d9d3592961fde13ac445a52cf3382fd",
+      "reason": "实际考点：质量准则与客户宗旨的联系。使命、愿景、核心理念、行为准则及其含义、践行与传播。"
+    },
+    "single-059": {
+      "group": "culture_core",
+      "contentSHA256": "0e36ba46fd0d6e46f1313ed0b819d3134629ec62dbd17100f78ee89956122bc2",
+      "reason": "实际考点：企业文化的定义范围。使命、愿景、核心理念、行为准则及其含义、践行与传播。"
+    },
+    "single-060": {
+      "group": "culture_core",
+      "contentSHA256": "e14c7d616bdbb72f3e9a30c44908f370f65ebc7a9990a549ebf9dfb2c1f11c2a",
+      "reason": "实际考点：重汽文化体系的数字简称。使命、愿景、核心理念、行为准则及其含义、践行与传播。"
+    },
+    "single-061": {
+      "group": "culture_core",
+      "contentSHA256": "66075e1aa8701e63086c19348fcda1a55d340a7e292c08c9339457502e604e3a",
+      "reason": "实际考点：企业文化的外部辐射载体。使命、愿景、核心理念、行为准则及其含义、践行与传播。"
+    },
+    "single-062": {
+      "group": "culture_core",
+      "contentSHA256": "0193463708e03342c0c9ec8c973fd55664fd57752a554f32fb2943898442d398",
+      "reason": "实际考点：企业文化的约束功能。使命、愿景、核心理念、行为准则及其含义、践行与传播。"
+    },
+    "single-063": {
+      "group": "culture_core",
+      "contentSHA256": "184c5043df6e9ae5086d9f4b63fd07cdb444b723b751ba0675cf2a4a41855458",
+      "reason": "实际考点：企业文化的激励功能。使命、愿景、核心理念、行为准则及其含义、践行与传播。"
+    },
+    "single-064": {
+      "group": "culture_core",
+      "contentSHA256": "5be64ac92d8d9c260ba9fbae48bbfdaf6d649eda260377cbacc1ca8cd4343f0a",
+      "reason": "实际考点：企业文化的核心层。使命、愿景、核心理念、行为准则及其含义、践行与传播。"
+    },
+    "single-065": {
+      "group": "company_development",
+      "contentSHA256": "9d1820a6d0a53d25ba718b00d6a0834332caa8cb2aa853eb06bf0424e5a63d89",
+      "reason": "实际考点：五星加评价的具体车型。企业历史、年份节点、品牌产品、经营数据、发展战略与具体事件制度。"
+    },
+    "single-066": {
+      "group": "company_development",
+      "contentSHA256": "cd58756eb6c1c460e0673a26f17a921af939dabca0fd4e6d51fae72e556c7da1",
+      "reason": "实际考点：题库时点的整车生产基地数量。企业历史、年份节点、品牌产品、经营数据、发展战略与具体事件制度。"
+    },
+    "judge-001": {
+      "group": "theory_policy",
+      "contentSHA256": "47a4c34df232ed9eca8fc0878696520007ec651de29864dca86b301ed446e2f3",
+      "reason": "实际考点：文化自信与民族复兴。一般文化理论、文化自信及国家政策与国企背景。"
+    },
+    "judge-002": {
+      "group": "culture_core",
+      "contentSHA256": "c5e9c8c3e1e6c2ee7a085264e6c2df7261c74250bf93a6206318741d888418cf",
+      "reason": "实际考点：廉洁行为准则。使命、愿景、核心理念、行为准则及其含义、践行与传播。"
+    },
+    "judge-003": {
+      "group": "company_development",
+      "contentSHA256": "30355a0da9bb1b675c66dc8a0701075530006b730f99071be25c096e26654993",
+      "reason": "实际考点：黄河低风阻系数。企业历史、年份节点、品牌产品、经营数据、发展战略与具体事件制度。"
+    },
+    "judge-004": {
+      "group": "culture_core",
+      "contentSHA256": "3ab7134374df14981d88bd261c9249961fe1b4ec079dbaddcdb0444f4c2d7616",
+      "reason": "实际考点：愿景目标层级。使命、愿景、核心理念、行为准则及其含义、践行与传播。"
+    },
+    "judge-005": {
+      "group": "company_development",
+      "contentSHA256": "5c258f67a739f96161de0467ef233037cfc95deb580080cf77d7eab1e86ddc14",
+      "reason": "实际考点：豪沃卡车下线节点。企业历史、年份节点、品牌产品、经营数据、发展战略与具体事件制度。"
+    },
+    "judge-006": {
+      "group": "culture_core",
+      "contentSHA256": "8eb558fd03e0d6b77dd7474f4fc15d5bdf0fedb88c29df8dddb85f091e738944",
+      "reason": "实际考点：客户宗旨的服务对象。使命、愿景、核心理念、行为准则及其含义、践行与传播。"
+    },
+    "judge-007": {
+      "group": "company_development",
+      "contentSHA256": "aa735c19c5d1416f3567cb207996620596679d9c8cccecc616a3897701336fea",
+      "reason": "实际考点：集团公司成立。企业历史、年份节点、品牌产品、经营数据、发展战略与具体事件制度。"
+    },
+    "judge-008": {
+      "group": "company_development",
+      "contentSHA256": "39c8b0ec3e7d06eafe31729a0d626c34c2b536bee6ecf136a3db5e622b3857e9",
+      "reason": "实际考点：汕德卡推向市场年份。企业历史、年份节点、品牌产品、经营数据、发展战略与具体事件制度。"
+    },
+    "judge-009": {
+      "group": "company_development",
+      "contentSHA256": "fdcb2d91a7147133865c536df7e366301bf9e96742e022b968fa5debfc230750",
+      "reason": "实际考点：1960年黄河载重汽车视察。企业历史、年份节点、品牌产品、经营数据、发展战略与具体事件制度。"
+    },
+    "judge-010": {
+      "group": "company_development",
+      "contentSHA256": "18b3ce7c1d57963a7363dee45fc49bcaa003d122985e1c245c802fe07578cd69",
+      "reason": "实际考点：越野车试制年份。企业历史、年份节点、品牌产品、经营数据、发展战略与具体事件制度。"
+    },
+    "judge-011": {
+      "group": "company_development",
+      "contentSHA256": "b315b76259e405065ffff095ca1a9c3d033a96c405ab3aaca9a685dd26d4a300",
+      "reason": "实际考点：新一代黄河推出年份。企业历史、年份节点、品牌产品、经营数据、发展战略与具体事件制度。"
+    },
+    "judge-012": {
+      "group": "company_development",
+      "contentSHA256": "ead6c775f853f03cb58a93db7fe9e319d9b10118c7418066f339aa91b535b76d",
+      "reason": "实际考点：题库所记连续三年双第一。企业历史、年份节点、品牌产品、经营数据、发展战略与具体事件制度。"
+    },
+    "judge-013": {
+      "group": "company_development",
+      "contentSHA256": "cd937ed8fcd26d2a8b7b6fc148bdb27af64a33a48567a4701f46fa5aabcc3523",
+      "reason": "实际考点：题库所记全球市场覆盖。企业历史、年份节点、品牌产品、经营数据、发展战略与具体事件制度。"
+    },
+    "judge-014": {
+      "group": "culture_core",
+      "contentSHA256": "f45224edeb28a920c40fbc653b4471190e681338034c207a0497c2481fadd798",
+      "reason": "实际判断三永精神和战略视野的理念内容；题首讲话时间仅为背景。"
+    },
+    "judge-015": {
+      "group": "culture_core",
+      "contentSHA256": "d783ba3d431d06f39053791f9e5cca2a89f7e2018578036f815a0041007745e9",
+      "reason": "实际辨析以德为先或以勤为先，属于用人理念；会议日期仅为背景。"
+    },
+    "judge-016": {
+      "group": "company_development",
+      "contentSHA256": "fd3fe262e908c02fecffe53a304c34e0fc7bead50db909452e483f08fab6d376",
+      "reason": "实际考点：1958年越野车试制。企业历史、年份节点、品牌产品、经营数据、发展战略与具体事件制度。"
+    },
+    "judge-017": {
+      "group": "company_development",
+      "contentSHA256": "2c0caff7d7f659eb70fc6a21bbc1c29cf4551fe9a7cd392f3819578743e8464b",
+      "reason": "实际考点：汕德卡高端重卡定位。企业历史、年份节点、品牌产品、经营数据、发展战略与具体事件制度。"
+    },
+    "judge-018": {
+      "group": "company_development",
+      "contentSHA256": "f0d4531c3a15f9099e78647f681768ce1d38cd1589a3e64c10178930ad4169e9",
+      "reason": "实际考点：自主知识产权雪蜡车。企业历史、年份节点、品牌产品、经营数据、发展战略与具体事件制度。"
+    },
+    "judge-019": {
+      "group": "theory_policy",
+      "contentSHA256": "ffee69726ef98800eb9e4f08195e63c73ff2b7261776795568784b23b6b74356",
+      "reason": "实际考点：文化的历史性与变化。一般文化理论、文化自信及国家政策与国企背景。"
+    },
+    "judge-020": {
+      "group": "theory_policy",
+      "contentSHA256": "78e665c98dd69c6547b669f557094da8f1b3708b92643be682b877b0791bbc74",
+      "reason": "实际考点：文化广义与狭义。一般文化理论、文化自信及国家政策与国企背景。"
+    },
+    "judge-021": {
+      "group": "theory_policy",
+      "contentSHA256": "03a3df1f34a11b330af7c9f56369f6881998a7c9c02ceafd2e36b086e5c654d7",
+      "reason": "实际考点：经济政治文化关系。一般文化理论、文化自信及国家政策与国企背景。"
+    },
+    "judge-022": {
+      "group": "company_development",
+      "contentSHA256": "52e397f1967771925df52462fec1e28647d3c0d2ad9273750105d253a46275cd",
+      "reason": "实际考点：黄河X7行驶纪录。企业历史、年份节点、品牌产品、经营数据、发展战略与具体事件制度。"
+    },
+    "judge-023": {
+      "group": "company_development",
+      "contentSHA256": "cf49ac5ccf1ec08f11dead570919079d127613f7f6db73a2207d474d7422803a",
+      "reason": "整句判断2025年5月28日会议事件与部署，并非单独辨识行为准则。"
+    },
+    "judge-024": {
+      "group": "company_development",
+      "contentSHA256": "469d618e01ef30d27658544eb10eeef163dac28de3bda51ee8070a9085fb3ab1",
+      "reason": "考查亲人服务品牌的行业首创范围，属于品牌发展背景。"
+    },
+    "judge-025": {
+      "group": "culture_core",
+      "contentSHA256": "eb8f7f321ce491251e93e45c617572a7c13cd525ba629e911ebe78307371774f",
+      "reason": "实际考点：企业文化的传承与创新。使命、愿景、核心理念、行为准则及其含义、践行与传播。"
+    },
+    "judge-026": {
+      "group": "company_development",
+      "contentSHA256": "68c841425c085bbf203f276718840fae3a44999b2989f1a190656f81e14bc0f9",
+      "reason": "实际考点：前三季度整车及出口数据。企业历史、年份节点、品牌产品、经营数据、发展战略与具体事件制度。"
+    },
+    "judge-027": {
+      "group": "company_development",
+      "contentSHA256": "30debd55a6f06a60cd613c67a94f21297e1b73ba4289ea8fa3a1b555c463f99b",
+      "reason": "实际考点：2030出口规划目标。企业历史、年份节点、品牌产品、经营数据、发展战略与具体事件制度。"
+    },
+    "judge-028": {
+      "group": "company_development",
+      "contentSHA256": "7c82582b267ac3f4c089a72f22939fe5ed7f7dcaf3c1855d291fede6efd618ee",
+      "reason": "实际考点：2025年大国工匠认定。企业历史、年份节点、品牌产品、经营数据、发展战略与具体事件制度。"
+    },
+    "judge-029": {
+      "group": "company_development",
+      "contentSHA256": "ba16f7966cca63f8bb78e4d0c914d22382f05d6a8d8595ccca46c57df8dbfce7",
+      "reason": "实际考点：2025中国企业500强排名。企业历史、年份节点、品牌产品、经营数据、发展战略与具体事件制度。"
+    },
+    "judge-030": {
+      "group": "company_development",
+      "contentSHA256": "662e4853643e74c2df4c78f54c12ef1f6116c43601d0ef812d0bad0490ce7514",
+      "reason": "实际考点：2024销量与市占率。企业历史、年份节点、品牌产品、经营数据、发展战略与具体事件制度。"
+    },
+    "judge-031": {
+      "group": "company_development",
+      "contentSHA256": "bbb54e1084a22e41906aeb7d6a218b08e61f876fafa9f211e1cd3b6fc80a1163",
+      "reason": "实际考点：全球合作伙伴大会主题。企业历史、年份节点、品牌产品、经营数据、发展战略与具体事件制度。"
+    },
+    "judge-032": {
+      "group": "culture_core",
+      "contentSHA256": "e34d3cdd60adf4c76055d12b803d5223a7d8d2b76b7332f4186be8cb03c82e6f",
+      "reason": "实际考点：文化内涵与外延的发展。使命、愿景、核心理念、行为准则及其含义、践行与传播。"
+    },
+    "judge-033": {
+      "group": "culture_core",
+      "contentSHA256": "f1e5e5935c5be31fad68092535b0f5697f0407d25eec1bcb6d1907bd4bf68f94",
+      "reason": "实际考点：廉洁准则与核心理念辨析。使命、愿景、核心理念、行为准则及其含义、践行与传播。"
+    },
+    "judge-034": {
+      "group": "company_development",
+      "contentSHA256": "d95caf656439ce09c646cb663c8d3e40b4054e82d0243b1a34ebe3620c2e8480",
+      "reason": "实际考点：十吨汽车鉴定年份。企业历史、年份节点、品牌产品、经营数据、发展战略与具体事件制度。"
+    },
+    "judge-035": {
+      "group": "company_development",
+      "contentSHA256": "8d3b57bbde73461256149a5593ace344afc454790801bffa03d6d9a244435056",
+      "reason": "实际考点：汕德卡推向市场节点。企业历史、年份节点、品牌产品、经营数据、发展战略与具体事件制度。"
+    },
+    "judge-036": {
+      "group": "company_development",
+      "contentSHA256": "4f473343e3a7d81afe64873012c05015892bfd5d1a1b0d5718838629e585d86a",
+      "reason": "实际考点：新一代黄河推出节点。企业历史、年份节点、品牌产品、经营数据、发展战略与具体事件制度。"
+    },
+    "judge-037": {
+      "group": "culture_core",
+      "contentSHA256": "76fa868108a07670afc2ce50a5d9e2148bd09018d573fe8a374f5fa4a5de4981",
+      "reason": "实际辨析以德为先或以勤为先，属于用人理念；会议介绍仅为背景。"
+    },
+    "judge-038": {
+      "group": "company_development",
+      "contentSHA256": "aea51b26de1f25884976093488167fca060f0689997ae72754f4f47ed43071a4",
+      "reason": "实际考点：高端重卡品牌主体。企业历史、年份节点、品牌产品、经营数据、发展战略与具体事件制度。"
+    },
+    "judge-039": {
+      "group": "theory_policy",
+      "contentSHA256": "3a8717a34fecc9ee0f482471d612b351b3cc70e9f1fe5d8897bd8a9b978dd92f",
+      "reason": "实际考点：文化历史性与动态变化。一般文化理论、文化自信及国家政策与国企背景。"
+    },
+    "judge-040": {
+      "group": "theory_policy",
+      "contentSHA256": "37ed8b2c906f1d224d96b7f66a98783443a9a1b855b66cab7ebb7660d135f17c",
+      "reason": "实际考点：广义狭义文化范围。一般文化理论、文化自信及国家政策与国企背景。"
+    },
+    "judge-041": {
+      "group": "theory_policy",
+      "contentSHA256": "8371f775f0b2bea48b09e46e09ad6e56e663a851b9b2cad486a0ab2389699e27",
+      "reason": "实际考点：经济基础关系的倒置。一般文化理论、文化自信及国家政策与国企背景。"
+    },
+    "judge-042": {
+      "group": "company_development",
+      "contentSHA256": "917dc2597ff55a389d97d47d8df91e6535428cfb4e474313fad36ece7db04aae",
+      "reason": "实际考点：行驶纪录的车型主体。企业历史、年份节点、品牌产品、经营数据、发展战略与具体事件制度。"
+    },
+    "judge-043": {
+      "group": "company_development",
+      "contentSHA256": "77e257ac9259cc96b51262e41b1c27574a0083a779b70f3f0ad42a63f9b617f8",
+      "reason": "考查1999年亲人服务品牌的创立历史。"
+    },
+    "judge-044": {
+      "group": "company_development",
+      "contentSHA256": "b4d36a838798b573d3b4f882093527b9be2954fe220bd986b31d97b01ccdb756",
+      "reason": "实际考点：出口与国内销量的口径。企业历史、年份节点、品牌产品、经营数据、发展战略与具体事件制度。"
+    },
+    "judge-045": {
+      "group": "company_development",
+      "contentSHA256": "24d61b15bb57bde71d5d39c15b7fe179d0d9c9a9ddebf5bda42f7bc37f581153",
+      "reason": "实际考点：连续年数的替换。企业历史、年份节点、品牌产品、经营数据、发展战略与具体事件制度。"
+    },
+    "judge-046": {
+      "group": "culture_core",
+      "contentSHA256": "5825c30a96f5558004649ab91eccd51e3bc3b4da538f88aa01e6d2331d1caa39",
+      "reason": "实际考点：文化外延与社会责任。使命、愿景、核心理念、行为准则及其含义、践行与传播。"
+    },
+    "judge-047": {
+      "group": "company_development",
+      "contentSHA256": "360ce12ec674e934258d8530e0c4944a91c51f2fc4ffd6f0fb1a682a4742c21d",
+      "reason": "实际考点：风阻系数的数值替换。企业历史、年份节点、品牌产品、经营数据、发展战略与具体事件制度。"
+    },
+    "judge-048": {
+      "group": "theory_policy",
+      "contentSHA256": "ccb4bfc066a6d01f8e3e763b140b4e853b2f44fca72e5ae7141f3a97ee7019fd",
+      "reason": "实际考点：国有企业的重要基础地位。一般文化理论、文化自信及国家政策与国企背景。"
+    },
+    "judge-049": {
+      "group": "company_development",
+      "contentSHA256": "90ec5471e5990ca7178704ecf97d48aef65400c108670e12a08c169403dd2816",
+      "reason": "实际考点：赛道版重卡的品牌辨析。企业历史、年份节点、品牌产品、经营数据、发展战略与具体事件制度。"
+    },
+    "judge-050": {
+      "group": "company_development",
+      "contentSHA256": "8a62cd64c2898bcc271307d06605b616cd95e298a9d6ef87435ec44653be0d02",
+      "reason": "实际考点：省工人先锋号集体荣誉。企业历史、年份节点、品牌产品、经营数据、发展战略与具体事件制度。"
+    },
+    "judge-051": {
+      "group": "culture_core",
+      "contentSHA256": "c14f5860fb86af695f16218257ad0e9117e19bcd1e727353fcf1fc289952652d",
+      "reason": "实际考点：质量承诺与客户宗旨。使命、愿景、核心理念、行为准则及其含义、践行与传播。"
+    },
+    "judge-052": {
+      "group": "company_development",
+      "contentSHA256": "f57fc3d8f21d734d43433550c6492da04adf4547771ce3ac6d339fe3ed5899d5",
+      "reason": "实际考点：2025年9月单月出口节点。企业历史、年份节点、品牌产品、经营数据、发展战略与具体事件制度。"
+    },
+    "judge-053": {
+      "group": "company_development",
+      "contentSHA256": "8a4baf1fc9b51abd9be8bf2753d6969a089530870f920872d10be12cffa5fde6",
+      "reason": "实际考点：合作伙伴大会主题辨析。企业历史、年份节点、品牌产品、经营数据、发展战略与具体事件制度。"
+    },
+    "judge-054": {
+      "group": "company_development",
+      "contentSHA256": "bc1d8bbf14b92411efd32a79fea221c5e114ac2cc2ff7f97ac8566bbcb298d60",
+      "reason": "判断廉洁广场启用暨竞走接力赛的日期与主题，属于具体活动事件。"
+    },
+    "multiple-001": {
+      "group": "company_development",
+      "contentSHA256": "5114b9c4889086d82db447d3167b939ea1ee467f75a2f7e64c988eaa5869ef18",
+      "reason": "2030六个重工目标属于发展战略，不等同于1137核心文化体系。"
+    },
+    "multiple-002": {
+      "group": "culture_core",
+      "contentSHA256": "d0044e3ba1c91d7fe4722072e9b485108df7f4241bf138d3df93d8f026f75d4b",
+      "reason": "实际考点：山东重工愿景的三个限定。使命、愿景、核心理念、行为准则及其含义、践行与传播。"
+    },
+    "multiple-003": {
+      "group": "culture_core",
+      "contentSHA256": "17630e7376793b5db7c292bd1cf6aa944b8f717281851d9922d82f0ddf992698",
+      "reason": "实际考点：三条核心理念的分类。使命、愿景、核心理念、行为准则及其含义、践行与传播。"
+    },
+    "multiple-004": {
+      "group": "company_development",
+      "contentSHA256": "8a3133238c600262d174a3c7d71166d1c82b2afab7664c2b496e8fb2eb39ee63",
+      "reason": "三个中心属于经营管理定位。"
+    },
+    "multiple-005": {
+      "group": "culture_core",
+      "contentSHA256": "fba734f2728562f9cd25db49cee839cbe69bf3d95649c5c31718931523c92adf",
+      "reason": "实际考点：重德重勤重廉的具体解释。使命、愿景、核心理念、行为准则及其含义、践行与传播。"
+    },
+    "multiple-006": {
+      "group": "company_development",
+      "contentSHA256": "03d2edce7b84c19d80083efa7b7e87e48335a9c137ddbae8a1460267c19d06af",
+      "reason": "实际考点：发动机三高试验的环境。企业历史、年份节点、品牌产品、经营数据、发展战略与具体事件制度。"
+    },
+    "multiple-007": {
+      "group": "company_development",
+      "contentSHA256": "cbc93cfe3637bc916dd6eb4cfcfc064319fe9e53934dfeb34366f82d9170823f",
+      "reason": "实际考点：题干列举的三个全系列品牌。企业历史、年份节点、品牌产品、经营数据、发展战略与具体事件制度。"
+    },
+    "multiple-008": {
+      "group": "culture_core",
+      "contentSHA256": "3cb3a9a42d9091e93154145325173efd3ff7ff6dff24de3160d67b45107cd4d8",
+      "reason": "考查企业文化视窗的传播建设内容，属于文化建设与传播。"
+    },
+    "multiple-009": {
+      "group": "company_development",
+      "contentSHA256": "bc4c0127f3914303f24d0843dbaf16abaae8b1f7ad2f352ab1086e83975e13b0",
+      "reason": "实际考点：驱动形式与功率覆盖。企业历史、年份节点、品牌产品、经营数据、发展战略与具体事件制度。"
+    },
+    "multiple-010": {
+      "group": "culture_core",
+      "contentSHA256": "cb0bc3e872f3651ca331d1bd8ff3d06ffb70d06fd4531c2c2ee245a3eb79e6f4",
+      "reason": "实际考点：贯穿工作的四项职工原则。使命、愿景、核心理念、行为准则及其含义、践行与传播。"
+    },
+    "multiple-011": {
+      "group": "culture_core",
+      "contentSHA256": "8fb9e4293b0be32aa0c19c67aea39ba22a65d11e518b6abce2dbabc1690697bc",
+      "reason": "实际考点：使命与愿景回答的问题。使命、愿景、核心理念、行为准则及其含义、践行与传播。"
+    },
+    "multiple-012": {
+      "group": "culture_core",
+      "contentSHA256": "6d2f4367b09ea87fe4725630a64e16109845c008b4833ba1dda852c35c89e2ff",
+      "reason": "实际考点：文化凝聚个体的两种作用。使命、愿景、核心理念、行为准则及其含义、践行与传播。"
+    },
+    "multiple-013": {
+      "group": "culture_core",
+      "contentSHA256": "35cd1e7fd774ce76a05cfded6159ce6d2898a686c97a9d7d2e91cc02f78b2e53",
+      "reason": "实际考点：精神契约与行动指南。使命、愿景、核心理念、行为准则及其含义、践行与传播。"
+    },
+    "multiple-014": {
+      "group": "culture_core",
+      "contentSHA256": "736ddf4ea7d3d704316fc2ecca1ffcb0e14d3e3331817b10ffb876658cc3beb8",
+      "reason": "实际考点：企业文化的四方面作用。使命、愿景、核心理念、行为准则及其含义、践行与传播。"
+    },
+    "multiple-015": {
+      "group": "company_development",
+      "contentSHA256": "95c20431472249f18fbf1f56a8b8793ba0ce6191c3587377181f6b5173ac1bc1",
+      "reason": "实际考点：题库列举的科研平台。企业历史、年份节点、品牌产品、经营数据、发展战略与具体事件制度。"
+    },
+    "multiple-016": {
+      "group": "company_development",
+      "contentSHA256": "5a4dab8287a9817de0a0e7cc38b3c836188775bbd7936509a9bd2e6d1a986f2b",
+      "reason": "六化战略属于经营发展战略。"
+    },
+    "multiple-017": {
+      "group": "company_development",
+      "contentSHA256": "17d2e9a374ab6f8f939315eac2287d468dd323b7fd80159c330a8a0116b79e41",
+      "reason": "实际考点：智能雪蜡车成果的三个概括。企业历史、年份节点、品牌产品、经营数据、发展战略与具体事件制度。"
+    },
+    "multiple-018": {
+      "group": "culture_core",
+      "contentSHA256": "a6c1ad8fb748a2da44eea713f5b376ea1c7228adb4abd8b9c7dbe9a38009af2b",
+      "reason": "实际考点：质量行为准则的前后两句。使命、愿景、核心理念、行为准则及其含义、践行与传播。"
+    },
+    "multiple-019": {
+      "group": "culture_core",
+      "contentSHA256": "9927d31aed4b18574e18c5f9433630ef461ac14e815e00573b861ccef3beaf5f",
+      "reason": "实际考点：四个一的作用对应。使命、愿景、核心理念、行为准则及其含义、践行与传播。"
+    },
+    "multiple-020": {
+      "group": "culture_core",
+      "contentSHA256": "e2b20b5fcd695f23fec8c84d7aacf899b76a0045d7440200b8ee3a747bc47ba1",
+      "reason": "考查向一线聚焦在一线成长的践行要求，属于文化行为准则的落实。"
+    },
+    "multiple-021": {
+      "group": "culture_core",
+      "contentSHA256": "d1dcae1145e302baba611aa4f2cc98cc7e179a65d64c9d6184d3d44dbb9421dd",
+      "reason": "实际考点：亲人服务的手中与心中。使命、愿景、核心理念、行为准则及其含义、践行与传播。"
+    },
+    "multiple-022": {
+      "group": "culture_core",
+      "contentSHA256": "e6efffc692ea01c3ab07235244d18d69f32bd5436ab272205f8b2628f53bc16c",
+      "reason": "实际考点：服务场景的客户与服务准则。使命、愿景、核心理念、行为准则及其含义、践行与传播。"
+    },
+    "multiple-023": {
+      "group": "company_development",
+      "contentSHA256": "dda76b6e80773c6e3f126f05bb923bff13610fe46522df7bfe4a5796a019204d",
+      "reason": "实际考点：2030出口目标的三项升级。企业历史、年份节点、品牌产品、经营数据、发展战略与具体事件制度。"
+    },
+    "multiple-024": {
+      "group": "company_development",
+      "contentSHA256": "8de1d0f3810087c05519b1e9e690b796ade3bd3fd7ac3eb1b8c8dc02fa1d3ce1",
+      "reason": "实际考点：全球合作伙伴大会四大领域。企业历史、年份节点、品牌产品、经营数据、发展战略与具体事件制度。"
+    },
+    "multiple-025": {
+      "group": "culture_core",
+      "contentSHA256": "b4c6f2a4f1ae94e5b8c2dbc69152d6b65d0e4974a4157c6ee77eafa5206629cf",
+      "reason": "考查向一线聚焦在一线成长的践行方法，属于文化行为准则的落实。"
+    },
+    "multiple-026": {
+      "group": "culture_core",
+      "contentSHA256": "c346eea0195c3bdf5b0ab684288a5863246e841832f137712214463b1ac78547",
+      "reason": "实际考点：1137体系的数量结构。使命、愿景、核心理念、行为准则及其含义、践行与传播。"
+    },
+    "multiple-027": {
+      "group": "culture_core",
+      "contentSHA256": "4a6eff601d43cdd91ddf4cc3a45cb33f0cde6b9dce26dab62d83c87aeab71df9",
+      "reason": "实际考点：资料中特指的重汽特色条目。使命、愿景、核心理念、行为准则及其含义、践行与传播。"
+    },
+    "multiple-028": {
+      "group": "culture_core",
+      "contentSHA256": "9abe03a79596479a715c8ea95533e224874cce350e0dda2e6d85b36869994e71",
+      "reason": "实际考点：七条行为准则完整识别。使命、愿景、核心理念、行为准则及其含义、践行与传播。"
+    },
+    "multiple-029": {
+      "group": "culture_core",
+      "contentSHA256": "04c3de7a09a410330cbf1091cb2a5bc6b924f765a02e9a8bb0870cd022be58f6",
+      "reason": "实际考点：三个永的内涵层次。使命、愿景、核心理念、行为准则及其含义、践行与传播。"
+    },
+    "multiple-030": {
+      "group": "culture_core",
+      "contentSHA256": "a7baf80368f4d73035a14ddb5123efefdf536b4965a6a942930d1b2636a0f3cc",
+      "reason": "实际考点：文化动能的五项行动。使命、愿景、核心理念、行为准则及其含义、践行与传播。"
+    },
+    "multiple-031": {
+      "group": "culture_core",
+      "contentSHA256": "0e4dc15ed2cf06505db9eab402e6ae79785a3ff447ebda38badfc7df7fb26e4c",
+      "reason": "实际考点：企业使命的四个关键词。使命、愿景、核心理念、行为准则及其含义、践行与传播。"
+    },
+    "multiple-032": {
+      "group": "company_development",
+      "contentSHA256": "3852ff7b33926124f1e029d712fab6b8a8642dffa1480c3b877555670e79d126",
+      "reason": "实际考点：2025年全国劳动模范人员。企业历史、年份节点、品牌产品、经营数据、发展战略与具体事件制度。"
+    },
+    "multiple-033": {
+      "group": "culture_core",
+      "contentSHA256": "bb4f46e8b42caf24cd833b4594eab1a02d7c38aabab4ee08b23e93244648eed1",
+      "reason": "实际考点：使命面向的五类价值。使命、愿景、核心理念、行为准则及其含义、践行与传播。"
+    },
+    "multiple-034": {
+      "group": "culture_core",
+      "contentSHA256": "bdeef4c4af0deeed43df4fa192bfc27e4c7fc971351ffee931d14a2852071ce0",
+      "reason": "实际考点：亲人服务的四项内核。使命、愿景、核心理念、行为准则及其含义、践行与传播。"
+    },
+    "multiple-035": {
+      "group": "culture_core",
+      "contentSHA256": "0926a43a39429eec13e5a34017b03935e729bba6f60e9a5044175ddc1f82b6d8",
+      "reason": "实际考点：企业文化定义的三类主体。使命、愿景、核心理念、行为准则及其含义、践行与传播。"
+    },
+    "multiple-036": {
+      "group": "company_development",
+      "contentSHA256": "fc0024fbd727c4bc3fb70b03903586a85dc767c722ae683b65b1ec0b11f48cb2",
+      "reason": "实际考点：资料列举的产品品牌。企业历史、年份节点、品牌产品、经营数据、发展战略与具体事件制度。"
+    },
+    "multiple-037": {
+      "group": "company_development",
+      "contentSHA256": "e48f07ee9a6e1aa58ea73453d556cea50fbe282bdc3ad5b00545fa25c3578288",
+      "reason": "考查2025年企业年金和医保等具体福利制度，不能因出现归属感而划入核心理念。"
+    }
+  }
+}

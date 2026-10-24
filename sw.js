@@ -5,7 +5,7 @@ const IMAGE_CACHE = 'shenrenliu-qbank-images-v2';
 const LEGACY_IMAGE_CACHE = 'shenrenliu-qbank-images-v1';
 const REQUIRED = [
   './', './index.html', './styles.css', './banks/catalog.js', './banks/sinotruk-culture-official.js', './hos-analysis.js', './explanation-core.js', './backup-core.js', './backup-ui.js', './bank-core.js', './bank-runtime.js', './questions.js',
-  './pedagogy.js', './enhanced-fill.js', './transfer-code.js', './lulu.js', './ultra-content.js', './ultra-core.js', './app.js', './pwa-install.js',
+  './pedagogy.js', './enhanced-fill.js', './transfer-code.js', './lulu.js', './lulu-art.js', './ultra-content.js', './ultra-core.js', './app.js', './pwa-install.js',
   './styles.css?v=3.0-shenzhongshen-r1', './app.js?v=3.0-shenzhongshen-r1', './pwa-install.js?v=3.0-shenzhongshen-r1', './pwa-install.js?v=3.0-update-20261024'
 ];
 const OPTIONAL = ['./①点我打开题库.html', './manifest.webmanifest', './icon-source.svg', './icon-16.png', './icon-32.png', './icon-48.png', './icon-64.png', './icon-128.png', './icon-256.png', './icon-192.png', './icon-512.png', './icon-192-maskable.png', './icon-512-maskable.png', './manifest.webmanifest?v=3.0-shenzhongshen-r1', ...[16,32,48,64,128,192,256,512].map(n=>`./icon-${n}.png?v=3.0-shenzhongshen-r1`), './icon-192-maskable.png?v=3.0-shenzhongshen-r1', './icon-512-maskable.png?v=3.0-shenzhongshen-r1'];
@@ -113,6 +113,10 @@ self.addEventListener('fetch', event => {
     return;
   }
 
+  // Content-addressed mascot art stays cached across app releases; never part of required downloads.
+  if (/\/media\/lulu-[a-f0-9]+\.webp$/.test(url.pathname)) {
+    event.respondWith((async()=>{const cache=await caches.open(IMAGE_CACHE);const cached=await cache.match(request);if(cached)return cached;try{const response=await fetchFresh(request);await cache.put(request,response.clone());return response;}catch(_){return new Response('',{status:503});}})());return;
+  }
   if (url.pathname.includes('/source/')) {
     event.respondWith((async () => {
       const cache = await caches.open(IMAGE_CACHE);

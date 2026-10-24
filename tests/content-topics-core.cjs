@@ -1,0 +1,12 @@
+const fs=require('fs'),vm=require('vm'),assert=require('assert/strict'),crypto=require('crypto');
+const w={window:{}};vm.createContext(w);for(const f of ['ultra-core.js','bank-core.js'])vm.runInContext(fs.readFileSync(f,'utf8'),w);
+const C=w.window.BANK_CORE,b=JSON.parse(fs.readFileSync('banks/sinotruk-culture-official.json','utf8')),map=JSON.parse(fs.readFileSync('explanations/culture-official-topics.json','utf8')),source=JSON.parse(fs.readFileSync('explanations/culture-official-source.json','utf8'));
+assert(C.validate(b));assert.deepEqual(Object.fromEntries(b.meta.contentGroups.map(g=>[g.id,b.questions.filter(q=>q.contentGroup===g.id).length])),{culture_core:66,company_development:82,theory_policy:9});
+for(const q of source.questions){const digest=crypto.createHash('sha256').update(JSON.stringify([q.type,q.stem,q.options,q.answerTexts])).digest('hex');assert.equal(map.assignments[q.key].contentSHA256,digest);assert(map.assignments[q.key].reason.trim());assert.equal(b.questions.find(x=>x.sourceKey===q.key).contentGroup,map.assignments[q.key].group);}
+for(const key of ['single-035','single-040','single-043','single-044','single-045','single-046','judge-015','judge-037','multiple-020','multiple-025'])assert.equal(map.assignments[key].group,'culture_core','长背景按实际文化考点归类 '+key);
+for(const key of ['single-041','single-042','judge-023','judge-054','multiple-001','multiple-004','multiple-016','multiple-037'])assert.equal(map.assignments[key].group,'company_development',key);
+let old=structuredClone(b);delete old.meta.contentGroups;delete old.meta.contentGroupsReviewedAt;for(const q of old.questions)delete q.contentGroup;assert(C.validate(old));assert(C.sameQuestionContent(b.questions,old.questions),'分类更新接受旧原题备份');old.questions[0].answers=['错配'];assert(!C.sameQuestionContent(b.questions,old.questions),'答案变化不得被分类兼容吞掉');
+let bad=structuredClone(b);bad.questions[0].contentGroup='guessed';assert.throws(()=>C.validate(bad));bad=structuredClone(b);delete bad.questions[0].contentGroup;assert.throws(()=>C.validate(bad));
+const ctx=C.compile([b],[b.meta.id]);assert.equal(ctx.scopeKey,b.meta.id);for(const q of ctx.questions){assert.equal(q.id,C.id(b.meta.id,q.sourceQuestionId));assert(q.contentGroupName);}
+const counts=Object.fromEntries(b.meta.contentGroups.map(g=>[g.id,Object.keys(b.pedagogy.fillBank).filter(id=>b.questions.find(q=>q.id===+id).contentGroup===g.id).length]));
+console.log('PASS 157题人工分类覆盖与指纹、长背景边界、分类字段校验、旧备份兼容与答案差异保护、原题ID和存储范围；填空分布 '+JSON.stringify(counts));

@@ -7,13 +7,14 @@ const version = (process.env.BUILD_VERSION || 'local').replace(/[^a-zA-Z0-9._-]/
 const publishedAt=new Date().toISOString();
 const files = [
   'index.html', '①点我打开题库.html', 'release-notes.md', 'styles.css', 'questions.js',
-  'culture-insights.js', 'hos-analysis.js', 'explanation-core.js', 'backup-core.js', 'backup-ui.js', 'bank-core.js', 'bank-runtime.js', 'pedagogy.js', 'enhanced-fill.js', 'transfer-code.js', 'lulu.js', 'ultra-content.js', 'ultra-core.js', 'lulu-mascot.png', 'app.js', 'pwa-install.js', 'manifest.webmanifest',
+  'culture-insights.js', 'hos-analysis.js', 'explanation-core.js', 'backup-core.js', 'backup-ui.js', 'bank-core.js', 'bank-runtime.js', 'pedagogy.js', 'enhanced-fill.js', 'transfer-code.js', 'lulu.js', 'lulu-art.js', 'ultra-content.js', 'ultra-core.js', 'lulu-mascot.png', 'app.js', 'pwa-install.js', 'manifest.webmanifest',
   'icon-source.svg', 'icon-16.png', 'icon-32.png', 'icon-48.png', 'icon-64.png', 'icon-128.png', 'icon-256.png', 'icon-192.png', 'icon-512.png', 'icon-192-maskable.png', 'icon-512-maskable.png'
 ];
 
 await rm(output, {recursive: true, force: true});
 await mkdir(output, {recursive: true});
 for (const file of files) await cp(path.join(root, file), path.join(output, file));
+await cp(path.join(root,'media'),path.join(output,'media'),{recursive:true});
 const assetBase=`assets/${version}/`;
 let html = (await readFile(path.join(output,'index.html'),'utf8')).replaceAll('__BUILD_VERSION__',version);
 html=html.replace('<meta name="build-version"',`<meta name="asset-base" content="${assetBase}"><meta name="build-time" content="${publishedAt}"><meta name="build-version"`);

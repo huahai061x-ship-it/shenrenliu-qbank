@@ -148,7 +148,29 @@
       if(!state.updateAvailable)report('downloading',`正在下载更新包 ${data.done}/${data.total}，可继续学习`);
     });
   }
-  function openLatest(){if(navigator.onLine===false){report('offline','当前离线，请联网后获取新版');return false;}if(window.prepareRequiredPwaUpdate?.()===false)return false;const url=location.hostname==='huahai061x-ship-it.github.io'?new URL('https://huahai061x-ship-it.github.io/ShenRenLiu/latest.html'):new URL('latest.html',appBase);url.search=location.search;url.searchParams.delete('entry');url.hash=location.hash;location.assign(url.href);return true;}
+  function latestMessage(message){report('latest',message);let dialog=document.querySelector('#latestVersionResult');if(!dialog){dialog=document.createElement('dialog');dialog.id='latestVersionResult';dialog.className='feedback-dialog';dialog.setAttribute('aria-labelledby','latestVersionResultTitle');dialog.innerHTML='<h2 id="latestVersionResultTitle">当前已经是最新版本</h2><p>已联网确认，无需重复获取或刷新，可以继续学习。</p><button class="btn primary" type="button">知道了，继续学习</button>';dialog.querySelector('button').onclick=()=>dialog.close();document.body.append(dialog);}if(!dialog.open)dialog.showModal();}
+  let latestPromise=null;
+  async function openLatest(){
+    if(latestPromise)return latestPromise;
+    if(navigator.onLine===false){report('offline','当前离线，无法确认最新版本；请联网后重试');return false;}
+    latestPromise=(async()=>{
+      const link=document.querySelector('.latest-entry-link');link?.setAttribute('aria-busy','true');
+      report('checking','正在联网核对最新版本…');
+      try{
+        let release;
+        for(let attempt=0;attempt<2;attempt++){
+          const abort=typeof AbortController!=='undefined'?new AbortController():null;
+          try{const url=new URL('release.json',appBase);url.searchParams.set('_check',Date.now().toString(36)+'-latest-'+attempt);release=await bounded(fetch(url.href,{cache:'no-store',headers:{'Cache-Control':'no-cache'},...(abort?{signal:abort.signal}:{})}).then(r=>{if(!r.ok)throw Error('版本服务暂不可用，请稍后重试');return r.json();}),12000,'联网检查超时，请重试');break;}catch(error){if(attempt===1)throw error;}finally{abort?.abort();}
+        }
+        if(release?.schemaVersion!==1||typeof release.version!=='string'||!release.version||release.version.length>100)throw Error('版本信息不完整，请稍后重试');
+        state.latestVersion=release.version;state.checkedAt=Date.now();
+        if(state.currentVersion===release.version){latestMessage('当前已经是最新版本，无需重复获取或刷新');return false;}
+        if(window.prepareRequiredPwaUpdate?.()===false)return false;
+        const url=location.hostname==='huahai061x-ship-it.github.io'?new URL('https://huahai061x-ship-it.github.io/ShenRenLiu/latest.html'):new URL('latest.html',appBase);url.search=location.search;url.searchParams.delete('entry');url.hash=location.hash;location.assign(url.href);return true;
+      }catch(error){report(navigator.onLine===false?'offline':'error',error.message||'未能确认最新版本，请稍后重试');window.toast?.(state.updateMessage);return false;}
+      finally{link?.removeAttribute('aria-busy');latestPromise=null;}
+    })();return latestPromise;
+  }
   window.PWA_INSTALL={state,standalone,notify,inspectManifest,promptInstall,requestUpdate,checkUpdate,assetURL,openLatest};
   const autoCheck=()=>checkUpdate();
   window.addEventListener('pageshow',event=>checkUpdate({force:!!event.persisted}));

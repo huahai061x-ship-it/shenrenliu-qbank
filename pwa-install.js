@@ -13,13 +13,12 @@
   const releaseURL=()=>{const url=appBase.pathname==='/shenrenliu-qbank/'?new URL('/ShenRenLiu/latest.html',appBase):new URL('releases/'+encodeURIComponent(state.latestVersion)+'.html',appBase);url.search=location.search||'';url.searchParams.delete('entry');url.hash=location.hash||'';return url.href;};
   const standalone = () => !!(window.matchMedia?.('(display-mode: standalone)').matches || navigator.standalone);
   function showBuildIdentity(){
-    const line=document.querySelector('#siteVersionLine'),time=document.querySelector('#siteBuildTime'),id=document.querySelector('#siteBuildId');if(!line||!time||!id)return;
+    const line=document.querySelector('#siteVersionLine'),time=document.querySelector('#siteBuildTime');if(!line||!time)return;
     const version=state.currentVersion,published=document.querySelector('meta[name="build-time"]')?.content;
-    if(!version||version.includes('__BUILD_VERSION__')){time.textContent='本地预览';id.textContent='未发布';return;}
-    id.textContent=version.slice(0,8);id.title=version;
+    if(!version||version.includes('__BUILD_VERSION__')){time.textContent='本地预览';return;}
     if(published&&!Number.isNaN(Date.parse(published))){const date=new Date(published);let text;try{text=new Intl.DateTimeFormat('zh-CN',{timeZone:'Asia/Shanghai',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).format(date).replace(/\//g,'-');}catch(_){text=new Date(date.getTime()+8*3600000).toISOString().slice(0,16).replace('T',' ');}
-      time.textContent=text;time.dateTime=date.toISOString();line.title='本机版本 v3.0；更新时间 '+text+'（北京时间）；版本标识 '+version;
-    }else{time.textContent='未标时间';line.title='本机版本标识 '+version;}
+      time.textContent=text;time.dateTime=date.toISOString();line.title='本机版本 v3.0；更新时间 '+text+'（北京时间）';
+    }else{time.textContent='未标时间';line.title='本机版本 v3.0';}
   }
   const notify = () => {showBuildIdentity();state.controlled=!!navigator.serviceWorker?.controller;const button=document.querySelector('#siteUpdateButton'),status=document.querySelector('#siteUpdateStatus');if(button){button.disabled=state.checking;button.textContent=state.updateAvailable?'↻ 发现新版本':state.checking?'↻ 正在检查…':'↻ 检查更新';button.setAttribute?.('aria-busy',String(state.checking));}if(status){status.textContent=state.updateMessage;status.title=state.updateMessage;if(status.dataset)status.dataset.state=state.updateStatus;}window.updateInstallUI?.();window.updatePwaNotice?.();};
   window.addEventListener('beforeinstallprompt', event => {

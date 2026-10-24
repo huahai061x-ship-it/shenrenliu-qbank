@@ -246,7 +246,8 @@ function backupMetrics(){let ag=S.aggregateStats||emptyAggregate();return {answe
 function backupReminder(){let now=Date.now(),m=backupMetrics(),last=S.settings.lastBackup||0,b=S.settings.lastBackupMetrics||{},active=m.answers>=20||m.exams>=2||m.wrong>=5||m.favorites>=5;if(!active||now<(S.settings.backupDismissedUntil||0))return '';let overdue=last&&now-last>7*86400000,changed=(m.exams-(b.exams||0)>=3)||(m.wrong-(b.wrong||0)>=5)||(m.favorites-(b.favorites||0)>=5);if(last&&!overdue&&!changed)return '';let message=last?'你的学习记录已有较多新增内容，建议导出一次，避免浏览器数据丢失。':'你已经产生了较多学习记录，但还没有备份，建议现在导出一次。';return `<div class="panel backup-reminder"><div><b>💾 数据备份提醒</b><span>${message}</span></div><div><button class="btn primary" onclick="${BANK_RUNTIME?'BANK_RUNTIME.openBackup()':'exportData()'}">立即备份</button><button class="btn" onclick="dismissBackupReminder()">稍后提醒</button></div></div>`}
 function backupStatusText(){return S.settings.lastBackup?`上次备份：${new Date(S.settings.lastBackup).toLocaleDateString()}`:'从未备份：尚未备份'}
 let renderScrollTicket=0;
-function app(html,scrollMode='top'){window.LULU?.stop();let y=window.scrollY,ticket=++renderScrollTicket;$('#main').innerHTML=html;window.LULU?.loadImages();updateWatermark();updatePwaNotice();requestAnimationFrame(()=>{if(ticket!==renderScrollTicket)return;if(scrollMode==='preserve')window.scrollTo({top:y,behavior:'instant'});else if(scrollMode==='question'){let q=$('.question-focus')||$('.q-stem')||$('.section-title')||$('.question-card');if(q){let height=$('.topbar')?.getBoundingClientRect?.().height||64;if(q.style)q.style.scrollMarginTop=(height+10)+'px';q.scrollIntoView({block:'start',behavior:'instant'})}else window.scrollTo({top:0,behavior:'instant'})}else window.scrollTo({top:0,behavior:'instant'})})}
+function pageHeaderHeight(){const header=$('.topbar');return header?.hidden?0:(header?.getBoundingClientRect?.().height??64)}
+function app(html,scrollMode='top'){const header=$('.topbar');if(header)header.hidden=view!=='home';window.LULU?.stop();let y=window.scrollY,ticket=++renderScrollTicket;$('#main').innerHTML=html;window.LULU?.loadImages();updateWatermark();updatePwaNotice();requestAnimationFrame(()=>{if(ticket!==renderScrollTicket)return;if(scrollMode==='preserve')window.scrollTo({top:y,behavior:'instant'});else if(scrollMode==='question'){let q=$('.question-focus')||$('.q-stem')||$('.section-title')||$('.question-card');if(q){let height=pageHeaderHeight();if(q.style)q.style.scrollMarginTop=(height+10)+'px';q.scrollIntoView({block:'start',behavior:'instant'})}else window.scrollTo({top:0,behavior:'instant'})}else window.scrollTo({top:0,behavior:'instant'})})}
 function navHome(force=false){if(session&&session.kind!=='exam')persistPractice();closeEasterEgg();if(!force&&isActiveExam()&&!confirm('确定放弃当前考试吗？本卷进度将被清除。'))return;if(isTimedSession())pauseExamTimer();if(isActiveExam()){S.lastSession=null;saveStore()}stopTimerTicker();document.body.classList.remove('sheet-open');view='home';session=null;current=0;renderHome()}
 
 function shortcutCards(){return normalizeShortcuts(S.settings.homeShortcuts).map(id=>{let x=SHORTCUT_MAP[id];return modeCard(x.icon,x.title,x.desc,x.action,'core')}).join('')}
@@ -560,8 +561,8 @@ function exposeSubmittedFeedback(){
  if(!window.matchMedia('(max-width:600px)').matches)return;
  let owner=session,index=current,ticket=renderScrollTicket;
  requestAnimationFrame(()=>{if(owner!==session||index!==current||ticket!==renderScrollTicket)return;
-  let el=$('.immediate-feedback')||$('.open-reference'),r=el?.getBoundingClientRect?.(),bar=$('.topbar')?.getBoundingClientRect?.();if(!r)return;
-  let top=(bar?.bottom||64)+12,bottom=window.visualViewport?.height||window.innerHeight||800;
+  let el=$('.immediate-feedback')||$('.open-reference'),r=el?.getBoundingClientRect?.();if(!r)return;
+  let top=pageHeaderHeight()+12,bottom=window.visualViewport?.height||window.innerHeight||800;
   if(r.top<top||r.top+Math.min(r.height,180)>bottom-72)window.scrollTo({top:Math.max(0,window.scrollY+r.top-top),behavior:'instant'});
  });
 }

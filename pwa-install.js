@@ -111,7 +111,7 @@
         const versionURL=new URL('release.json',appBase);versionURL.searchParams.set('_check',Date.now().toString(36));
         const abort=typeof AbortController!=='undefined'?new AbortController():null;
         let response;
-        try{response=await bounded(fetch(versionURL.href,{cache:'no-store',...(abort?{signal:abort.signal}:{}),headers:{'Cache-Control':'no-cache'}}).then(async r=>{if(!r.ok)throw Error('版本服务暂不可用');return r.json();}),12000,'联网检查超时，请检查网络后重试');}finally{abort?.abort();}
+        try{for(let attempt=0;attempt<2;attempt++){try{versionURL.searchParams.set('_check',Date.now().toString(36)+'-'+attempt);response=await bounded(fetch(versionURL.href,{cache:'no-store',...(abort?{signal:abort.signal}:{}),headers:{'Cache-Control':'no-cache'}}).then(async r=>{if(!r.ok)throw Error('版本服务暂不可用');return r.json();}),12000,'联网检查超时，请检查网络后重试');break;}catch(error){if(attempt===1||navigator.onLine===false)throw error;report('checking','首次联网未成功，正在重新核对版本…');}}}finally{abort?.abort();}
         if(response?.schemaVersion!==1||typeof response.version!=='string'||!response.version||response.version.length>100)throw Error('版本信息不完整，请稍后重试');
         state.latestVersion=response.version;
         let registration;try{registration=await bounded(registerWorker(),navigator.serviceWorker?.controller?15000:5000,'更新服务连接超时，请重试');}catch(error){state.webviewFallback=true;state.swError=error.message;registration=null;}

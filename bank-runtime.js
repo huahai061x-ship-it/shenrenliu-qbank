@@ -4,7 +4,7 @@ const R=window.BANK_RUNTIME={errors:[],app:null};let ctx,storage,originals=[];
 const readJSON=(key,fallback)=>{let raw=localStorage.getItem(key);return raw?JSON.parse(raw):fallback};
 function message(s){let n=document.querySelector('#backupDialog[open] #backupStatus')||document.querySelector('#bankStatus');if(n)n.textContent=s;else alert(s)}
 function download(name,obj){let a=document.createElement('a'),url=URL.createObjectURL(new Blob([JSON.stringify(obj,null,2)],{type:'application/json'}));a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)}
-function script(src){return new Promise((resolve,reject)=>{if(!/^[\w./-]+\.js$/.test(src)||src.includes('..')||src.startsWith('/'))return reject(Error('题库脚本路径无效'));let s=document.createElement('script');s.src=src;s.onload=resolve;s.onerror=()=>reject(Error('无法加载 '+src));document.head.appendChild(s)})}
+function script(src){return new Promise((resolve,reject)=>{if(!/^[\w./-]+\.js$/.test(src)||src.includes('..')||src.startsWith('/'))return reject(Error('题库脚本路径无效'));let s=document.createElement('script');s.src=window.PWA_INSTALL?.assetURL?.(src)||src;s.onload=resolve;s.onerror=()=>reject(Error('无法加载 '+src));document.head.appendChild(s)})}
 function saveCurrent(){if(!R.app)return true;return R.app.saveCurrent()!==false}
 R.readStore=()=>{try{return storage.read()}catch(e){storage.blocked=true;throw e}};
 R.persistStore=s=>R.reloading?true:storage.persist(s);

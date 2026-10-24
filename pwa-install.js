@@ -1,11 +1,16 @@
 // Loaded in <head>, before the manifest and the question-bank scripts.
 (() => {
+  // Version-specific entry pages keep the same origin, storage, and canonical app scope.
+  try{const base=document.querySelector('base[data-release-root]');if(base?.getAttribute){base.href=new URL(base.getAttribute('href'),location.href).href;const url=new URL(base.href);url.search=location.search;url.hash=location.hash;window.history.replaceState(window.history.state,'',url.href);}}catch(_){}
   // Keep the compatibility entry marker out of the address bar without reloading or changing scope.
   try{const url=new URL(location.href);if(url.searchParams.get('entry')==='ShenRenLiu'){url.searchParams.delete('entry');window.history.replaceState(window.history.state,'',url.href);}}catch(_){}
   const state = {prompt:null, installed:false, busy:false, controlled:false, manifest:null, manifestOK:false, manifestError:'', waiting:null, updateAvailable:false, reloadRequested:false, registration:null, swError:'', checking:false, updateStatus:'idle', updateMessage:'自动检查已开启', checkedAt:0, currentVersion:document.querySelector('meta[name="build-version"]')?.content||'', latestVersion:'', downloadDone:0, downloadTotal:0};
   const appBase = new URL('./',document.baseURI);
   const watchedRegistrations=new WeakSet(),watchedWorkers=new WeakSet();
   let registrationPromise=null,checkPromise=null,lastAttempt=0;
+  const assetRoot=document.querySelector('meta[name="asset-base"]')?.content||'';
+  const assetURL=file=>/^assets\/[a-zA-Z0-9._-]+\/$/.test(assetRoot)&&!assetRoot.includes('__BUILD_VERSION__')?new URL(assetRoot+file,appBase).href:file;
+  const releaseURL=()=>{const url=new URL('releases/'+encodeURIComponent(state.latestVersion)+'.html',appBase);url.search=location.search||'';url.searchParams.delete('entry');url.hash=location.hash||'';return url.href;};
   const standalone = () => !!(window.matchMedia?.('(display-mode: standalone)').matches || navigator.standalone);
   const notify = () => {state.controlled=!!navigator.serviceWorker?.controller;const button=document.querySelector('#siteUpdateButton'),status=document.querySelector('#siteUpdateStatus');if(button){button.disabled=state.checking;button.textContent=state.updateAvailable?'↻ 发现新版本':state.checking?'↻ 正在检查…':'↻ 检查更新';button.setAttribute?.('aria-busy',String(state.checking));}if(status){status.textContent=state.updateMessage;status.title=state.updateMessage;if(status.dataset)status.dataset.state=state.updateStatus;}window.updateInstallUI?.();window.updatePwaNotice?.();};
   window.addEventListener('beforeinstallprompt', event => {
@@ -49,7 +54,7 @@
     state.updatePrepared=false;state.reloadRequested=false;
     if(window.prepareRequiredPwaUpdate){if(window.prepareRequiredPwaUpdate()===false)return false;state.updatePrepared=true;}else if(window.canReloadForPwaUpdate?.()===false){window.deferPwaUpdate?.();return false;}
     state.reloadRequested=true;
-    if(state.waiting&&(!state.waiting.state||state.waiting.state==='installed'))state.waiting.postMessage('SKIP_WAITING');else if(state.reloadOnly&&!navigator.serviceWorker){const url=new URL(location.href);url.searchParams.set('_site_update',state.latestVersion);location.replace(url.href);}else location.reload();
+    if(state.webviewFallback&&state.latestVersion)location.replace(releaseURL());else if(state.waiting&&(!state.waiting.state||state.waiting.state==='installed'))state.waiting.postMessage('SKIP_WAITING');else if(state.reloadOnly&&!navigator.serviceWorker)location.replace(releaseURL());else location.reload();
     return true;
   }
   function report(status,message) {state.updateStatus=status;state.updateMessage=message;notify();return status;}
@@ -109,13 +114,14 @@
         try{response=await bounded(fetch(versionURL.href,{cache:'no-store',...(abort?{signal:abort.signal}:{}),headers:{'Cache-Control':'no-cache'}}).then(async r=>{if(!r.ok)throw Error('版本服务暂不可用');return r.json();}),12000,'联网检查超时，请检查网络后重试');}finally{abort?.abort();}
         if(response?.schemaVersion!==1||typeof response.version!=='string'||!response.version||response.version.length>100)throw Error('版本信息不完整，请稍后重试');
         state.latestVersion=response.version;
-        const registration=await bounded(registerWorker(),15000,'更新服务连接超时，请重试');
+        let registration;try{registration=await bounded(registerWorker(),navigator.serviceWorker?.controller?15000:5000,'更新服务连接超时，请重试');}catch(error){state.webviewFallback=true;state.swError=error.message;registration=null;}
         if(!registration){
+          state.webviewFallback=true;
           if(state.currentVersion&&state.currentVersion!==state.latestVersion){state.reloadOnly=true;state.updateAvailable=true;return report('available','发现新版本，点击更新后生效');}
           if(!state.currentVersion)throw Error('当前浏览器无法核对本机版本，请使用系统浏览器打开');
         }else{
           if(foundWaiting(registration))return 'available';
-          await bounded(registration.update(),15000,'更新包检查超时，请重试');
+          try{await bounded(registration.update(),15000,'更新包检查超时，请重试');}catch(error){state.webviewFallback=true;state.swError=error.message;if(state.currentVersion!==state.latestVersion){state.reloadOnly=true;state.updateAvailable=true;return report('available','发现新版本，可使用网页方式更新');}state.checkedAt=Date.now();return report('latest','已联网确认：当前为最新版本');}
           monitorRegistration(registration);
           if(foundWaiting(registration))return 'available';
           await finishInstallation(registration);
@@ -137,12 +143,13 @@
       if(state.reloadRequested&&(state.updatePrepared||window.canReloadForPwaUpdate?.()!==false)){state.reloadRequested=false;location.reload();}
     });
     navigator.serviceWorker.addEventListener('message',event=>{
-      const data=event.data;if(data?.type!=='UPDATE_PROGRESS'||data.version===state.currentVersion)return;
+      const data=event.data;if(data?.type==='SERVER_VERSION_CHANGED'&&data.version!==state.currentVersion){checkUpdate({force:true});return;}if(data?.type!=='UPDATE_PROGRESS'||data.version===state.currentVersion)return;
       state.downloadDone=data.done;state.downloadTotal=data.total;
       if(!state.updateAvailable)report('downloading',`正在下载更新包 ${data.done}/${data.total}，可继续学习`);
     });
   }
-  window.PWA_INSTALL={state,standalone,notify,inspectManifest,promptInstall,requestUpdate,checkUpdate};
+  function openLatest(){if(navigator.onLine===false){report('offline','当前离线，请联网后获取新版');return false;}if(window.prepareRequiredPwaUpdate?.()===false)return false;const url=location.hostname==='huahai061x-ship-it.github.io'?new URL('https://huahai061x-ship-it.github.io/ShenRenLiu/latest.html'):new URL('latest.html',appBase);url.search=location.search;url.searchParams.delete('entry');url.hash=location.hash;location.assign(url.href);return true;}
+  window.PWA_INSTALL={state,standalone,notify,inspectManifest,promptInstall,requestUpdate,checkUpdate,assetURL,openLatest};
   const autoCheck=()=>checkUpdate();
   window.addEventListener('pageshow',event=>checkUpdate({force:!!event.persisted}));
   window.addEventListener('focus',autoCheck);

@@ -6,6 +6,10 @@
 
 原网址：https://huahai061x-ship-it.github.io/shenrenliu-qbank/
 
+旧移动浏览器独立取新入口：https://huahai061x-ship-it.github.io/ShenRenLiu/latest.html 。该入口绕过旧站离线控制范围读取最新页面，仍使用同账号站点来源的学习记录，不清空数据。站内顶部“获取新版”与此入口配合；普通联网入口为原站 `latest.html`。设置可查看本机发布日期和批次。
+
+每次发布由CI的verify任务运行 `scripts/verify-production.mjs`，核对线上批次及大陆三网样本线路；报告作为7天验收附件保留。探测服务不可用会明确失败，不能代替真实结果。
+
 简短入口：https://huahai061x-ship-it.github.io/ShenRenLiu/ （跳回原站，学习记录和原桌面图标继续沿用）。
 
 顶部“检查更新”可立即联网核对版本；回到前台、恢复联网和前台每2分钟也会自动检查。离线或检查失败不显示为“已是最新”。更新前保存当前输入和未交试卷，保存失败会停止更新。

@@ -3,7 +3,7 @@
   "name": "神人刘题库训练站",
   "short_name": "神人刘题库",
   "description": "v3.0 神中神版：支持选择题库、混合练习、模拟考试、逐空判分与学习记录备份。",
-  "start_url": "./",
+  "start_url": "./latest.html",
   "scope": "./",
   "display": "standalone",
   "display_override": [

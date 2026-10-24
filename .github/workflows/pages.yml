@@ -74,6 +74,8 @@ jobs:
         env:
           BUILD_VERSION: ${{ github.sha }}
         run: node scripts/build-release.mjs
+      - name: Verify release package
+        run: node tests/release-package.cjs
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v5
         with:
@@ -93,3 +95,25 @@ jobs:
       - name: Deploy GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5
+
+  verify:
+    needs: deploy
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+      - name: Verify deployed version and mainland network samples
+        env:
+          EXPECTED_BUILD: ${{ github.sha }}
+        run: node scripts/verify-production.mjs
+      - name: Preserve verification evidence
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: production-verification
+          path: verification/
+          retention-days: 7

@@ -10,7 +10,7 @@
   let registrationPromise=null,checkPromise=null,lastAttempt=0;
   const assetRoot=document.querySelector('meta[name="asset-base"]')?.content||'';
   const assetURL=file=>/^assets\/[a-zA-Z0-9._-]+\/$/.test(assetRoot)&&!assetRoot.includes('__BUILD_VERSION__')?new URL(assetRoot+file,appBase).href:file;
-  const releaseURL=()=>{const url=new URL('releases/'+encodeURIComponent(state.latestVersion)+'.html',appBase);url.search=location.search||'';url.searchParams.delete('entry');url.hash=location.hash||'';return url.href;};
+  const releaseURL=()=>{const url=appBase.pathname==='/shenrenliu-qbank/'?new URL('/ShenRenLiu/latest.html',appBase):new URL('releases/'+encodeURIComponent(state.latestVersion)+'.html',appBase);url.search=location.search||'';url.searchParams.delete('entry');url.hash=location.hash||'';return url.href;};
   const standalone = () => !!(window.matchMedia?.('(display-mode: standalone)').matches || navigator.standalone);
   const notify = () => {state.controlled=!!navigator.serviceWorker?.controller;const button=document.querySelector('#siteUpdateButton'),status=document.querySelector('#siteUpdateStatus');if(button){button.disabled=state.checking;button.textContent=state.updateAvailable?'↻ 发现新版本':state.checking?'↻ 正在检查…':'↻ 检查更新';button.setAttribute?.('aria-busy',String(state.checking));}if(status){status.textContent=state.updateMessage;status.title=state.updateMessage;if(status.dataset)status.dataset.state=state.updateStatus;}window.updateInstallUI?.();window.updatePwaNotice?.();};
   window.addEventListener('beforeinstallprompt', event => {

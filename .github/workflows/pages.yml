@@ -72,6 +72,7 @@ jobs:
           node tests/library-research-core.cjs
           node tests/beijing-clock-core.cjs
           node tests/recent-progress-core.cjs
+          node tests/routine-eggs-core.cjs
       - name: Configure Pages
         uses: actions/configure-pages@v6
       - name: Build site

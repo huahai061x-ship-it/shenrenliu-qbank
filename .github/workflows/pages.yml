@@ -69,6 +69,9 @@ jobs:
           git diff --exit-code -- banks/sinotruk-culture-official.js banks/sinotruk-culture-official.json
           node tests/culture-official-core.cjs
           node tests/content-topics-core.cjs
+          node tests/library-research-core.cjs
+          node tests/beijing-clock-core.cjs
+          node tests/recent-progress-core.cjs
       - name: Configure Pages
         uses: actions/configure-pages@v6
       - name: Build site

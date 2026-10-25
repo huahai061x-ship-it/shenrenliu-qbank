@@ -31,7 +31,7 @@ let normal=boot();setExam(normal,{n:30,rule:'normal'});normal.c.window.beginSpec
 
 let a=boot();a.c.window.renderRealExamSetup('real');a.c.window.beginRealExam('real');let firstId=Number(a.main.innerHTML.match(/原题号 #(\d+)/)[1]),q=a.c.window.QUESTION_BANK.find(z=>z.id===firstId);a.c.window.chooseOption(q.options.indexOf(q.answers[0]));a.setClock(6000);a.c.window.jumpQ(10);let saved=a.store.shenrenliu_qbank_v1,beforeMs=JSON.parse(saved).lastSession.totalActiveMs,b=boot(saved);assert(beforeMs===5000,'刷新前有效用时保存错误');assert(b.main.innerHTML.includes('继续上次考试'),'重启后未显示恢复入口');assert(JSON.parse(b.store.shenrenliu_qbank_v1).lastSession.totalActiveMs===beforeMs,'关闭期间被错误计时');b.c.window.resumeLastSession();assert(b.main.innerHTML.includes('题号 11/45'),'恢复后当前题号错误');b.c.window.jumpQ(0);assert(b.main.innerHTML.includes('option selected'),'恢复后答案丢失');b.c.window.submitExam();assert(!JSON.parse(b.store.shenrenliu_qbank_v1).lastSession,'交卷后恢复点未清除');
 
-let bad=JSON.parse(saved);bad.lastSession.schemaVersion=999;let rejected=boot(JSON.stringify(bad));assert(!rejected.main.innerHTML.includes('继续上次考试'),'未来断点schema未被安全拒绝');
+let bad=JSON.parse(saved);bad.lastSession.schemaVersion=999;let rejected=boot(JSON.stringify(bad));assert(JSON.parse(rejected.store.shenrenliu_qbank_v1).lastSession===null,'未来断点schema未被安全拒绝');
 let pages=a.c.window.getSourcePages(a.c.window.QUESTION_BANK.find(q=>q.id===302));assert(pages.join(',')==='72,73','第302题跨页数据丢失');let report=a.c.window.reviewReportText([a.c.window.QUESTION_BANK.find(q=>q.id===302)]);assert(report.includes('原题第72、73页'),'第302题待复核导出丢失第73页');
 
 let hostile=boot(JSON.stringify({favorites:[302,999999],reviewFlags:{302:1,999999:1},history:[{mode:'<img src=x onerror=alert(1)>',score:999,count:-3,durationMs:-5}],schemaVersion:1}));hostile.c.window.renderHistory('all');let migrated=JSON.parse(hostile.store.shenrenliu_qbank_v1);assert(migrated.favorites.length===1&&!migrated.reviewFlags['999999'],'非法题号未过滤');assert(!hostile.main.innerHTML.includes('<img src=x'),'历史文本未转义');assert(hostile.main.innerHTML.includes('&lt;img'),'恶意历史文本未安全显示');
@@ -45,8 +45,8 @@ for(const [name,at,value] of [['多选字符串',multiAt,'THIS_SHOULD_BE_ARRAY']
 let legacyFill=JSON.parse(JSON.stringify(snapshot));legacyFill.lastSession.answers[fillAt]=['答案一','答案二'];let legacy=boot(JSON.stringify(legacyFill));assert(JSON.parse(legacy.store.shenrenliu_qbank_v1).lastSession.answers[fillAt]==='答案一、答案二','旧版填空字符串数组未安全兼容');
 
 // C/D：题型或填空等级属于结构损坏，必须拒绝整个恢复点。
-let typeMismatch=JSON.parse(JSON.stringify(snapshot));typeMismatch.lastSession.renderTypes[multiAt]='single';assert(!boot(JSON.stringify(typeMismatch)).main.innerHTML.includes('继续上次考试'),'恢复点题型错配未拒绝');
-let levelMismatch=JSON.parse(JSON.stringify(snapshot));levelMismatch.lastSession.fillLevels[fillAt]='super';assert(!boot(JSON.stringify(levelMismatch)).main.innerHTML.includes('继续上次考试'),'非法fillLevel未拒绝');
+let typeMismatch=JSON.parse(JSON.stringify(snapshot));typeMismatch.lastSession.renderTypes[multiAt]='single';assert(JSON.parse(boot(JSON.stringify(typeMismatch)).store.shenrenliu_qbank_v1).lastSession===null,'恢复点题型错配未拒绝');
+let levelMismatch=JSON.parse(JSON.stringify(snapshot));levelMismatch.lastSession.fillLevels[fillAt]='super';assert(JSON.parse(boot(JSON.stringify(levelMismatch)).store.shenrenliu_qbank_v1).lastSession===null,'非法fillLevel未拒绝');
 
 // E/F：历史卷必须按原索引保留tuple；损坏卷不得重做。
 let corruptHistory={schemaVersion:2,history:[{mode:'索引测试',ids:[132,999999,133],renderTypes:['multiple','single','multiple'],fillLevels:['standard','standard','standard']}]},hx=boot(JSON.stringify(corruptHistory)),hr=JSON.parse(hx.store.shenrenliu_qbank_v1).history[0];assert(hr.ids.join(',')==='132,133'&&hr.renderTypes.join(',')==='multiple,multiple','历史试卷tuple发生索引错位');assert(hr.paperDamaged,'损坏历史卷未留下阻止标记');hx.c.window.redoHistoryPaper(0);assert(hx.created.some(x=>x.textContent==='该历史试卷数据损坏，无法重做'),'损坏历史卷未被安全阻止');

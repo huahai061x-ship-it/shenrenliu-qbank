@@ -9,6 +9,8 @@ function check(q,a){
  if(!text(a.topic,2))errors.push(tag+'缺少具体考点topic');
  if(!text(a.why,12))errors.push(tag+'依据why过短或包含空话');
  if(!['ready','needs_source'].includes(a.status))errors.push(tag+'必须明确ready或needs_source核验状态');
+ if(a.references!==undefined&&(!Array.isArray(a.references)||a.references.some(r=>!plain(r)||!text(r.title,2)||!/^https:\/\/[^\s]+$/.test(r.url)||!text(r.support,8))))errors.push(tag+'来源须含有效标题、HTTPS链接和具体支持范围');
+ if(a.connections!==undefined&&(!Array.isArray(a.connections)||a.connections.some(r=>!plain(r)||!Number.isInteger(r.questionId)||r.questionId<1||!text(r.reason,12))))errors.push(tag+'库内互证须含原题号及具体关系说明');
  if(q.type==='judge'){
   if(q.answers[0]==='错'&&!text(a.correction,12))errors.push(tag+'错题必须提供具体改正表述correction');
  }else{

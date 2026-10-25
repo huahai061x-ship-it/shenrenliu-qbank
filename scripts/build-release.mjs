@@ -7,7 +7,7 @@ const version = (process.env.BUILD_VERSION || 'local').replace(/[^a-zA-Z0-9._-]/
 const publishedAt=new Date().toISOString();
 const files = [
   'index.html', '①点我打开题库.html', 'release-notes.md', 'styles.css', 'questions.js',
-  'culture-insights.js', 'hos-analysis.js', 'explanation-core.js', 'backup-core.js', 'backup-ui.js', 'bank-core.js', 'bank-runtime.js', 'pedagogy.js', 'enhanced-fill.js', 'transfer-code.js', 'lulu.js', 'lulu-art.js', 'ultra-content.js', 'ultra-core.js', 'lulu-mascot.png', 'app.js', 'pwa-install.js', 'manifest.webmanifest',
+  'culture-insights.js', 'hos-analysis.js', 'explanation-core.js', 'backup-core.js', 'backup-ui.js', 'bank-core.js', 'bank-runtime.js', 'pedagogy.js', 'enhanced-fill.js', 'transfer-code.js', 'lulu.js', 'lulu-art.js', 'beijing-clock.js', 'ultra-content.js', 'ultra-core.js', 'lulu-mascot.png', 'app.js', 'pwa-install.js', 'manifest.webmanifest',
   'icon-source.svg', 'icon-16.png', 'icon-32.png', 'icon-48.png', 'icon-64.png', 'icon-128.png', 'icon-256.png', 'icon-192.png', 'icon-512.png', 'icon-192-maskable.png', 'icon-512-maskable.png'
 ];
 

@@ -19,6 +19,7 @@ function validate(e){
  if(d.settings!=null&&!plain(d.settings)||e.scopeSessions!=null&&!plain(e.scopeSessions)||e.bundles!=null&&!Array.isArray(e.bundles))throw Error('备份设置、未交试卷或题库格式无效');
  for(const s of Object.values(e.scopeSessions||{}))if(s!=null&&(!plain(s)||!Array.isArray(s.ids)||s.ids.some(n=>!Number.isSafeInteger(n)||n<1)))throw Error('未交试卷格式无效');
  if(d.recentSessions!=null&&(!Array.isArray(d.recentSessions)||d.recentSessions.length>128||d.recentSessions.some(x=>!plain(x)||!['exam','practice'].includes(x.kind)||typeof x.id!=='string'||x.id.length>80||!x.id||typeof x.scopeKey!=='string'||x.scopeKey.split('|').some(n=>!e.includedBankIds.includes(n))||!Number.isFinite(x.time)||x.time<0||!plain(x.snapshot))))throw Error('最近进度格式或题库身份无效');
+ if(d.learningPlans!=null){if(!plain(d.learningPlans))throw Error('学习计划格式无效');for(const [id,p] of Object.entries(d.learningPlans)){window.STUDY_PLAN_CORE.validate(p);if(id!==p.id||p.keys.some(k=>!e.includedBankIds.includes(k.split(':')[0])))throw Error('学习计划题库身份无效');}}
  return true;
 }
 function encode(payload,createdAt=new Date().toISOString()){
@@ -61,6 +62,7 @@ function merge(local,incoming){
  a.mastery={...b.mastery,...a.mastery};a.favorites=[...new Set([...(a.favorites||[]),...(b.favorites||[])])];
  for(const [n,r] of Object.entries(a.pendingPractice||{}))if((a.learning?.[n]?.last||0)>=(r.time||0))delete a.pendingPractice[n];
  let activityIds=new Set(),activityScopes=new Map();a.recentSessions=[...(a.recentSessions||[]),...(b.recentSessions||[])].filter(x=>!activityIds.has(x.id)&&activityIds.add(x.id)).filter(x=>{let count=activityScopes.get(x.scopeKey)||0;activityScopes.set(x.scopeKey,count+1);return count<2}).sort((x,y)=>y.time-x.time).slice(0,128);a.recentSessionsMigrated=a.recentSessions.length>0;
+ a.learningPlans||={};for(const [id,p] of Object.entries(b.learningPlans||{})){a.learningPlans[id]=a.learningPlans[id]?window.STUDY_PLAN_CORE.merge(a.learningPlans[id],p)||a.learningPlans[id]:clone(p);}
  a.history=histories(a.history,b.history);a.aggregateStats=maxTree(a.aggregateStats,b.aggregateStats);
  a.examRotation=maxTree(a.examRotation,b.examRotation);
  if((b.examRotation?.round||0)>(local.data.examRotation?.round||0))a.examRotation.recent=clone(b.examRotation.recent||[]);

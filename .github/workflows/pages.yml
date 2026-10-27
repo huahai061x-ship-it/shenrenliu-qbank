@@ -82,8 +82,11 @@ jobs:
           node tests/cloud-sync-core.cjs
           node tests/cloud-sync-server.cjs
           node tests/cloud-sync-controller.cjs
+          node tests/cloud-fast-controller.cjs
           node tests/cloud-sync-transport.cjs
+          node tests/cloud-sync-performance.cjs
           node tests/cloud-full-sync-core.cjs
+          node tests/study-plan-core.cjs
           node tests/cloud-full-sync-server.cjs
       - name: Build pinned email login SDK
         run: |

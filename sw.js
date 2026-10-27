@@ -5,11 +5,11 @@ const IMAGE_CACHE = 'shenrenliu-qbank-images-v2';
 const LEGACY_IMAGE_CACHE = 'shenrenliu-qbank-images-v1';
 const REQUIRED = [
   './', './index.html', './styles.css', './banks/catalog.js', './banks/sinotruk-culture-official.js', './hos-analysis.js', './explanation-core.js', './backup-core.js', './backup-ui.js', './bank-core.js', './bank-runtime.js', './questions.js',
-  './pedagogy.js', './enhanced-fill.js', './transfer-code.js', './lulu.js', './lulu-art.js', './lulu-avatar.js', './routine-eggs.js', './beijing-clock.js', './ultra-content.js', './ultra-core.js', './app.js', './pwa-install.js',
+  './pedagogy.js', './enhanced-fill.js', './transfer-code.js', './lulu.js', './lulu-art.js', './lulu-avatar.js', './routine-eggs.js', './beijing-clock.js', './study-plan-core.js', './study-plan-ui.js', './lulu-fortunes.js', './ultra-content.js', './ultra-core.js', './app.js', './pwa-install.js',
   './cloud-sync-config.js', './cloud-sync-recovery.js', './cloud-sync-payload.js', './cloud-sync-core.js', './cloud-sync-cloudbase.js', './cloud-sync.js',
   './styles.css?v=3.0-shenzhongshen-r1', './app.js?v=3.0-shenzhongshen-r1', './pwa-install.js?v=3.0-shenzhongshen-r1', './pwa-install.js?v=3.0-update-20261024'
 ];
-const OPTIONAL = ['./vendor/cloudbase-3.10.3.js', './①点我打开题库.html', './manifest.webmanifest', './icon-source.svg', './icon-16.png', './icon-32.png', './icon-48.png', './icon-64.png', './icon-128.png', './icon-256.png', './icon-192.png', './icon-512.png', './icon-192-maskable.png', './icon-512-maskable.png', './manifest.webmanifest?v=3.0-shenzhongshen-r1', ...[16,32,48,64,128,192,256,512].map(n=>`./icon-${n}.png?v=3.0-shenzhongshen-r1`), './icon-192-maskable.png?v=3.0-shenzhongshen-r1', './icon-512-maskable.png?v=3.0-shenzhongshen-r1'];
+const OPTIONAL = ['./vendor/cloudbase-auth-functions-3.10.3.js', './①点我打开题库.html', './manifest.webmanifest', './icon-source.svg', './icon-16.png', './icon-32.png', './icon-48.png', './icon-64.png', './icon-128.png', './icon-256.png', './icon-192.png', './icon-512.png', './icon-192-maskable.png', './icon-512-maskable.png', './manifest.webmanifest?v=3.0-shenzhongshen-r1', ...[16,32,48,64,128,192,256,512].map(n=>`./icon-${n}.png?v=3.0-shenzhongshen-r1`), './icon-192-maskable.png?v=3.0-shenzhongshen-r1', './icon-512-maskable.png?v=3.0-shenzhongshen-r1'];
 const VERSIONED=[...new Set(REQUIRED.filter(url=>/\.(js|css)(\?|$)/.test(url)).map(url=>'./assets/'+BUILD_VERSION+'/'+url.slice(2).split('?')[0]))];
 const RELEASE_PAGE='./releases/'+BUILD_VERSION+'.html';
 const DECORATIVE=['./lulu-mascot.png','./culture-insights.js'];

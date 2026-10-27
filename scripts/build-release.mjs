@@ -8,7 +8,7 @@ const version = (process.env.BUILD_VERSION || 'local').replace(/[^a-zA-Z0-9._-]/
 const publishedAt=new Date().toISOString();
 const files = [
   'index.html', '①点我打开题库.html', 'release-notes.md', 'styles.css', 'questions.js',
-  'culture-insights.js', 'hos-analysis.js', 'explanation-core.js', 'backup-core.js', 'backup-ui.js', 'bank-core.js', 'bank-runtime.js', 'pedagogy.js', 'enhanced-fill.js', 'transfer-code.js', 'lulu.js', 'lulu-art.js', 'lulu-avatar.js', 'routine-eggs.js', 'cloud-sync-config.js', 'cloud-sync-recovery.js', 'cloud-sync-payload.js', 'cloud-sync-core.js', 'cloud-sync-cloudbase.js', 'cloud-sync.js', 'beijing-clock.js', 'ultra-content.js', 'ultra-core.js', 'lulu-mascot.png', 'app.js', 'pwa-install.js', 'manifest.webmanifest',
+  'culture-insights.js', 'hos-analysis.js', 'explanation-core.js', 'backup-core.js', 'backup-ui.js', 'bank-core.js', 'bank-runtime.js', 'pedagogy.js', 'enhanced-fill.js', 'transfer-code.js', 'lulu.js', 'lulu-art.js', 'lulu-avatar.js', 'routine-eggs.js', 'cloud-sync-config.js', 'cloud-sync-recovery.js', 'cloud-sync-payload.js', 'cloud-sync-core.js', 'cloud-sync-cloudbase.js', 'cloud-sync.js', 'beijing-clock.js', 'study-plan-core.js', 'study-plan-ui.js', 'lulu-fortunes.js', 'ultra-content.js', 'ultra-core.js', 'lulu-mascot.png', 'app.js', 'pwa-install.js', 'manifest.webmanifest',
   'icon-source.svg', 'icon-16.png', 'icon-32.png', 'icon-48.png', 'icon-64.png', 'icon-128.png', 'icon-256.png', 'icon-192.png', 'icon-512.png', 'icon-192-maskable.png', 'icon-512-maskable.png'
 ];
 
@@ -19,9 +19,10 @@ vm.runInNewContext(await readFile(path.join(root,'cloud-sync-config.js'),'utf8')
 const cloudConfig=cloudConfigContext.window.QBANK_CLOUD_CONFIG;
 if(cloudConfig?.enabled){
   if(!cloudConfig.envId)throw Error('Cloud sync enabled without an environment ID');
-  if(cloudConfig.sdkURL!=='vendor/cloudbase-3.10.3.js')throw Error('Unreviewed cloud client path');
+  if(cloudConfig.sdkURL!=='vendor/cloudbase-auth-functions-3.10.3.js')throw Error('Unreviewed cloud client path');
   await mkdir(path.join(output,'vendor'),{recursive:true});
-  await cp(path.join(root,'cloud/build/client/cloudbase-3.10.3.js'),path.join(output,cloudConfig.sdkURL));
+  await cp(path.join(root,'cloud/build/client/cloudbase-auth-functions-3.10.3.js'),path.join(output,cloudConfig.sdkURL));
+  await cp(path.join(root,'cloud/build/client/cloudbase-3.10.3.js'),path.join(output,'vendor/cloudbase-3.10.3.js'));
   await cp(path.join(root,'cloud/client-sdk/node_modules/@cloudbase/js-sdk/LICENSE'),path.join(output,'vendor/cloudbase-LICENSE.txt'));
 }
 

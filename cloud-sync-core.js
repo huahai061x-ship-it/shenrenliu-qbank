@@ -2,13 +2,14 @@
 (function(root,factory){const api=factory();if(typeof module==='object'&&module.exports)module.exports=api;else root.CLOUD_SYNC_CORE=api;})(typeof window!=='undefined'?window:globalThis,()=>{
   'use strict';
   const P=typeof module==='object'&&module.exports?require('./cloud-sync-payload.js'):window.CLOUD_SYNC_PAYLOAD;
+  const PLAN=typeof module==='object'&&module.exports?require('./study-plan-core.js'):window.STUDY_PLAN_CORE;
   const QUESTION_FIELDS=['favorite','mastery','wrong','learning','seen','reviewFlags','reviewNotes','pendingPractice','difficultyProgress','rotation'];
-  const FIELDS=[...QUESTION_FIELDS,'statistics','exam','activity','preferences','examRotation','openStudy','easterEggs'],DOMAINS=['qq.com','vip.qq.com','foxmail.com','163.com','126.com','yeah.net','sina.com','sina.cn','sohu.com'];
+  const FIELDS=[...QUESTION_FIELDS,'statistics','exam','activity','preferences','examRotation','openStudy','easterEggs','learningPlan'],DOMAINS=['qq.com','vip.qq.com','foxmail.com','163.com','126.com','yeah.net','sina.com','sina.cn','sohu.com'];
   const plain=x=>!!x&&typeof x==='object'&&!Array.isArray(x),clone=x=>JSON.parse(JSON.stringify(x));
   function email(input){const value=String(input||'').trim().toLowerCase();if(value.length>254||! /^[a-z0-9][a-z0-9.!#$%&'*+\/=?^_`{|}~-]{0,63}@[a-z0-9.-]+$/.test(value)||value.split('@')[0].includes('..')||!DOMAINS.includes(value.split('@')[1]))throw Error('请使用QQ、网易、 新浪或搜狐等当前支持的大陆常用邮箱');return value;}
   function key(q){const bank=q.bankId||'hos_2026',id=q.sourceQuestionId||q.id;const value=bank+':'+id;if(!validKey(value))throw Error('题目身份无效');return value;}
   const validKey=x=>typeof x==='string'&&/^[a-z][a-z0-9_-]{0,47}:[1-9][0-9]{0,5}$/.test(x);
-  const STORE_FIELDS={schemaVersion:'local-format',favorites:'favorite',mastery:'mastery',wrong:'wrong',learning:'learning',seen:'seen',reviewFlags:'reviewFlags',reviewNotes:'reviewNotes',pendingPractice:'pendingPractice',difficultyProgress:'difficultyProgress',aggregateStats:'statistics',history:'exam',recentSessions:'activity',lastSession:'activity-derived',recentSessionsMigrated:'activity-derived',settings:'preferences-with-device-backup-exclusions',examRotation:'rotation+examRotation',openStudy:'openStudy',easterEggs:'easterEggs'};
+  const STORE_FIELDS={schemaVersion:'local-format',favorites:'favorite',mastery:'mastery',wrong:'wrong',learning:'learning',seen:'seen',reviewFlags:'reviewFlags',reviewNotes:'reviewNotes',pendingPractice:'pendingPractice',difficultyProgress:'difficultyProgress',aggregateStats:'statistics',history:'exam',recentSessions:'activity',lastSession:'activity-derived',recentSessionsMigrated:'activity-derived',settings:'preferences-with-device-backup-exclusions',examRotation:'rotation+examRotation',openStudy:'openStudy',easterEggs:'easterEggs',learningPlans:'learningPlan'};
   const recordId=(key,field)=>key+'/'+field;
   function stable(value){if(Array.isArray(value))return '['+value.map(stable).join(',')+']';if(plain(value))return '{'+Object.keys(value).sort().map(k=>JSON.stringify(k)+':'+stable(value[k])).join(',')+'}';return JSON.stringify(value);}
   const same=(a,b)=>stable(a)===stable(b);
@@ -29,10 +30,23 @@
       const paper=value.kind==='exam'?value.snapshot.paperId:value.snapshot.session?.paperId;
       if(paper!==value.id||value.kind==='exam'&&!Array.isArray(value.snapshot.ids)||value.kind==='practice'&&!Array.isArray(value.snapshot.session?.items))throw Error('恢复进度与试卷身份不一致');
     }
+    if(field==='learningPlan')PLAN.validate(value);
     if(field==='statistics')for(const n of ['totalAnswers','totalCorrect','totalStudyMs','totalExams','highestScore'])if(value[n]!=null&&(!Number.isFinite(value[n])||value[n]<0))throw Error('累计统计无效');
   }
-  function validateIdentity(row){if(QUESTION_FIELDS.includes(row.field)){if(!/^[a-z][a-z0-9_-]{0,47}:[1-9][0-9]{0,5}$/.test(row.key)||row.key==='global:1')throw Error('逐题记录身份无效');return;}if(row.field==='exam'){if(!row.key.startsWith('paper_')||row.value&&!P.manifest(row.value)&&row.key!==entityKey('paper',examIdentity(row.value)))throw Error('试卷身份不匹配');}else if(row.field==='activity'){if(!row.key.startsWith('activity_')||row.value&&!P.manifest(row.value)&&row.key!==entityKey('activity',row.value.id))throw Error('恢复进度身份不匹配');}else if(row.key!=='global:1')throw Error('账号学习记录身份无效');}
+  function validateIdentity(row){if(QUESTION_FIELDS.includes(row.field)){if(!/^[a-z][a-z0-9_-]{0,47}:[1-9][0-9]{0,5}$/.test(row.key)||row.key==='global:1')throw Error('逐题记录身份无效');return;}if(row.field==='exam'){if(!row.key.startsWith('paper_')||row.value&&!P.manifest(row.value)&&row.key!==entityKey('paper',examIdentity(row.value)))throw Error('试卷身份不匹配');}else if(row.field==='activity'){if(!row.key.startsWith('activity_')||row.value&&!P.manifest(row.value)&&row.key!==entityKey('activity',row.value.id))throw Error('恢复进度身份不匹配');}else if(row.field==='learningPlan'){if(!row.key.startsWith('plan_')||row.value&&!P.manifest(row.value)&&row.key!==entityKey('plan',row.value.id))throw Error('学习计划身份不匹配');}else if(row.key!=='global:1')throw Error('账号学习记录身份无效');}
   function forkActivity(value,id,time){const out=clone(value);out.id=id;out.time=time;if(out.kind==='exam'){out.snapshot.paperId=id;out.snapshot.title=(out.snapshot.title||'考试')+' · 冲突副本';}else{out.snapshot.session.paperId=id;out.snapshot.session.title=(out.snapshot.session.title||'背诵')+' · 冲突副本';}validateValue('activity',out);return out;}
+  function mergeActivityTiming(a,b){
+    if(!a||!b||a.id!==b.id||a.kind!==b.kind||a.scopeKey!==b.scopeKey)return null;
+    const different=Symbol('different'),timing=new Set(['time','timeMs','totalActiveMs']);
+    function merge(x,y,key='',clock=false){
+      const isClock=clock||timing.has(key);
+      if(isClock&&typeof x==='number'&&typeof y==='number'&&Number.isFinite(x)&&Number.isFinite(y))return Math.max(x,y);
+      if(Array.isArray(x)&&Array.isArray(y)){if(x.length!==y.length)return different;const out=[];for(let i=0;i<x.length;i++){const v=merge(x[i],y[i],'',isClock);if(v===different)return different;out.push(v);}return out;}
+      if(plain(x)&&plain(y)){const keys=Object.keys(x);if(keys.length!==Object.keys(y).length||keys.some(k=>!Object.hasOwn(y,k)))return different;const out={};for(const k of keys){const v=merge(x[k],y[k],k,false);if(v===different)return different;out[k]=v;}return out;}
+      return same(x,y)?clone(x):different;
+    }
+    const value=merge(a,b);if(value===different)return null;validateValue('activity',value);return value;
+  }
   function validateRecord(row){if(!plain(row)||!validKey(row.key)||!FIELDS.includes(row.field)||!Number.isSafeInteger(row.rev)||row.rev<1)throw Error('云端记录结构无效');validateValue(row.field,row.value);validateIdentity(row);return row;}
   function validateOp(op){if(!plain(op)||!validKey(op.key)||!FIELDS.includes(op.field)||!Number.isSafeInteger(op.baseRev)||op.baseRev<0||typeof op.id!=='string'||! /^[a-zA-Z0-9_-]{8,100}$/.test(op.id))throw Error('同步操作结构无效');validateValue(op.field,op.value);validateIdentity(op);return op;}
   function batch(operations){const result=[];let bytes=0;for(const op of operations){validateOp(op);const encoded=P.encode(op.value);const size=P.length(JSON.stringify({...op,value:encoded.value}))+1;if(size>200000)throw Error('单条同步数据过大');if(result.length>=50||bytes+size>200000)break;result.push(op);bytes+=size;}return result;}
@@ -46,6 +60,7 @@
       const r=store.examRotation;if(r?.usage?.[q.id]!=null||r?.lastSeenRound?.[q.id]!=null)put(k,'rotation',{usage:r.usage?.[q.id]||0,lastSeenRound:r.lastSeenRound?.[q.id]||0});
     }
     if(store.aggregateStats)put('global:1','statistics',clone(store.aggregateStats));
+    for(const plan of Object.values(store.learningPlans||{}))put(entityKey('plan',plan.id),'learningPlan',clone(plan));
     for(const h of store.history||[])put(entityKey('paper',examIdentity(h)),'exam',clone(h));
     for(const activity of store.recentSessions||[])put(entityKey('activity',activity.id),'activity',clone(activity));
     if(store.settings){const {lastBackup,backupDismissedUntil,lastBackupMetrics,...preferences}=store.settings;put('global:1','preferences',clone(preferences));}
@@ -85,6 +100,7 @@
         else{const field=row.field;out[field]||={};if(value===null)delete out[field][q.id];else out[field][q.id]=clone(value);}continue;}
       if(row.field==='exam'){if(value&&(value.ids||[]).some(id=>!ids.has(id)))throw Error('历史试卷需要的题库尚未加载，请先导入相同题库');value===null?history.delete(row.key):history.set(row.key,clone(value));}
       else if(row.field==='activity'){const old=activities.get(row.key);if(old)scopes.add(old.scopeKey);if(value){const referenced=value.kind==='exam'?value.snapshot.ids:value.snapshot.session.items.map(i=>i.questionId);if(referenced.some(id=>!ids.has(id)))throw Error('恢复进度需要的题库尚未加载，请先导入相同题库');scopes.add(value.scopeKey);activities.set(row.key,clone(value));}else activities.delete(row.key);}
+      else if(row.field==='learningPlan'){out.learningPlans||={};if(value===null){for(const id of Object.keys(out.learningPlans))if(entityKey('plan',id)===row.key)delete out.learningPlans[id];}else out.learningPlans[value.id]=clone(value);}
       else if(row.field==='statistics')out.aggregateStats=value===null?{}:clone(value);
       else if(row.field==='preferences'){const local=out.settings||{};out.settings={...(value||{}),lastBackup:local.lastBackup||0,backupDismissedUntil:local.backupDismissedUntil||0,lastBackupMetrics:clone(local.lastBackupMetrics||{})};}
       else if(row.field==='examRotation')out.examRotation={...(out.examRotation||{}),round:value?.round||0,recent:clone(value?.recent||[])};
@@ -94,5 +110,5 @@
     let retired=false;const completed=new Set([...history.values()].map(h=>h.paperId).filter(Boolean));for(const [id,row] of activities)if(row.kind==='exam'&&completed.has(row.id)){scopes.add(row.scopeKey);activities.delete(id);retired=true;}if(rows.some(r=>r.field==='activity')||retired){const counts=new Map();out.recentSessions=[...activities.values()].sort((a,b)=>b.time-a.time).filter(r=>{const n=counts.get(r.scopeKey)||0;counts.set(r.scopeKey,n+1);return n<2}).slice(0,128);out.recentSessionsMigrated=true;out.__cloudActivityScopes=[...scopes];}
     return out;
   }
-  return {FIELDS,QUESTION_FIELDS,STORE_FIELDS,forkActivity,DOMAINS,entityKey,examIdentity,emptyValue,compactState,restoreState,email,key,recordId,same,clone,validateValue,validateRecord,validateOp,batch,applyOperation,values,bootstrap,capture,acknowledge,resolve,project};
+  return {FIELDS,QUESTION_FIELDS,STORE_FIELDS,mergeLearningPlan:(a,b)=>a&&b?PLAN.merge(a,b):null,forkActivity,mergeActivityTiming,DOMAINS,entityKey,examIdentity,emptyValue,compactState,restoreState,email,key,recordId,same,clone,validateValue,validateRecord,validateOp,batch,applyOperation,values,bootstrap,capture,acknowledge,resolve,project};
 });

@@ -8,7 +8,7 @@ function storageNames(scope=process.env.QBANK_SYNC_SCOPE||'test'){
 function createService(repo){
   return async function(request,identity){
     if(typeof identity?.uid!=='string'||!identity.uid||identity.uid.length>128||identity.isAnonymous!==false)throw Error('请先通过邮箱验证码登录');
-    const actions={prepareBlob:['action','manifest'],pull:['action','cursor'],push:['action','operations'],putBlob:['action','hash','index','total','content'],getBlob:['action','hash','index','total'],putBlobs:['action','hash','total','chunks'],getBlobs:['action','hash','total','indices']};
+    const actions={prepareBlob:['action','manifest'],pull:['action','cursor','plans'],push:['action','operations'],putBlob:['action','hash','index','total','content'],getBlob:['action','hash','index','total'],putBlobs:['action','hash','total','chunks'],getBlobs:['action','hash','total','indices']};
     if(!request||!actions[request.action]||Object.keys(request).some(k=>!actions[request.action].includes(k)))throw Error('同步请求无效');
     if(Buffer.byteLength(JSON.stringify(request))>262144)throw Error('同步批次过大');
     const owner=identity.uid,response=data=>({schemaVersion:1,protocolVersion:2,...data});
@@ -33,9 +33,10 @@ function createService(repo){
     }
     if(request.action==='pull'){
       const cursor=request.cursor||'';if(typeof cursor!=='string'||cursor.length>120)throw Error('分页位置无效');
-      const source=await repo.list(owner,cursor,100),rows=[];let bytes=0;
-      for(const row of source){Core.validateRecord(row);const size=Buffer.byteLength(JSON.stringify(row))+1;if(rows.length&&bytes+size>240000)break;if(size>240000)throw Error('单条旧记录过大，请先迁移到分块格式');rows.push(row);bytes+=size;}
-      const more=rows.length<source.length||source.length===100;return response({records:rows,nextCursor:more&&rows.length?Core.recordId(rows.at(-1).key,rows.at(-1).field):null});
+      if(request.plans!==undefined&&request.plans!==1)throw Error('学习计划版本无效');
+      const source=await repo.list(owner,cursor,100),rows=[];let bytes=0,scanned=0,last=cursor;
+      for(const row of source){Core.validateRecord(row);if(row.field==='learningPlan'&&request.plans!==1){scanned++;last=Core.recordId(row.key,row.field);continue;}const size=Buffer.byteLength(JSON.stringify(row))+1;if(rows.length&&bytes+size>240000)break;if(size>240000)throw Error('单条旧记录过大，请先迁移到分块格式');rows.push(row);bytes+=size;scanned++;last=Core.recordId(row.key,row.field);}
+      const more=scanned<source.length||source.length===100;return response({records:rows,nextCursor:more&&scanned?last:null});
     }
     if(!Array.isArray(request.operations)||request.operations.length>50)throw Error('每次最多同步50条变更');
     const logicalValues=new Map();

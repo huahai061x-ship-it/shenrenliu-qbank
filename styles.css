@@ -181,6 +181,9 @@ body:has(.quick-nav) .container{padding-bottom:112px}
 
 .routine-bubble-head b{white-space:nowrap}
 
+.cloud-account-dialog{width:min(600px,calc(100vw - 28px));max-height:85dvh;overflow:auto}.cloud-account-dialog>p{line-height:1.7}.cloud-account-dialog input{width:100%;box-sizing:border-box;padding:12px;border:1px solid var(--line);border-radius:10px;background:var(--panel);color:var(--text)}.cloud-account-dialog .notice{margin:12px 0}.cloud-account-dialog .btn{min-height:42px}#cloudSyncMessage{color:var(--brand);overflow-wrap:anywhere}
+
+.sync-test-notice{padding:10px 16px;background:#fff2d4;color:#714300;text-align:center;font-size:13px;font-weight:700}.sync-test-notice[hidden]{display:none}
 /* Compact home tools and bounded motion; question positions never animate. */
 .brand{min-width:0}.brand>div{min-width:0}.top-actions{flex-shrink:0;flex-wrap:nowrap;align-items:center}.top-actions .btn{white-space:nowrap}
 :where(button,a,input,select,textarea,summary){touch-action:manipulation}
@@ -198,3 +201,16 @@ details[open]>.question-preferences-body,details[open]>.confidence-box{animation
 @media(max-width:350px){.topbar-inner{display:grid;grid-template-columns:minmax(0,1fr);gap:6px}.brand{white-space:normal}.brand .brand-version{white-space:nowrap}.top-actions{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));width:100%;gap:6px}.top-actions .btn{width:100%;min-height:36px}.site-update-strip{padding-top:2px;height:62px}}
 @media(hover:none),(pointer:coarse){.mode-card:hover{transform:none;border-color:var(--line)}.lulu-button:hover img{transform:none}.option:not(.selected):not(.correct):not(.wrong):hover{background:var(--panel);border-color:var(--line)}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
+.cloud-account-strip{max-width:1180px;margin:auto;padding:0 18px 10px;display:flex;justify-content:flex-end}
+#cloudAccountButton{display:flex;align-items:center;gap:9px;width:min(420px,100%);min-width:0;min-height:44px;padding:6px 10px;border:1px solid color-mix(in srgb,var(--brand) 38%,var(--line));border-radius:13px;background:color-mix(in srgb,var(--brand) 7%,var(--panel));box-shadow:0 2px 7px #163a7110;font-size:13px;text-align:left}
+.cloud-account-avatar{flex:0 0 30px;width:30px;height:30px;display:grid;place-items:center;border-radius:50%;background:var(--brand);color:#fff;font-size:19px;font-weight:800}
+.cloud-account-identity{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:700;color:var(--text)}
+.cloud-account-state{display:inline-flex;align-items:center;justify-content:center;gap:5px;flex:0 0 82px;padding:5px 6px;border-radius:20px;color:#1b6940;background:#dff5e8;font-size:12px;font-weight:800;white-space:nowrap}
+.cloud-account-state i{width:6px;height:6px;border-radius:50%;background:currentColor}
+.cloud-account-chevron{font-size:22px;color:var(--muted);line-height:1}
+#cloudAccountButton[data-sync-state="signed-out"] .cloud-account-state,#cloudAccountButton[data-sync-state="syncing"] .cloud-account-state{color:#174bb2;background:#e0ebff}
+#cloudAccountButton[data-sync-state="pending"] .cloud-account-state,#cloudAccountButton[data-sync-state="confirm"] .cloud-account-state,#cloudAccountButton[data-sync-state="attention"] .cloud-account-state{color:#855200;background:#fff0cb}
+#cloudAccountButton[data-sync-state="error"] .cloud-account-state{color:#a32129;background:#ffe3e6}
+.cloud-account-profile{display:flex;align-items:center;gap:12px;padding:12px;border:1px solid var(--line);border-radius:13px;background:color-mix(in srgb,var(--brand) 5%,var(--panel));margin:12px 0 16px}.cloud-account-profile>div{min-width:0}.cloud-account-profile small{display:block;color:var(--muted);margin-bottom:4px}.cloud-account-profile strong{display:block;overflow-wrap:anywhere;font-size:16px}.cloud-account-dialog>p{overflow-wrap:anywhere}
+@media(max-width:720px){.cloud-account-strip{padding:0 12px 8px}#cloudAccountButton{width:100%;gap:8px;font-size:12px;min-height:44px}.cloud-account-state{flex-basis:78px}}

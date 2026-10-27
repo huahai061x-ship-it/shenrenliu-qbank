@@ -1,0 +1,11 @@
+import {mkdir,copyFile,writeFile} from 'node:fs/promises';
+import path from 'node:path';
+import {createRequire} from 'node:module';
+const Core=createRequire(import.meta.url)('../cloud-sync-core.js');
+const root=path.resolve(import.meta.dirname,'..'),target=path.join(root,'cloud/build/sync');
+await mkdir(target,{recursive:true});
+for(const name of ['index.js','package.json','package-lock.json'])await copyFile(path.join(root,'cloud/sync-function',name),path.join(target,name));
+for(const name of ['cloud-sync-core.js','cloud-sync-payload.js'])await copyFile(path.join(root,name),path.join(target,name));
+await writeFile(path.join(target,'database.rules.json'),JSON.stringify({read:false,write:false},null,2));
+await writeFile(path.join(target,'setup-checklist.json'),JSON.stringify({notApplied:true,databaseMode:'traditional-document',function:{name:'shenrenliu-sync',handler:'index.main',transport:'authenticated SDK callFunction; not a public HTTP endpoint'},collection:{name:'qbank_sync_v1',clientPermissions:{read:false,write:false},index:{name:'owner_recordId',fields:[{name:'owner',order:'asc'},{name:'recordId',order:'asc'}]}},payloadCollection:{name:'qbank_sync_payload_v2',clientPermissions:{read:false,write:false},access:'owner-derived document ids only'},protocolVersion:2,allowedEmailDomains:Core.DOMAINS,realServiceChecks:['actual mail delivery','anonymous rejected','two users isolated','direct database access denied','transaction conflict','two real devices','session expiry','quota and failure recovery']},null,2));
+console.log('Prepared cloud/build/sync. Not deployed; database must deny direct client reads and writes.');

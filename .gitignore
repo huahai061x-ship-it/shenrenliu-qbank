@@ -1,1 +1,6 @@
 dist/
+cloud/build/
+cloud/client-sdk/node_modules/
+.env
+.env.*
+!.env.example

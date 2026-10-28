@@ -1,27 +1,27 @@
-import {mkdir,writeFile,appendFile} from 'node:fs/promises';
+import {mkdir, writeFile, appendFile} from 'node:fs/promises';
 import path from 'node:path';
-const base=new URL(process.env.SITE_URL||'https://huahai061x-ship-it.github.io/shenrenliu-qbank/');
-const expected=process.env.EXPECTED_BUILD||process.env.GITHUB_SHA;
-if(!expected)throw Error('EXPECTED_BUILD is required');
-const output=path.resolve(process.env.VERIFY_OUTPUT||'verification'),report={expected,base:base.href,checkedAt:new Date().toISOString(),runnerChecks:[],mainland:{status:'not_checked',measurements:[]}};
-await mkdir(output,{recursive:true});
-const pause=ms=>new Promise(resolve=>setTimeout(resolve,ms));
-async function get(url,options={}){const response=await fetch(url,{...options,signal:AbortSignal.timeout(30000)});if(!response.ok)throw Error(`${new URL(url).pathname}: HTTP ${response.status}`);return response;}
-const agents={desktop:'Mozilla/5.0 Chrome/131.0.0.0 Safari/537.36',quark:'Mozilla/5.0 (Linux; Android 14) AppleWebKit/537.36 Chrome/124.0.0.0 Mobile Safari/537.36 Quark/7.4.5.681',wechat:'Mozilla/5.0 (Linux; Android 14) AppleWebKit/537.36 Chrome/124.0.0.0 Mobile Safari/537.36 MicroMessenger/8.0.60',qq:'Mozilla/5.0 (Linux; Android 14) AppleWebKit/537.36 Chrome/124.0.0.0 Mobile Safari/537.36 QQ/9.1.30 MQQBrowser/6.2'};
-const failures=[];
-async function runnerCheck(name,file,needle,agent=agents.desktop){let error;for(let attempt=0;attempt<3;attempt++){try{const url=new URL(file,base);url.searchParams.set('_verify',Date.now().toString());const response=await get(url,{cache:'no-store',headers:{'User-Agent':agent,'Cache-Control':'no-cache'}}),text=await response.text();if(!text.includes(needle))throw Error('返回内容不是本次发布');report.runnerChecks.push({name,url:url.href,status:200,matched:true});return;}catch(e){error=e;if(attempt<2)await pause(5000)}}report.runnerChecks.push({name,file,error:error.message});failures.push(name+': '+error.message);}
-async function measurement(file,locations,needle){const url=new URL(file,base);const request={type:'http',target:url.hostname,locations,timeout:20,measurementOptions:{protocol:'HTTPS',request:{method:'GET',path:url.pathname,query:'_verify='+Date.now(),headers:{'Cache-Control':'no-cache'}}}};let response=await fetch('https://api.globalping.io/v1/measurements',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(request),signal:AbortSignal.timeout(20000)}),created=await response.json();if(response.status!==202)throw Error('大陆探测服务未受理：HTTP '+response.status+' '+(created.error?.message||''));let result;for(let i=0;i<25;i++){await pause(2000);const r=await get('https://api.globalping.io/v1/measurements/'+created.id);result=await r.json();if(result.status!=='in-progress')break;}const samples=(result?.results||[]).map(x=>({country:x.probe.country,city:x.probe.city,asn:x.probe.asn,network:x.probe.network,status:x.result.statusCode||null,probeStatus:x.result.status,failureSource:x.result.failureSource||null,totalMs:x.result.timings?.total||null,error:x.result.error||(!x.result.statusCode?x.result.rawOutput:null),matched:x.result.statusCode===200&&(x.result.rawBody||'').includes(needle)}));const entry={id:created.id,url:'https://globalping.io?measurement='+created.id,target:url.href,samples};report.mainland.measurements.push(entry);console.log(JSON.stringify({route:file,measurement:created.id,samples}));return entry;}
-const providers=[4134,4837,9808];
-async function verifyMainlandRoute(file,needle,locations){const attempts=[await measurement(file,locations,needle)];for(let retry=0;retry<2;retry++){const missing=providers.filter(asn=>!attempts.some(m=>m.samples.some(s=>s.country==='CN'&&s.asn===asn&&s.matched)));if(!missing.length)break;report.mainland.hadRetries=true;await pause(3000);attempts.push(await measurement(file,missing.map(asn=>({country:'CN',asn,limit:1})),needle));}for(const asn of providers)if(!attempts.some(m=>m.samples.some(s=>s.country==='CN'&&s.asn===asn&&s.matched)))failures.push('大陆批次核对未通过：'+file+' AS'+asn);return attempts[0];}
-try{
- for(const [name,agent] of Object.entries(agents))await runnerCheck(name+' 最新入口','latest.html','data-latest-entry',agent);
- await runnerCheck('旧缓存独立入口','https://huahai061x-ship-it.github.io/ShenRenLiu/latest.html','data-mobile-recovery');
- await runnerCheck('发布批次','release.json',expected);await runnerCheck('版本固定页面',`releases/${expected}.html`,expected);await runnerCheck('脚本批次',`assets/${expected}/app.js`,'ShenRenLiu build: '+expected);
- const first=await verifyMainlandRoute('release.json',expected,providers.map(asn=>({country:'CN',asn,limit:1})));
- for(const [file,needle] of [['latest.html','data-latest-entry'],['https://huahai061x-ship-it.github.io/ShenRenLiu/latest.html','data-mobile-recovery'],[`releases/${expected}.html`,expected],[`assets/${expected}/app.js`,'ShenRenLiu build: '+expected]])await verifyMainlandRoute(file,needle,first.id);
- report.mainland.status=failures.length?'failed':report.mainland.hadRetries?'passed_with_retries':'passed';
-}catch(error){report.mainland.status='not_verified';report.mainland.error=error.message;failures.push(error.message);}
-report.failures=failures;await writeFile(path.join(output,'production-verification.json'),JSON.stringify(report,null,2));
-const summary=`## 上线后版本与大陆网络核验\n\n发布批次：${expected}\n\n大陆探测：${report.mainland.status}\n\n${report.mainland.measurements.map(m=>`- [探测结果](${m.url})：${m.samples.map(s=>`${s.city}/AS${s.asn} ${s.status||'失败'} ${s.matched?'批次匹配':'未确认'}`).join('；')}`).join('\n')}\n\n浏览器User-Agent检查只证明HTTP返回内容；不替代夸克、微信或QQ手机真机测试。探测点样本不代表中国大陆所有线路。\n${failures.map(f=>'- '+f).join('\n')}\n`;
-await writeFile(path.join(output,'summary.md'),summary);if(process.env.GITHUB_STEP_SUMMARY)await appendFile(process.env.GITHUB_STEP_SUMMARY,summary);
-if(failures.length){console.error(failures.join('\n'));process.exitCode=1;}else{if(report.mainland.hadRetries)console.log('::warning::大陆三网样本经重试取得正确批次；首轮超时或节点离线已保留，线路存在波动，不代表全国稳定。');console.log('PASS 本次发布批次及大陆电信、联通、移动样本线路返回内容核对');}
+import {verifyProduction, renderSummary} from './verify-production-core.mjs';
+
+const output = path.resolve(process.env.VERIFY_OUTPUT || 'verification');
+await mkdir(output, {recursive: true});
+async function save(report) {
+  await writeFile(path.join(output, 'production-verification.json'), JSON.stringify(report, null, 2));
+  await writeFile(path.join(output, 'summary.md'), renderSummary(report));
+}
+const report = await verifyProduction({
+  expected: process.env.EXPECTED_BUILD || process.env.GITHUB_SHA,
+  siteURL: process.env.SITE_URL || 'https://huahai061x-ship-it.github.io/shenrenliu-qbank/',
+  scope: process.env.VERIFY_SCOPE || 'all',
+  log: entry => console.log(JSON.stringify(entry)),
+  save,
+});
+const summary = renderSummary(report);
+if (process.env.GITHUB_STEP_SUMMARY) await appendFile(process.env.GITHUB_STEP_SUMMARY, summary);
+for (const failure of report.failures) console.error(failure);
+if (report.failures.length) process.exitCode = 1;
+else {
+  if (report.mainland.hadRetries || report.deployment.hadRetries) {
+    console.log('::warning::部分检查经重试恢复，首轮失败已保留；不能据此宣称线路持续稳定。');
+  }
+  console.log(`PASS ${report.scope} 发布检查；大陆网络状态：${report.mainland.status}`);
+}

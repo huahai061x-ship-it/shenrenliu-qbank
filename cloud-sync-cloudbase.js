@@ -17,7 +17,11 @@
       async signOut(){payloadCache.clear();chunkCache.clear();chunkBytes=0;verificationEpoch++;verification=null;verificationEmail='';failure(await timed(()=>auth.signOut()));},
       async request(data,options={}){
         const P=window.CLOUD_SYNC_PAYLOAD;
-        const raw=async payload=>{const response=await timed(()=>app.callFunction({name:config.functionName,data:payload})),result=response?.result;if(!result?.ok||result.schemaVersion!==1)throw Error(result?.error||'云同步暂不可用');if(result.protocolVersion!==2)throw Error('云同步服务版本过旧，请联系维护者更新');return result;};
+        // Retry transport interruptions only. Preserve the exact operation IDs so a lost
+        // reply after a committed write cannot duplicate learning records.
+        const transient=e=>/REQUEST_CANCELED|ECONN|ETIMEDOUT|network|failed to fetch|timeout|网络|超时|连接中断/i.test(String(e?.code||'')+' '+String(e?.message||e))||[499,502,503,504].includes(Number(e?.status||e?.statusCode));
+        const invoke=async payload=>{for(let attempt=0;;attempt++){try{return await timed(()=>app.callFunction({name:config.functionName,data:payload}));}catch(error){if(attempt>=2||!transient(error)||document.hidden===true||(typeof navigator!=='undefined'&&navigator.onLine===false))throw error;await new Promise(resolve=>setTimeout(resolve,[300,1000][attempt]));if(document.hidden===true||(typeof navigator!=='undefined'&&navigator.onLine===false))throw error;}}};
+        const raw=async payload=>{const response=await invoke(payload),result=response?.result;if(!result?.ok||result.schemaVersion!==1)throw Error(result?.error||'云同步暂不可用');if(result.protocolVersion!==2)throw Error('云同步服务版本过旧，请联系维护者更新');return result;};
         const expand=async row=>{
           if(!P.manifest(row.value))return row;const ref=P.validateManifest(row.value);let value=payloadCache.get(ref.hash);
           if(value===undefined){const chunks=new Array(ref.parts),missing=[];for(let i=0;i<ref.parts;i++){const cached=ref.chunkHashes?chunkCache.get(ref.chunkHashes[i]):undefined;if(cached!==undefined)chunks[i]=cached;else missing.push(i);}

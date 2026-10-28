@@ -3,13 +3,15 @@ name: Test and deploy GitHub Pages
 on:
   push:
     branches: [main]
+  pull_request:
+    branches: [main]
   workflow_dispatch:
 
 permissions:
   contents: read
 
 concurrency:
-  group: pages
+  group: pages-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -34,6 +36,7 @@ jobs:
           node tests/experience-core.cjs
           node tests/continuity-core.cjs
           node tests/pwa-update-core.cjs
+          node --test tests/verify-production.test.mjs
           node 全功能发布前校验.js
           node 增强填空与轮换校验.js
           node v2.1边界与恢复校验.js
@@ -93,6 +96,7 @@ jobs:
           npm ci --prefix cloud/client-sdk --no-audit --no-fund
           node scripts/build-cloud-client.mjs
       - name: Configure Pages
+        if: github.event_name != 'pull_request'
         uses: actions/configure-pages@v6
       - name: Build site
         env:
@@ -107,8 +111,11 @@ jobs:
           include-hidden-files: true
 
   deploy:
+    if: github.event_name != 'pull_request'
     needs: build
     runs-on: ubuntu-latest
+    outputs:
+      page_url: ${{ steps.deployment.outputs.page_url }}
     permissions:
       pages: write
       id-token: write
@@ -123,6 +130,12 @@ jobs:
   verify:
     needs: deploy
     runs-on: ubuntu-latest
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      matrix:
+        scope: [deployment, mainland]
+    name: verify-${{ matrix.scope }}
     permissions:
       contents: read
     steps:
@@ -130,14 +143,16 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: '24'
-      - name: Verify deployed version and mainland network samples
+      - name: Verify ${{ matrix.scope }}
         env:
           EXPECTED_BUILD: ${{ github.sha }}
+          SITE_URL: ${{ needs.deploy.outputs.page_url }}
+          VERIFY_SCOPE: ${{ matrix.scope }}
         run: node scripts/verify-production.mjs
       - name: Preserve verification evidence
         if: always()
         uses: actions/upload-artifact@v6
         with:
-          name: production-verification
+          name: production-verification-${{ matrix.scope }}-attempt-${{ github.run_attempt }}
           path: verification/
           retention-days: 7

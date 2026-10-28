@@ -87,6 +87,7 @@ jobs:
           node tests/cloud-sync-controller.cjs
           node tests/cloud-fast-controller.cjs
           node tests/cloud-sync-transport.cjs
+          node tests/cloud-login-fast.cjs
           node tests/cloud-sync-performance.cjs
           node tests/cloud-request-recovery.cjs
           node tests/cloud-full-sync-core.cjs

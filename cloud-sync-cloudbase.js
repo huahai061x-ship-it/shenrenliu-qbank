@@ -9,11 +9,12 @@
     function rememberChunk(hash,text){if(chunkCache.has(hash))return;const size=window.CLOUD_SYNC_PAYLOAD.length(text);while(chunkBytes+size>8*1024*1024&&chunkCache.size){const key=chunkCache.keys().next().value;chunkBytes-=window.CLOUD_SYNC_PAYLOAD.length(chunkCache.get(key));chunkCache.delete(key);}chunkCache.set(hash,text);chunkBytes+=size;}
     const timeoutMs=Math.min(45000,Math.max(500,Number(config.requestTimeoutMs)||15000));
     async function timed(task){let timer;try{return await Promise.race([task(),new Promise((_,reject)=>{timer=setTimeout(()=>reject(Error('网络响应超时，本机记录与待同步变更仍保留，请稍后重试')),timeoutMs);})]);}finally{clearTimeout(timer);}}
-    async function user(){const data=failure(await timed(()=>auth.getUser()));if(!data?.user)return null;const uid=data.user.id||data.user.uid;if(!uid)throw Error('登录身份无效');return {uid,email:data.user.email||''};}
+    function identity(value){const uid=value?.id||value?.uid;return uid?{uid,email:value.email||''}:null;}
+    async function user(){const data=failure(await timed(()=>auth.getUser()));if(!data?.user)return null;const result=identity(data.user);if(!result)throw Error('登录身份无效');return result;}
     return {
-      async currentUser(){const result=await timed(()=>auth.getSession());if(result?.error?.code==='unauthenticated')return null;const data=failure(result);return data?.session?user():null;},
+      async currentUser(){const result=await timed(()=>auth.getSession());if(result?.error?.code==='unauthenticated')return null;const data=failure(result);return data?.session?(identity(data.session.user)||user()):null;},
       async sendCode(email){const clean=window.CLOUD_SYNC_CORE.email(email);const ticket=++verificationEpoch;verification=null;verificationEmail='';const data=failure(await timed(()=>auth.signInWithOtp({email:clean})));if(ticket!==verificationEpoch)throw Error('验证码请求已变化，请重新获取');if(typeof data?.verifyOtp!=='function')throw Error('验证码通道尚未开通');verification=data.verifyOtp;verificationEmail=clean;},
-      async verifyCode(email,code){if(!verification||window.CLOUD_SYNC_CORE.email(email)!==verificationEmail)throw Error('请先为当前邮箱获取验证码');if(! /^[a-zA-Z0-9]{4,12}$/.test(code))throw Error('请输入邮件中的验证码');failure(await timed(()=>verification({token:code})));verification=null;return user();},
+      async verifyCode(email,code){if(!verification||window.CLOUD_SYNC_CORE.email(email)!==verificationEmail)throw Error('请先为当前邮箱获取验证码');if(! /^[a-zA-Z0-9]{4,12}$/.test(code))throw Error('请输入邮件中的验证码');const data=failure(await timed(()=>verification({token:code})));verification=null;return identity(data?.user)||identity(data?.session?.user)||user();},
       async signOut(){payloadCache.clear();chunkCache.clear();chunkBytes=0;verificationEpoch++;verification=null;verificationEmail='';failure(await timed(()=>auth.signOut()));},
       async request(data,options={}){
         const P=window.CLOUD_SYNC_PAYLOAD;

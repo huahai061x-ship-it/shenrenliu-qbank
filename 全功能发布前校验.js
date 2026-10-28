@@ -5,8 +5,9 @@ const document={hidden:false,documentElement:{dataset:{}},body:{classList,append
 const localStorage={getItem:k=>store[k]||null,setItem:(k,v)=>store[k]=v};
 const context={window:{addEventListener(){},matchMedia:()=>({matches:false}),scrollTo(){},scrollY:0,isSecureContext:false},document,localStorage,location:{protocol:'file:',href:'file:///test'},navigator:{},history:{pushState(){},replaceState(){}},performance:{now:()=>0},requestAnimationFrame:f=>f(),setTimeout:()=>0,clearTimeout(){},setInterval:()=>0,clearInterval(){},structuredClone:o=>JSON.parse(JSON.stringify(o)),confirm:()=>true,prompt(){},alert(){},Blob:function(){},URL:{createObjectURL:()=>'',revokeObjectURL(){}},FileReader:function(){}};
 context.window.window=context.window;context.window.document=document;context.window.localStorage=localStorage;context.window.location=context.location;context.window.navigator=context.navigator;vm.createContext(context);
-for(const file of ['questions.js','pedagogy.js','enhanced-fill.js','ultra-content.js','ultra-core.js','app.js'])vm.runInContext(fs.readFileSync(file,'utf8'),context,{filename:file});
-if(!main.innerHTML.includes('题库数据自检通过'))throw Error('首页题库自检未通过');
+for(const file of ['questions.js','pedagogy.js','enhanced-fill.js','ultra-content.js','ultra-core.js','app.js']){let source=fs.readFileSync(file,'utf8');if(file==='app.js')source=source.replace('const BANK_AUDIT_ERRORS=auditQuestionBank();','const BANK_AUDIT_ERRORS=auditQuestionBank();window.__AUDIT_ERRORS__=BANK_AUDIT_ERRORS;');vm.runInContext(source,context,{filename:file});}
+if(context.window.__AUDIT_ERRORS__?.length!==0)throw Error('运行时题库自检未通过');
+if(main.innerHTML.includes('题库完整性检查通过'))throw Error('首页不应显示内部自检成功信息');
 context.window.startStudy('sequence');
 if(!main.innerHTML.includes('class="quick-nav"')||!main.innerHTML.includes('题号 1/507'))throw Error('快捷导航未正确显示');
 context.window.nextQ();if(!main.innerHTML.includes('题号 2/507'))throw Error('下一题切换失败');

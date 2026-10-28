@@ -6,6 +6,8 @@ const root = path.resolve(import.meta.dirname, '..');
 const output = path.join(root, 'dist');
 const version = (process.env.BUILD_VERSION || 'local').replace(/[^a-zA-Z0-9._-]/g, '-');
 const publishedAt=new Date().toISOString();
+const announcement=JSON.parse(await readFile(path.join(root,'release-announcement.json'),'utf8'));
+if(typeof announcement.title!=='string'||!Array.isArray(announcement.items)||announcement.items.some(x=>typeof x!=='string'))throw Error('Invalid release announcement');
 const files = [
   'index.html', '①点我打开题库.html', 'release-notes.md', 'styles.css', 'questions.js',
   'culture-insights.js', 'hos-analysis.js', 'explanation-core.js', 'backup-core.js', 'backup-ui.js', 'bank-core.js', 'bank-runtime.js', 'pedagogy.js', 'enhanced-fill.js', 'transfer-code.js', 'lulu.js', 'lulu-art.js', 'lulu-avatar.js', 'routine-eggs.js', 'cloud-sync-config.js', 'cloud-sync-recovery.js', 'cloud-sync-payload.js', 'cloud-sync-core.js', 'cloud-sync-cloudbase.js', 'cloud-sync.js', 'beijing-clock.js', 'study-plan-core.js', 'study-plan-ui.js', 'lulu-fortunes.js', 'ultra-content.js', 'ultra-core.js', 'lulu-mascot.png', 'app.js', 'pwa-install.js', 'manifest.webmanifest',
@@ -37,7 +39,7 @@ await mkdir(path.join(output,'releases'),{recursive:true});
 const releasePage=`releases/${version}.html`;
 await writeFile(path.join(output,releasePage),html.replace('<head>','<head><base data-release-root href="../">'),'utf8');
 await cp(path.join(root,'latest.html'),path.join(output,'latest.html'));
-await writeFile(path.join(output,'release.json'),JSON.stringify({schemaVersion:1,version,appVersion:'v3.0',page:releasePage,assetBase,publishedAt}),'utf8');
+await writeFile(path.join(output,'release.json'),JSON.stringify({schemaVersion:1,version,appVersion:'v3.0',page:releasePage,assetBase,publishedAt,announcement}),'utf8');
 await cp(path.join(root, 'source'), path.join(output, 'source'), {recursive: true});
 await cp(path.join(root, 'banks'), path.join(output, 'banks'), {recursive: true});
 for(const file of [...files.filter(f=>/\.(js|css)$/.test(f)&&f!=='culture-insights.js'), 'banks/catalog.js','banks/sinotruk-culture-official.js']){

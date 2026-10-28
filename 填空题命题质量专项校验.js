@@ -16,7 +16,7 @@ function boot(){
     if(f==='app.js'){
       const marker='updateWatermark();initBackGuard();renderHome();';
       if(!source.includes(marker))throw Error('判题测试无法定位现有 answerCorrect 函数');
-      source=source.replace(marker,'window.__FILL_QUALITY_TEST__={answerCorrect};'+marker);
+      source=source.replace(marker,'window.__FILL_QUALITY_TEST__={answerCorrect,auditErrors:BANK_AUDIT_ERRORS};'+marker);
     }
     vm.runInContext(source,c,{filename:f});
   }
@@ -27,7 +27,7 @@ const rewritten=[138,143,144,145,154,164,165,170,173,177,183,184,185,186,187];
 const fixed=[168,462,474],removed=[176,378,418,431,450,473],inserted=[247,258,259,261,268,308];
 check(Q.length===507,'原题不是507道');check(Object.keys(standard).length===104,'标准填空不是104道');
 check(Object.keys(added).length===104,'增强独立池不是104道');check(Object.keys(full).length===208,'增强总池不是208道');
-check(x.main.innerHTML.includes('题库数据自检通过'),'运行时题库自检未通过');
+check(x.c.window.__FILL_QUALITY_TEST__.auditErrors.length===0,'运行时题库自检未通过');
 for(const id of removed){check(!added[id],`#${id}仍在增强池`);check(Q.some(q=>q.id===id),`原题#${id}丢失`)}
 for(const id of inserted)check(!!added[id],`#${id}未加入增强池`);
 const expected={

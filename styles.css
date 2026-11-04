@@ -242,5 +242,3 @@ details[open]>.question-preferences-body,details[open]>.confidence-box{animation
 @media(hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){
   .q-actions .btn:hover:not(:disabled),.search-pager .btn:hover:not(:disabled){box-shadow:0 2px 7px color-mix(in srgb,var(--brand) 16%,transparent)}
 }
-
-.forming-modules{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:14px;margin:16px 0}.forming-modules h2{margin:0}.forming-modules p{margin:2px 0 10px;color:var(--muted)}

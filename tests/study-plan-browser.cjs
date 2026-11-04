@@ -19,7 +19,7 @@ const server=http.createServer((req,res)=>{
       await p.goto(base+'?banks=hos_2026');await p.waitForFunction(()=>window.BANK_RUNTIME?.app);
       await p.getByRole('button',{name:'定制我的计划'}).click();await p.getByRole('button',{name:'新建学习计划'}).click();
       const [firstCount,bothCount]=await p.evaluate(()=>{
-        const ids=['hos_2026','sinotruk_culture_2025_official'],all=BANK_RUNTIME.allQuestions.filter(q=>q.analysis?.status!=='needs_source');
+        const ids=['hos_2026','sinotruk_culture_2025_official'],all=BANK_RUNTIME.allQuestions;
         return [all.filter(q=>q.bankId===ids[0]).length,all.filter(q=>ids.includes(q.bankId)).length];
       });
       const selected=async()=>Number((await p.locator('#planSelectionCount').innerText()).match(/已选 (\d+) 题/)[1]);

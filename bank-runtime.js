@@ -1,5 +1,5 @@
 (()=>{'use strict';
-const C=window.BANK_CORE,SELECT='shenrenliu_qbank_selection_v1',CUSTOM='shenrenliu_qbank_custom_banks_v1';const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const C=window.BANK_CORE,LEGACY_SELECT='shenrenliu_qbank_selection_v1',SELECT=window.QBANK_PRIVATE?.active?LEGACY_SELECT:'shenrenliu_qbank_selection_forging_v2',CUSTOM='shenrenliu_qbank_custom_banks_v1';const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const P=window.QBANK_PRIVATE;
 const R=window.BANK_RUNTIME={errors:[],app:null};let ctx,storage,originals=[];
 const readJSON=(key,fallback)=>{let raw=localStorage.getItem(key);return raw?JSON.parse(raw):fallback};
@@ -50,6 +50,35 @@ R.resetSelected=()=>{if(R.app?.activeExam())return message('请先交卷或切�
 R.cacheSelected=async()=>{try{if(location.protocol==='file:'||!navigator.serviceWorker)throw Error('请通过启动本地试用.cmd打开HTTP版本，再下载离线原图');if(!navigator.onLine)throw Error('请先联网或保持本地服务器运行');await navigator.serviceWorker.ready;let done=0,total=ctx.selected.reduce((n,b)=>n+(ctx.metas.get(b).sourcePageCount||0),0);for(let id of ctx.selected){let m=ctx.metas.get(id),cache=await caches.open('shenrenliu-bank-'+id+'-'+(m.version||'1'));for(let n=1;n<=(m.sourcePageCount||0);n++){let url=new URL((m.sourceBase||'source')+'/image'+n+'.webp',document.baseURI);let r=await fetch(url);if(!r.ok)throw Error('原图下载失败：'+url.pathname);await cache.put(url,r);done++;message('原图下载 '+done+'/'+total)}await cache.put(new URL('__bank_download__/'+id,document.baseURI),new Response(JSON.stringify({complete:true,version:m.version||'1'})))}message('所选题库可用原图已缓存；题目与正式原文随程序缓存，本机导入的JSON题库保存在浏览器中。')}catch(e){message('离线下载未完成：'+e.message)}};
 R.retiredInfo=()=>{let e=storage?.snapshot(),old=e?.bundles?.find(b=>b.meta.id==='sinotruk_culture_2026');return old?{questions:old.questions.length,history:(e.deferredHistory||[]).length}:null};
 R.exportBankSummary=()=>ctx.selected.map(n=>ctx.metas.get(n).name).join(' ＋ ');
+function resolveBankSelection(){
+ const forging='forming_forging_2026';
+ const available=new Set(originals.map(b=>b.meta.id));
+ const fallback=available.has(forging)?forging:C.HOS;
+ const url=new URL(location.href),requested=url.searchParams.get('banks')?.split(',');
+ let saved=null,previous=null,resumable=false;
+ try{
+   saved=readJSON(SELECT,null);
+   if(!saved){
+     previous=readJSON(LEGACY_SELECT,null);
+     if(requested?.length===1&&Array.isArray(previous)){
+       const scope=[...previous].sort().join('|');
+       resumable=!!readJSON(C.KEY,null)?.scopeSessions?.[scope]||!!localStorage.getItem('shenrenliu_practice_v1_'+scope);
+     }
+   }
+ }catch(_){}
+ // An old homepage may carry its previous saved selection in the URL after updating.
+ // Preserve explicit deep links and links that resume a specific activity.
+ const oldHome=!P?.active&&!saved&&!resumable&&Array.isArray(previous)&&requested?.join(',')===previous.join(',')&&
+   !['planStart','studyQuestion','studyTag','historyIndex','collectionStart','moduleMode','resumeActivity'].some(key=>url.searchParams.has(key));
+ const preferred=oldHome?[fallback]:(requested||saved||[fallback]);
+ let ids=Array.isArray(preferred)?preferred.map(id=>id==='sinotruk_culture_2026'?'sinotruk_culture_2025_official':id).filter(id=>available.has(id)):[];
+ ids=[...new Set(ids)];if(!ids.length)ids=[fallback];
+ try{
+   localStorage.setItem(SELECT,JSON.stringify(ids));
+   if(requested&&ids.join(',')!==requested.join(',')){url.searchParams.set('banks',ids.join(','));history.replaceState(history.state,'',url.href);}
+ }catch(_){}
+ return ids;
+}
 function enterBankModule(){
   const url=new URL(location.href);
   const mode=url.searchParams.get('moduleMode');
@@ -68,5 +97,5 @@ R.attachApp=app=>{R.app=app;enterBankModule();let params=new URLSearchParams(loc
  const loaded=new Set(originals.map(bank=>bank.meta.id));
  originals.push(...verified.filter(bank=>!loaded.has(bank.meta.id)));
 }
-let custom=[];try{custom=readJSON(CUSTOM,[]);if(!Array.isArray(custom))throw Error('格式错误')}catch(e){custom=[];R.errors.push('本机导入题库：'+e.message)}for(let b of custom){if(P?.isBank(b.meta?.id))continue;if(b.meta?.id==='sinotruk_culture_2026')continue;try{C.validate(b);let existing=originals.find(x=>x.meta.id===b.meta.id);if(existing){if(!C.sameQuestionContent(existing.questions,b.questions))throw Error('同ID题库内容不同，保留原记录，请先导出备份');continue;}C.compile([...originals,b],[C.HOS]);originals.push(b)}catch(e){R.errors.push((b.meta?.name||'导入题库')+'：'+e.message)}}let selection;try{selection=new URLSearchParams(location.search).get('banks')?.split(',')||readJSON(SELECT,[C.HOS])}catch(_){selection=[C.HOS]}if(Array.isArray(selection))selection=selection.map(n=>n==='sinotruk_culture_2026'?'sinotruk_culture_2025_official':n);if(!selection.some(n=>originals.some(b=>b.meta.id===n)))selection=[C.HOS];if(!Array.isArray(selection))selection=[C.HOS];selection=selection.map(n=>n==='sinotruk_culture_2026'?'sinotruk_culture_2025_official':n);selection=[...new Set(selection)];try{localStorage.setItem(SELECT,JSON.stringify(selection));let url=new URL(location.href);if(url.searchParams.get('banks')?.includes('sinotruk_culture_2026')){url.searchParams.set('banks',selection.join(','));history.replaceState(history.state,'',url.href)}}catch(e){}ctx=C.compile(originals,selection);storage=new C.Storage(localStorage,ctx);Object.assign(R,{ctx,storage,allQuestions:ctx.allQuestions,questions:ctx.questions,candidates:ctx.candidates});window.QUESTION_BANK=ctx.questions;window.HOS_PEDAGOGY=ctx.pedagogy;window.HOS_ENHANCED_FILL=ctx.enhanced;window.ULTRA_CANDIDATES=ctx.candidates;await script('app.js')}catch(e){document.querySelector('#main').innerHTML=`<div class="panel pad"><h2>题库启动未完成</h2><p>${esc(e.message)}</p><button class="btn" onclick="location.reload()">重试</button><p>原有学习记录未被清除，请保留本页并检查题库文件。</p></div>`;console.error(e)}})();
+let custom=[];try{custom=readJSON(CUSTOM,[]);if(!Array.isArray(custom))throw Error('格式错误')}catch(e){custom=[];R.errors.push('本机导入题库：'+e.message)}for(let b of custom){if(P?.isBank(b.meta?.id))continue;if(b.meta?.id==='sinotruk_culture_2026')continue;try{C.validate(b);let existing=originals.find(x=>x.meta.id===b.meta.id);if(existing){if(!C.sameQuestionContent(existing.questions,b.questions))throw Error('同ID题库内容不同，保留原记录，请先导出备份');continue;}C.compile([...originals,b],[C.HOS]);originals.push(b)}catch(e){R.errors.push((b.meta?.name||'导入题库')+'：'+e.message)}}const selection=resolveBankSelection();ctx=C.compile(originals,selection);storage=new C.Storage(localStorage,ctx);Object.assign(R,{ctx,storage,allQuestions:ctx.allQuestions,questions:ctx.questions,candidates:ctx.candidates});window.QUESTION_BANK=ctx.questions;window.HOS_PEDAGOGY=ctx.pedagogy;window.HOS_ENHANCED_FILL=ctx.enhanced;window.ULTRA_CANDIDATES=ctx.candidates;await script('app.js')}catch(e){document.querySelector('#main').innerHTML=`<div class="panel pad"><h2>题库启动未完成</h2><p>${esc(e.message)}</p><button class="btn" onclick="location.reload()">重试</button><p>原有学习记录未被清除，请保留本页并检查题库文件。</p></div>`;console.error(e)}})();
 })();

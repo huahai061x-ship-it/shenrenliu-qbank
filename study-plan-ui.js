@@ -2,25 +2,25 @@
   'use strict';
   const C=window.STUDY_PLAN_CORE,esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   let A,draft=new Set(),banks=new Set(),catalog=new Map();
-  const now=()=>window.BEIJING_CLOCK?.now?.()||Date.now(),today=()=>C.today(now()),store=()=>A.getStore(),plans=()=>Object.values(store().learningPlans||{}),label=q=>(q.bankName||'HOS 应知应会')+' · 原题 '+(q.sourceQuestionId||q.id),qmap=()=>new Map(A.questions().map(q=>[C.questionKey(q),q]));
+  const now=()=>window.BEIJING_CLOCK?.now?.()||Date.now(),today=()=>C.today(now()),store=()=>A.getStore(),plans=()=>Object.values(store().learningPlans||{}),label=q=>(q.bankName||'HOS 应知应会')+' · 原题 '+(q.sourceQuestionId||q.id)+(needsReview(q)?' · 待核验':''),qmap=()=>new Map(A.questions().map(q=>[C.questionKey(q),q]));
   const header=(title,subtitle)=>`<div class="section-title"><div><h2>${esc(title)}</h2><p>${esc(subtitle)}</p></div><button class="btn" onclick="navHome()">返回首页</button></div>`;
   const theory=()=>`<details class="panel plan-theory"><summary>这个计划怎样安排复习？</summary><p>遗忘通常在初学后更快。先独立回想，再核对答案；复习顺序是到期旧题在前、新题在后。新计划答错约10分钟后再试，第二次仍忘记就留到次日；看提示后答对也会在次日再见。</p><p>独立答对后，间隔从约1、2、4、7、14到30天逐步拉长；同一天反复答对不会虚增间隔。新计划按选定的每日新题上限安排，漏学的新题分日补，已学题按到期日复习。目标日期后仍可继续巩固。旧计划沿用原来的截止日安排。短计划会压缩能安排的轮次；来不及形成长期记忆时会明确提醒。</p><p>这些是参考间隔练习与主动回忆研究的起始安排，并非人人一致的固定遗忘百分比。每天以实际作答更新，漏做的题留到今天，不会假装完成。</p><p><a href="https://doi.org/10.1111/j.1467-9280.2008.02209.x" target="_blank" rel="noopener">间隔与目标保留时间研究（Cepeda等，2008）</a> · <a href="https://doi.org/10.1126/science.1152408" target="_blank" rel="noopener">主动回忆研究（Karpicke与Roediger，2008）</a></p></details>`;
   function home(){const day=today(),due=plans().reduce((n,p)=>n+C.tasks(p,day,now()).length,0);return `<section class="panel plan-home"><div class="plan-home-icon" aria-hidden="true">🗓️</div><div><h2>定制计划</h2><p>${due?`今天有 ${due} 项学习任务，按安排慢慢来。`:'选好题目和日期，每天的新题与复习替你排好。'}</p></div><button class="btn primary" onclick="STUDY_PLANS.open()">${plans().length?'查看我的计划':'定制我的计划'}</button></section>`;}
   function open(){if(!A)return;const day=today();A.show(header('定制计划','按北京时间安排，每次主动回忆后更新复习日期。')+`<div class="q-actions"><button class="btn primary" onclick="STUDY_PLANS.createForm()">新建学习计划</button></div><div class="plan-list">${plans().sort((a,b)=>b.createdAt-a.createdAt).map(p=>{const tasks=C.tasks(p,day,now()),s=Object.values(C.states(p,day)),learned=s.filter(x=>x.introduced).length;return `<article class="panel pad"><h3>${esc(p.title)}</h3><p>${p.start} 至 ${p.end} · ${p.keys.length} 题 · 已开始 ${learned} 题</p><p class="muted">${day<p.start?'还未到开始日期':day>p.end?'目标日已过，可继续巩固与补学':`今天待学 ${tasks.length} 题（含未完成任务）`}</p><div class="q-actions"><button class="btn primary" onclick="STUDY_PLANS.start('${p.id}')" ${!tasks.length||day<p.start?'disabled':''}>${day>p.end?'继续巩固':'开始今天的学习'}</button><button class="btn" onclick="STUDY_PLANS.detail('${p.id}')">查看每日安排</button><button class="btn small" onclick="this.hidden=true;this.nextElementSibling.hidden=false">移除计划</button><span hidden><span>保留所有作答与成绩，只移除此计划？</span><button class="btn danger small" onclick="STUDY_PLANS.remove('${p.id}')">确认移除</button><button class="btn small" onclick="this.parentElement.hidden=true;this.parentElement.previousElementSibling.hidden=false">取消</button></span></div></article>`;}).join('')||'<div class="panel pad"><h3>从一个能坚持的小计划开始</h3><p>选好题库，再定一周、两周或自己的目标日期。每一天都能看到要学哪几题、复习第几遍。</p></div>'}</div>`+theory());}
   const el=id=>document.getElementById(id);
-  const eligible=q=>q.analysis?.status!=='needs_source';
+  const needsReview=q=>q?.analysis?.status==='needs_source';
   let candidate=null, matches=[],pickerPage=0,calendarRows=[],calendarLookup;
   const PAGE=30,BATCH=20;
   function createForm(){
     catalog=qmap();banks=new Set(A.bankIds());candidate=null;pickerPage=0;
-    draft=new Set([...catalog].filter(([,q])=>banks.has(q.bankId||'hos_2026')&&eligible(q)).map(([key])=>key));
+    draft=new Set([...catalog].filter(([,q])=>banks.has(q.bankId||'hos_2026')).map(([key])=>key));
     const groups=new Map();for(const q of catalog.values()){
       const id=q.bankId||'hos_2026';if(!groups.has(id))groups.set(id,{name:q.bankName||'HOS 应知应会',count:0});
-      if(eligible(q))groups.get(id).count++;
+      groups.get(id).count++;
     }
     const choices=[...groups].map(([id,g])=>`<label><input type="checkbox" data-plan-bank="${esc(id)}" ${banks.has(id)?'checked':''} onchange="STUDY_PLANS.bankChanged(this)"><span>${esc(g.name)} · ${g.count}题</span></label>`).join('');
     const topics=[...new Map([...catalog.values()].filter(q=>q.contentGroup).map(q=>[q.contentGroup,q.contentGroupName]))];
-    A.show(header('新建学习计划','勾选题库即可纳入全部可判分题，也可以展开细选。')+`<form id="planForm" class="panel pad" onsubmit="event.preventDefault();STUDY_PLANS.preview()" oninput="STUDY_PLANS.invalidate()">
+    A.show(header('新建学习计划','勾选题库即可纳入全部题目，也可以展开细选。')+`<form id="planForm" class="panel pad" onsubmit="event.preventDefault();STUDY_PLANS.preview()" oninput="STUDY_PLANS.invalidate()">
     <fieldset class="plan-banks"><legend>选择题库 · 可多选</legend>${choices}</fieldset>
     <p id="planSelectionCount" role="status"></p><details class="plan-theory" ontoggle="if(this.open) STUDY_PLANS.filter()"><summary>细选题目或按分类调整</summary>
       <div class="plan-filter"><label class="field">查找题目<input id="planSearch" type="search" placeholder="题干、原题号或知识点" oninput="STUDY_PLANS.filter()"></label><label class="field">内容分类<select id="planTopic" onchange="STUDY_PLANS.filter()"><option value="all">全部内容</option>${topics.map(([id,n])=>`<option value="${esc(id)}">${esc(n)}</option>`).join('')}</select></label></div>
@@ -32,12 +32,12 @@
   function bankChanged(input){
     const id=input.dataset.planBank;
     if(input.checked)banks.add(id);else banks.delete(id);
-    for(const [key,q] of catalog)if((q.bankId||'hos_2026')===id&&eligible(q))input.checked?draft.add(key):draft.delete(key);
+    for(const [key,q] of catalog)if((q.bankId||'hos_2026')===id)input.checked?draft.add(key):draft.delete(key);
     if(el('planQuestions').closest('details').open)filter();else count();
   }
   function filter(){
     const term=el('planSearch').value.trim().toLowerCase(),topic=el('planTopic').value;
-    matches=[...catalog].filter(([,q])=>eligible(q)&&banks.has(q.bankId||'hos_2026')&&(topic==='all'||q.contentGroup===topic)&&(!term||String(q.sourceQuestionId||q.id)===term||[q.stem,...q.tags||[]].join(' ').toLowerCase().includes(term)));
+    matches=[...catalog].filter(([,q])=>banks.has(q.bankId||'hos_2026')&&(topic==='all'||q.contentGroup===topic)&&(!term||String(q.sourceQuestionId||q.id)===term||[q.stem,...q.tags||[]].join(' ').toLowerCase().includes(term)));
     pickerPage=0;paintPicker();count();
   }
   function paintPicker(){
@@ -55,7 +55,9 @@
     count();
   }
   function count(){
-    invalidate();el('planSelectionCount').textContent=`已选 ${draft.size} 题 · 原资料待核验的题目已跳过`;
+    invalidate();
+    const pending=[...draft].filter(key=>needsReview(catalog.get(key))).length;
+    el('planSelectionCount').textContent=`已选 ${draft.size} 题${pending?' · 含 '+pending+' 道待核验题':''}`;
     try{const span=C.ordinal(el('planEnd').value)-C.ordinal(el('planStart').value)+1,limit=pace(),over=Math.max(0,draft.size-span*limit);
       el('planPaceInfo').textContent=draft.size&&span>0?`每天最多 ${limit} 道新题，到期复习另计，每轮最多 ${BATCH} 题。${over?'按此节奏，截止时至少有 '+over+' 道新题尚未开始；可延长周期、调高题量或在目标日后继续。':''}`:'';
     }catch(_){el('planPaceInfo').textContent='';}

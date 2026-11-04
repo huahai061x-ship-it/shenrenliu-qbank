@@ -22,7 +22,7 @@ const QUICK_ENTRY_MIGRATION_KEY='quick-entry-migrated-v2.2.9-fengshen-r3';
 let shortcutEditorChanged=false,shortcutEditorReset=false;
 const MODE_REGISTRY=[
 {id:'today',icon:'📅',title:'今日复习',desc:'到期、错题和长期未见题优先',action:`renderTodayReviewSetup()`},
-{id:'real',icon:'🏁',title:usesFormingPaper()?formingExamName():isOfficialCultureScope()?'企业文化综合模拟':Q.length&&Q.every(q=>q.type==='fill')?'填空专项模拟':'真实模拟 Ultra',desc:usesFormingPaper()?'按单选、多选、判断的占比组卷，最多50道原题':Q.length&&Q.every(q=>q.type==='fill')?'按当前题库选择题量，集中测试填空':'固定45题：15单选 + 10多选 + 10判断 + 10填空',action:`renderRealExamSetup('real')`},
+{id:'real',icon:'🏁',title:usesFormingPaper()?formingExamName():isOfficialCultureScope()?'企业文化综合模拟':Q.length&&Q.every(q=>q.type==='fill')?'填空专项模拟':'真实模拟 Ultra',desc:usesFormingPaper()?'30单选、7多选、13判断':Q.length&&Q.every(q=>q.type==='fill')?'按当前题库选择题量，集中测试填空':'固定45题：15单选 + 10多选 + 10判断 + 10填空',action:`renderRealExamSetup('real')`},
 {id:'sequence',icon:'📖',title:'顺序背题',desc:'按原题号学习，可随时看解析和资料出处',action:`startStudy('sequence')`},
 {id:'wrong',quickEligible:false,showInAllModes:false,icon:'❌',title:'错题本',desc:'按错因与纠正状态分类重练',action:`renderWrongBook()`},
 {id:'random',icon:'🔀',title:'随机刷题',desc:'打乱顺序查漏补缺',action:`startStudy('random')`},
@@ -290,15 +290,8 @@ function renderShortcutEditor(){let box=$('#shortcutSettings');if(!box)return;sh
 function markShortcutsCustomized(){shortcutEditorChanged=true;shortcutEditorReset=false}
 function restoreDefaultShortcuts(){shortcutEditorChanged=false;shortcutEditorReset=true;$$('.shortcutSetting').forEach((el,i)=>el.value=DEFAULT_SHORTCUTS[i]);toast('已恢复默认选择，请点保存设置')}
 function openShortcutSettings(){openSettings();requestAnimationFrame(()=>$('#shortcutSettings')?.scrollIntoView({block:'center',behavior:'smooth'}))}
-function formingModules(){
-  const banks=(window.QBANK_BANKS||[]).filter(bank=>bank.examProfile==='forming50'&&BANK_RUNTIME?.ctx?.metas?.has(bank.id));
-  if(!banks.length)return '';
-  const button=(id,mode,label)=>`<button class="btn" type="button" onclick="BANK_RUNTIME.applySelection([${esc(JSON.stringify(id))}],{moduleMode:'${mode}'})">${label}</button>`;
-  return `<div id="formingModules" class="forming-modules">${banks.map(bank=>`<section class="panel pad" data-forming-module="${esc(bank.id)}"><h2>${esc(bank.name)}题库</h2><p>${BANK_RUNTIME.ctx.metas.get(bank.id).expectedQuestionCount} 题</p><div class="q-actions">${button(bank.id,'practice','刷题练习')}${button(bank.id,'exam','模拟考试')}${button(bank.id,'plan','定制计划')}</div></section>`).join('')}</div>`;
-}
 function renderHome(){view='home';migrateRecentSessions();const st=stats();app(`
 <section class="hero compact-hero"><div class="panel hero-main lulu-hero"><div class="hero-copy"><div class="hero-heading"><h1><span>神人刘题库</span><span>训练站</span></h1></div><div class="hero-caption"><button class="hero-bank-picker" type="button" onclick="window.BANK_RUNTIME?.openSelector()" aria-haspopup="dialog"><span class="hero-bank-label">选择题库<span class="hero-bank-arrow" aria-hidden="true">›</span></span><span class="hero-bank-current">${BANK_RUNTIME?esc(BANK_RUNTIME.exportBankSummary()):'HOS 应知应会'}</span>${BANK_RUNTIME?.errors.length?'<span class="hero-bank-error">部分题库未加载，点击查看</span>':''}</button></div></div><div class="lulu-mascot"><span id="luluSpeech" class="lulu-speech" aria-hidden="true">点击我试试吧～</span><button id="luluHomeButton" class="lulu-button" type="button" onclick="openLuluRoom()" aria-label="水豚噜噜：打开学习记录和掌握地图" title="水豚噜噜 · 点击探索学习小屋">${window.LULU?.imageMarkup(512,512)||'<img src="lulu-mascot.png" width="512" height="512" alt="" draggable="false">' }<span class="lulu-label">水豚噜噜 · 点击探索</span></button></div></div><div class="panel status-overview"><b>学习状态概览</b><div><span>题库<strong>${Q.length}</strong></span><span>已练习<strong>${st.seen}</strong></span><span>未覆盖<strong>${Q.length-st.seen}</strong></span><span>错题<strong>${st.wrong}</strong></span><span>收藏<strong>${st.fav}</strong></span><span>到期复习<strong>${st.due}</strong></span></div></div></section>
-${formingModules()}
 ${window.STUDY_PLANS?.home?.()||''}
 ${recentSessionsMarkup()}
 <aside class="notice" id="homeReleaseNote" aria-label="本次更新" hidden></aside>
@@ -754,10 +747,10 @@ function usesFormingPaper(){return !!BANK_RUNTIME?.ctx?.selected?.some(formingBa
 function onlyFormingBanks(){return usesFormingPaper()&&BANK_RUNTIME.ctx.selected.every(formingBank)}
 function formingExamName(){return topicMeta()?topicMeta().name+'模拟考试':'混合题库模拟考试'}
 function formingPaperPlan(){
- const types=['single','multiple','judge'];
- const rows=types.map(type=>{
+ const targetCounts={single:30,multiple:7,judge:13};
+ const rows=Object.keys(targetCounts).map(type=>{
    const source=Q.filter(q=>q.type===type),pool=source.filter(objectiveReady);
-   return {type,pool,weight:source.length,capacity:new Set(pool.map(q=>duplicateKey(q.id))).size,count:0};
+   return {type,pool,weight:targetCounts[type],capacity:new Set(pool.map(q=>duplicateKey(q.id))).size,count:0};
  });
  const total=Math.min(50,rows.reduce((sum,row)=>sum+row.capacity,0));
  const weight=rows.reduce((sum,row)=>sum+row.weight,0);
@@ -776,7 +769,7 @@ function formingExam(start){
    const cards=rows.map(r=>`<div class="panel pad"><b>${typeName(r.type)}</b><div style="font-size:30px;font-weight:800">${r.count}</div></div>`).join('');
    const pending=Q.filter(q=>q.type!=='fill'&&!objectiveReady(q));
    const review=pending.length?`<details><summary>查看待核验题（${pending.length}）</summary><div class="q-actions">${pending.map(q=>`<button class="btn small" onclick="reviewOne(${q.id})">${esc(q.bankName)} #${q.sourceQuestionId}</button>`).join('')}</div></details>`:'';
-   app(`<div class="panel exam-setup"><div class="section-title"><div><h2>${esc(title)}</h2><p>${esc(BANK_RUNTIME.exportBankSummary())} · ${total}题 · 百分制</p></div><button class="btn" onclick="navHome()">返回</button></div><div class="dashboard-grid">${cards}</div><p>按当前范围的原题型占比分配名额。同卷避开重复题组，多选题需全部选对才得分。</p>${review}<div class="field"><label for="realExamRule">考试规则</label><select id="realExamRule"><option value="normal">普通模式（未答可交卷）</option><option value="strict">严格模式（必须全部作答）</option></select></div><div class="q-actions"><button class="btn primary" ${total?'':'disabled'} onclick="beginRealExam()">开始模拟</button></div></div>`);
+   app(`<div class="panel exam-setup"><div class="section-title"><div><h2>${esc(title)}</h2><p>${esc(BANK_RUNTIME.exportBankSummary())} · ${total}题 · 百分制</p></div><button class="btn" onclick="navHome()">返回</button></div><div class="dashboard-grid">${cards}</div><p>全库50题卷含30道单选、7道多选、13道判断。范围内题量不足时按可用题调整。同卷避开重复题组，多选题需全部选对才得分。</p>${review}<div class="field"><label for="realExamRule">考试规则</label><select id="realExamRule"><option value="normal">普通模式（未答可交卷）</option><option value="strict">严格模式（必须全部作答）</option></select></div><div class="q-actions"><button class="btn primary" ${total?'':'disabled'} onclick="beginRealExam()">开始模拟</button></div></div>`);
    return;
  }
  if(!total)return toast('当前范围暂无可判分题目');

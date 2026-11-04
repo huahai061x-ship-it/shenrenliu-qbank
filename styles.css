@@ -104,6 +104,7 @@ body:has(.quick-nav) .container{padding-bottom:112px}
 
 /* Put the bank selector in the home hero rather than a separate top banner. */
 .hero-bank-picker{display:flex;flex-direction:column;gap:6px;width:100%;max-width:360px;min-width:0;min-height:76px;padding:12px 16px;border:1px solid color-mix(in srgb,var(--brand) 32%,var(--line));border-radius:16px;background:color-mix(in srgb,var(--brand) 7%,var(--panel));color:var(--text);font:inherit;text-align:left;cursor:pointer;transition:background .15s,border-color .15s}
+.hero-caption .hero-start{display:block;width:100%;max-width:360px;margin-top:8px;min-height:44px;font-size:15px}
 .hero-bank-picker:hover{background:color-mix(in srgb,var(--brand) 12%,var(--panel));border-color:var(--brand)}
 .hero-bank-picker:focus-visible{outline:3px solid var(--brand);outline-offset:3px}
 .hero-bank-label{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:16px;font-weight:800;line-height:1.4;color:var(--brand)}

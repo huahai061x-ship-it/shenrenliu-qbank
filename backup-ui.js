@@ -13,11 +13,11 @@ function open(){
 }
 async function exportFile(share=false){
  try{
-  const R=window.BANK_RUNTIME,e=R.getBackup();if(!e)return;
+  const R=window.BANK_RUNTIME,e=R.getBackup(true);if(!e)return;
   const text=window.BACKUP_CORE.encode(e),name='神人刘_学习备份_'+new Date().toISOString().replace(/[:.]/g,'-')+'.txt',file=new File([text],name,{type:'text/plain;charset=utf-8'});
   if(share&&navigator.canShare?.({files:[file]}))await navigator.share({files:[file],title:'神人刘学习备份'});
   else{let url=URL.createObjectURL(file),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),3000)}
-  R.noteBackup();status(share?'文件已交给系统分享。请在目标设备下载后导入。':'已生成TXT备份文件，请保存到自己信任的位置。');
+  if(!R.conflicted)R.noteBackup();status(share?'文件已交给系统分享。请在目标设备下载后导入。':'已生成TXT备份文件，请保存到自己信任的位置。');
  }catch(e){if(e.name!=='AbortError')status('备份未完成：'+e.message)}
 }
 async function preview(file){

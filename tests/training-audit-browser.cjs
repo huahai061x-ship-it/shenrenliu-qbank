@@ -1,0 +1,84 @@
+const assert=require('node:assert/strict');
+const fs=require('node:fs');
+const path=require('node:path');
+const {chromium}=require(process.env.PLAYWRIGHT_PATH||'playwright');
+
+(async()=>{
+  const browser=await chromium.launch({executablePath:process.env.CHROME_BIN||undefined});
+  const base=process.env.LIVE_URL||'https://training.test/';
+  const context=await browser.newContext({viewport:{width:390,height:844},serviceWorkers:'block'});
+  const errors=[];
+  const root=path.resolve('dist');
+  if(!process.env.LIVE_URL)await context.route('https://training.test/**',async route=>{
+    const p=new URL(route.request().url()).pathname;
+    const file=path.resolve(root,'.'+(p==='/'?'/index.html':p));
+    if(!file.startsWith(root+path.sep)||!fs.existsSync(file))return route.fulfill({status:404,body:''});
+    return route.fulfill({path:file});
+  });
+  try{
+    const page=await context.newPage();
+    page.on('pageerror',e=>errors.push(e.message));
+    const open=async(url=base)=>{await page.goto(url);await page.waitForFunction(()=>!!window.BANK_RUNTIME?.app)};
+    const button=name=>page.getByRole('button',{name,exact:true}).first();
+    await open();
+    const rect=await page.locator('.hero-start').boundingBox();
+    assert(rect.y>=0 && rect.y+rect.height<=844);
+    await button('先练 5 题').click();
+    await page.locator('.q-stem').waitFor({timeout:6000}).catch(async e=>{throw Error(e.message+'\n'+errors.join('\n')+'\n'+(await page.locator('body').innerText()).slice(0,900))});
+    assert.equal(await page.evaluate(()=>BANK_RUNTIME.app.getSession().items.length),5);
+    await button('下一题').click();
+    const stem=await page.locator('.q-stem').innerText();
+    await button('暂停保存，回首页').click();
+    await button('继续练习 · 第 2 题').click();
+    assert.equal(await page.locator('.q-stem').innerText(),stem);
+    await open(base+'?banks=forming_forging_2026&studyQuestion=1');
+    await page.locator('.option').filter({hasText:'溢流阀'}).click();
+    await button('提交答案').click();
+    await button('直接看答案').click();
+    assert.equal(await page.locator('.feedback-mine').innerText(),'你的答案：溢流阀');
+    await button('暂停保存，回首页').click();
+    await page.locator('.hero-start').click();
+    assert.equal(await page.locator('.feedback-mine').innerText(),'你的答案：溢流阀');
+    await button('标记待复核').click();
+    const note=await page.locator('#reviewNoteDialog p').innerText();
+    assert(note.includes('本机')&&note.includes('维护者')&&!note.includes('仅保存在'));
+    await button('取消').click();
+    await open();
+    await page.locator('.mode-card').filter({has:page.getByRole('heading',{name:'锻造知识模拟考试',exact:true})}).getByRole('button').first().click();
+    await page.locator('#realExamRule').selectOption('strict');
+    await page.locator('#formingReviewList summary').click();
+    await page.locator('#formingReviewList button').first().click();
+    await button('返回来源').click();
+    assert.equal(await page.locator('#realExamRule').inputValue(),'strict');
+    assert(await page.locator('#formingReviewList').evaluate(d=>d.open));
+    await button('开始模拟').click();
+    await page.evaluate(()=>{
+      const s=BANK_RUNTIME.app.getSession();
+      for(const i of s.items)i.answer=i.renderType==='multiple'?[...i.q.answers]:i.q.answers[0];
+      submitExam(true);renderHistory();
+    });
+    assert.match(await page.locator('#main').innerText(),/30单选 \+ 7多选 \+ 13判断/);
+    await page.evaluate(()=>{
+      const history=BANK_RUNTIME.app.getStore().history;
+      const previous=structuredClone(history[0]);
+      previous.count=1;previous.ids=previous.ids.slice(0,1);
+      previous.renderTypes=['fill'];previous.questionTimes=previous.questionTimes.slice(0,1);
+      history.push(previous);renderHistory('all');
+    });
+    assert.match(await page.locator('#main').innerText(),/1填空/);
+    assert.match(await page.locator('#main').innerText(),/30单选 \+ 7多选 \+ 13判断/);
+    const cast=base+'?banks=forming_casting_2026';
+    await open(cast);
+    const fail=/\/banks\/forming_casting_2026\.js(?:\?|$)/;
+    await context.route(fail,r=>r.abort('failed'));
+    await open(cast+'&studyQuestion=1');
+    assert.match(await page.locator('.hero-bank-error').innerText(),/未加载/);
+    assert.equal(await page.locator('.q-stem').count(),0);
+    assert.equal(new URL(page.url()).searchParams.get('banks'),'forming_casting_2026');
+    await context.unroute(fail);
+    await open();
+    assert.equal(await page.locator('.hero-bank-current').innerText(),'铸造知识');
+    assert.deepEqual(errors,[]);
+    console.log('PASS 首屏开练及恢复、保留本人错答、备注说明、返回严格模式、真实卷型、断载恢复选库。');
+  }finally{await browser.close()}
+})().catch(e=>{console.error(e);process.exitCode=1});

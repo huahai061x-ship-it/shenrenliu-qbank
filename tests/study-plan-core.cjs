@@ -30,3 +30,32 @@ assert.equal(B.decode(B.encode({...envelope,includedBankIds:['demo_plan'],data:{
 const v4rows=Object.values(S.values({learningPlans:{[current.id]:current}},[])).map(x=>({...x,rev:1}));v4rows.forEach(S.validateRecord);assert.equal(S.project({},[],v4rows).learningPlans[current.id].dailyNew,20);
 const mixed=C.orderedKeys([{bankId:'a',id:1,type:'single'},{bankId:'a',id:2,type:'single'},{bankId:'a',id:3,type:'judge'},{bankId:'b',id:1,type:'single'},{bankId:'b',id:2,type:'single'}]);assert.equal(new Set(mixed).size,5);assert.deepEqual(mixed.slice(0,2),['a:1','b:1']);
 console.log('PASS 14天整库均衡题序、每日新题限额、漏学不堆积、忘后10分钟/跨零点再测、旧题优先、提示次日重测、跨目标日巩固、提前回忆不推迟、备份与云同步。');
+
+const timeKeys=Array.from({length:460},(_,i)=>'forging:'+(i+1));
+assert.deepEqual(C.estimateTime([null,{timedAttempts:4,totalMs:40000}]),{personal:false,secondsPerTask:45,attempts:4});
+assert.deepEqual(C.estimateTime([{timedAttempts:3,totalMs:90000},{timedAttempts:2,totalMs:100000}]),{personal:true,secondsPerTask:53,attempts:5});
+const timed=C.create({...paced,keys:timeKeys,dailyMinutes:15,secondsPerTask:45,dailyNew:20});
+const forecast=C.schedule(timed,timed.start,true);
+assert.equal(forecast.rows.length,14);
+assert(forecast.firstPass>timed.end);
+assert.equal(forecast.coveredAtEnd,forecast.rows.reduce((sum,r)=>sum+r.items.filter(s=>!s.introduced).length,0));
+assert.equal(C.schedule({...timed,end:forecast.firstPass},timed.start).coveredAtEnd,460);
+assert(forecast.rows.every(r=>r.items.length<=20));
+const oneSlot={...timed,keys:timeKeys.slice(0,12),dailyNew:1,secondsPerTask:900};
+const slow=C.schedule(oneSlot,oneSlot.start,true);
+assert(slow.rows.some(r=>r.items.some(item=>item.introduced)));
+assert(slow.firstPass>oneSlot.end);
+let active=timed;
+for(const row of forecast.rows){
+  const left=()=>C.tasks(active,row.day,at(row.day));
+  assert.deepEqual(left().map(s=>s.key),row.items.map(s=>s.key));
+  for(const [i,item] of row.items.entries()){
+    active=C.record(active,{id:'test_'+row.day+'_'+i,key:item.key,rating:'remembered',at:at(row.day)});
+  }
+  assert.equal(left().length,0);
+}
+assert.throws(()=>C.validate({...timed,secondsPerTask:0}));
+assert.equal(C.merge(timed,{...timed,dailyMinutes:30,secondsPerTask:90}),null);
+const storedTimed=B.decode(B.encode({...envelope,includedBankIds:['forging'],data:{learningPlans:{[active.id]:active}}})).payload.data.learningPlans[active.id];
+assert.deepEqual(C.tasks(storedTimed,active.end),C.tasks(active,active.end));
+console.log('PASS 每日时间预算覆盖全部所选原题、新学复习共用限额、测算日期、实际完成后扣减预算、个人速度及备用速度、备份保留时间安排。');

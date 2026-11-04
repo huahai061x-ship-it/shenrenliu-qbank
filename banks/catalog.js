@@ -19,7 +19,19 @@ window.QBANK_BANKS=[
     "version": "2026.11.04",
     "file": "banks/forming_forging_2026.js",
     "sourcePageCount": 0,
-    "examProfile": "forming50"
+    "examProfile": "forming50",
+    "practicePairs": [
+      [2, 114],
+      [3, 5],
+      [12, 34],
+      [13, 58],
+      [15, 30],
+      [98, 231]
+    ],
+    "conflictPairs": [
+      [86, 88],
+      [83, 410]
+    ]
   },
   {
     "id": "forming_casting_2026",
@@ -27,6 +39,12 @@ window.QBANK_BANKS=[
     "version": "2026.11.04",
     "file": "banks/forming_casting_2026.js",
     "sourcePageCount": 0,
-    "examProfile": "forming50"
+    "examProfile": "forming50",
+    "practicePairs": [
+      [42, 392],
+      [48, 70],
+      [63, 452],
+      [196, 217]
+    ]
   }
 ];

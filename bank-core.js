@@ -11,10 +11,99 @@ function compile(banks,selection){let qs=[],ped={},enhanced={},candidates=[],gro
 const parents=new Map(qs.map(q=>[q.id,q.id])),find=n=>parents.get(n)===n?n:(parents.set(n,find(parents.get(n))),parents.get(n)),union=(a,b)=>parents.set(find(b),find(a));for(const g of groups)for(const n of g.slice(1))union(g[0],n);let exact=new Map(),knowledge=new Map();for(const q of qs){let signature=JSON.stringify([q.type,q.stem,q.options,q.answers]);if(exact.has(signature))union(q.id,exact.get(signature));else exact.set(signature,q.id)}for(const c of candidates.filter(c=>c.kind==='concept_blank')){let k=c.knowledgeKey||'Q'+c.sourceQuestionIds[0];if(knowledge.has(k))union(c.sourceQuestionIds[0],knowledge.get(k));else knowledge.set(k,c.sourceQuestionIds[0])}
 const selected=[...new Set(selection||[HOS])].filter(n=>metas.has(n));if(!selected.length)throw Error('至少选择一个可用题库');return {banks,metas,allQuestions:qs,questions:qs.filter(q=>selected.includes(q.bankId)),pedagogy:ped,enhanced,candidates,groups,byId,openIds,selected,scopeKey:[...selected].sort().join('|'),duplicateKey:n=>'B'+find(n),bankIdsFor:ids=>[...new Set((ids||[]).map(n=>byId.get(n)?.bankId).filter(Boolean))],label:q=>(q.originalLabel||'#'+q.sourceQuestionId)+' · '+q.bankName}}
 const MAPS=['wrong','mastery','reviewFlags','reviewNotes','pendingPractice','seen','learning','difficultyProgress'];
+const equal=(a,b)=>a===b||JSON.stringify(a)===JSON.stringify(b);
+const object=v=>v!==null&&typeof v==='object'&&!Array.isArray(v);
+function conflict(){
+ const e=Error('另一页面同时修改了同一条学习记录，本次保存已暂停。请先从设置导出本页独立备份，刷新后可合并。');
+ e.name='WorkspaceConflict';return e;
+}
+// Apply only edits made since this tab's last view. Missing keys are intentional removals.
+function reconcile(base,local,disk,path=[]){
+ if(equal(local,base))return disk;
+ if(equal(disk,base))return local;
+ const field=path.join('.');
+ if(field==='data.favorites'){
+   const before=new Set(base||[]),mine=new Set(local||[]),result=new Set(disk||[]);
+   for(const id of before)if(!mine.has(id))result.delete(id);
+   for(const id of mine)if(!before.has(id))result.add(id);
+   return [...result];
+ }
+ if(['data.history','data.recentSessions'].includes(field)){
+   const history=field==='data.history';
+   const identity=r=>history?(r.paperId||JSON.stringify([r.time,r.mode,r.ids,r.score])):r.id;
+   const rows=a=>Object.fromEntries((a||[]).map(r=>[identity(r),r]));
+   const merged=reconcile(rows(base),rows(local),rows(disk),[history?'papers':'activities']);
+   const sorted=Object.values(merged).sort((a,b)=>b.time-a.time);
+   if(history)return sorted.slice(0,50);
+   const counts=new Map();
+   return sorted.filter(r=>{const count=counts.get(r.scopeKey)||0;counts.set(r.scopeKey,count+1);return count<2}).slice(0,128);
+ }
+ // These rows describe a single attempt or open activity. Merging individual
+ // answers, timers and aggregate counters would fabricate a study history.
+ if((path[0]==='scopeSessions'&&path.length===2)||(['papers','activities'].includes(path[0])&&path.length===2)||
+    (path[0]==='data'&&(path[1]==='aggregateStats'||path[1]==='examRotation'))||
+    (path[0]==='data'&&['learning','wrong','reviewNotes','difficultyProgress','openStudy'].includes(path[1])&&path.length===3)){
+   if(equal(local,disk)&&!['aggregateStats','learning','wrong','examRotation'].includes(path[1]))return disk;
+   throw conflict();
+ }
+ if(object(local)&&object(disk)&&(base===undefined||object(base))){
+   const result={...disk};
+   for(const k of new Set([...Object.keys(base||{}),...Object.keys(local)])){
+     const value=reconcile(base?.[k],local[k],disk[k],[...path,k]);
+     if(value===undefined)delete result[k];else Object.defineProperty(result,k,{value,enumerable:true,configurable:true,writable:true});
+   }
+   return result;
+ }
+ if(equal(local,disk))return disk;
+ // Seeing a question in either tab is harmless. Keep the most recent observation.
+ if(field.startsWith('data.seen.')&&Number.isFinite(local)&&Number.isFinite(disk))return Math.max(local,disk);
+ throw conflict();
+}
 class Storage{
 constructor(storage,ctx){this.storage=storage;this.ctx=ctx;this.blocked=false;this.envelope=null}
-read(){let raw=this.storage.getItem(KEY);if(raw){let e=JSON.parse(raw);if(e.format!=='shenrenliu-workspace'||e.version!==1)throw Error('工作区格式不兼容');this.envelope=e}else{let legacy=this.storage.getItem(LEGACY);let data=legacy?unpack(JSON.parse(legacy)):{};if(data.schemaVersion>2)throw Error('旧数据来自更新版本，暂不迁移');this.envelope={format:'shenrenliu-workspace',version:1,data,scopeSessions:{[HOS]:data.lastSession||null},deferredHistory:[]};if(legacy&&!this.storage.getItem(KEY+'_legacy_backup'))this.storage.setItem(KEY+'_legacy_backup',legacy)}let e=this.envelope,d=unpack(e.data);e.data=d;let all=[...(d.history||[]),...(e.deferredHistory||[])],available=r=>!(r.ids||[]).some(n=>!this.ctx.byId.has(Number(n)));e.deferredHistory=all.filter(r=>!available(r));d={...d,history:all.filter(available),lastSession:e.scopeSessions?.[this.ctx.scopeKey]||null};if(d.lastSession?.ids?.some(n=>!this.ctx.byId.has(Number(n))))d.lastSession=null;return d}
-persist(s,cloudScopes=null){if(this.blocked)throw Error('数据读取失败，已暂停写入以保护原记录');let e=clone(this.envelope),prev=unpack(e.data),d=clone(s);for(const k of MAPS)d[k]={...Object.fromEntries(Object.entries(prev[k]||{}).filter(([n])=>!this.ctx.byId.has(Number(n)))),...d[k]};d.favorites=[...new Set([...(prev.favorites||[]).filter(n=>!this.ctx.byId.has(Number(n))),...(d.favorites||[])])];d.openStudy={...Object.fromEntries(Object.entries(prev.openStudy||{}).filter(([n])=>!this.ctx.openIds.has(n))),...d.openStudy};e.scopeSessions||={};e.scopeSessions[this.ctx.scopeKey]=d.lastSession||null;if(Array.isArray(cloudScopes))for(const scope of cloudScopes){if(typeof scope!=='string'||scope.split('|').some(id=>!this.ctx.metas.has(id)))throw Error('云端题库范围无效');e.scopeSessions[scope]=(d.recentSessions||[]).filter(r=>r.scopeKey===scope&&r.kind==='exam').sort((a,b)=>b.time-a.time)[0]?.snapshot||null;}d.lastSession=null;if(prev.aggregateStats?.byQuestion)(d.aggregateStats||={}).byQuestion={...Object.fromEntries(Object.entries(prev.aggregateStats.byQuestion).filter(([n])=>!this.ctx.byId.has(Number(n)))),...d.aggregateStats.byQuestion};e.data=pack(d);e.bankRegistry={...e.bankRegistry,...Object.fromEntries([...this.ctx.metas].map(([n,m])=>[n,m]))};e.bundles=[...(e.bundles||[]).filter(b=>!this.ctx.metas.has(b.meta.id)),...this.ctx.banks.filter(b=>b.meta.id!==HOS&&!window.QBANK_PRIVATE?.isBank(b.meta.id)&&!window.QBANK_BANKS?.some(m=>m.id===b.meta.id&&m.examProfile==='forming50'))];this.storage.setItem(KEY,JSON.stringify(e));this.envelope=e;return true}
+read(){let raw=this.storage.getItem(KEY);this.raw=raw;if(raw){let e=JSON.parse(raw);if(e.format!=='shenrenliu-workspace'||e.version!==1)throw Error('工作区格式不兼容');this.envelope=e}else{let legacy=this.storage.getItem(LEGACY);let data=legacy?unpack(JSON.parse(legacy)):{};if(data.schemaVersion>2)throw Error('旧数据来自更新版本，暂不迁移');this.envelope={format:'shenrenliu-workspace',version:1,data,scopeSessions:{[HOS]:data.lastSession||null},deferredHistory:[]};if(legacy&&!this.storage.getItem(KEY+'_legacy_backup'))this.storage.setItem(KEY+'_legacy_backup',legacy)}return this.project(this.envelope)}
+project(envelope){let e=clone(envelope),d=unpack(e.data);let all=[...(d.history||[]),...(e.deferredHistory||[])],available=r=>!(r.ids||[]).some(n=>!this.ctx.byId.has(Number(n)));d={...d,history:all.filter(available),lastSession:e.scopeSessions?.[this.ctx.scopeKey]||null};if(d.lastSession?.ids?.some(n=>!this.ctx.byId.has(Number(n))))d.lastSession=null;return d}
+candidate(s,cloudScopes=null){if(this.blocked)throw Error('数据读取失败，已暂停写入以保护原记录');let e=clone(this.envelope),prev=unpack(e.data),d=clone(s);for(const k of MAPS)d[k]={...Object.fromEntries(Object.entries(prev[k]||{}).filter(([n])=>!this.ctx.byId.has(Number(n)))),...d[k]};d.favorites=[...new Set([...(prev.favorites||[]).filter(n=>!this.ctx.byId.has(Number(n))),...(d.favorites||[])])];d.openStudy={...Object.fromEntries(Object.entries(prev.openStudy||{}).filter(([n])=>!this.ctx.openIds.has(n))),...d.openStudy};e.scopeSessions||={};e.scopeSessions[this.ctx.scopeKey]=d.lastSession||null;if(Array.isArray(cloudScopes))for(const scope of cloudScopes){if(typeof scope!=='string'||scope.split('|').some(id=>!this.ctx.metas.has(id)))throw Error('云端题库范围无效');e.scopeSessions[scope]=(d.recentSessions||[]).filter(r=>r.scopeKey===scope&&r.kind==='exam').sort((a,b)=>b.time-a.time)[0]?.snapshot||null;}d.lastSession=null;if(prev.aggregateStats?.byQuestion)(d.aggregateStats||={}).byQuestion={...Object.fromEntries(Object.entries(prev.aggregateStats.byQuestion).filter(([n])=>!this.ctx.byId.has(Number(n)))),...d.aggregateStats.byQuestion};e.deferredHistory=[...(prev.history||[]),...(e.deferredHistory||[])].filter(row=>row.ids?.some(n=>!this.ctx.byId.has(Number(n))));e.data=pack(d);e.bankRegistry={...e.bankRegistry,...Object.fromEntries([...this.ctx.metas].map(([n,m])=>[n,m]))};e.bundles=[...(e.bundles||[]).filter(b=>!this.ctx.metas.has(b.meta.id)),...this.ctx.banks.filter(b=>b.meta.id!==HOS&&!window.QBANK_PRIVATE?.isBank(b.meta.id)&&!window.QBANK_BANKS?.some(m=>m.id===b.meta.id&&m.examProfile==='forming50'))];return e}
+// Synchronous save callers must receive quota/conflict errors before leaving a question.
+persist(s,cloudScopes=null,normalize=v=>v){
+ return this.withWriter(checkOwner=>{
+   const raw=this.storage.getItem(KEY),candidate=this.candidate(s,cloudScopes);
+   let latest=candidate,updated=null;
+   if(raw!==this.raw){
+     if(!raw)throw conflict();
+     const disk=JSON.parse(raw);
+     if(disk.format!=='shenrenliu-workspace'||disk.version!==1)throw conflict();
+     const decoded=e=>({...e,data:unpack(e.data)});
+     latest=reconcile(decoded(this.envelope),decoded(candidate),decoded(disk));
+     latest.data=pack(latest.data);
+     updated=normalize(this.project(latest));
+   }
+   const next=JSON.stringify(latest);
+   checkOwner();
+   if(this.storage.getItem(KEY)!==raw)throw conflict();
+   this.storage.setItem(KEY,next);
+   this.raw=next;this.envelope=latest;
+   if(updated)for(const k of Object.keys(updated))if(!equal(s[k],updated[k]))s[k]=updated[k];
+   return true;
+ });
+}
+// Dedicated per-writer markers avoid a check-then-set lock on one shared key.
+// Ordinary edits are synchronous and never wait for another tab on the UI thread.
+withWriter(write){
+ if(typeof this.storage.key!=='function')return write(()=>{});
+ const prefix=KEY+'_writing_',marker=prefix+(globalThis.crypto?.randomUUID?.()||Math.random().toString(36).slice(2));
+ this.storage.setItem(marker,String(Date.now()));
+ try{
+   for(let i=0;i<this.storage.length;i++){
+     const k=this.storage.key(i);
+     if(!k?.startsWith(prefix)||k===marker)continue;
+     const age=Date.now()-Number(this.storage.getItem(k));
+     if(age>30000){this.storage.removeItem(k);i--;continue;}
+     throw Object.assign(Error('另一页面正在保存，请在本页稍后重试。'),{name:'WorkspaceConflict'});
+   }
+   return write(()=>{if(this.storage.getItem(marker)===null)throw conflict()});
+ }finally{this.storage.removeItem(marker)}
+}
 snapshot(){return clone(this.envelope)}
 }
 window.BANK_CORE={HOS,KEY,LEGACY,hash,id,validate,sameQuestionContent,compile,unpack,pack,Storage,MAPS};

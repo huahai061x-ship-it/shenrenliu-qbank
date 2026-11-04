@@ -30,6 +30,15 @@ const server=http.createServer((req,res)=>{
       assert.equal(await selected(),bothCount-1);await p.locator('[data-plan-key]').first().check();
       await p.locator('#planPeriod').selectOption('7');await p.getByRole('button',{name:'生成每日安排预览'}).click();assert.equal(await p.locator('.plan-day').count(),7);
       await p.locator('#planPeriod').selectOption('custom');assert(await p.locator('#planEnd').isEditable());
+      await p.locator('#planPace').selectOption('minutes-15');
+      assert((await p.locator('#planPaceInfo').innerText()).includes('暂按作答 30 秒'));
+      await p.getByRole('button',{name:'生成每日安排预览'}).click();
+      const timedPreview=await p.locator('#planPreview .notice').innerText();
+      assert(timedPreview.includes('每天 15 分钟')&&timedPreview.includes('首轮学习'));
+      assert((await p.locator('.plan-day summary').allInnerTexts()).every(text=>{
+        const counts=text.match(/新题 (\d+) · 复习 (\d+)/);
+        return counts&&Number(counts[1])+Number(counts[2])<=20;
+      }));
       await p.locator('#planPeriod').selectOption('14');await p.locator('#planPace').selectOption('20');assert((await p.locator('#planPaceInfo').innerText()).includes('至少有 '+(bothCount-280)+' 道'));
       await p.getByRole('button',{name:'生成每日安排预览'}).click();assert.equal(await p.locator('.plan-day').count(),14);assert.equal(await p.locator('.plan-day li').count(),0);
       await p.locator('.plan-day summary').first().click();await p.locator('.plan-day li').first().waitFor();assert.equal(await p.locator('.plan-day li').count(),20);
@@ -44,6 +53,20 @@ const server=http.createServer((req,res)=>{
       assert(await p.getByText(/刚才忘记的题/).isVisible());await p.reload();await p.waitForFunction(()=>!!window.BANK_RUNTIME?.app);
       assert.equal(await p.evaluate(()=>Object.keys(Object.values(__V22_TEST__.getStore().learningPlans)[0].events).length),1);
       await p.evaluate(()=>openSettings());await p.locator('#settingsModal button').filter({hasText:'关闭'}).click();assert(await p.locator('#settingsModal').evaluate(e=>e.classList.contains('hidden')));
+      await p.evaluate(()=>{
+        const q=QUESTION_BANK[0],s=BANK_RUNTIME.app.getStore();
+        s.learning[q.id]={...s.learning[q.id],timedAttempts:5,totalMs:300000};
+        STUDY_PLANS.createForm();
+      });
+      await p.locator('#planPace').selectOption('minutes-15');
+      assert((await p.locator('#planPaceInfo').innerText()).includes('按所选题目的作答记录'));
+      await p.getByRole('button',{name:'生成每日安排预览'}).click();
+      await p.getByRole('button',{name:'确认保存这个计划'}).click();
+      const budget=await p.evaluate(()=>Object.values(BANK_RUNTIME.app.getStore().learningPlans).find(plan=>plan.dailyMinutes));
+      assert.equal(budget.dailyMinutes,15);
+      assert.equal(budget.dailyNew,Math.floor(900/budget.secondsPerTask));
+      await p.reload();await p.waitForFunction(()=>window.BANK_RUNTIME?.app);
+      assert(await p.evaluate(()=>Object.values(BANK_RUNTIME.app.getStore().learningPlans).some(plan=>plan.dailyMinutes===15)));
       assert.deepEqual(errors,[]);await ctx.close();console.log('PASS '+width+'px 两个公开题库整库选择、分页细选、周期切换、14天预览、跨库启动、忘题计划、暂存和刷新恢复');
     }
   }finally{await browser.close();server.closeAllConnections();server.close();}

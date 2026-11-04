@@ -25,7 +25,7 @@
     <p id="planSelectionCount" role="status"></p><details class="plan-theory" ontoggle="if(this.open) STUDY_PLANS.filter()"><summary>细选题目或按分类调整</summary>
       <div class="plan-filter"><label class="field">查找题目<input id="planSearch" type="search" placeholder="题干、原题号或知识点" oninput="STUDY_PLANS.filter()"></label><label class="field">内容分类<select id="planTopic" onchange="STUDY_PLANS.filter()"><option value="all">全部内容</option>${topics.map(([id,n])=>`<option value="${esc(id)}">${esc(n)}</option>`).join('')}</select></label></div>
       <div class="q-actions"><button type="button" class="btn small" onclick="STUDY_PLANS.selectVisible(true)">加入筛选结果</button><button type="button" class="btn small" onclick="STUDY_PLANS.selectVisible(false)">移出筛选结果</button></div><div id="planQuestions" class="plan-question-picker"></div><div id="planPages" class="q-actions"></div></details>
-    <div class="plan-form-grid"><label class="field">计划名称<input id="planTitle" maxlength="80" value="我的学习计划" required></label><label class="field">开始日期（北京时间）<input id="planStart" type="date" value="${today()}" min="${today()}" onchange="STUDY_PLANS.periodChanged()" required></label><label class="field">计划周期<select id="planPeriod" onchange="STUDY_PLANS.periodChanged()"><option value="7">一周（7天）</option><option value="14" selected>两周（14天）</option><option value="28">四周（28天）</option><option value="custom">自定截止日期</option></select></label><label class="field">目标日期<input id="planEnd" type="date" value="${C.add(today(),13)}" min="${today()}" onchange="STUDY_PLANS.periodChanged()" readonly required></label><label class="field">每天最多学多少新题<select id="planPace" onchange="STUDY_PLANS.periodChanged()"><option value="auto">按目标日期自动分配</option><option value="10">10道</option><option value="20">20道</option><option value="40">40道</option></select></label></div>
+    <div class="plan-form-grid"><label class="field">计划名称<input id="planTitle" maxlength="80" value="我的学习计划" required></label><label class="field">开始日期（北京时间）<input id="planStart" type="date" value="${today()}" min="${today()}" onchange="STUDY_PLANS.periodChanged()" required></label><label class="field">计划周期<select id="planPeriod" onchange="STUDY_PLANS.periodChanged()"><option value="7">一周（7天）</option><option value="14" selected>两周（14天）</option><option value="28">四周（28天）</option><option value="custom">自定截止日期</option></select></label><label class="field">目标日期<input id="planEnd" type="date" value="${C.add(today(),13)}" min="${today()}" onchange="STUDY_PLANS.periodChanged()" readonly required></label><label class="field">每日安排<select id="planPace" onchange="STUDY_PLANS.periodChanged()"><option value="auto">按目标日期自动分配</option><optgroup label="按每天可用时间">${[10,15,30,60].map(m=>`<option value="minutes-${m}">每天 ${m} 分钟</option>`).join('')}</optgroup><optgroup label="按每日新题量">${[10,20,40].map(n=>`<option value="${n}">最多 ${n} 道新题</option>`).join('')}</optgroup></select></label></div>
     <p id="planPaceInfo" class="muted"></p><p id="planError" role="alert"></p><button class="btn primary" type="submit">生成每日安排预览</button></form><section id="planPreview"></section>`+theory());count();
   }
   function invalidate(){candidate=null;el('planPreview')?.replaceChildren();}
@@ -48,6 +48,14 @@
   function page(n){pickerPage=Math.min(Math.max(pickerPage+n,0),Math.max(0,Math.ceil(matches.length/PAGE)-1));paintPicker();el('planQuestions').scrollTop=0;}
   function toggle(key,on){on?draft.add(key):draft.delete(key);count();}
   function selectVisible(on){for(const [key] of matches)on?draft.add(key):draft.delete(key);paintPicker();count();}
+  function budget(){
+    const value=el('planPace').value;
+    if(!value.startsWith('minutes-'))return null;
+    const dailyMinutes=Number(value.slice(8));
+    const history=store().learning||{};
+    const time=C.estimateTime([...draft].map(key=>history[catalog.get(key)?.id]));
+    return {dailyMinutes,...time,dailyNew:Math.floor(dailyMinutes*60/time.secondsPerTask)};
+  }
   function pace(){return el('planPace').value==='auto'?C.suggestedNew(draft.size,el('planStart').value,el('planEnd').value):Number(el('planPace').value);}
   function periodChanged(){
     const period=el('planPeriod').value,start=el('planStart').value;el('planEnd').readOnly=period!=='custom';el('planEnd').min=start;
@@ -58,6 +66,11 @@
     invalidate();
     const pending=[...draft].filter(key=>needsReview(catalog.get(key))).length;
     el('planSelectionCount').textContent=`已选 ${draft.size} 题${pending?' · 含 '+pending+' 道待核验题':''}`;
+    const time=budget();
+    if(time){
+      el('planPaceInfo').textContent=draft.size?`每次约 ${time.secondsPerTask} 秒（${time.personal?'按所选题目的作答记录':'暂无足够的计时记录，暂按作答 30 秒'}，另留 15 秒看解析）。每天约 ${time.dailyNew} 次新学或复习。`:'';
+      return;
+    }
     try{const span=C.ordinal(el('planEnd').value)-C.ordinal(el('planStart').value)+1,limit=pace(),over=Math.max(0,draft.size-span*limit);
       el('planPaceInfo').textContent=draft.size&&span>0?`每天最多 ${limit} 道新题，到期复习另计，每轮最多 ${BATCH} 题。${over?'按此节奏，截止时至少有 '+over+' 道新题尚未开始；可延长周期、调高题量或在目标日后继续。':''}`:'';
     }catch(_){el('planPaceInfo').textContent='';}
@@ -68,14 +81,20 @@
       if(!draft.size)throw Error('请至少选择一个有可学习题目的题库，或在细选中加入题目');
       const start=el('planStart').value,end=el('planEnd').value;if(start<today())throw Error('开始日期不能早于今天');
       const uid=globalThis.crypto?.randomUUID?.()?.replaceAll('-','')||Date.now().toString(36)+Math.random().toString(36).slice(2);
-      candidate=C.create({id:'plan_'+uid,title:el('planTitle').value,keys:C.orderedKeys([...draft].map(k=>catalog.get(k))),start,end,dailyNew:pace(),now:now()});
-      err.textContent='';const box=el('planPreview'),calendar=calendarMarkup(candidate,start),peak=Math.max(...calendarRows.map(r=>r.items.length)),span=C.ordinal(end)-C.ordinal(start)+1;
-      box.innerHTML=`<div class="notice"><h3>${esc(candidate.title)} · ${span}天</h3><p>共 ${candidate.keys.length} 题，每日新题上限 ${candidate.dailyNew}。按每天独立答对估计，最忙的一天约有 ${peak} 道新学和复习任务，可分轮完成。</p><button class="btn primary" onclick="STUDY_PLANS.saveCandidate()">确认保存这个计划</button></div>${calendar}`;
+      const time=budget();
+      if(time&&!time.dailyNew)throw Error('按当前作答用时，每天的时间不足一次练习，请增加每日分钟数或按题量安排。');
+      candidate=C.create({id:'plan_'+uid,title:el('planTitle').value,keys:C.orderedKeys([...draft].map(k=>catalog.get(k))),start,end,...(time||{dailyNew:pace()}),now:now()});
+      err.textContent='';const forecast=C.schedule(candidate,start,!!time);
+      const box=el('planPreview'),calendar=calendarMarkup(candidate,start,forecast.rows),peak=Math.max(...calendarRows.map(r=>r.items.length)),span=C.ordinal(end)-C.ordinal(start)+1;
+      const summary=time
+        ? `每天 ${time.dailyMinutes} 分钟，按每天完成安排且独立答对估算，到 ${end} 可学到 ${forecast.coveredAtEnd} / ${candidate.keys.length} 道原题。预计 ${forecast.firstPass} 完成所选题目的首轮学习。${forecast.firstPass>end?'到目标日后仍可继续这个计划。':''}目标日前最忙的一天约 ${peak} 次新学和复习。`
+        : `共 ${candidate.keys.length} 题，每日新题上限 ${candidate.dailyNew}。按每天独立答对估计，最忙的一天约有 ${peak} 道新学和复习任务，可分轮完成。`;
+      box.innerHTML=`<div class="notice"><h3>${esc(candidate.title)} · ${span}天</h3><p>${summary}</p><button class="btn primary" onclick="STUDY_PLANS.saveCandidate()">确认保存这个计划</button></div>${calendar}`;
       box.scrollIntoView({block:'start',behavior:'auto'});
     }catch(e){invalidate();err.textContent=e.message;}
   }
-  function calendarMarkup(p,from){
-    calendarLookup=qmap();calendarRows=C.calendar(p,from);
+  function calendarMarkup(p,from,rows=C.calendar(p,from)){
+    calendarLookup=qmap();calendarRows=rows;
     return `<div class="plan-calendar">${calendarRows.map((row,i)=>{const n=row.items.filter(s=>!s.introduced).length;return `<details class="panel plan-day" ontoggle="if(this.open)STUDY_PLANS.openDay(this,${i})"><summary><b>${row.day}${row.day===today()?' · 今天':''}</b><span>新题 ${n} · 复习 ${row.items.length-n}</span></summary><div class="plan-day-items"></div></details>`;}).join('')}</div>`;
   }
   function openDay(details,index,limit=30){
@@ -84,7 +103,7 @@
     list.innerHTML=`<ol>${row.items.slice(0,limit).map(s=>{const q=calendarLookup.get(s.key);return `<li><span class="tag">${s.introduced?'第 '+(s.repetitions+1)+' 遍':'初学'}</span><b>${esc(q?label(q):s.key)}</b><p>${esc(q?.stem||'请加载相同题库。')}</p></li>`;}).join('')||'<li>当天暂无到期题。</li>'}</ol>${row.items.length>limit?`<button class="btn small" onclick="STUDY_PLANS.openDay(this.closest('details'),${index},${limit+30})">再显示30题</button>`:''}`;
   }
   function saveCandidate(){if(!candidate)return A.toast('请按当前设置重新预览');const p=candidate;store().learningPlans||={};store().learningPlans[p.id]=p;if(!A.save()){delete store().learningPlans[p.id];return;}candidate=null;detail(p.id);A.toast('计划已保存');}
-  function detail(id){const p=store().learningPlans?.[id];if(!p)return open();const day=today(),lookup=qmap(),tasks=C.tasks(p,day,now()),waiting=Object.values(C.states(p,day)).filter(s=>s.retryAt>now()),retryAt=waiting.length?Math.min(...waiting.map(s=>s.retryAt)):0;A.show(header(p.title,`${p.start} 至 ${p.end} · ${p.keys.length} 题`)+`<div class="q-actions"><button class="btn" onclick="STUDY_PLANS.open()">全部计划</button><button class="btn primary" onclick="STUDY_PLANS.start('${id}')" ${tasks.length&&day>=p.start?'':'disabled'}>开始今天的学习（本轮${Math.min(BATCH,tasks.length)}题）</button></div>${retryAt?`<div class="notice">刚才忘记的题将在北京时间 ${new Date(retryAt+8*3600000).toISOString().slice(11,16)} 起陆续到期。<button class="btn small" onclick="STUDY_PLANS.detail('${id}')">刷新任务</button></div>`:''}<div class="notice">先复习到期与错题，再学新题。答对后安排下一次回忆；只翻页或看答案不会算作完成。未来安排按独立答对估计，实际题量会随表现变化。${day>p.end?'已超过目标日，可继续按到期日期巩固。':''}</div>${Object.values(p.events).length?`<details class="panel plan-theory"><summary>已完成的回忆记录（${Object.keys(p.events).length}次）</summary><ol>${Object.entries(p.events).sort((a,b)=>b[1].at-a[1].at).slice(0,100).map(([,e])=>`<li>${e.day} · ${esc(lookup.has(e.key)?label(lookup.get(e.key)):e.key)} · ${{remembered:'独立想起',assisted:'提示后想起',again:'还没记住'}[e.rating]}</li>`).join('')}</ol></details>`:''}${day>p.end?`<section class="panel pad"><h3>今天已到期 ${tasks.length} 题</h3><ol>${tasks.map(s=>`<li>${esc(lookup.has(s.key)?label(lookup.get(s.key)):s.key)}</li>`).join('')}</ol></section>`:calendarMarkup(p,day)}${theory()}`);}
+  function detail(id){const p=store().learningPlans?.[id];if(!p)return open();const day=today(),lookup=qmap(),tasks=C.tasks(p,day,now()),waiting=Object.values(C.states(p,day)).filter(s=>s.retryAt>now()),retryAt=waiting.length?Math.min(...waiting.map(s=>s.retryAt)):0;A.show(header(p.title,`${p.start} 至 ${p.end} · ${p.keys.length} 题`)+`<div class="q-actions"><button class="btn" onclick="STUDY_PLANS.open()">全部计划</button><button class="btn primary" onclick="STUDY_PLANS.start('${id}')" ${tasks.length&&day>=p.start?'':'disabled'}>开始今天的学习（本轮${Math.min(BATCH,tasks.length)}题）</button></div>${retryAt?`<div class="notice">刚才忘记的题将在北京时间 ${new Date(retryAt+8*3600000).toISOString().slice(11,16)} 起陆续到期。<button class="btn small" onclick="STUDY_PLANS.detail('${id}')">刷新任务</button></div>`:''}<div class="notice">${p.dailyMinutes?`每天 ${p.dailyMinutes} 分钟，约 ${p.dailyNew} 次新学和复习；超过当日预算的任务顺延。`:'先复习到期与错题，再学新题。'}答对后安排下一次回忆；只翻页或看答案不会算作完成。未来安排按独立答对估计，实际题量会随表现变化。${day>p.end?'已超过目标日，可继续按到期日期巩固。':''}</div>${Object.values(p.events).length?`<details class="panel plan-theory"><summary>已完成的回忆记录（${Object.keys(p.events).length}次）</summary><ol>${Object.entries(p.events).sort((a,b)=>b[1].at-a[1].at).slice(0,100).map(([,e])=>`<li>${e.day} · ${esc(lookup.has(e.key)?label(lookup.get(e.key)):e.key)} · ${{remembered:'独立想起',assisted:'提示后想起',again:'还没记住'}[e.rating]}</li>`).join('')}</ol></details>`:''}${day>p.end?`<section class="panel pad"><h3>今天已到期 ${tasks.length} 题</h3><ol>${tasks.map(s=>`<li>${esc(lookup.has(s.key)?label(lookup.get(s.key)):s.key)}</li>`).join('')}</ol></section>`:calendarMarkup(p,day)}${theory()}`);}
   function start(id){const p=store().learningPlans?.[id];if(!p)return A.toast('计划不存在，请回首页重新查看');const tasks=C.tasks(p,today(),now());if(!tasks.length){detail(id);return A.toast('暂时没有到期任务，可查看下次复习安排');}const lookup=qmap();if(tasks.slice(0,BATCH).some(s=>!lookup.has(s.key)))return A.toast('需要的题库未加载，请先导入相同题库，原计划仍保留');A.start(tasks.slice(0,BATCH).map(s=>lookup.get(s.key)),id);}
   function remove(id){const p=store().learningPlans?.[id];if(!p)return;delete store().learningPlans[id];if(!A.save()){store().learningPlans[id]=p;return;}open();}
   function recordQuestion(q,rating,eventId){const key=C.questionKey(q);for(const p of plans()){if(!p.keys.includes(key)||today()<p.start)continue;store().learningPlans[p.id]=C.record(p,{id:eventId,key,rating,at:now()});}}

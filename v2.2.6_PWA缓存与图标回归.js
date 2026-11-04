@@ -4,9 +4,9 @@ let online=true,revision='new-image';
 const urlOf=r=>new URL(typeof r==='string'?r:r.url,base).href;
 class BrowserRequest extends Request{constructor(input,options){super(typeof input==='string'?urlOf(input):input,options)}}
 function cache(name){if(!stores.has(name))stores.set(name,new Map());const data=stores.get(name);return {async put(r,response){data.set(urlOf(r),response.clone())},async match(r){return data.get(urlOf(r))?.clone()},async keys(){return [...data.keys()].map(u=>new BrowserRequest(u))}}}
-const caches={open:async name=>cache(name),keys:async()=>[...stores.keys()],delete:async name=>stores.delete(name),match:async(r,{cacheName}={})=>cache(cacheName).match(r)};
+const caches={has:async name=>stores.has(name),open:async name=>cache(name),keys:async()=>[...stores.keys()],delete:async name=>stores.delete(name),match:async(r,{cacheName}={})=>cache(cacheName).match(r)};
 const self={location:{origin:new URL(base).origin},clients:{async claim(){}},async skipWaiting(){},addEventListener:(name,fn)=>handlers[name]=fn};
-const context={self,caches,Request:BrowserRequest,Response,Headers,URL,fetch:async request=>{fetchUrls.push(urlOf(request));if(!online)throw Error('offline');return new Response(urlOf(request).includes('/source/')?revision:'asset',{status:200})}};
+const context={self,caches,Request:BrowserRequest,Response,Headers,URL,fetch:async request=>{fetchUrls.push(urlOf(request));if(!online)throw Error('offline');return new Response(urlOf(request).includes('/source/')?revision:new URL(urlOf(request)).pathname.endsWith('.html')?'<meta name="build-version" content="__BUILD_VERSION__">':'/* ShenRenLiu build: __BUILD_VERSION__ */\nasset',{status:200})}};
 vm.createContext(context);vm.runInContext(fs.readFileSync('sw.js','utf8'),context);
 async function lifecycle(name){let pending;handlers[name]({waitUntil:p=>pending=p});await pending}
 async function fetchImage(name='image3.webp'){let pending;handlers.fetch({request:new BrowserRequest(base+'source/'+name),respondWith:p=>pending=p});return pending}

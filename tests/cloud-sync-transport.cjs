@@ -6,9 +6,16 @@ function boot(){let currentUser={id:'reader-a',email:'reader@qq.com'},sentToken=
 }
 (async()=>{const t=boot(),config={enabled:true,envId:'test-env',functionName:'shenrenliu-sync',sdkURL:'vendor/cloudbase.js'},adapter=await t.window.createQbankCloudbase(config);
  await adapter.sendCode('reader@qq.com');await assert.rejects(()=>adapter.verifyCode('other@163.com','654321'),/当前邮箱/);await assert.rejects(()=>adapter.verifyCode('reader@qq.com','000000'),/验证码/);assert.equal((await adapter.verifyCode('reader@qq.com','654321')).uid,'reader-a');assert.equal(t.token(),'654321');assert.equal(t.timers.size,0);
+ assert.throws(()=>Core.email('reader.@qq.com'));
+ await adapter.sendCode('reader@qq.com');t.setMode('error');
+ await assert.rejects(()=>adapter.sendCode('reader@qq.com'),/频繁/);
+ assert.equal((await adapter.verifyCode('reader@qq.com','654321')).uid,'reader-a','重发失败仍可使用上次有效的验证码');
  t.setMode('error');await assert.rejects(()=>adapter.sendCode('reader@qq.com'),/频繁/);t.setMode('hang');const pending=adapter.sendCode('reader@qq.com'),rejected=assert.rejects(pending,/超时.*保留/);assert.equal(t.timers.size,1);[...t.timers.values()][0]();await rejected;assert.equal(t.timers.size,0);t.setMode('');await adapter.sendCode('reader@qq.com');assert.equal((await adapter.verifyCode('reader@qq.com','654321')).uid,'reader-a');
  console.log('PASS 邮箱验证码绑定同次请求；错码可重试、限流友好提示；超时解除等待且可重新请求，不清理本机数据');
  t.setMode('no-session');assert.equal(await adapter.currentUser(),null);t.setMode('session-network');await assert.rejects(()=>adapter.currentUser(),/网络/);t.setMode('');assert.equal((await adapter.currentUser()).uid,'reader-a');console.log('PASS 真实SDK未登录响应识别为未登录，网络故障仍明确报错，已有会话可恢复');
+ t.setMode('no-session');await assert.rejects(()=>adapter.request({action:'pull'},{expectedUid:'reader-a'}),/过期/);
+ t.setMode('');await assert.rejects(()=>adapter.request({action:'pull'},{expectedUid:'other-account'}),/账号已变化/);
+ console.log('PASS 凭证已过期或另一个标签页切换登录身份时，阻止原账号记录以错误身份读写');
  const loader=boot();delete loader.window.cloudbase;const first=loader.window.createQbankCloudbase(config),bad=assert.rejects(first,/组件无效/);loader.scripts[0].onload();await bad;const second=loader.window.createQbankCloudbase(config),bad2=assert.rejects(second,/组件暂不可用/);assert.equal(loader.scripts.length,2);loader.scripts[1].onerror();await bad2;
  console.log('PASS 组件损坏和下载失败都可重新加载，不会永久卡在已失败的Promise');
 })().catch(error=>{console.error(error);process.exitCode=1});

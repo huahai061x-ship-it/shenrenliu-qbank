@@ -1,7 +1,7 @@
 (() => {
   'use strict';
   const C=window.CLOUD_SYNC_CORE,CONFIG=window.QBANK_CLOUD_CONFIG||{},PREFIX='shenrenliu_cloud_v1_'+encodeURIComponent(CONFIG.envId||'disabled')+'_',BINDING=PREFIX+'owner';
-  let app,transport,connecting,user=null,state=null,observed={},home=true,applying=false,busy=false,captureTimer=null,syncTimer=null,otpEmail='',codeSentAt=0,lastError='',lastSync=0,preview=null,epoch=0,previewLocal=null,accountLoading=false,activeSync=null,lastForeground=0,adapterEpoch=0;
+  let app,transport,connecting,user=null,state=null,observed={},home=true,applying=false,busy=false,captureTimer=null,syncTimer=null,otpEmail='',otpDraft='',otpBusy='',codeTimer=null,codeSentAt=0,lastError='',lastSync=0,preview=null,epoch=0,previewLocal=null,accountLoading=false,activeSync=null,lastForeground=0,adapterEpoch=0;
   const uid=()=>crypto.randomUUID().replaceAll('-',''),cacheKey=()=>PREFIX+encodeURIComponent(user.uid),status=()=>!CONFIG.enabled?'云同步尚未启用':!user?(lastError||'未登录'):accountLoading?'正在连接学习记录':busy?'正在同步学习数据':lastError||(Object.keys(state?.conflicts||{}).length?'有差异待处理':Object.keys(state?.pending||{}).length?'有待同步变更':lastSync?'已同步全部学习数据':'尚未同步');
   function persist(){localStorage.setItem(cacheKey(),JSON.stringify(C.compactState(state)));}
   function current(){return C.values(app.getStore(),app.questions());}
@@ -36,7 +36,7 @@
     const rows=[],ids=new Set();let cursor=null;
     const versions=incremental?knownVersions():null;
     for(let page=0;page<1000;page++){
-      const result=await transport.request({action:'pull',...(cursor?{cursor}:{})},versions?{knownVersions:versions}:undefined);
+      const result=await transport.request({action:'pull',...(cursor?{cursor}:{})},{expectedUid:user.uid,knownVersions:versions});
       if(!valid())throw Error('登录状态已变化，本次同步已停止');
       if(!Array.isArray(result.records)||result.records.length>100)throw Error('云端分页无效');
       for(const row of result.records){C.validateRecord(row);const id=C.recordId(row.key,row.field);if(ids.has(id))throw Error('云端分页包含重复记录');ids.add(id);rows.push(row);}
@@ -75,7 +75,7 @@
       for(let batch=0;batch<20;batch++){
         capture();const operations=C.batch(Object.values(state.pending).filter(op=>!state.conflicts[C.recordId(op.key,op.field)]));
         if(!operations.length)break;
-        const response=await transport.request({action:'push',operations});if(!valid())return;
+        const response=await transport.request({action:'push',operations},{expectedUid:owner});if(!valid())return;
         // A local edit may happen before the 250ms capture timer fires.
         capture();const next=C.acknowledge(state.pending,state.records,state.conflicts,response.results);state={...state,...next};persist();
         if(Date.now()-started>10000)break;
@@ -163,23 +163,53 @@
   const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   function message(text){const node=document.querySelector('#cloudSyncMessage');if(node)node.textContent=text;}
   function conflictMarkup(){return Object.entries(state.conflicts).map(([id,issue])=>`<div class="notice"><b>${esc(label(issue.local))}</b>${issue.reason?`<p class="muted">${esc(issue.reason)}</p>`:''}<p>本机：${esc(summary(issue.local))}；账号：${esc(summary(issue.remote))}</p><button class="btn" data-local="${esc(id)}">保留本机</button><button class="btn" data-remote="${esc(id)}">保留账号</button><button class="btn small" data-export-conflict="${esc(id)}">保存两份差异文件</button>${issue.local.field==='activity'&&issue.local.value?`<button class="btn" data-fork="${esc(id)}">保留两份进度</button>`:''}</div>`).join('');}
-  function updateCodeButton(){const button=document.querySelector('#cloudAccountDialog [data-action="send"]');if(!button)return;const seconds=Math.max(0,Math.ceil((60000-(Date.now()-codeSentAt))/1000));button.disabled=seconds>0;button.textContent=seconds?`${seconds}秒后可重发`:'发送验证码';if(seconds&&document.querySelector('#cloudAccountDialog')?.open)setTimeout(updateCodeButton,1000);}
+  function updateCodeButton(){
+    clearTimeout(codeTimer);
+    const dialog=document.querySelector('#cloudAccountDialog'),send=dialog?.querySelector('[data-action="send"]');
+    if(!send)return;
+    const seconds=Math.max(0,Math.ceil((60000-(Date.now()-codeSentAt))/1000));
+    send.disabled=!!otpBusy||seconds>0;
+    send.textContent=otpBusy==='send'?'正在发送…':seconds?seconds+'秒后可重发':'发送验证码';
+    const check=dialog.querySelector('[data-action="verify"]'),email=dialog.querySelector('#cloudEmail');
+    check.disabled=!!otpBusy||!otpEmail||email.value.trim().toLowerCase()!==otpEmail;
+    check.textContent=otpBusy==='verify'?'正在验证…':'验证并登录';
+    email.readOnly=!!otpBusy;
+    if(seconds&&dialog.open)codeTimer=setTimeout(updateCodeButton,1000);
+  }
+  async function runOtp(action,fn){
+    if(otpBusy)return;
+    otpBusy=action;updateCodeButton();
+    try{await fn();}finally{otpBusy='';updateCodeButton();}
+  }
   function render(){
     const dialog=document.querySelector('#cloudAccountDialog');if(!dialog)return;
     const advancedOpen=!!dialog.querySelector('.cloud-advanced')?.open;
     let content='';
     if(!CONFIG.enabled)content='<p>当前继续使用本机记录。</p>';
-    else if(!user)content=`<p class="muted">用邮箱验证码登录，无需邮箱密码。</p><label>邮箱<input id="cloudEmail" type="email" autocomplete="email" value="${esc(otpEmail)}" placeholder="例如：你的QQ号@qq.com"></label><button class="btn" data-action="send">发送验证码</button><label>邮件验证码<input id="cloudCode" autocomplete="one-time-code" maxlength="12"></label><button class="btn primary" data-action="verify">验证并登录</button>`;
+    else if(!user)content=`<p class="muted">支持 QQ、Foxmail、网易、新浪和搜狐邮箱。</p><label>邮箱<input id="cloudEmail" type="email" autocomplete="email" value="${esc(otpDraft||otpEmail)}" placeholder="例如：你的QQ号@qq.com"></label><button class="btn" data-action="send">发送验证码</button><label>邮件验证码<input id="cloudCode" autocomplete="one-time-code" autocapitalize="none" spellcheck="false" maxlength="12"></label><button class="btn primary" data-action="verify">验证并登录</button>`;
     else if(preview)content=`<p>为这台设备接入账号。账号已有记录优先，本机独有记录会补入；不同的同卷进度另存一份。先保存本机恢复副本，再同步。</p><button class="btn primary cloud-primary-action" data-action="approve">一键同步，开始学习</button><details class="cloud-advanced"><summary>高级：查看差异或手动选择</summary><p>补入本机${preview.upload.length}项，接收账号${preview.download.length}项，存在${preview.conflicts.length}项差异。重复累计统计不会直接相加。</p><label class="cloud-manual-option"><input type="checkbox" id="cloudManualMode">本次逐项选择，以后保留手动处理模式</label>${preview.conflicts.map(issue=>`<label>${esc(label(issue.local))}<br>本机：${esc(summary(issue.local))}；账号：${esc(summary(issue.remote))}<select data-cloud-choice="${esc(issue.id)}"><option value="">请选择</option><option value="local">保留本机</option><option value="remote">保留账号</option></select></label>`).join('')}</details>`;
     else if(accountLoading)content='';
     else if(!state?.approved)content='<p>邮箱已登录，尚未完成同步连接。本机记录保留，重试无需重新收验证码。</p><button class="btn primary" data-action="retry">重试连接</button>';
     else content=`<p>收藏、错题、掌握、成绩和练习进度会自动互通。答题中先保存本机，回首页接收其他设备的记录。</p><button class="btn primary cloud-primary-action" data-action="sync">立即同步</button>${state.policy==='manual'?'<button class="btn" data-action="accountMode">一键改为自动同步</button>':''}<details class="cloud-advanced"${state.policy==='manual'?' open':''}><summary>高级：同步详情与恢复</summary><p>待上传${Object.keys(state.pending).length}项，差异${Object.keys(state.conflicts).length}项。${state.policy==='account'?'同一内容同时修改时使用账号已确认的版本，本机差异保存恢复副本；不同进度另存，重复统计不相加。':'当前为手动处理模式。'}</p>${conflictMarkup()}<button class="btn" data-action="undoCloud">撤销最近一次云端接收</button><button class="btn" data-action="undoAccount">恢复自动整理前本机副本</button></details>`;
     dialog.innerHTML=`<h2>学习账号与同步</h2>${user?`<div class="cloud-account-profile">${avatar(user.email)}<div><strong>${esc(user.email||'我的学习账号')}</strong></div></div>`:''}<p id="cloudSyncStatus" role="status">${esc(status())}</p>${content}<p id="cloudSyncMessage" role="status"></p><div class="q-actions">${user?'<button class="btn" data-action="logout">退出登录</button>':''}<button class="btn" data-action="close">关闭</button></div>`;
     dialog.querySelector('[data-action="close"]').onclick=()=>dialog.close();
-    const bind=(action,fn)=>{const button=dialog.querySelector(`[data-action="${action}"]`);if(button)button.onclick=async()=>{button.disabled=true;try{await fn();}catch(error){message(error.message);}finally{if(button.isConnected){button.disabled=false;if(action==='verify')button.textContent='验证并登录';if(action==='send')updateCodeButton();}}};};
+    const bind=(action,fn)=>{const button=dialog.querySelector(`[data-action="${action}"]`);if(button)button.onclick=async()=>{button.disabled=true;try{await fn();}catch(error){message(error.message);}finally{if(button.isConnected){if(action==='send'||action==='verify')updateCodeButton();else button.disabled=false;}}};};
     bind('retry',()=>authenticate(user));
-    bind('send',async()=>{if(Date.now()-codeSentAt<60000)throw Error('请稍等一分钟再获取验证码');const email=C.email(document.querySelector('#cloudEmail').value);const button=dialog.querySelector('[data-action="send"]');button.textContent='正在发送…';message('正在请求发送验证码…');await connect();await transport.sendCode(email);otpEmail=email;codeSentAt=Date.now();message('验证码已发送，请查收邮箱或垃圾邮件。');});
-    bind('verify',async()=>{if(!transport)throw Error('请先获取验证码');const email=C.email(document.querySelector('#cloudEmail').value),code=document.querySelector('#cloudCode').value.trim();dialog.querySelector('[data-action="verify"]').textContent='正在验证…';message('');await authenticate(await transport.verifyCode(email,code));});
+    const mailField=dialog.querySelector('#cloudEmail');
+    if(mailField)mailField.oninput=()=>{otpDraft=mailField.value;updateCodeButton();};
+    bind('send',()=>runOtp('send',async()=>{
+      if(Date.now()-codeSentAt<60000)throw Error('请稍等一分钟再获取验证码');
+      const email=C.email(mailField.value);otpDraft=email;message('正在请求发送验证码…');
+      await connect();await transport.sendCode(email);otpEmail=email;codeSentAt=Date.now();
+      message('验证码已发送至 '+email+'，请查收邮箱或垃圾邮件。');
+      if(dialog.open)dialog.querySelector('#cloudCode')?.focus();
+    }));
+    bind('verify',()=>runOtp('verify',async()=>{
+      const email=C.email(mailField.value),code=dialog.querySelector('#cloudCode').value.trim();
+      if(!transport||email!==otpEmail)throw Error('请先为当前邮箱获取验证码');
+      message('');const next=await transport.verifyCode(email,code);
+      otpEmail='';await authenticate(next);
+    }));
     bind('approve',approve);bind('sync',sync);bind('undoCloud',()=>undoCloud());bind('undoAccount',()=>undoCloud(true));bind('logout',logout);
     bind('accountMode',async()=>{state.policy='account';persist();await sync();});
     dialog.querySelectorAll('[data-export-conflict]').forEach(button=>button.onclick=()=>downloadConflict(button.dataset.exportConflict));
@@ -188,7 +218,7 @@
     if(advancedOpen&&dialog.querySelector('.cloud-advanced'))dialog.querySelector('.cloud-advanced').open=true;
     updateStatus();updateCodeButton();
   }
-  function open(){if(!home)return;if(!document.querySelector('#cloudAccountDialog')){const dialog=document.createElement('dialog');dialog.id='cloudAccountDialog';dialog.className='feedback-dialog cloud-account-dialog';document.body.append(dialog);}render();document.querySelector('#cloudAccountDialog').showModal();if(CONFIG.enabled&&!user){const ticket=epoch;(async()=>{try{const next=await(await connect()).currentUser();if(next&&ticket===epoch&&!user&&document.querySelector('#cloudAccountDialog')?.open)await authenticate(next);}catch(error){if(ticket===epoch){lastError=error.message;message(error.message);updateStatus();}}})();}}
+  function open(){if(!home)return;if(!document.querySelector('#cloudAccountDialog')){const dialog=document.createElement('dialog');dialog.id='cloudAccountDialog';dialog.className='feedback-dialog cloud-account-dialog';document.body.append(dialog);}render();document.querySelector('#cloudAccountDialog').showModal();updateCodeButton();if(CONFIG.enabled&&!user&&!otpBusy){const ticket=epoch;(async()=>{try{const next=await(await connect()).currentUser();if(next&&ticket===epoch&&!user&&document.querySelector('#cloudAccountDialog')?.open)await authenticate(next);}catch(error){if(ticket===epoch){lastError=error.message;message(error.message);updateStatus();}}})();}}
   function onView(isHome){const wasHome=home;home=isHome;const notice=document.querySelector('#syncTestNotice');if(notice)notice.hidden=!isHome;if(home&&!wasHome&&user&&state?.approved)schedule(0);updateStatus();}
   function foreground(){if(!CONFIG.enabled||!app||!home||document.hidden||navigator.onLine===false||Date.now()-lastForeground<1000)return;lastForeground=Date.now();if(user&&state?.approved){schedule(0);return;}if(localStorage.getItem(BINDING)){const ticket=epoch;connect().then(t=>t.currentUser()).then(next=>{if(next&&ticket===epoch&&!user)return authenticate(next);}).catch(error=>{lastError=error.message;updateStatus();});}}
   async function attach(adapter){adapterEpoch++;app=adapter;if(!CONFIG.enabled)return;let button=document.querySelector('#cloudAccountButton');if(!button){button=document.createElement('button');button.id='cloudAccountButton';button.className='btn small';button.onclick=open;const host=document.createElement('div');host.className='cloud-account-strip';host.append(button);document.querySelector('.topbar')?.append(host);}for(const name of ['pointerenter','focus','touchstart'])button.addEventListener?.(name,()=>{connect().catch(()=>{});},{once:true,passive:true});updateStatus();if(user&&state){if(state.approved)schedule(0);return;}if(!localStorage.getItem(BINDING))return;try{await connect();const next=await transport.currentUser();if(next)await authenticate(next);}catch(error){lastError=error.message;updateStatus();}}

@@ -5,3 +5,28 @@ let b=record(p,'attempt00003','remembered');assert.equal(C.states(b,'2026-10-28'
 const rows=Object.values(S.values({learningPlans:{[merged.id]:merged}},[])).map(x=>({...x,rev:1}));assert.equal(rows.length,1);rows.forEach(S.validateRecord);assert.deepEqual(S.project({},[],rows).learningPlans[merged.id],merged);assert.equal(Object.keys(S.project({learningPlans:{[merged.id]:merged}},[],[{...rows[0],value:null,rev:2}]).learningPlans).length,0);
 let storage={};const ctx={window:{STUDY_PLAN_CORE:C},TextEncoder,localStorage:{getItem:k=>storage[k],setItem:(k,v)=>storage[k]=v},Math};vm.createContext(ctx);vm.runInContext(fs.readFileSync('backup-core.js','utf8'),ctx);let envelope={format:'shenrenliu-workspace',version:1,includedBankIds:['hos_2026','culture'],data:{learningPlans:{[p.id]:merged}}};const B=ctx.window.BACKUP_CORE;assert.deepEqual(JSON.parse(JSON.stringify(B.decode(B.encode(envelope)).payload)),envelope);assert.throws(()=>B.validate({...envelope,includedBankIds:['hos_2026']}));let other=structuredClone(envelope);other.data.learningPlans[p.id]=a;assert.equal(Object.keys(B.merge(envelope,other).data.learningPlans[p.id].events).length,5);
 vm.runInContext(fs.readFileSync('lulu-fortunes.js','utf8'),ctx);const F=ctx.window.LULU_FORTUNES;assert.equal(F.count,160);const first=Array.from({length:160},()=>F.draw());assert.equal(new Set(first).size,160);vm.runInContext(fs.readFileSync('lulu-fortunes.js','utf8'),ctx);assert.notEqual(ctx.window.LULU_FORTUNES.draw(),first.at(-1));console.log('PASS 北京日期、真实日期边界、错题再练、跨日间隔、同日不虚增、幂等、并发合并、截止复习、逾期保留、云同步与删除、备份身份、160签不重复');
+
+const newKeys=Array.from({length:400},(_,i)=>'demo_plan:'+(i+1));
+const paced=C.create({id:'plan_paced0001',title:'两周',keys:newKeys,start:'2026-11-04',end:'2026-11-17',dailyNew:20,now:at('2026-11-04')});
+assert.equal(C.suggestedNew(400,paced.start,paced.end),37);
+assert.equal(C.calendar(paced,paced.start).length,14);
+assert.equal(C.tasks(paced,'2026-11-08',at('2026-11-08')).length,20,'漏做不会一次堆积五天新题');
+assert(C.calendar(paced,paced.start).every(row=>row.items.filter(item=>!item.introduced).length<=20));
+let now=at('2026-11-06'),current=C.record(paced,{id:'wrong_today_01',key:newKeys[0],rating:'again',at:now});
+const due=(time)=>C.tasks(current,C.today(time),time).map(q=>q.key);
+assert.equal(due(now).length,19);assert(!due(now+599999).includes(newKeys[0]));assert.equal(due(now+600000)[0],newKeys[0]);
+const tooSoon=C.record(current,{id:'early_after_forget',key:newKeys[0],rating:'remembered',at:now+100});assert.equal(C.states(tooSoon,'2026-11-06')[newKeys[0]].retryAt,now+600000);
+current=C.record(current,{id:'wrong_today_02',key:newKeys[0],rating:'again',at:now+600000});assert(!due(now+1200000).includes(newKeys[0]));
+assert.equal(due(now+C.DAY)[0],newKeys[0]);assert.equal(due(now+C.DAY).length,21);
+current=C.record(current,{id:'prompted_day2',key:newKeys[0],rating:'assisted',at:now+C.DAY});assert.equal(C.states(current,'2026-11-07')[newKeys[0]].due,'2026-11-08');
+const nearMidnight=Date.parse('2026-11-14T23:56:00+08:00');
+current=C.record(paced,{id:'midnight_wrong',key:newKeys[1],rating:'again',at:nearMidnight});assert(!due(nearMidnight+5*60000).includes(newKeys[1]));assert.equal(due(nearMidnight+10*60000)[0],newKeys[1]);
+let remembered=paced;
+for(const [i,d] of ['2026-11-04','2026-11-05','2026-11-07','2026-11-11'].entries())remembered=C.record(remembered,{id:'recall_event_'+i,key:newKeys[3],rating:'remembered',at:at(d)});
+assert.equal(C.states(remembered,'2026-11-11')[newKeys[3]].due,'2026-11-18','巩固日期可越过目标日，无强制全库期末堆叠');
+remembered=C.record(remembered,{id:'early_event_04',key:newKeys[3],rating:'remembered',at:at('2026-11-12')});assert.equal(C.states(remembered,'2026-11-12')[newKeys[3]].due,'2026-11-18','提前回忆不推迟原复习日');
+assert.equal(C.merge(paced,{...paced,dailyNew:10}),null);
+assert.equal(B.decode(B.encode({...envelope,includedBankIds:['demo_plan'],data:{learningPlans:{[paced.id]:paced}}})).payload.data.learningPlans[paced.id].dailyNew,20);
+const v4rows=Object.values(S.values({learningPlans:{[current.id]:current}},[])).map(x=>({...x,rev:1}));v4rows.forEach(S.validateRecord);assert.equal(S.project({},[],v4rows).learningPlans[current.id].dailyNew,20);
+const mixed=C.orderedKeys([{bankId:'a',id:1,type:'single'},{bankId:'a',id:2,type:'single'},{bankId:'a',id:3,type:'judge'},{bankId:'b',id:1,type:'single'},{bankId:'b',id:2,type:'single'}]);assert.equal(new Set(mixed).size,5);assert.deepEqual(mixed.slice(0,2),['a:1','b:1']);
+console.log('PASS 14天整库均衡题序、每日新题限额、漏学不堆积、忘后10分钟/跨零点再测、旧题优先、提示次日重测、跨目标日巩固、提前回忆不推迟、备份与云同步。');

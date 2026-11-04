@@ -10,7 +10,7 @@ const announcement=JSON.parse(await readFile(path.join(root,'release-announcemen
 if(typeof announcement.title!=='string'||!Array.isArray(announcement.items)||announcement.items.some(x=>typeof x!=='string'))throw Error('Invalid release announcement');
 const files = [
   'index.html', '①点我打开题库.html', 'release-notes.md', 'styles.css', 'questions.js',
-  'culture-insights.js', 'hos-analysis.js', 'explanation-core.js', 'backup-core.js', 'backup-ui.js', 'bank-core.js', 'bank-runtime.js', 'pedagogy.js', 'enhanced-fill.js', 'transfer-code.js', 'lulu.js', 'lulu-art.js', 'lulu-avatar.js', 'routine-eggs.js', 'cloud-sync-config.js', 'cloud-sync-recovery.js', 'cloud-sync-payload.js', 'cloud-sync-core.js', 'cloud-sync-cloudbase.js', 'cloud-sync.js', 'beijing-clock.js', 'study-plan-core.js', 'study-plan-ui.js', 'lulu-fortunes.js', 'ultra-content.js', 'ultra-core.js', 'lulu-mascot.png', 'app.js', 'pwa-install.js', 'manifest.webmanifest',
+  'culture-insights.js', 'hos-analysis.js', 'explanation-core.js', 'backup-core.js', 'backup-ui.js', 'bank-core.js', 'bank-runtime.js', 'pedagogy.js', 'enhanced-fill.js', 'transfer-code.js', 'lulu.js', 'lulu-art.js', 'lulu-avatar.js', 'routine-eggs.js', 'private-banks.js', 'cloud-sync-config.js', 'cloud-sync-recovery.js', 'cloud-sync-payload.js', 'cloud-sync-core.js', 'cloud-sync-cloudbase.js', 'cloud-sync.js', 'beijing-clock.js', 'study-plan-core.js', 'study-plan-ui.js', 'lulu-fortunes.js', 'ultra-content.js', 'ultra-core.js', 'lulu-mascot.png', 'app.js', 'pwa-install.js', 'manifest.webmanifest',
   'icon-source.svg', 'icon-16.png', 'icon-32.png', 'icon-48.png', 'icon-64.png', 'icon-128.png', 'icon-256.png', 'icon-192.png', 'icon-512.png', 'icon-192-maskable.png', 'icon-512-maskable.png'
 ];
 
@@ -39,15 +39,21 @@ await mkdir(path.join(output,'releases'),{recursive:true});
 const releasePage=`releases/${version}.html`;
 await writeFile(path.join(output,releasePage),html.replace('<head>','<head><base data-release-root href="../">'),'utf8');
 await cp(path.join(root,'latest.html'),path.join(output,'latest.html'));
-await writeFile(path.join(output,'release.json'),JSON.stringify({schemaVersion:1,version,appVersion:'v3.0',page:releasePage,assetBase,publishedAt,announcement}),'utf8');
-await cp(path.join(root, 'source'), path.join(output, 'source'), {recursive: true});
-await cp(path.join(root, 'banks'), path.join(output, 'banks'), {recursive: true});
-for(const file of [...files.filter(f=>/\.(js|css)$/.test(f)&&f!=='culture-insights.js'), 'banks/catalog.js','banks/sinotruk-culture-official.js']){
+await writeFile(path.join(output,'release.json'),JSON.stringify({schemaVersion:1,version,appVersion:'V4.0',page:releasePage,assetBase,publishedAt,announcement}),'utf8');
+// Only the previously published banks and their approved reference images ship.
+// Additional packs are imported on the user's device and have no public asset URL.
+const publicBanks=['banks/catalog.js','banks/sinotruk-culture-official.js','banks/sinotruk-culture-official.json'];
+await mkdir(path.join(output,'banks'),{recursive:true});
+for(const file of publicBanks)await cp(path.join(root,file),path.join(output,file));
+await mkdir(path.join(output,'source'),{recursive:true});
+for(let number=1;number<=111;number++){
+  const image='source/image'+number+'.webp';
+  await cp(path.join(root,image),path.join(output,image));
+}
+for(const file of [...files.filter(f=>/\.(js|css)$/.test(f)&&f!=='culture-insights.js'), ...publicBanks.filter(f=>f.endsWith('.js'))]){
   const target=path.join(output,assetBase,file);await mkdir(path.dirname(target),{recursive:true});
   const content=await readFile(path.join(root,file),'utf8');await writeFile(target,`/* ShenRenLiu build: ${version} */\n${content}`,'utf8');
 }
-// Retired 35-question bank stays only as a migration test fixture, not a deployed bank.
-for(const f of ['sinotruk-culture.js','sinotruk-culture.json'])await rm(path.join(output,'banks',f),{force:true});
 await cp(path.join(root, 'licenses'), path.join(output, 'licenses'), {recursive: true});
 await writeFile(path.join(output, '.nojekyll'), '', 'utf8');
 

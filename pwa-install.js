@@ -22,15 +22,36 @@
     if(list){list.replaceChildren();const items=release.announcement?.items;
       for(const text of Array.isArray(items)?items.filter(x=>typeof x==='string').slice(0,8):['功能和体验已更新，请保存进度后更新。']){const li=document.createElement('li');li.textContent=text.slice(0,300);list.append(li);}}
   }
+  const noteKey='shenrenliu_release_note_seen_v1';
+  let dismissedBuild='';
+  function renderReleaseNote(){
+    const box=document.getElementById?.('homeReleaseNote'),release=state.latestRelease;
+    if(!box)return;
+    let seen=dismissedBuild;
+    try{seen=seen||localStorage.getItem(noteKey)}catch(_){}
+    if(!release?.announcement||release.version!==state.currentVersion||seen===release.version){box.hidden=true;return;}
+    if(box.dataset.build!==release.version){
+      const details=document.createElement('details'),heading=document.createElement('summary'),list=document.createElement('ul'),close=document.createElement('button');
+      heading.textContent='本次更新 · '+(release.announcement.title||release.appVersion||'网站公告');
+      for(const text of (Array.isArray(release.announcement.items)?release.announcement.items:[]).slice(0,8)){
+        if(typeof text!=='string')continue;
+        const item=document.createElement('li');item.textContent=text.slice(0,300);list.append(item);
+      }
+      close.type='button';close.className='btn small';close.textContent='已读，收起公告';
+      close.onclick=()=>{dismissedBuild=release.version;try{localStorage.setItem(noteKey,dismissedBuild)}catch(_){}box.hidden=true;};
+      details.append(heading,list,close);box.replaceChildren(details);box.dataset.build=release.version;
+    }
+    box.hidden=false;
+  }
   function showBuildIdentity(){
     const line=document.querySelector('#siteVersionLine'),time=document.querySelector('#siteBuildTime');if(!line||!time)return;
     const version=state.currentVersion,published=document.querySelector('meta[name="build-time"]')?.content;
     if(!version||version.includes('__BUILD_VERSION__')){time.textContent='本地预览';return;}
     if(published&&!Number.isNaN(Date.parse(published))){const date=new Date(published);let text;try{text=new Intl.DateTimeFormat('zh-CN',{timeZone:'Asia/Shanghai',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).format(date).replace(/\//g,'-');}catch(_){text=new Date(date.getTime()+8*3600000).toISOString().slice(0,16).replace('T',' ');}
-      time.textContent=text;time.dateTime=date.toISOString();line.title='本机版本 v3.0；更新时间 '+text+'（北京时间）';
-    }else{time.textContent='未标时间';line.title='本机版本 v3.0';}
+      time.textContent=text;time.dateTime=date.toISOString();line.title='本机版本 V4.0 “神”版；更新时间 '+text+'（北京时间）';
+    }else{time.textContent='未标时间';line.title='本机版本 V4.0 “神”版';}
   }
-  const notify = () => {showBuildIdentity();state.controlled=!!navigator.serviceWorker?.controller;const button=document.querySelector('#siteUpdateButton'),status=document.querySelector('#siteUpdateStatus');if(button){button.disabled=state.checking;button.textContent=state.updateAvailable?'↻ 发现新版本':state.checking?'↻ 正在检查…':'↻ 检查更新';button.setAttribute?.('aria-busy',String(state.checking));}if(status){status.textContent=state.updateMessage;status.title=state.updateMessage;if(status.dataset)status.dataset.state=state.updateStatus;}window.updateInstallUI?.();window.updatePwaNotice?.();};
+  const notify = () => {showBuildIdentity();renderReleaseNote();state.controlled=!!navigator.serviceWorker?.controller;const button=document.querySelector('#siteUpdateButton'),status=document.querySelector('#siteUpdateStatus');if(button){button.disabled=state.checking;button.textContent=state.updateAvailable?'↻ 发现新版本':state.checking?'↻ 正在检查…':'↻ 检查更新';button.setAttribute?.('aria-busy',String(state.checking));}if(status){status.textContent=state.updateMessage;status.title=state.updateMessage;if(status.dataset)status.dataset.state=state.updateStatus;}window.updateInstallUI?.();window.updatePwaNotice?.();};
   window.addEventListener('beforeinstallprompt', event => {
     event.preventDefault();state.prompt=event;state.installed=false;notify();
   });
@@ -72,16 +93,25 @@
     state.updatePrepared=false;state.reloadRequested=false;
     if(window.prepareRequiredPwaUpdate){if(window.prepareRequiredPwaUpdate()===false)return false;state.updatePrepared=true;}else if(window.canReloadForPwaUpdate?.()===false){window.deferPwaUpdate?.();return false;}
     state.reloadRequested=true;
-    if(state.webviewFallback&&state.latestVersion)location.replace(releaseURL());else if(state.waiting&&(!state.waiting.state||state.waiting.state==='installed'))state.waiting.postMessage('SKIP_WAITING');else if(state.reloadOnly&&!navigator.serviceWorker)location.replace(releaseURL());else location.reload();
+    if(state.waiting&&(!state.waiting.state||state.waiting.state==='installed'))state.waiting.postMessage('SKIP_WAITING');else if(state.webviewFallback&&state.latestVersion)location.replace(releaseURL());else if(state.reloadOnly&&!navigator.serviceWorker)location.replace(releaseURL());else location.reload();
     return true;
   }
   function report(status,message) {state.updateStatus=status;state.updateMessage=message;notify();return status;}
   function bounded(promise,ms,message) {
     let timer;return Promise.race([promise,new Promise((_,reject)=>{timer=setTimeout(()=>reject(Error(message)),ms);})]).finally(()=>clearTimeout(timer));
   }
-  function foundWaiting(registration,worker=registration.waiting) {
+  async function foundWaiting(registration,worker=registration.waiting) {
     if(!worker||(!registration.active&&!navigator.serviceWorker.controller)||worker===registration.active||['activating','activated','redundant'].includes(worker.state))return false;
-    state.waiting=worker;state.updateAvailable=true;report('available','新版本已下载，点击更新后生效');return true;
+    if(!state.latestVersion)return false;
+    const announced=state.latestVersion,version=await workerVersion(worker);
+    if(state.latestVersion!==announced||worker.state&&worker.state!=='installed')return false;
+    if(typeof MessageChannel!=='undefined'&&!version){
+      if(state.currentVersion===announced)return false;
+      state.waiting=null;state.webviewFallback=true;state.reloadOnly=true;state.updateAvailable=true;
+      report('available','发现新版本，可保存进度后从新版入口打开');return true;
+    }
+    if(version&&version!==announced)return false;
+    state.webviewFallback=false;state.reloadOnly=false;state.waiting=worker;state.updateAvailable=true;report('available','新版本已下载，点击更新后生效');return true;
   }
   function watchWorker(registration,worker) {
     if(!worker||watchedWorkers.has(worker))return;watchedWorkers.add(worker);
@@ -93,7 +123,7 @@
   }
   function monitorRegistration(registration) {
     state.registration=registration;
-    foundWaiting(registration);watchWorker(registration,registration.installing);
+    watchWorker(registration,registration.installing);
     if(watchedRegistrations.has(registration))return;watchedRegistrations.add(registration);
     registration.addEventListener('updatefound',()=>{
       const worker=registration.installing;if(!worker)return;
@@ -124,13 +154,17 @@
     lastAttempt=Date.now();state.checking=true;state.swError='';report('checking','正在联网核对最新版本…');
     checkPromise=(async()=>{
       if(location.protocol==='file:')return report('unsupported','请打开在线网址后检查更新');
-      if(navigator.onLine===false)return report('offline','当前离线，无法确认最新版本；联网后可重试');
+      if(navigator.onLine===false){
+        if(state.webviewFallback)state.updateAvailable=false;
+        return report('offline','当前离线，无法确认最新版本；联网后可重试');
+      }
       try{
         const versionURL=new URL('release.json',appBase);versionURL.searchParams.set('_check',Date.now().toString(36));
         const abort=typeof AbortController!=='undefined'?new AbortController():null;
         let response;
         try{for(let attempt=0;attempt<2;attempt++){try{versionURL.searchParams.set('_check',Date.now().toString(36)+'-'+attempt);response=await bounded(fetch(versionURL.href,{cache:'no-store',...(abort?{signal:abort.signal}:{}),headers:{'Cache-Control':'no-cache'}}).then(async r=>{if(!r.ok)throw Error('版本服务暂不可用');return r.json();}),12000,'联网检查超时，请检查网络后重试');break;}catch(error){if(attempt===1||navigator.onLine===false)throw error;report('checking','首次联网未成功，正在重新核对版本…');}}}finally{abort?.abort();}
-        if(response?.schemaVersion!==1||typeof response.version!=='string'||!response.version||response.version.length>100)throw Error('版本信息不完整，请稍后重试');
+        if(response?.schemaVersion!==1||typeof response.version!=='string'||!response.version||!/^[a-zA-Z0-9._-]{1,100}$/.test(response.version))throw Error('版本信息不完整，请稍后重试');
+        if(state.latestVersion!==response.version){state.waiting=null;state.updateAvailable=false;state.reloadOnly=false;}
         state.latestVersion=response.version;
         state.latestRelease=response;
         showUpdateAnnouncement();
@@ -140,19 +174,20 @@
           if(state.currentVersion&&state.currentVersion!==state.latestVersion){state.reloadOnly=true;state.updateAvailable=true;return report('available','发现新版本，点击更新后生效');}
           if(!state.currentVersion)throw Error('当前浏览器无法核对本机版本，请使用系统浏览器打开');
         }else{
-          if(foundWaiting(registration))return 'available';
+          state.webviewFallback=false;
+          if(await foundWaiting(registration))return 'available';
           try{await bounded(registration.update(),15000,'更新包检查超时，请重试');}catch(error){state.webviewFallback=true;state.swError=error.message;if(state.currentVersion!==state.latestVersion){state.reloadOnly=true;state.updateAvailable=true;return report('available','发现新版本，可使用网页方式更新');}state.checkedAt=Date.now();return report('latest','已联网确认：当前为最新版本');}
           monitorRegistration(registration);
-          if(foundWaiting(registration))return 'available';
+          if(await foundWaiting(registration))return 'available';
           await finishInstallation(registration);
-          if(foundWaiting(registration))return 'available';
+          if(await foundWaiting(registration))return 'available';
           if(state.currentVersion!==state.latestVersion){
             if(await workerVersion(registration.active)===state.latestVersion){state.reloadOnly=true;state.updateAvailable=true;return report('available','新版本已就绪，点击更新后生效');}
             throw Error('服务器已有新版本，更新包尚未就绪，请稍后重试');
           }
         }
         state.checkedAt=Date.now();state.updateAvailable=false;state.waiting=null;return report('latest','已联网确认：当前为最新版本');
-      }catch(error){if(state.updateAvailable)return report('available','新版本已下载，点击更新后生效');state.swError=error.message;return report(navigator.onLine===false?'offline':'error',error.message||'检查未完成，请稍后重试');}
+      }catch(error){if(state.updateAvailable&&state.waiting?.state==='installed')return report('available','新版本已下载，点击更新后生效');state.swError=error.message;return report(navigator.onLine===false?'offline':'error',error.message||'检查未完成，请稍后重试');}
     })().finally(()=>{state.checking=false;checkPromise=null;notify();});
     return checkPromise;
   }
@@ -182,20 +217,24 @@
           const abort=typeof AbortController!=='undefined'?new AbortController():null;
           try{const url=new URL('release.json',appBase);url.searchParams.set('_check',Date.now().toString(36)+'-latest-'+attempt);release=await bounded(fetch(url.href,{cache:'no-store',headers:{'Cache-Control':'no-cache'},...(abort?{signal:abort.signal}:{})}).then(r=>{if(!r.ok)throw Error('版本服务暂不可用，请稍后重试');return r.json();}),12000,'联网检查超时，请重试');break;}catch(error){if(attempt===1)throw error;}finally{abort?.abort();}
         }
-        if(release?.schemaVersion!==1||typeof release.version!=='string'||!release.version||release.version.length>100)throw Error('版本信息不完整，请稍后重试');
+        if(release?.schemaVersion!==1||typeof release.version!=='string'||!release.version||!/^[a-zA-Z0-9._-]{1,100}$/.test(release.version))throw Error('版本信息不完整，请稍后重试');
         state.latestVersion=release.version;state.checkedAt=Date.now();
         if(state.currentVersion===release.version){latestMessage('当前已经是最新版本，无需重复获取或刷新');return false;}
-        if(window.prepareRequiredPwaUpdate?.()===false)return false;
+        if(window.prepareRequiredPwaUpdate?.()===false){report('error','学习进度保存失败，请先备份或释放存储空间后再更新');return false;}
         const url=location.hostname==='huahai061x-ship-it.github.io'?new URL('https://huahai061x-ship-it.github.io/ShenRenLiu/latest.html'):new URL('latest.html',appBase);url.search=location.search;url.searchParams.delete('entry');url.hash=location.hash;location.assign(url.href);return true;
       }catch(error){report(navigator.onLine===false?'offline':'error',error.message||'未能确认最新版本，请稍后重试');window.toast?.(state.updateMessage);return false;}
       finally{link?.removeAttribute('aria-busy');latestPromise=null;}
     })();return latestPromise;
   }
-  window.PWA_INSTALL={state,standalone,notify,inspectManifest,promptInstall,requestUpdate,checkUpdate,assetURL,openLatest};
+  window.PWA_INSTALL={state,standalone,notify,inspectManifest,promptInstall,requestUpdate,checkUpdate,assetURL,openLatest,renderReleaseNote};
   const autoCheck=()=>checkUpdate();
   window.addEventListener('pageshow',event=>checkUpdate({force:!!event.persisted}));
   window.addEventListener('focus',autoCheck);
   window.addEventListener('online',()=>checkUpdate({force:true}));
+  window.addEventListener('offline',()=>{
+    if(state.webviewFallback)state.updateAvailable=false;
+    report('offline',state.waiting?.state==='installed'?'当前离线，已下载的更新仍可安装':'当前离线，恢复联网后自动检查更新');
+  });
   document.addEventListener('visibilitychange',()=>{if(!document.hidden)autoCheck();});
   document.addEventListener('resume',autoCheck);
   const start=()=>{registerWorker().catch(error=>{state.swError=error.message;notify();});checkUpdate({force:true});inspectManifest();notify();setInterval(()=>{if(!document.hidden)autoCheck();},120000);};

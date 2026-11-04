@@ -229,3 +229,16 @@ details[open]>.question-preferences-body,details[open]>.confidence-box{animation
 @media(max-width:640px){.plan-home{flex-wrap:wrap;padding:18px;gap:12px}.plan-home-icon{font-size:28px}.plan-home>div:nth-child(2){flex:1;min-width:200px}.plan-home>.btn{width:100%;margin:0;min-height:44px}.plan-form-grid{grid-template-columns:1fr 1fr;gap:12px}.plan-form-grid>.field:first-child{grid-column:1/-1}.plan-filter{grid-template-columns:1fr}.plan-day summary{align-items:flex-start;flex-direction:column;gap:5px}.plan-question-picker{max-height:380px}.plan-banks{display:grid}.plan-form-grid input{width:100%;min-width:0;box-sizing:border-box}.plan-list .q-actions{gap:10px}}
 
 .cloud-account-avatar[data-mail-provider]{background:var(--panel);color:var(--brand)}.cloud-account-avatar img{display:block;object-fit:contain;border-radius:5px}
+
+.search-pager{display:flex;align-items:center;justify-content:center;gap:16px;margin:18px 0}.search-pager span{font-variant-numeric:tabular-nums;color:var(--muted);font-size:.9rem}
+.search-count{scroll-margin-block-start:12rem}.search-count:focus{outline:none}
+@media(prefers-reduced-motion:no-preference){
+  .btn:not(:disabled),.hero-bank-picker{transition:transform 120ms ease-out,background-color 120ms ease,border-color 120ms ease,box-shadow 120ms ease}
+  .btn:active:not(:disabled),.hero-bank-picker:active{transform:scale(.975)}
+  .option .letter{transition:transform 130ms ease-out,background-color 130ms ease,color 130ms ease}
+  .option.selected .letter{transform:scale(1.08)}
+  .search-pager .btn:active:not(:disabled){transform:scale(.96)}
+}
+@media(hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){
+  .q-actions .btn:hover:not(:disabled),.search-pager .btn:hover:not(:disabled){box-shadow:0 2px 7px color-mix(in srgb,var(--brand) 16%,transparent)}
+}

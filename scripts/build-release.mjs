@@ -40,9 +40,8 @@ const releasePage=`releases/${version}.html`;
 await writeFile(path.join(output,releasePage),html.replace('<head>','<head><base data-release-root href="../">'),'utf8');
 await cp(path.join(root,'latest.html'),path.join(output,'latest.html'));
 await writeFile(path.join(output,'release.json'),JSON.stringify({schemaVersion:1,version,appVersion:'V4.0',page:releasePage,assetBase,publishedAt,announcement}),'utf8');
-// Only the previously published banks and their approved reference images ship.
-// Additional packs are imported on the user's device and have no public asset URL.
-const publicBanks=['banks/catalog.js','banks/sinotruk-culture-official.js','banks/sinotruk-culture-official.json'];
+// Publish the registered banks and their approved assets only.
+const publicBanks=['banks/catalog.js','banks/sinotruk-culture-official.js','banks/sinotruk-culture-official.json','banks/forming_forging_2026.js','banks/forming_casting_2026.js'];
 await mkdir(path.join(output,'banks'),{recursive:true});
 for(const file of publicBanks)await cp(path.join(root,file),path.join(output,file));
 await mkdir(path.join(output,'source'),{recursive:true});

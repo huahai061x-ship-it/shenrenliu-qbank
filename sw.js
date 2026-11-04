@@ -4,7 +4,7 @@ const APP_CACHE = `${CACHE_PREFIX}v4.0-public-${BUILD_VERSION}`;
 const IMAGE_CACHE = 'shenrenliu-qbank-images-v2';
 const LEGACY_IMAGE_CACHE = 'shenrenliu-qbank-images-v1';
 const REQUIRED = [
-  './', './index.html', './styles.css', './banks/catalog.js', './banks/sinotruk-culture-official.js', './hos-analysis.js', './explanation-core.js', './backup-core.js', './backup-ui.js', './bank-core.js', './bank-runtime.js', './questions.js',
+  './', './index.html', './styles.css', './banks/catalog.js', './banks/sinotruk-culture-official.js', './banks/forming_forging_2026.js', './banks/forming_casting_2026.js', './hos-analysis.js', './explanation-core.js', './backup-core.js', './backup-ui.js', './bank-core.js', './bank-runtime.js', './questions.js',
   './pedagogy.js', './enhanced-fill.js', './transfer-code.js', './lulu.js', './lulu-art.js', './lulu-avatar.js', './routine-eggs.js', './beijing-clock.js', './study-plan-core.js', './study-plan-ui.js', './lulu-fortunes.js', './ultra-content.js', './ultra-core.js', './app.js', './pwa-install.js',
   './private-banks.js', './cloud-sync-config.js', './cloud-sync-recovery.js', './cloud-sync-payload.js', './cloud-sync-core.js', './cloud-sync-cloudbase.js', './cloud-sync.js',
   './styles.css?v=3.0-shenzhongshen-r1', './app.js?v=3.0-shenzhongshen-r1', './pwa-install.js?v=3.0-shenzhongshen-r1', './pwa-install.js?v=3.0-update-20261024', './pwa-install.js?v=4.0-update-20261104'

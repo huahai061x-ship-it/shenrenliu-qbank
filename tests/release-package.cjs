@@ -8,13 +8,13 @@ assert(fs.existsSync(path.join(root,'latest.html')));assert(!fs.existsSync(path.
 
 for(const match of html.matchAll(/src="([^"]+\.js)"/g))assert(context.packageFiles.VERSIONED.includes("./"+match[1]),"Offline entry missing: "+match[1]);
 
-const publicBankFiles=['catalog.js','sinotruk-culture-official.js','sinotruk-culture-official.json'];
+const publicBankFiles=['catalog.js','forming_casting_2026.js','forming_forging_2026.js','sinotruk-culture-official.js','sinotruk-culture-official.json'];
 assert.deepEqual(fs.readdirSync(path.join(root,'banks')).sort(),publicBankFiles);
 assert.deepEqual(fs.readdirSync(path.join(root,release.assetBase,'banks')).sort(),publicBankFiles.filter(name=>name.endsWith('.js')));
 const meta={window:{}};vm.runInNewContext(fs.readFileSync(path.join(root,'banks/catalog.js'),'utf8'),meta);
-assert.deepEqual(Array.from(meta.window.QBANK_BANKS,m=>m.id),['hos_2026','sinotruk_culture_2025_official']);
+assert.deepEqual(Array.from(meta.window.QBANK_BANKS,m=>m.id),["hos_2026","sinotruk_culture_2025_official","forming_forging_2026","forming_casting_2026"]);
 assert.deepEqual(Array.from(context.packageFiles.REQUIRED).filter(ref=>ref.startsWith('./banks/')).sort(),publicBankFiles.filter(name=>name.endsWith('.js')).map(name=>'./banks/'+name));
 assert.deepEqual(fs.readdirSync(path.join(root,'source')).sort(),Array.from({length:111},(_,n)=>'image'+(n+1)+'.webp').sort());
 assert(fs.existsSync(path.join(root,release.assetBase,'private-banks.js')));
 assert(!fs.readdirSync(root,{recursive:true}).some(name=>/\.(?:xlsx?|csv|zip|tsv)$/i.test(name)));
-console.log('PASS 公开包仅含原有两库及111张原图，版本目录与离线缓存无额外题库；本地导入器随站缓存。');
+console.log('PASS 四个内置库、版本目录和离线清单一致，原有111张原图齐全，未包含工作簿和导入压缩包。');

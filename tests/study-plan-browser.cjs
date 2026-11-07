@@ -47,6 +47,7 @@ const server=http.createServer((req,res)=>{
       await p.getByRole('button',{name:'直接看答案',exact:true}).click();await p.getByRole('button',{name:'还没记住',exact:true}).click();
       assert.equal(await p.evaluate(()=>Object.values(Object.values(__V22_TEST__.getStore().learningPlans)[0].events)[0].rating),'again');
       await p.getByRole('button',{name:'暂停保存，回首页',exact:true}).click();assert(await p.evaluate(()=>__V22_TEST__.getStore().recentSessions.length>0));
+      await p.locator('.recent-activities>summary').click();
       await p.getByRole('button',{name:'放弃此进度',exact:true}).first().click();await p.locator('[data-discard-cancel]').click();
       await p.getByRole('button',{name:'放弃此进度',exact:true}).first().click();await p.locator('[data-discard-confirm]').click();
       await p.getByRole('button',{name:/定制|查看我的计划/}).first().click();await p.getByRole('button',{name:'查看每日安排'}).click();

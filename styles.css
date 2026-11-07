@@ -438,6 +438,20 @@ details[open]>.question-preferences-body,details[open]>.confidence-box{animation
 .home-topic-trigger{display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;max-width:360px;min-height:44px;padding:8px 2px;border:0;background:transparent;color:var(--brand);font:inherit;text-align:left;cursor:pointer;overflow-wrap:anywhere}
 .home-topic-trigger:focus-visible{outline:2px solid var(--brand);outline-offset:2px;border-radius:6px}
 .home-content .hero-caption .hero-start{margin-top:0;white-space:normal;line-height:1.45}
+.home-content .hero-main.lulu-hero{position:relative;isolation:isolate}
+.home-content .hero-main.lulu-hero::before,.home-content .hero-main.lulu-hero::after{content:"";position:absolute;pointer-events:none;z-index:-1;border:1px solid color-mix(in srgb,var(--brand) 9%,transparent);border-radius:50%}
+.home-content .hero-main.lulu-hero::before{width:320px;height:320px;left:-225px;top:-170px;box-shadow:0 0 0 30px color-mix(in srgb,var(--brand) 2%,transparent),0 0 0 60px color-mix(in srgb,var(--brand) 2%,transparent)}
+.home-content .hero-main.lulu-hero::after{width:450px;height:450px;right:-260px;bottom:-330px;box-shadow:0 0 0 36px color-mix(in srgb,var(--brand) 2%,transparent),0 0 0 72px color-mix(in srgb,var(--brand) 2%,transparent)}
+.home-content .hero-caption{display:grid;gap:10px}
+.home-content .home-topic-trigger{min-height:52px;padding:10px 14px;border:1px solid color-mix(in srgb,var(--brand) 16%,var(--line));border-radius:12px;background:color-mix(in srgb,var(--panel) 65%,transparent);font-size:15px}
+.home-content .hero-caption .hero-start{min-height:56px;font-size:16px}
+@media(max-width:600px){
+ .home-content .hero-caption{gap:8px}
+ .home-content .home-topic-trigger{min-height:48px;padding:10px;border-radius:10px}
+ .home-content .hero-caption .hero-start{min-height:50px;font-size:15px}
+ .home-content .hero-main.lulu-hero::before{opacity:.5}
+ .home-content .hero-main.lulu-hero::after{opacity:.5}
+}
 .home-content .shortcut-title{margin:16px 0 10px;align-items:center}
 .home-content .shortcut-title h2{font-size:21px}
 .home-content .personal-entry{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}

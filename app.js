@@ -296,14 +296,38 @@ function homeTrainingResume(){
  const scope=BANK_RUNTIME?.ctx?.scopeKey||'hos_2026';
  return (S.recentSessions||[]).find(row=>row.scopeKey===scope);
 }
+// A short original-question sampler: fresh questions first, then coverage across banks, topics and types.
+// Only actual viewing/answer records determine recency; drawing a question never marks it as learned.
+function representativePracticePick(pool,n,store=S,random=Math.random){
+ const unique=[...new Map(pool.map(q=>[q.id,q])).values()],count=Math.min(Math.max(0,Math.floor(Number(n)||0)),new Set(unique.map(q=>duplicateKey(q.id))).size);
+ if(!count)return [];
+ const last=q=>Math.max(Number(store.seen?.[q.id])||0,Number(store.learning?.[q.id]?.last)||0);
+ const recent=new Set(unique.filter(q=>last(q)>0).sort((a,b)=>last(b)-last(a)).slice(0,Math.min(count*2,Math.max(0,unique.length-count))).map(q=>q.id));
+ const rows=unique.map(q=>({q,bank:q.bankId||'hos_2026',topic:(q.bankId||'hos_2026')+'/'+(q.contentGroup||'all'),group:duplicateKey(q.id),last:last(q),tier:!last(q)?0:recent.has(q.id)?2:1,random:random()}));
+ const typeTotals={},bankCounts={},topicCounts={},typeCounts={},groups=new Set(),out=[];
+ for(const row of rows)typeTotals[row.q.type]=(typeTotals[row.q.type]||0)+1;
+ const score=row=>{
+  const b=bankCounts[row.bank]||0,t=topicCounts[row.topic]||0,k=typeCounts[row.q.type]||0,target=Math.max(1,count*typeTotals[row.q.type]/rows.length);
+  return (b===0?1000:0)+(t===0?100:0)+(k===0?80:0)-b*30-t*12+6*(target-k)/target;
+ };
+ while(out.length<count){
+  const candidates=rows.filter(row=>!groups.has(row.group));if(!candidates.length)break;
+  candidates.sort((a,b)=>a.tier-b.tier||score(b)-score(a)||a.last-b.last||a.random-b.random);
+  const row=candidates[0];out.push(row.q);groups.add(row.group);
+  bankCounts[row.bank]=(bankCounts[row.bank]||0)+1;topicCounts[row.topic]=(topicCounts[row.topic]||0)+1;typeCounts[row.q.type]=(typeCounts[row.q.type]||0)+1;
+ }
+ return out;
+}
 function homeTrainingLabel(){
  const row=homeTrainingResume();
- return row?(row.kind==='exam'?'继续考试':'继续练习')+' · 第 '+(row.snapshot.current+1)+' 题':'先练 '+Math.min(5,Q.length)+' 题';
+ return row?(row.kind==='exam'?'继续考试':'继续练习')+' · 第 '+(row.snapshot.current+1)+' 题':'先练 '+Math.min(10,new Set(Q.map(q=>duplicateKey(q.id))).size)+' 题';
 }
 function startHomeTraining(){
  const row=homeTrainingResume();
  if(row)return resumeSavedActivity(row.id);
- startPracticeBatch(Math.min(5,Q.length));
+ const picked=representativePracticePick(Q,10);
+ if(!picked.length)return toast('当前范围暂无可练题目');
+ startStudySession(picked,'热身练习 · '+picked.length+'题','all');
 }
 function renderHome(){view='home';migrateRecentSessions();const st=stats();app(`<div class="home-content">
 <section class="hero compact-hero"><div class="panel hero-main lulu-hero"><div class="hero-copy"><div class="hero-heading"><h1><span>神人刘题库</span><span>训练站</span></h1></div><div class="hero-caption"><button class="hero-bank-picker" type="button" onclick="window.BANK_RUNTIME?.openSelector()" aria-haspopup="dialog"><span class="hero-bank-label">选择题库<span class="hero-bank-arrow" aria-hidden="true">›</span></span><span class="hero-bank-current">${BANK_RUNTIME?esc(BANK_RUNTIME.exportBankSummary()):'HOS 应知应会'}</span>${BANK_RUNTIME?.errors.length?'<span class="hero-bank-error">部分题库未加载，点击查看</span>':''}</button><button type="button" class="home-topic-trigger" onclick="openContentTopicPicker()" aria-haspopup="dialog">内容：${esc(contentTopicName())}<span aria-hidden="true"> ›</span></button><button type="button" class="btn primary hero-start" onclick="startHomeTraining()">${esc(homeTrainingLabel())}</button></div></div><div class="lulu-mascot"><span id="luluSpeech" class="lulu-speech" aria-hidden="true">点击我试试吧～</span><button id="luluHomeButton" class="lulu-button" type="button" onclick="openLuluRoom()" aria-label="水豚噜噜：打开学习记录和掌握地图" title="水豚噜噜 · 点击探索学习小屋">${window.LULU?.imageMarkup(512,512)||'<img src="lulu-mascot.png" width="512" height="512" alt="" draggable="false">' }<span class="lulu-label">学习小屋 ›</span></button></div></div></section>
@@ -953,7 +977,7 @@ function importData(file){if(BANK_RUNTIME)return BANK_RUNTIME.importBackup(file)
 
 document.addEventListener('visibilitychange',()=>{if(document.hidden){persistPractice();pauseExamTimer()}else resumeExamTimer()});
 window.addEventListener('pagehide',()=>persistPractice());window.addEventListener('beforeunload',()=>persistPractice());window.addEventListener('beforeunload',protectUnload);
-window.EXPERIENCE_CORE={textDifference,responseStatus,examCompletion,legacyCleanupCandidates,decodePracticeSession};
+window.EXPERIENCE_CORE={textDifference,responseStatus,examCompletion,legacyCleanupCandidates,decodePracticeSession,representativePracticePick};
 Object.assign(window,{drawLuluOrangeNote,checkSiteUpdate,prepareRequiredPwaUpdate,updateInstallUI,updatePwaNotice,applyPwaUpdate,confirmExamSubmit,cancelExamSubmit,canReloadForPwaUpdate:()=>!isActiveExam(),deferPwaUpdate:()=>{saveSession();toast('请交卷后再更新网站')},toastPwaInstalled:()=>toast('神人刘题库已安装到桌面'),closeInstallGuide,copyInstallUrl,closeEasterEgg,renderEggAtlas,returnFromEggAtlas,__V223_TEST__:{detectMobilePlatform,scoreEggId,sanitizeEggState,installChecks,eggCatalog:EGG_CATALOG,textPools:EGG_TEXT_POOLS,pickEggCopy,consolidateEggCandidates,eligibleTitle,showEasterEgg,getStore:()=>structuredClone(S)}});
 Object.assign(window,{turnSearchPage,ratePlanRecall,requestPendingPractice,requestTagStudy,pauseAndSave,resumeSavedActivity,discardSavedActivity,rememberSheetPosition,locateCurrentSheetQuestion,confirmPracticeScope,cancelPracticeScope,requestStudyStart,requestPracticeBatch,requestTodayReview,requestSpecialRecite,requestFillStart,requestFavoriteStart,requestWrongStart,requestWeakFill,requestReviewStart,setCollectionBank,setAllCollectionBanks,selectContentTopic,openContentTopicPicker,pausePractice,resumePractice,returnToPracticeSource,finishPracticeHome,closeEasterEgg,previewLegacyCleanup,applyLegacyCleanup,undoLegacyCleanup,retryIncorrectBlanks,setSearchMode,clearSearchFilters,jumpSourcePage,zoomSource,renderPracticeSetup,startPracticeBatch,startHomeTraining,startPendingPractice,setUnderstanding,blankEnter,openReviewNote,saveReviewNote,removeReviewNote,nextOpenQuestion,rememberQuestionPreferences,setThinkBeforeSelect,revealStudyOptions,setStudyScope,startWeakFill,renderOpenStudy,renderOpenQuestion,setOpenAnswer,submitOpenAnswer,rateOpenAnswer,retryOpenAnswer,setBlankAnswer,openLuluRoom,openLuluPage,rememberModesOpen,setReciteAnswerMode,revealReciteAnswer,renderFavoriteBook,startFavoriteStudy,renderCollectionExamSetup,beginCollectionExam,showInstallGuide,openTransfer,closeTransfer,generateTransferCode,copyTransferCode,previewTransferCode,resetTransferPreview,resetTransferOutput,describeTransferMode,applyTransferCode,undoTransferCode,downloadTransferBackup,chooseTransferFile,setReviewMode,reviewCurrentQuestion,reviewHistoryPaper,navHome,startStudy,startTodayReview,startBalancedReview,startTagStudy,renderFillStudySetup,startFillStudy,renderSpecialSetup,startSpecialRecite,beginSpecialExam,openCollection,renderWrongBook,startWrongCategory,renderReviewList,startReviewStudy,toggleReviewFlag,clearReviewFlag,exportReviewReport,reviewReportText,getSourcePages,renderTodayReviewSetup,confirmDiscardSession,cancelDiscardSession,renderExamSetup,refreshExamCounts,beginExam,renderRealExamSetup,beginRealExam,renderSprintSetup,startSprint,resumeLastSession,discardLastSession,chooseOption,setAnswer,checkStudy,showExplanation,showAnswer,setConfidence,prevQ,nextQ,jumpQ,toggleAnswerPanel,toggleFav,setMastery,submitExam,retryWrongCurrent,retrySlowCurrent,reviewCurrentSession,reviewOne,redoCurrentPaper,redoHistoryPaper,reviewSlowCurrent:reviewHistorySlow,reviewHistorySlow,renderSearch,doSearch,renderHistory,renderMasteryMap,openQuestionSource,openSource,closeSource,sourcePrev,sourceNext,openSettings,openShortcutSettings,markShortcutsCustomized,restoreDefaultShortcuts,saveSettings,resetData,exportData,dismissBackupReminder,importData,shareSite,installApp,$,__V22_TEST__:{getStore:()=>structuredClone(S),getSession:()=>session,duplicateGroups:DUPLICATE_GROUPS,coveragePick:(pool,n,blocked,balanced)=>coveragePick(pool,n,blocked,balanced),sprintPriority,sprintQuestions,backupReminder,normalizeShortcuts,shortcutCatalog:SHORTCUTS,migrationKey:QUICK_ENTRY_MIGRATION_KEY,recordExamRotation,stableOptionOrder,wrongCategory,flush:()=>{flushExamTimer();saveStore()}}});
 window.matchMedia?.('(max-width:600px)')?.addEventListener?.('change',()=>toggleAnswerPanel(false));

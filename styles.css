@@ -243,3 +243,73 @@ details[open]>.question-preferences-body,details[open]>.confidence-box{animation
 @media(hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){
   .q-actions .btn:hover:not(:disabled),.search-pager .btn:hover:not(:disabled){box-shadow:0 2px 7px color-mix(in srgb,var(--brand) 16%,transparent)}
 }
+/* Home: choose a scope and start training before secondary information. */
+.home-content>.hero{display:block;margin-bottom:16px}
+.home-content .compact-hero .hero-main.lulu-hero{grid-template-columns:minmax(0,1fr) 144px;min-height:0;padding:20px 24px}
+.home-content .hero-copy{display:grid;grid-template-columns:minmax(0,1fr) minmax(220px,360px);gap:24px;align-items:center}
+.home-content .hero-heading h1{font-size:36px}
+.home-content .lulu-mascot{padding-top:48px}
+.home-topic-trigger{display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;max-width:360px;min-height:44px;padding:8px 2px;border:0;background:transparent;color:var(--brand);font:inherit;text-align:left;cursor:pointer;overflow-wrap:anywhere}
+.home-topic-trigger:focus-visible{outline:2px solid var(--brand);outline-offset:2px;border-radius:6px}
+.home-content .hero-caption .hero-start{margin-top:0}
+.home-content .shortcut-title{margin:16px 0 10px;align-items:center}
+.home-content .shortcut-title h2{font-size:21px}
+.home-content .personal-entry{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.home-content .personal-entry .mode-card{display:grid;grid-template-columns:1fr auto;align-items:center;gap:8px;padding:12px 16px}
+.home-content .personal-entry .mode-icon,.home-content .personal-entry p{display:none}
+.home-content .personal-entry h3{font-size:17px;margin:0}
+.home-content .personal-entry .btn{min-height:44px}
+.home-content .more-modes{padding-bottom:0;margin-top:16px}
+.home-content .more-modes[open]{padding-bottom:16px}
+.home-content .plan-home{margin:16px 0;padding:16px;gap:12px;border-color:var(--line);background:color-mix(in srgb,var(--brand) 4%,var(--panel))}
+.home-content .plan-home h2{font-size:19px;margin:0 0 4px}
+.home-content .plan-home p{font-size:13px;margin:0}
+.home-content .plan-home-icon{font-size:26px}
+.home-content .status-overview{margin:16px 0}
+.home-content .status-overview>div{grid-template-columns:repeat(6,minmax(0,1fr))}
+.recent-activities{margin:16px 0;padding:0 16px}
+.recent-activities>summary{padding:16px 0;cursor:pointer;font-weight:700}
+.recent-activities>summary span{font-size:13px;font-weight:400;color:var(--muted);margin-left:8px}
+.recent-activities .resume-banner{box-shadow:none;margin:0 0 12px}
+.home-updates{margin-top:24px}
+.home-updates .notice{font-size:13px}
+.home-bank-note>summary{cursor:pointer}
+.home-bank-note>.notice{border:0;background:none;margin:8px 0 0;padding:0}
+.content-topic-dialog h2{margin:0 0 12px;font-size:23px}
+.content-topic-bank{color:var(--muted);overflow-wrap:anywhere;margin:0 0 20px}
+.content-topic-dialog .content-topic-options{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.content-topic-dialog .content-topic-options .btn{min-height:48px;font-size:15px}
+.content-topic-dialog .content-topic-options .btn:first-child{grid-column:1/-1}
+.content-topic-dialog .q-actions{justify-content:flex-end}
+@media(max-width:900px){
+ .home-content .hero-copy{display:flex;gap:12px;align-items:stretch}
+ .home-content .hero-heading h1{font-size:30px}
+}
+@media(max-width:600px){
+ .home-content .compact-hero .hero-main.lulu-hero{grid-template-columns:minmax(0,1fr) 80px;gap:12px;padding:14px}
+ .home-content .hero-heading{display:none}
+ .home-content .lulu-mascot{padding:0}
+ .home-content .lulu-speech{display:none}
+ .home-content .hero-bank-picker{min-height:64px;padding:10px 12px;border-radius:12px;gap:3px}
+ .home-content .hero-bank-current{font-size:13px}
+ .home-content .hero-bank-label{font-size:15px}
+ .home-content .home-topic-trigger{font-size:13px}
+ .home-content .shortcut-title h2{font-size:19px}
+ .home-content .shortcut-title .btn{min-height:44px}
+ .home-content .core-mode-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+ .home-content .core-mode-grid .mode-card{display:grid;grid-template-columns:24px minmax(0,1fr);grid-template-rows:1fr auto;gap:10px 8px;padding:12px;align-items:center}
+ .home-content .core-mode-grid .mode-icon{grid-row:1;font-size:24px}
+ .home-content .core-mode-grid h3{font-size:16px;line-height:1.4;margin:0;text-wrap:balance}
+ .home-content .core-mode-grid p{display:none}
+ .home-content .core-mode-grid .btn{grid-column:1/-1;grid-row:2;width:100%;min-height:44px}
+ .home-content .personal-entry .mode-card{padding:12px;grid-template-columns:1fr}
+ .home-content .personal-entry .btn{width:100%}
+ .home-content .plan-home{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px 12px}
+ .home-content .plan-home-icon{display:none}
+ .home-content .plan-home>div:nth-child(2){min-width:0}
+ .home-content .plan-home>.btn{width:auto;margin:0;font-size:14px;max-width:132px;white-space:normal}
+ .home-content .status-overview{padding:14px}
+ .home-content .status-overview>div{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+ .content-topic-dialog{padding:20px 16px}
+ .content-topic-dialog .content-topic-options{grid-template-columns:1fr}
+}

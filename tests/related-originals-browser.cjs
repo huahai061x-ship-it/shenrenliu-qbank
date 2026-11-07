@@ -49,7 +49,7 @@ const browserPath = process.env.CHROME_BIN;
     assert.deepEqual(await list(),[1,2,3,4,114]);
     await page.getByRole('button',{name:'暂停保存，回首页',exact:true}).click();
     await page.reload();await ready();
-    await page.getByRole('button',{name:'继续上次练习',exact:true}).first().click();
+    await page.locator('.recent-activities>summary').click();await page.getByRole('button',{name:'继续上次练习',exact:true}).first().click();
     assert.deepEqual(await list(),[1,2,3,4,114]);
     await page.evaluate(()=>jumpQ(4));
     assert.match(await page.locator('.question-card').innerText(),/换个角度.*#2/);

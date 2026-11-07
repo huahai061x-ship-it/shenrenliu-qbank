@@ -806,7 +806,7 @@ function openContentTopicPicker(){
  d.innerHTML=`<h2 id="contentTopicTitle">选择练习内容</h2><p class="content-topic-bank">${esc(BANK_RUNTIME?BANK_RUNTIME.exportBankSummary():'HOS 应知应会')}</p><div class="content-topic-options" role="group" aria-label="内容练习范围">${[{id:'all',name:'全部内容'},...groups].map(g=>{const count=g.id==='all'?BANK_Q.length:BANK_Q.filter(q=>q.contentGroup===g.id).length;return `<button type="button" class="btn ${id===g.id?'primary':''}" aria-pressed="${id===g.id}" data-content-topic="${g.id}" onclick="selectContentTopic('${g.id}')">${esc(g.name)} · ${count}题</button>`}).join('')}</div><p class="content-topic-description">${groups.length?'新练习和模拟使用所选内容；旧进度保留原题目。':!m?'当前为多题库混合范围，使用全部内容。':'当前题库使用全部内容。'}</p><div class="q-actions"><button class="btn" onclick="document.querySelector('#contentTopicDialog').close()">关闭</button></div>`;
  if(!d.open)d.showModal();
 }
-function restoreContentTopicRoute(){const u=new URL(location.href);if(u.searchParams.get('chooseContent')!=='1'||view!=='home')return;u.searchParams.delete('chooseContent');history.replaceState(history.state,'',u.href);openContentTopicPicker()}
+function restoreContentTopicRoute(){if(typeof URL!=='function'||view!=='home')return;const u=new URL(location.href);if(u.searchParams.get('chooseContent')!=='1')return;u.searchParams.delete('chooseContent');history.replaceState(history.state,'',u.href);openContentTopicPicker()}
 
 function formingBank(id){return (window.QBANK_PRIVATE?.active&&window.QBANK_PRIVATE.isBank(id))||window.QBANK_BANKS?.some(m=>m.id===id&&m.examProfile==='forming50')}
 function usesFormingPaper(){return !!BANK_RUNTIME?.ctx?.selected?.some(formingBank)}

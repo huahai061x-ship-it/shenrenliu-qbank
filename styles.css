@@ -462,6 +462,9 @@ details[open]>.question-preferences-body,details[open]>.confidence-box{animation
 .home-updates .notice{font-size:13px}
 .home-bank-note>summary{cursor:pointer}
 .home-bank-note>.notice{border:0;background:none;margin:8px 0 0;padding:0}
+@media(min-width:901px){
+ .home-content .compact-hero .hero-main.lulu-hero{grid-template-columns:minmax(0,480px) 232px;column-gap:clamp(64px,6vw,80px);justify-content:center}
+}
 .content-topic-dialog h2{margin:0 0 12px;font-size:23px}
 .content-topic-bank{color:var(--muted);overflow-wrap:anywhere;margin:0 0 20px}
 .content-topic-dialog .content-topic-options{display:grid;grid-template-columns:1fr 1fr;gap:10px}

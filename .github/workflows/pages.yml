@@ -86,6 +86,7 @@ jobs:
           node tests/cloud-native-event.cjs
           node tests/cloud-sync-core.cjs
           node tests/cloud-sync-server.cjs
+          node tests/bug-feedback-server.cjs
           node tests/cloud-sync-controller.cjs
           node tests/cloud-fast-controller.cjs
           node tests/cloud-sync-transport.cjs

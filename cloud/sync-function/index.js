@@ -8,10 +8,11 @@ function storageNames(scope=process.env.QBANK_SYNC_SCOPE||'test'){
 function createService(repo){
   return async function(request,identity){
     if(typeof identity?.uid!=='string'||!identity.uid||identity.uid.length>128||identity.isAnonymous!==false)throw Error('请先通过邮箱验证码登录');
-    const actions={prepareBlob:['action','manifest'],pull:['action','cursor','plans'],push:['action','operations'],putBlob:['action','hash','index','total','content'],getBlob:['action','hash','index','total'],putBlobs:['action','hash','total','chunks'],getBlobs:['action','hash','total','indices']};
+    const actions={createFeedback:['action','id','value'],listFeedback:['action','cursor'],feedbackDetail:['action','id'],prepareBlob:['action','manifest'],pull:['action','cursor','plans'],push:['action','operations'],putBlob:['action','hash','index','total','content'],getBlob:['action','hash','index','total'],putBlobs:['action','hash','total','chunks'],getBlobs:['action','hash','total','indices']};
     if(!request||!actions[request.action]||Object.keys(request).some(k=>!actions[request.action].includes(k)))throw Error('同步请求无效');
     if(Buffer.byteLength(JSON.stringify(request))>262144)throw Error('同步批次过大');
     const owner=identity.uid,response=data=>({schemaVersion:1,protocolVersion:2,...data});
+    if(['createFeedback','listFeedback','feedbackDetail'].includes(request.action))return response(await require('./feedback.js').service(repo,request,owner));
     if(request.action==='prepareBlob'){const ref=Payload.validateManifest(request.manifest);if(!ref.chunkHashes)throw Error('分块清单缺少内容索引');return response({missing:await repo.prepareBlob(owner,ref)});}
     if(['putBlobs','getBlobs'].includes(request.action)){
       if(!/^[a-f0-9]{64}$/.test(request.hash)||!Number.isSafeInteger(request.total)||request.total<1||request.total>2000)throw Error('同步分块清单无效');
@@ -58,6 +59,15 @@ function cloudbaseRepository(app,scope){
   async function manifest(owner,digest){const key=owner+'|'+digest;if(manifests.has(key))return manifests.get(key);const stored=one(await db.collection(BLOBS).doc(manifestId(owner,digest)).get());if(!stored)return null;if(stored.owner!==owner||stored.manifest?.hash!==digest)throw Error('分块清单所属账号无效');if(manifests.size>=64)manifests.delete(manifests.keys().next().value);manifests.set(key,stored.manifest);return stored.manifest;}
   async function chunk(owner,digest){const stored=one(await db.collection(BLOBS).doc(chunkId(owner,digest)).get());if(!stored)return null;if(stored.owner!==owner||stored.digest!==digest)throw Error('同步分块所属账号无效');return stored.content;}
   return {
+    async feedbackList(owner,cursor,limit){const where={owner};if(cursor)where.recordId=db.command.lt(cursor);const result=await db.collection(COLLECTION).where(where).orderBy('recordId','desc').limit(limit).get();return (result.data||[]).map(row=>row.record);},
+    async feedbackCreate(owner,id,record){return db.runTransaction(async tx=>{
+      const doc=tx.collection(COLLECTION).doc(hash(owner,id)),stored=one(await doc.get());
+      if(stored){if(stored.owner!==owner||stored.record.fingerprint!==record.fingerprint)throw Error('这条反馈已提交，请新建反馈补充说明');return stored.record;}
+      const day=new Date(Date.now()+8*3600000).toISOString().slice(0,10),quotaOwner='quota/'+owner,quota=tx.collection(COLLECTION).doc(hash(quotaOwner,day)),prior=one(await quota.get()),count=Number(prior?.count)||0;
+      if(count>=20)throw Error('今天已提交20条反馈，请明天再提交');
+      await quota.set({owner:quotaOwner,recordId:day,count:count+1,updatedAt:Date.now()});
+      await doc.set({owner,recordId:id,record,updatedAt:Date.now()});return record;
+    });},
     async list(owner,cursor,limit){const where={owner};if(cursor)where.recordId=db.command.gt(cursor);const result=await db.collection(COLLECTION).where(where).orderBy('recordId','asc').limit(limit).get();return (result.data||[]).map(row=>row.record);},
     async transaction(owner,id,update,guardId=null){return db.runTransaction(async tx=>{const doc=tx.collection(COLLECTION).doc(hash(owner,id)),stored=one(await doc.get());if(stored&&stored.owner!==owner)throw Error('记录所属账号无效');const guarded=guardId?one(await tx.collection(COLLECTION).doc(hash(owner,guardId)).get()):null;if(guarded&&guarded.owner!==owner)throw Error('试卷所属账号无效');const change=update(stored?.record||null,guarded?.record||null);if(change.changed)await doc.set({owner,recordId:id,record:change.record,updatedAt:Date.now()});return change;});},
     async prepareBlob(owner,ref){

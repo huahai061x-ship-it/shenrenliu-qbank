@@ -34,6 +34,11 @@
           }
           return {...row,value:JSON.parse(JSON.stringify(value))};
         };
+        if(data.action==='createFeedback'){
+          const encoded=P.encode(data.value);
+          if(encoded.chunks.length){const prepared=await raw({action:'prepareBlob',manifest:encoded.value}),missing=prepared.missing;if(!Array.isArray(missing)||new Set(missing).size!==missing.length||missing.some(i=>!Number.isSafeInteger(i)||i<0||i>=encoded.chunks.length))throw Error('反馈截图分块无效');for(let i=0;i<missing.length;i+=4)await raw({action:'putBlobs',hash:encoded.value.hash,total:encoded.chunks.length,chunks:missing.slice(i,i+4).map(index=>({index,content:encoded.chunks[index]}))});}
+          data={...data,value:encoded.value};
+        }
         if(data.action==='push'){
           const operations=[];
           for(const op of data.operations){const encoded=P.encode(op.value);if(encoded.chunks.length){const prepared=await raw({action:'prepareBlob',manifest:encoded.value}),missing=prepared.missing;if(!Array.isArray(missing)||new Set(missing).size!==missing.length||missing.some(i=>!Number.isSafeInteger(i)||i<0||i>=encoded.chunks.length))throw Error('同步分块索引无效');for(let i=0;i<missing.length;i+=4)await raw({action:'putBlobs',hash:encoded.value.hash,total:encoded.chunks.length,chunks:missing.slice(i,i+4).map(index=>({index,content:encoded.chunks[index]}))});}operations.push({...op,value:encoded.value});if(encoded.chunks.length){encoded.chunks.forEach((text,i)=>rememberChunk(encoded.value.chunkHashes[i],text));if(payloadCache.size>=8)payloadCache.delete(payloadCache.keys().next().value);payloadCache.set(encoded.value.hash,op.value);}}
@@ -42,6 +47,7 @@
         const result=await raw(data.action==='pull'?{...data,plans:1}:data);
         if(result.records){const seen=new Set();for(const row of result.records){window.CLOUD_SYNC_CORE.validateRecord(row);const id=window.CLOUD_SYNC_CORE.recordId(row.key,row.field);if(seen.has(id))throw Error('云端分页包含重复记录');seen.add(id);}result.records=await Promise.all(result.records.filter(row=>options.knownVersions?.[window.CLOUD_SYNC_CORE.recordId(row.key,row.field)]!==row.rev).map(expand));}
         if(result.results)for(const item of result.results)if(item.record)item.record=await expand(item.record);
+        if(result.feedbackItem?.value)result.feedbackItem=await expand(result.feedbackItem);
         return result;
       }
     };

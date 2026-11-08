@@ -1,0 +1,27 @@
+const assert=require('node:assert/strict'),crypto=require('node:crypto');
+const {createService,cloudbaseRepository}=require('../cloud/build/sync/index.js'),P=require('../cloud-sync-payload.js');
+const data=new Map();let queue=Promise.resolve();
+const db={command:{lt:x=>({lt:x}),gt:x=>({gt:x})},collection(name){return {doc(id){const key=name+'/'+id;return {async get(){return {data:data.has(key)?[structuredClone(data.get(key))]:[]};},async set(v){data.set(key,structuredClone(v));}};},where(filter){let dir='asc',limit=100;const q={orderBy(_,d){dir=d;return q;},limit(n){limit=n;return q;},async get(){let rows=[...data.entries()].filter(([k,v])=>k.startsWith(name+'/')&&v.owner===filter.owner&&(!filter.recordId||(filter.recordId.lt?v.recordId<filter.recordId.lt:v.recordId>filter.recordId.gt))).map(([,v])=>v).sort((a,b)=>a.recordId.localeCompare(b.recordId)*(dir==='asc'?1:-1));return {data:structuredClone(rows.slice(0,limit))};}};return q;}};},runTransaction(fn){const job=queue.then(()=>fn(db));queue=job.catch(()=>{});return job;}};
+const repo=cloudbaseRepository({database:()=>db},'test'),service=createService(repo),a={uid:'qa-a',isAnonymous:false},b={uid:'qa-b',isAnonymous:false};
+const newId=()=>Date.now()+'-'+crypto.randomUUID(),value={category:'功能故障',description:'点击下一题没有反应',steps:'选择答案后点击下一题',expected:'进入下一题',images:[],context:{page:'刷题练习',question:'12',bank:'forming_forging_2026',version:'qa',viewport:'390 × 844',platform:'test'}};
+(async()=>{
+ for(const identity of [{},{uid:'anon',isAnonymous:true}])await assert.rejects(()=>service({action:'listFeedback'},identity),/登录/);
+ await assert.rejects(()=>service({action:'listFeedback',uid:a.uid},b),/请求无效/);
+ const id=newId(),request={action:'createFeedback',id,value},results=await Promise.all([service(request,a),service(request,a)]);
+ assert.equal(results[0].feedbackItem.id,results[1].feedbackItem.id);assert.equal((await service({action:'listFeedback'},a)).feedback.length,1);
+ assert.equal((await service({action:'listFeedback'},b)).feedback.length,0);await assert.rejects(()=>service({action:'feedbackDetail',id},b),/未找到/);
+ assert.equal((await service({action:'pull'},a)).records.length,0,'feedback must not enter learning sync');
+ await assert.rejects(()=>service({...request,value:{...value,status:'resolved'}},a),/格式无效/);
+ await assert.rejects(()=>service({...request,value:{...value,description:'changed'}},a),/已提交/);
+ for(const patch of [{description:''},{description:'x'.repeat(3001)},{context:{password:'bad'}},{images:['https://example.com/a.png']},{images:['data:image/svg+xml;base64,AAAA']},{images:Array(4).fill('x')},{images:['data:image/png;base64,AAAAAAAAAAAAAAAA']},{category:'spoof'}])await assert.rejects(()=>service({action:'createFeedback',id:newId(),value:{...value,...patch}},a));
+ const image='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+aH9sAAAAASUVORK5CYII=',large={...value,images:['data:image/png;base64,'+Buffer.concat([Buffer.from(image.split(',')[1],'base64'),Buffer.alloc(60000)]).toString('base64')]},encoded=P.encode(large);
+ await repo.prepareBlob(a.uid,encoded.value);for(let i=0;i<encoded.chunks.length;i++)await repo.putBlob(a.uid,encoded.value.hash,i,encoded.chunks.length,encoded.chunks[i]);
+ const imageId=newId();await service({action:'createFeedback',id:imageId,value:encoded.value},a);assert.equal((await service({action:'feedbackDetail',id:imageId},a)).feedbackItem.imageCount,1);
+ await assert.rejects(()=>service({action:'createFeedback',id:newId(),value:encoded.value},b),/分块/);
+ const stored=[...data.values()].find(x=>x.record?.id===id);stored.record.status='resolved';stored.record.reply='已修复，刷新即可使用';assert.equal((await service({action:'feedbackDetail',id},a)).feedbackItem.reply,stored.record.reply);
+ for(let i=2;i<20;i++)await service({action:'createFeedback',id:newId(),value},a);
+ await assert.rejects(()=>service({action:'createFeedback',id:newId(),value},a),/20条/);
+ assert.equal((await service(request,a)).feedbackItem.id,id,'retry after quota remains idempotent');
+ assert.equal((await service({action:'listFeedback'},a)).feedback.length,20);
+ console.log('PASS feedback authentication, account isolation, retry deduplication, immutable submissions, text/image validation, private image chunks, admin reply, daily quota and learning-sync isolation');
+})().catch(e=>{console.error(e);process.exitCode=1});

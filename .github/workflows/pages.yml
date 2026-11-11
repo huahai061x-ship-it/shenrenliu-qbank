@@ -95,6 +95,7 @@ jobs:
           node tests/cloud-request-recovery.cjs
           node tests/cloud-full-sync-core.cjs
           node tests/study-plan-core.cjs
+          node tests/disputed-grading-core.cjs
           node tests/cloud-full-sync-server.cjs
       - name: Build pinned email login SDK
         run: |

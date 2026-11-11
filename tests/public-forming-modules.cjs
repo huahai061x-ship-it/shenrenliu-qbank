@@ -25,6 +25,7 @@ async function main() {
       ['forming_casting_2026', '铸造知识', 16, 1366]
     ]) {
       const context = await browser.newContext({viewport:{width,height:900}, serviceWorkers:'block'});
+      await context.addInitScript(()=>localStorage.setItem('shenrenliu_device_mode_v1','guest'));
       const page = await context.newPage();
       const errors = [];
       page.on('pageerror', error => errors.push(error.message));
@@ -70,7 +71,7 @@ async function main() {
       await page.getByRole('heading',{name:name+'模拟考试',exact:true}).waitFor();
       await page.getByRole('button',{name:'开始模拟',exact:true}).click();
       const paper = await page.evaluate(()=>__V22_TEST__.getSession().items.map(item=>({bank:item.q.bankId,type:item.renderType,status:item.q.analysis.status})));
-      assert(paper.every(item=>item.bank===id && item.status==='ready'));
+      assert(paper.every(item=>item.bank===id && ['ready','needs_source'].includes(item.status))); // Disputed keys now participate with a visible flag.
       for (const [type,count] of [['single',30],['multiple',7],['judge',13]]) assert.equal(paper.filter(item=>item.type===type).length,count);
       assert.equal(paper.length,50);
       assert.deepEqual(errors,[]);

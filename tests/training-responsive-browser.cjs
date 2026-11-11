@@ -7,6 +7,7 @@ fs.mkdirSync(out,{recursive:true});
  const results=[],errors=[];
  try{
   const context=await browser.newContext({serviceWorkers:'block'}),page=await context.newPage();
+  await context.addInitScript(()=>localStorage.setItem('shenrenliu_device_mode_v1','guest'));
   const base=process.env.LIVE_URL||'https://training.test/';
   if(!process.env.LIVE_URL)await context.route(base+'**',route=>{
    const pathname=new URL(route.request().url()).pathname,file=path.resolve(root,'.'+(pathname==='/'?'/index.html':pathname));
@@ -83,8 +84,8 @@ fs.mkdirSync(out,{recursive:true});
   await page.locator('.plan-day summary').first().click();await noOverflow('expanded plan day 320');
   await page.getByRole('button',{name:/开始今天的学习/}).click();
   await page.getByRole('button',{name:'直接看答案',exact:true}).click();
-  assert(await page.locator('.plan-recall').evaluate(e=>e.compareDocumentPosition(document.querySelector('.question-secondary-tools'))&Node.DOCUMENT_POSITION_FOLLOWING));
-  await page.getByRole('button',{name:'还没记住',exact:true}).click();
+  assert.equal(await page.locator('.plan-recall').count(),0);assert.equal(await page.locator('.mastery-control').count(),1);
+  await page.locator('.mastery-control select').selectOption('new');
   assert.equal(await page.evaluate(()=>Object.values(Object.values(BANK_RUNTIME.app.getStore().learningPlans)[0].events).length),1);
   await page.getByRole('button',{name:'暂停保存，回首页',exact:true}).click();await page.reload();await ready();
   assert.equal(await page.evaluate(()=>Object.values(Object.values(BANK_RUNTIME.app.getStore().learningPlans)[0].events)[0].rating),'again');

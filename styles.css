@@ -614,7 +614,7 @@ details[open]>.question-preferences-body,details[open]>.confidence-box{animation
 }
 @media(min-width:1280px) and (pointer:fine){
  .desktop-page-turns{display:block}
- .page-turn{position:fixed;top:calc(50dvh - 90px);z-index:4;width:clamp(44px,calc((100vw - 1180px)/2 - 24px),140px);height:180px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:8px 2px;border:1px solid color-mix(in srgb,var(--brand) 18%,var(--line));border-radius:18px;background:color-mix(in srgb,var(--brand) 3%,var(--bg));color:var(--muted);font-size:14px}
+ .page-turn{position:fixed;top:12px;bottom:12px;z-index:4;width:clamp(44px,calc((100vw - 1180px)/2 - 24px),180px);height:auto;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:8px 2px;border:1px solid color-mix(in srgb,var(--brand) 18%,var(--line));border-radius:18px;background:color-mix(in srgb,var(--brand) 3%,var(--bg));color:var(--muted);font-size:14px}
  .page-turn.previous{left:10px}.page-turn.next{right:10px}
  .page-turn>span{font-size:40px;line-height:1}
  .page-turn:hover:not(:disabled),.page-turn:focus-visible{background:color-mix(in srgb,var(--brand) 10%,var(--panel));color:var(--brand);border-color:var(--brand)}
@@ -624,4 +624,22 @@ details[open]>.question-preferences-body,details[open]>.confidence-box{animation
 @media(max-width:600px){
  .plan-start-actions .plan-batch-control{margin-left:auto}
  .plan-start-actions>.primary{flex-basis:100%!important}
+}
+
+/* Wide-screen chrome: keep phone and narrow-tablet typography unchanged. */
+@media(min-width:1001px){
+ .topbar .brand{font-size:26px;gap:14px;line-height:1.4}
+ .topbar .brand-badge{width:46px;height:46px;border-radius:14px}
+ .topbar .brand small{font-size:16px;margin-top:5px;line-height:1.5}
+ .topbar-inner{padding-top:18px;padding-bottom:18px}
+ .site-update-strip{height:auto;min-height:62px;gap:16px;padding-bottom:12px}
+ .site-update-strip .btn{font-size:18px;min-height:50px;padding:10px 18px}
+ .site-update-strip [role="status"],.site-update-strip .latest-entry-link{font-size:18px;white-space:normal;line-height:1.5}
+ .top-actions .icon-btn{font-size:18px;min-height:48px}
+ .question-position,.question-card .exam-timebar{font-size:16px}
+ .question-card .question-source-id,.question-card .pre-confidence>summary{font-size:16px}
+ .question-preferences>summary,.question-preferences>summary span{font-size:15px}
+ .recent-activities .muted,.recent-activities small{font-size:16px}
+ .sheet-legend{font-size:14px}
+ .home-updates .notice{font-size:15px}
 }

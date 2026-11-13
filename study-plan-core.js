@@ -79,10 +79,11 @@
     }
     return out;
   }
-  function dueItems(p,all,day,at,spent=0){
+  function dueItems(p,all,day,at,spent=0,excluded=[]){
+    const excludedSet=new Set(excluded);
     const startedToday=all.filter(s=>s.firstDay===day).length;
     let left=p.dailyNew===undefined?Infinity:Math.max(0,p.dailyNew-startedToday);
-    const eligible=all.filter(s=>s.due<=day&&(!s.retryAt||s.retryAt<=at));
+    const eligible=all.filter(s=>!excludedSet.has(s.key)&&s.due<=day&&(!s.retryAt||s.retryAt<=at));
     eligible.sort((a,b)=>Number(b.introduced)-Number(a.introduced)||Number(b.lastRating==='again')-Number(a.lastRating==='again')||a.due.localeCompare(b.due)||a.order-b.order);
     if(p.dailyMinutes){
       const slots=Math.max(0,p.dailyNew-spent),fresh=eligible.filter(s=>!s.introduced);
@@ -94,28 +95,29 @@
     }
     return eligible.filter(s=>{if(s.introduced)return true;if(left<=0)return false;left--;return true;});
   }
-  function tasks(p,day=today(),at=Date.now()){
+  function tasks(p,day=today(),at=Date.now(),excluded=[]){
     if(day<p.start)return [];
-    return dueItems(p,Object.values(states(p,day)),day,at,usedToday(p,day));
+    return dueItems(p,Object.values(states(p,day)),day,at,usedToday(p,day),excluded);
   }
   const usedToday=(p,day)=>p.dailyMinutes?Object.values(p.events).filter(e=>e.day===day).length:0;
   function record(p,{id,key,rating,at=Date.now()}){validate(p);if(p.events[id])return clone(p);const day=today(at);if(day<p.start)throw Error('计划尚未开始');const out=clone(p);out.events[id]={key,rating,day,at};validate(out);return out;}
   function merge(a,b){validate(a);validate(b);if(a.id!==b.id||JSON.stringify([a.keys,a.start,a.end,a.title,a.createdAt,a.dailyNew,a.dailyMinutes,a.secondsPerTask])!==JSON.stringify([b.keys,b.start,b.end,b.title,b.createdAt,b.dailyNew,b.dailyMinutes,b.secondsPerTask]))return null;const out=clone(a),rank={remembered:0,assisted:1,again:2};for(const [id,e] of Object.entries(b.events)){const old=out.events[id];if(!old)out.events[id]=clone(e);else if(JSON.stringify(old)!==JSON.stringify(e)){if(old.key!==e.key)return null;out.events[id]=clone(rank[e.rating]>rank[old.rating]||rank[e.rating]===rank[old.rating]&&e.at>old.at?e:old);}}validate(out);return out;}
-  function schedule(p,from=today(),projectCoverage=false){
+  function schedule(p,from=today(),projectCoverage=false,excluded=[]){
     const start=from<p.start?p.start:from,all=Object.values(states(p,start)),rows=[];
     const end=ordinal(p.end);
-    let covered=all.filter(s=>s.introduced).length,coveredAtEnd=covered,firstPass='';
+    const included=all.filter(s=>!excluded.includes(s.key)),total=included.length;
+    let covered=included.filter(s=>s.introduced).length,coveredAtEnd=covered,firstPass='';
     const first=ordinal(start);
     const horizon=first+all.length*(p.dailyNew===1?2:1);
-    for(let d=first;d<=end||(projectCoverage&&covered<all.length&&d<=horizon);d++){
-      const day=date(d),at=(d+1)*DAY-8*3600000-1,items=dueItems(p,all,day,at,d===first?usedToday(p,day):0);
+    for(let d=first;d<=end||(projectCoverage&&covered<total&&d<=horizon);d++){
+      const day=date(d),at=(d+1)*DAY-8*3600000-1,items=dueItems(p,all,day,at,d===first?usedToday(p,day):0,excluded);
       if(d<=end)rows.push({day,items});
       for(const s of items){
         if(!s.introduced)covered++;
         all[s.order]=advance(p,s,{day,rating:'remembered',at});
       }
       if(d<=end)coveredAtEnd=covered;
-      if(!firstPass&&covered===all.length)firstPass=day;
+      if(!firstPass&&covered===total)firstPass=day;
     }
     return {rows,coveredAtEnd,firstPass};
   }

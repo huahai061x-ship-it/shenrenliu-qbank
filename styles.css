@@ -643,3 +643,15 @@ details[open]>.question-preferences-body,details[open]>.confidence-box{animation
  .sheet-legend{font-size:14px}
  .home-updates .notice{font-size:15px}
 }
+
+/* Equal-height desktop cards anchor their action at the bottom. Phone grid remains unchanged. */
+@media(min-width:601px){
+ .home-content .mode-grid .mode-card{display:flex;flex-direction:column;align-items:flex-start}
+ .home-content .mode-grid .mode-card>.btn{margin-top:auto}
+ .plan-content .plan-list{align-items:stretch}
+ .plan-content .plan-list>article{display:flex;flex-direction:column}
+ .plan-content .plan-list>article>.q-actions{margin-top:auto}
+}
+.plan-mastery-option{display:flex;align-items:center;gap:8px;min-height:44px;margin-top:12px}
+.plan-content .plan-mastery-option input{width:20px;min-height:20px;height:20px;flex-shrink:0}
+.plan-mastery-note{color:var(--muted);font-size:14px;margin:0 0 12px}

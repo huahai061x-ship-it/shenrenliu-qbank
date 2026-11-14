@@ -1,11 +1,12 @@
 (() => {
   'use strict';
+const structuredClone=window.QBANK_COMPAT?.cloneData || globalThis.structuredClone;
   const categories=['题目或答案','功能故障','界面显示','登录与同步','建议与其他'];
   const statuses={new:'已收到',reviewing:'排查中',resolved:'已处理',needs_info:'待补充'};
   const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   let dialog,user,draft,entryContext,busy=false,tab='form',epoch=0,cursor=null,rows=[],dbPromise,writes=Promise.resolve(),draftWarning='';
   const $=s=>dialog.querySelector(s);
-  const id=()=>Date.now()+'-'+crypto.randomUUID();
+  const id=()=>Date.now()+'-'+(window.QBANK_COMPAT?.uuid() || crypto.randomUUID());
   function database(){return dbPromise ||= new Promise((resolve,reject)=>{const r=indexedDB.open('shenrenliu-feedback-drafts',1);r.onupgradeneeded=()=>r.result.createObjectStore('drafts');r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error);});}
   async function storage(mode,key,value){const db=await database();return new Promise((resolve,reject)=>{const tx=db.transaction('drafts',mode==='get'?'readonly':'readwrite'),s=tx.objectStore('drafts'),r=mode==='get'?s.get(key):mode==='delete'?s.delete(key):s.put(value,key);tx.oncomplete=()=>resolve(r.result);tx.onerror=()=>reject(tx.error);tx.onabort=()=>reject(tx.error);});}
   function persist(){if(!draft||!user)return Promise.resolve();const key=user.uid,value=structuredClone(draft);return writes=writes.catch(()=>{}).then(()=>storage('put',key,value)).catch(()=>{draftWarning='浏览器暂不能保存草稿，请保持此窗口开启，复制文字后再离开。';const hint=$('#feedbackDraftHint');if(hint)hint.textContent=draftWarning;});}

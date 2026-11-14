@@ -42,7 +42,7 @@
       const isClock=clock||timing.has(key);
       if(isClock&&typeof x==='number'&&typeof y==='number'&&Number.isFinite(x)&&Number.isFinite(y))return Math.max(x,y);
       if(Array.isArray(x)&&Array.isArray(y)){if(x.length!==y.length)return different;const out=[];for(let i=0;i<x.length;i++){const v=merge(x[i],y[i],'',isClock);if(v===different)return different;out.push(v);}return out;}
-      if(plain(x)&&plain(y)){const keys=Object.keys(x);if(keys.length!==Object.keys(y).length||keys.some(k=>!Object.hasOwn(y,k)))return different;const out={};for(const k of keys){const v=merge(x[k],y[k],k,false);if(v===different)return different;out[k]=v;}return out;}
+      if(plain(x)&&plain(y)){const keys=Object.keys(x);if(keys.length!==Object.keys(y).length||keys.some(k=>!Object.prototype.hasOwnProperty.call(y,k)))return different;const out={};for(const k of keys){const v=merge(x[k],y[k],k,false);if(v===different)return different;out[k]=v;}return out;}
       return same(x,y)?clone(x):different;
     }
     const value=merge(a,b);if(value===different)return null;validateValue('activity',value);return value;

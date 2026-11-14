@@ -99,7 +99,7 @@
       if(plans().length>=24)throw Error('最多保留24个计划，请先移除已结束的旧计划');
       if(!draft.size)throw Error('请至少选择一个有可学习题目的题库，或在细选中加入题目');
       const start=el('planStart').value,end=el('planEnd').value;if(start<today())throw Error('开始日期不能早于今天');
-      const uid=globalThis.crypto?.randomUUID?.()?.replaceAll('-','')||Date.now().toString(36)+Math.random().toString(36).slice(2);
+      const uid=globalThis.crypto?.randomUUID?.()?.replace(/-/g,'')||Date.now().toString(36)+Math.random().toString(36).slice(2);
       const time=budget();
       if(time&&!time.dailyNew)throw Error('按当前作答用时，每天的时间不足一次练习，请增加每日分钟数或按题量安排。');
       candidate=C.create({id:'plan_'+uid,title:el('planTitle').value,keys:C.orderedKeys([...draft].map(k=>catalog.get(k))),start,end,...(time||{dailyNew:pace()}),now:now()});

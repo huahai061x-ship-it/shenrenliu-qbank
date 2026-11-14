@@ -165,6 +165,6 @@
   const lines=[...new Set(Object.values(groups).flatMap(s=>s.split('\n').map(x=>x.trim()).filter(Boolean)))],KEY='shenrenliu_lulu_fortune_bag_v2';
   let bag=[],last=-1;
   try{const saved=JSON.parse(localStorage.getItem(KEY)||'null');if(saved?.size===lines.length&&Array.isArray(saved.bag)&&new Set(saved.bag).size===saved.bag.length&&saved.bag.every(n=>Number.isInteger(n)&&n>=0&&n<lines.length)){bag=saved.bag;last=saved.last;}}catch(_){}
-  function draw(){if(!bag.length){bag=Array.from({length:lines.length},(_,i)=>i);for(let i=bag.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[bag[i],bag[j]]=[bag[j],bag[i]];}if(bag.at(-1)===last)[bag[0],bag[bag.length-1]]=[bag[bag.length-1],bag[0]];}last=bag.pop();try{localStorage.setItem(KEY,JSON.stringify({size:lines.length,bag,last}));}catch(_){}return lines[last];}
+  function draw(){if(!bag.length){bag=Array.from({length:lines.length},(_,i)=>i);for(let i=bag.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[bag[i],bag[j]]=[bag[j],bag[i]];}if(bag[bag.length-1]===last)[bag[0],bag[bag.length-1]]=[bag[bag.length-1],bag[0]];}last=bag.pop();try{localStorage.setItem(KEY,JSON.stringify({size:lines.length,bag,last}));}catch(_){}return lines[last];}
   window.LULU_FORTUNES={draw,count:lines.length};
 })();

@@ -577,6 +577,8 @@ details[open]>.question-preferences-body,details[open]>.confidence-box{animation
 .plan-start-actions{align-items:center}
 .plan-start-actions .plan-batch-control{margin:0 0 0 auto}
 .desktop-page-turns{display:none}
+/* Recovery details use the existing panel/field styling without changing training layouts. */
+#bootStatus textarea,.device-mode-dialog [data-diagnostic]{display:block;width:100%;box-sizing:border-box;margin:10px 0;min-height:160px;font-size:14px;line-height:1.6;resize:vertical}
 @media(min-width:601px){
  body{font-size:18px}
  .section-title p,.mode-card p,.plan-content .notice,.plan-content .plan-theory{font-size:16px}

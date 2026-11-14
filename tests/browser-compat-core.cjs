@@ -1,0 +1,16 @@
+const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict'),{webcrypto}=require('node:crypto');
+const c={window:{crypto:{getRandomValues:v=>webcrypto.getRandomValues(v)}},DOMException,Blob};vm.createContext(c);
+vm.runInContext(fs.readFileSync('browser-compat.js','utf8'),c);
+const copy=c.window.QBANK_COMPAT.cloneData;
+const raw=JSON.parse('{"__proto__":{"polluted":true},"answer":["A"],"unanswered":null}');raw.optional=undefined;raw.self=raw;
+const next=copy(raw);assert.equal(next.self,next);assert(Object.hasOwn(next,'optional'));assert.equal(next.optional,undefined);assert.equal(next.unanswered,null);
+assert.equal(Object.getPrototypeOf(next).polluted,undefined);assert.equal(next.__proto__.polluted,true);next.answer.push('B');assert.deepEqual(raw.answer,['A']);
+assert.throws(()=>copy({bad:()=>{}}),{name:'DataCloneError'});
+const typed=vm.runInContext('(()=>{const buffer=new ArrayBuffer(8);return {buffer,view:new Uint16Array(buffer),date:new Date(12),map:new Map([["a",2]])}})()',c),cloned=copy(typed);
+assert.equal(cloned.view.buffer,cloned.buffer);assert.notEqual(cloned.buffer,typed.buffer);assert.equal(cloned.date.getTime(),12);assert.equal(cloned.map.get('a'),2);
+const ids=new Set(Array.from({length:100},()=>c.window.QBANK_COMPAT.uuid()));assert.equal(ids.size,100);for(const id of ids)assert.match(id,/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/);
+const html=fs.readFileSync('index.html','utf8'),scripts=[...html.matchAll(/<script([^>]+)src="([^"?]+)/g)];
+assert(scripts.every(m=>/\bdefer\b/.test(m[1])),'no parser-blocking script may hide the recovery UI');
+assert.deepEqual(scripts.slice(0,4).map(m=>m[2]),['boot-guard.js','browser-compat.js','private-banks.js','pwa-install.js']);
+assert(html.includes('id="bootStatus"'));assert(html.includes('data-boot-backup'));
+console.log('PASS compatibility clone preserves learning data, binary feedback and references; safe UUID fallback; recoverable startup ordering');

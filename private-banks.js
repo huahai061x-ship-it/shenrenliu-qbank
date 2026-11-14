@@ -9,7 +9,7 @@
   const packageKey = 'srl_verified_local_pair_v1';
   const ids = Object.keys(expected);
   const active = new URL(location.href).searchParams.get('localBanks') === '1';
-  const isBank = id => Object.hasOwn(expected, id);
+  const isBank = id => Object.prototype.hasOwnProperty.call(expected, id);
   let raw, unavailable;
   // Cloud features and ALL learning storage are isolated before any application script runs.
   if (active) window.QBANK_CLOUD_CONFIG = {enabled:false};

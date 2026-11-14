@@ -1,6 +1,7 @@
 // Local-only portable learning progress. No network, identity service or third-party library.
 (() => {
 'use strict';
+const structuredClone=window.QBANK_COMPAT?.cloneData || globalThis.structuredClone;
 const MAX_BYTES=512*1024,MAX_CODE=128*1024,WRONG_FIELDS=['count','wrongTotal','wrongStreak','lastWrong','lastCorrect','independentCorrectStreak','assistedCorrect'],STATS_FIELDS=['attempts','correct','wrong','totalMs','timedAttempts','assistedCorrect','lowConfidenceCorrect'],PROGRESS_FIELDS=[...STATS_FIELDS,'last','due','streak','fillExposure','regularExposure','totalExposure','lastSeenRound'];
 const ids=new Set(window.QUESTION_BANK.map(q=>q.id));
 const object=v=>!!v&&typeof v==='object'&&!Array.isArray(v);

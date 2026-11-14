@@ -1,5 +1,6 @@
 (()=>{
  'use strict';
+ let lastFailure=null;
  const KEY='shenrenliu_device_mode_v1';let choice='',mounted=false,failed=false,reported=false,hadData=false;
  try{hadData=!!(localStorage.getItem('shenrenliu_qbank_workspace_v1')||localStorage.getItem('shenrenliu_qbank_v1'));}catch(_){}
  try{choice=localStorage.getItem(KEY)||'';}catch(_){}
@@ -14,8 +15,28 @@
   d.querySelector('[data-email]').onclick=()=>{try{localStorage.setItem(KEY,'email');choice='email';}catch(_){}d.close();window.CLOUD_SYNC?.open();};if(!d.open)d.showModal();
  }
  function mount(){if(mounted)return;mounted=true;let existing=false,bound=false;try{existing=hadData;const config=window.QBANK_CLOUD_CONFIG||{};bound=!!localStorage.getItem('shenrenliu_cloud_v1_'+encodeURIComponent(config.envId||'disabled')+'_owner');}catch(_){}if(!choice&&existing&&!bound){choice='guest';try{localStorage.setItem(KEY,choice);}catch(_){}}if(!choice&&!bound)setTimeout(function prompt(){if(choice)return;if(document.querySelector('dialog[open]')||!document.querySelector('.home-content'))return setTimeout(prompt,1000);open();},600);}
- function storageError(error){failed=true;refresh();if(reported)return;reported=true;setTimeout(()=>{if(!failed){reported=false;return}const d=box('deviceStorageDialog');d.setAttribute('aria-labelledby','deviceStorageTitle');d.innerHTML=`<h2 id="deviceStorageTitle">这次进度还没有保存成功</h2><p>当前页面仍保留着你的作答，请先备份，再关闭或刷新。</p><p class="device-local-note">浏览器可能限制了存储，或可用空间不足。访客和邮箱模式都需要本机存储；更换登录方式不能直接解决这个问题。</p><div class="device-recovery"><button class="btn primary" data-export>导出当前学习备份</button><button class="btn" data-retry>重新检查保存</button><button class="btn" data-close>留在当前页面</button></div><p role="status"></p>`;d.querySelector('[data-export]').onclick=()=>{try{window.exportUnsavedData();d.querySelector('[role=status]').textContent='已发起备份下载，请确认文件已保存。';}catch(e){d.querySelector('[role=status]').textContent='导出未完成：'+e.message;}};d.querySelector('[data-retry]').onclick=()=>{const ok=window.retryLocalSave?.();d.querySelector('[role=status]').textContent=failed?'仍未保存成功，请先导出备份，再检查浏览器存储设置。':'保存已恢复，可以继续学习。';};d.querySelector('[data-close]').onclick=()=>d.close();if(!d.open)d.showModal();},0);}
- function saved(){failed=false;reported=false;refresh();}
+ function failureMessage(error){
+  const name=error?.name||'Error';
+  if(name==='QuotaExceededError'||name==='NS_ERROR_DOM_QUOTA_REACHED')return '浏览器可用存储空间不足，本次保存未完成。请先导出备份。';
+  if(name==='SecurityError'||name==='NotAllowedError')return '浏览器拒绝了本机存储访问，本次保存未完成。请先导出备份。';
+  return '保存过程中发生了程序或兼容性错误。请先导出备份，并保留下面的诊断信息。';
+ }
+ function diagnostic(){return JSON.stringify({version:document.querySelector('meta[name="build-version"]')?.content||'local',stage:lastFailure?.stage,error:lastFailure?.name,code:lastFailure?.code,location:lastFailure?.location,browser:navigator.userAgent,touchPoints:navigator.maxTouchPoints||0,pointer:window.matchMedia?.('(pointer:coarse)').matches?'touch':'mouse',viewport:innerWidth+'×'+innerHeight,features:window.QBANK_COMPAT?.features||{}},null,2);}
+ function storageError(error,stage='保存学习记录'){
+  const frame=String(error?.stack||'').match(/([a-zA-Z0-9_-]+\.js):(\d+):(\d+)/);
+  lastFailure={stage,name:error?.name||'Error',code:Number(error?.code)||0,location:frame?frame[0]:''};failed=true;refresh();
+  const current=document.querySelector('#deviceStorageDialog[open]');if(current){current.querySelector('[data-reason]').textContent=failureMessage(error);current.querySelector('[data-diagnostic]').value=diagnostic();return;}
+  if(reported)return;reported=true;
+  setTimeout(()=>{if(!failed){reported=false;return}const d=box('deviceStorageDialog');d.setAttribute('aria-labelledby','deviceStorageTitle');
+   d.innerHTML='<h2 id="deviceStorageTitle">这次进度还没有保存成功</h2><p>当前页面仍保留着你的作答，请先备份，再关闭或刷新。</p><p class="device-local-note" data-reason></p><div class="device-recovery"><button class="btn primary" data-export>导出当前学习备份</button><button class="btn" data-retry>重新检查保存</button><button class="btn" data-close>留在当前页面</button></div><p role="status"></p><details class="field"><summary>保存诊断（不含邮箱、题目和作答记录）</summary><textarea data-diagnostic readonly rows="7" aria-label="保存诊断"></textarea><button class="btn" data-diagnostic-download>下载诊断信息</button></details>';
+   d.querySelector('[data-reason]').textContent=failureMessage(error);d.querySelector('[data-diagnostic]').value=diagnostic();
+   d.querySelector('[data-export]').onclick=()=>{try{window.exportUnsavedData();d.querySelector('[role=status]').textContent='已发起备份下载，请确认文件已保存。';}catch(e){d.querySelector('[role=status]').textContent='导出未完成，请保留当前页面并下载诊断信息。';storageError(e,'导出当前备份');}};
+   d.querySelector('[data-retry]').onclick=()=>{let ok=false;try{ok=window.retryLocalSave?.()===true;}catch(e){storageError(e,'重新检查保存')}d.querySelector('[role=status]').textContent=ok?'保存已恢复，可以继续学习。':'仍未保存成功，请先导出备份，并保留诊断信息。';};
+   d.querySelector('[data-diagnostic-download]').onclick=()=>{const a=document.createElement('a'),url=URL.createObjectURL(new Blob([diagnostic()],{type:'text/plain;charset=utf-8'}));a.href=url;a.download='神人刘_保存诊断.txt';a.click();setTimeout(()=>URL.revokeObjectURL(url),60000);};
+   d.querySelector('[data-close]').onclick=()=>d.close();if(!d.open)d.showModal();
+  },0);
+ }
+ function saved(scope='store'){if(lastFailure?.stage.includes('恢复点')&&scope!=='progress')return;failed=false;reported=false;lastFailure=null;refresh();}
  function emailConnected(){choice='email';try{localStorage.setItem(KEY,choice);}catch(_){}}
- window.LOCAL_MODE={open,mount,decorate,storageError,saved,probe,emailConnected,isGuest:()=>choice==='guest'};
+ window.LOCAL_MODE={open,mount,decorate,storageError,failureMessage,saved,probe,emailConnected,isGuest:()=>choice==='guest'};
 })();

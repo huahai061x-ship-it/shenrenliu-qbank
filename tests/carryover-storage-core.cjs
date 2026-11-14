@@ -1,0 +1,15 @@
+const assert=require('node:assert/strict'),C=require('../study-plan-core');global.window=global;require('../bank-core');
+const at=d=>Date.parse(d+'T12:00:00+08:00'),keys=Array.from({length:100},(_,i)=>'demo_plan:'+(i+1));
+let p=C.create({id:'plan_carryover01',title:'跨天',keys,start:'2026-11-10',end:'2026-11-19',dailyNew:10,now:at('2026-11-10')});
+assert.equal(C.replan(p,'2026-11-10').dailyNew,10,'初建计划保留用户选择的题量');
+const before=JSON.stringify(p),info=C.replan(p,'2026-11-15');assert.equal(info.dailyNew,20);assert.equal(info.overdue.length,50);
+let pending=C.tasks(p,'2026-11-15',at('2026-11-15'),[],true);assert.equal(pending.length,20);assert.equal(pending[0].key,keys[0]);
+const forecast=C.schedule(p,'2026-11-15',true,[],true);assert.equal(forecast.coveredAtEnd,100);assert.equal(JSON.stringify(p),before);
+for(let i=0;i<7;i++)p=C.record(p,{id:'event_carry_'+i,key:keys[i],rating:'remembered',at:at('2026-11-15')});
+assert.equal(C.tasks(p,'2026-11-15',at('2026-11-15'),[],true).filter(x=>!x.introduced).length,13);
+assert.equal(C.replan(p,'2026-11-20').dailyNew,10,'截止后不能一次塞全部剩余题');
+assert(!C.tasks(p,'2026-11-16',at('2026-11-16'),[keys[7]],true).some(x=>x.key===keys[7]));
+const timed=C.create({...p,id:'plan_timedcarry',dailyMinutes:10,secondsPerTask:60,dailyNew:10});assert.equal(C.replan(timed,'2026-11-18').dailyNew,10);assert(C.tasks(timed,'2026-11-18',at('2026-11-18'),[],true).length<=10);assert(C.schedule(timed,'2026-11-18',true,[],true).coveredAtEnd<100);
+const snap={version:1,questionId:1,stem:'快照',options:['甲','乙'],correctAnswer:['甲']};const data={history:[{presentationSnapshots:[snap]}],wrong:{1:{lastPresentation:snap}},recentSessions:[{kind:'practice',snapshot:{session:{items:[{questionId:1,presentationSnapshot:snap}],masteryPool:[{questionId:1,presentationSnapshot:snap}],parentFrame:{session:{items:[{questionId:1,presentationSnapshot:snap}]}}}}}]};
+const packed=BANK_CORE.pack(data);assert.equal(packed.presentationCatalog.length,1);assert.deepEqual(BANK_CORE.unpack(JSON.parse(JSON.stringify(packed))),data);assert.deepEqual(BANK_CORE.unpack(data),data);
+console.log('PASS 漏学跨日、剩余天数重排、部分完成、截止后补学、分钟预算不超、已掌握筛选、历史快照无损去重');

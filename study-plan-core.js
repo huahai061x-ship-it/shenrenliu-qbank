@@ -79,11 +79,22 @@
     }
     return out;
   }
-  function dueItems(p,all,day,at,spent=0,excluded=[]){
+  function replan(p,day=today(),excluded=[]){
+    const ignore=new Set(excluded),all=Object.values(states(p,day)),active=all.filter(s=>!ignore.has(s.key));
+    const remaining=active.filter(s=>!s.introduced).length,days=Math.max(1,ordinal(p.end)-ordinal(day)+1);
+    const started=all.filter(s=>s.firstDay===day).length,required=Math.ceil((remaining+started)/days);
+    const original=p.dailyNew||suggestedNew(p.keys.length,p.start,p.end);
+    // Keep the chosen pace until new questions have actually carried over.
+    // Use the start-of-day backlog so completing it cannot lower today's allowance mid-round.
+    const carriedNew=Object.values(states(p,add(day,-1))).some(s=>!ignore.has(s.key)&&!s.introduced&&s.due<day);
+    const dailyNew=p.dailyMinutes||day>p.end||!carriedNew?original:Math.min(2000,Math.max(original,required));
+    return {plan:{...p,dailyNew},remaining,days,required,dailyNew,overdue:active.filter(s=>s.due<day),excluded:all.length-active.length};
+  }
+  function dueItems(p,all,day,at,spent=0,excluded=[],adaptive=false){
     const excludedSet=new Set(excluded);
     const startedToday=all.filter(s=>s.firstDay===day).length;
     let left=p.dailyNew===undefined?Infinity:Math.max(0,p.dailyNew-startedToday);
-    const eligible=all.filter(s=>!excludedSet.has(s.key)&&s.due<=day&&(!s.retryAt||s.retryAt<=at));
+    const eligible=all.filter(s=>!excludedSet.has(s.key)&&(s.due<=day||adaptive&&!p.dailyMinutes&&!s.introduced)&&(!s.retryAt||s.retryAt<=at));
     eligible.sort((a,b)=>Number(b.introduced)-Number(a.introduced)||Number(b.lastRating==='again')-Number(a.lastRating==='again')||a.due.localeCompare(b.due)||a.order-b.order);
     if(p.dailyMinutes){
       const slots=Math.max(0,p.dailyNew-spent),fresh=eligible.filter(s=>!s.introduced);
@@ -95,22 +106,23 @@
     }
     return eligible.filter(s=>{if(s.introduced)return true;if(left<=0)return false;left--;return true;});
   }
-  function tasks(p,day=today(),at=Date.now(),excluded=[]){
+  function tasks(p,day=today(),at=Date.now(),excluded=[],adaptive=false){
     if(day<p.start)return [];
-    return dueItems(p,Object.values(states(p,day)),day,at,usedToday(p,day),excluded);
+    return dueItems(adaptive?replan(p,day,excluded).plan:p,Object.values(states(p,day)),day,at,usedToday(p,day),excluded,adaptive);
   }
   const usedToday=(p,day)=>p.dailyMinutes?Object.values(p.events).filter(e=>e.day===day).length:0;
   function record(p,{id,key,rating,at=Date.now()}){validate(p);if(p.events[id])return clone(p);const day=today(at);if(day<p.start)throw Error('计划尚未开始');const out=clone(p);out.events[id]={key,rating,day,at};validate(out);return out;}
   function merge(a,b){validate(a);validate(b);if(a.id!==b.id||JSON.stringify([a.keys,a.start,a.end,a.title,a.createdAt,a.dailyNew,a.dailyMinutes,a.secondsPerTask])!==JSON.stringify([b.keys,b.start,b.end,b.title,b.createdAt,b.dailyNew,b.dailyMinutes,b.secondsPerTask]))return null;const out=clone(a),rank={remembered:0,assisted:1,again:2};for(const [id,e] of Object.entries(b.events)){const old=out.events[id];if(!old)out.events[id]=clone(e);else if(JSON.stringify(old)!==JSON.stringify(e)){if(old.key!==e.key)return null;out.events[id]=clone(rank[e.rating]>rank[old.rating]||rank[e.rating]===rank[old.rating]&&e.at>old.at?e:old);}}validate(out);return out;}
-  function schedule(p,from=today(),projectCoverage=false,excluded=[]){
+  function schedule(p,from=today(),projectCoverage=false,excluded=[],adaptive=false){
     const start=from<p.start?p.start:from,all=Object.values(states(p,start)),rows=[];
+    if(adaptive)p=replan(p,start,excluded).plan;
     const end=ordinal(p.end);
     const included=all.filter(s=>!excluded.includes(s.key)),total=included.length;
     let covered=included.filter(s=>s.introduced).length,coveredAtEnd=covered,firstPass='';
     const first=ordinal(start);
     const horizon=first+all.length*(p.dailyNew===1?2:1);
     for(let d=first;d<=end||(projectCoverage&&covered<total&&d<=horizon);d++){
-      const day=date(d),at=(d+1)*DAY-8*3600000-1,items=dueItems(p,all,day,at,d===first?usedToday(p,day):0,excluded);
+      const day=date(d),at=(d+1)*DAY-8*3600000-1,items=dueItems(p,all,day,at,d===first?usedToday(p,day):0,excluded,adaptive);
       if(d<=end)rows.push({day,items});
       for(const s of items){
         if(!s.introduced)covered++;
@@ -123,5 +135,5 @@
   }
   const calendar=(p,from=today())=>schedule(p,from).rows;
   function sanitize(raw){const out={};if(!plain(raw))return out;for(const [id,p] of Object.entries(raw)){try{validate(p);if(id===p.id)out[id]=clone(p);}catch(_){/* Caller keeps the raw workspace backup. */}}return out;}
-  return {DAY,INTERVALS,questionKey,validKey,ordinal,date,today,add,suggestedNew,estimateTime,orderedKeys,validate,create,states,tasks,record,merge,calendar,schedule,sanitize};
+  return {DAY,INTERVALS,questionKey,validKey,ordinal,date,today,add,suggestedNew,estimateTime,orderedKeys,validate,create,states,tasks,record,merge,calendar,schedule,sanitize,replan};
 });

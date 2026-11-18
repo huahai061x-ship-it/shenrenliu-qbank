@@ -914,10 +914,10 @@ function gradedCard(item,i,key){
  <h3>${esc(itemStem(item))}</h3>${paperOptions(item)}
  ${pending?'<p class="notice">待核验 · 本场按原题答案判分</p>':''}
  <div class="graded-reason"><b>答案解析</b><p>${esc(paperRationale(item))}</p></div>
- <details class="graded-explanation" data-index="${i}" ontoggle="loadPaperExplanation(this)"><summary>完整解析</summary><div></div></details></article>`;
+ <details class="graded-explanation" data-index="${i}" ontoggle="if(this.open)loadPaperExplanation(this)"><summary onclick="if(!this.parentElement.open)loadPaperExplanation(this.parentElement)">完整解析</summary><div></div></details></article>`;
 }
 function loadPaperExplanation(detail){
- if(!detail.open||view!=='gradedPaper'||detail.dataset.loaded)return;
+ if(view!=='gradedPaper'||detail.dataset.loaded)return;
  const item=session?.items[Number(detail.dataset.index)];if(!item)return;
  if(item.paperNote){detail.lastElementChild.innerHTML=snapshotExplanation(item,item.paperNote);detail.dataset.loaded='1';return}
  const ex=explain(item.q,item.renderType,item.fillLevel,item.fillVariantKey);

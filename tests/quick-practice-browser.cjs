@@ -135,7 +135,7 @@ async function contrast(locator) {
     const chosen=await page.evaluate(()=>BANK_RUNTIME.app.getSession().items[2].answer);
     assert((await rightCard.locator('.graded-right').allTextContents()).some(t=>t.includes(Array.isArray(chosen)?chosen[0]:chosen)));
     await rightCard.locator('.graded-explanation summary').click();
-    assert(await rightCard.locator('.graded-explanation .explanation').isVisible());
+    await rightCard.locator('.graded-explanation .explanation').waitFor({state:'visible',timeout:5000});
     assert.match(await cards.nth(1).locator('.graded-card-head').innerText(),/答错/);
     await rightCard.locator('.guessed-answer').click();
     const retryIds=ids.filter((qid,i)=>i%2===1||qid===id||i===2);

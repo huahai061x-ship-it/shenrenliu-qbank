@@ -1,6 +1,7 @@
 // Shared browser/server protocol. Client wall clocks never decide which edit wins.
 (function(root,factory){const api=factory();if(typeof module==='object'&&module.exports)module.exports=api;else root.CLOUD_SYNC_CORE=api;})(typeof window!=='undefined'?window:globalThis,()=>{
   'use strict';
+  const HISTORY=typeof module==='object'&&module.exports?require('./exam-history-core.js'):window.EXAM_HISTORY_CORE;
   const P=typeof module==='object'&&module.exports?require('./cloud-sync-payload.js'):window.CLOUD_SYNC_PAYLOAD;
   const PLAN=typeof module==='object'&&module.exports?require('./study-plan-core.js'):window.STUDY_PLAN_CORE;
   const QUESTION_FIELDS=['favorite','mastery','wrong','learning','seen','reviewFlags','reviewNotes','pendingPractice','difficultyProgress','rotation'];
@@ -106,7 +107,7 @@
       else if(row.field==='examRotation')out.examRotation={...(out.examRotation||{}),round:value?.round||0,recent:clone(value?.recent||[])};
       else if(['openStudy','easterEggs'].includes(row.field))out[row.field]=clone(value||{});
     }
-    if(rows.some(r=>r.field==='exam'))out.history=[...history.values()].sort((a,b)=>b.time-a.time).slice(0,50);
+    if(rows.some(r=>r.field==='exam')){const sorted=[...history.values()].sort((a,b)=>b.time-a.time);out.history=HISTORY?HISTORY.retain(sorted):sorted.slice(0,50)}
     let retired=false;const completed=new Set([...history.values()].map(h=>h.paperId).filter(Boolean));for(const [id,row] of activities)if(row.kind==='exam'&&completed.has(row.id)){scopes.add(row.scopeKey);activities.delete(id);retired=true;}if(rows.some(r=>r.field==='activity')||retired){const counts=new Map();out.recentSessions=[...activities.values()].sort((a,b)=>b.time-a.time).filter(r=>{const n=counts.get(r.scopeKey)||0;counts.set(r.scopeKey,n+1);return n<2}).slice(0,128);out.recentSessionsMigrated=true;out.__cloudActivityScopes=[...scopes];}
     return out;
   }

@@ -48,12 +48,12 @@ function mergeRecord(a,b){
   const cumulative=(b.attempts||0)>(a.attempts||0)?b:(a.attempts||0)>(b.attempts||0)?a:recent;
   for(const k of ['attempts','correct','wrong','totalMs','timedAttempts','assistedCorrect','lowConfidenceCorrect'])if(typeof cumulative[k]==='number')out[k]=cumulative[k];
  }
- if(Array.isArray(a.guessedPapers)||Array.isArray(b.guessedPapers))out.guessedPapers=[...new Set([...(a.guessedPapers||[]),...(b.guessedPapers||[])])].slice(-50);
+ if(Array.isArray(a.guessedPapers)||Array.isArray(b.guessedPapers))out.guessedPapers=[...new Set([...(a.guessedPapers||[]),...(b.guessedPapers||[])])];
  const understood=(b.understandingAt||0)>(a.understandingAt||0)?b:a;if(understood.understandingAt){out.understandingAt=understood.understandingAt;out.understanding=understood.understanding}
  for(const k of ['wrongTotal','totalExposure','regularExposure','fillExposure'])if(typeof a[k]==='number'||typeof b[k]==='number')out[k]=Math.max(a[k]||0,b[k]||0);
  return out;
 }
-function histories(a=[],b=[]){let seen=new Set;return [...a,...b].sort((x,y)=>(y.time||y.date||y.started||0)-(x.time||x.date||x.started||0)).filter(h=>{let k=h.paperId||JSON.stringify([h.time,h.date,h.started,h.ids,h.score,h.userAnswers]);if(seen.has(k))return false;seen.add(k);return true}).slice(0,50)}
+function histories(a=[],b=[]){let seen=new Set;const sorted=[...a,...b].sort((x,y)=>(y.time||y.date||y.started||0)-(x.time||x.date||x.started||0)).filter(h=>{let k=h.paperId||JSON.stringify([h.time,h.date,h.started,h.ids,h.score,h.userAnswers]);if(seen.has(k))return false;seen.add(k);return true});return window.EXAM_HISTORY_CORE?.retain(sorted)||sorted.slice(0,50)}
 function maxTree(a,b){if(typeof a==='number'&&typeof b==='number')return Math.max(a,b);if(plain(a)&&plain(b)){let o={...b};for(const k of Object.keys(a))o[k]=k in b?maxTree(a[k],b[k]):a[k];return o}return a??b}
 function merge(local,incoming){
  validate(local);validate(incoming);let e=clone(local),a=e.data,b=incoming.data;

@@ -120,6 +120,14 @@ jobs:
           npm install --prefix "$RUNNER_TEMP/qbank-browser" --no-save --no-audit --no-fund playwright-core@1.56.1
           export CHROME_BIN="$(command -v google-chrome)"
           node tests/forming-editions-browser.cjs
+          node tests/quick-practice-browser.cjs
+      - name: Save responsive screenshots
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: mobile-review-screenshots
+          path: ${{ runner.temp }}/forming-screenshots
+          retention-days: 7
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v5
         with:

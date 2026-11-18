@@ -28,10 +28,10 @@ try{
  await p.locator('[onclick="openLuluPage(\'history\')"]').click();await p.getByRole('button',{name:'返回噜噜小屋',exact:true}).click();await p.locator('[onclick="openLuluPage(\'mastery\')"]').click();await p.getByRole('button',{name:'返回噜噜小屋',exact:true}).click();
  results.push('噜噜小屋三入口可达、学习记录与地图可返回；橘子签点换不连句、不更改学习记录');
  await p.evaluate(()=>{navHome(true);startStudy('sequence')});await settle();
- await p.evaluate(()=>{window.__stableCard=document.querySelector('.question-card');window.__stableOption=document.querySelector('.option');document.querySelector('.pre-confidence').open=true;});
+ await p.evaluate(()=>{window.__stableCard=document.querySelector('.question-card');window.__stableOption=document.querySelector('.option');});
  const y=await p.evaluate(()=>scrollY),startAnswer=await p.evaluate(()=>__V22_TEST__.getSession().items[0].answer);
  await p.locator('.option').first().click();await settle();
- assert(await p.evaluate(()=>window.__stableCard===document.querySelector('.question-card')&&window.__stableOption===document.querySelector('.option')));assert.equal(await p.locator('.option').first().getAttribute('aria-pressed'),'true');assert.equal(await p.locator('.pre-confidence').getAttribute('open'),'');
+ assert(await p.evaluate(()=>window.__stableCard===document.querySelector('.question-card')&&window.__stableOption===document.querySelector('.option')));assert.equal(await p.locator('.option').first().getAttribute('aria-pressed'),'true');assert.equal(await p.locator('.pre-confidence').count(),0);
  assert(Math.abs(await p.evaluate(()=>scrollY)-y)<2);assert.notEqual(await p.evaluate(()=>__V22_TEST__.getSession().items[0].answer),startAnswer);
  await p.evaluate(()=>checkStudy());await settle();assert.equal(await p.locator('.immediate-feedback').count(),1);const qid=await p.evaluate(()=>__V22_TEST__.getSession().items[0].q.id);await p.evaluate(id=>setMastery(id,'mastered'),qid);await settle();assert.equal(await p.locator('.sheet-item').first().getAttribute('data-mastery'),'mastered');assert.equal(await p.locator('.sheet-mastery-mark').count(),0);assert(!await p.locator('.sheet-legend').innerText().then(t=>t.includes('✓')));
  await p.evaluate(()=>nextQ());await settle();await p.evaluate(()=>prevQ());await settle();assert.equal(await p.locator('.option[aria-pressed="true"]').count(),1);

@@ -30,7 +30,7 @@ fs.mkdirSync(out,{recursive:true});
   const paper=await p.evaluate(()=>__V22_TEST__.getSession().paperId);
   await p.getByRole('button',{name:'暂停保存，回首页',exact:true}).click();
   assert.equal(await p.locator('.recent-activities').getAttribute('open'),null);
-  await p.locator('.hero-start').click();assert.equal(await p.evaluate(()=>__V22_TEST__.getSession().paperId),paper);
+  await p.locator('.recent-activities .resume-banner .btn.primary').first().click();assert.equal(await p.evaluate(()=>__V22_TEST__.getSession().paperId),paper);
   await p.getByRole('button',{name:'暂停保存，回首页',exact:true}).click();
   await p.locator('.recent-activities>summary').click();assert(await p.getByRole('button',{name:'继续上次考试',exact:true}).isVisible());
   await p.locator('.hero-bank-picker').click();await bank.getByRole('button',{name:'应用所选范围'}).click();

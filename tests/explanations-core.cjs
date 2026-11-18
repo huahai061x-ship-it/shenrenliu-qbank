@@ -8,6 +8,10 @@ let n=0;for(const q of Q){let a=A[q.id];assert.deepEqual(Array.from(E.check(q,a)
 assert.equal(Object.values(A).filter(a=>a.status==='needs_source').length,11);
 assert.deepEqual(Object.keys(A).filter(n=>A[n].status==='needs_source').map(Number),[150,238,274,343,394,421,422,429,436,438,505]);
 let q=Q[0],a=JSON.parse(JSON.stringify(A[q.id]));a.why='这个选项与正确答案不一致';assert(E.check(q,a).length);a=JSON.parse(JSON.stringify(A[q.id]));delete a.optionReasons[q.options[0]];assert(E.check(q,a).length);
+for(const sentence of ['这个选项不是原表格中出现的答案','原表中没有列出该选项']){
+ const entry={...A[q.id],optionReasons:{...A[q.id].optionReasons,[q.options[0]]:sentence}};
+ assert(E.check(q,entry).some(e=>e.includes('具体理由')));
+}
 assert.throws(()=>E.validateBank({questions:[q]}),/缺少/);
 const jq=Q.find(q=>q.type==='judge'&&q.answers[0]==='错'),ja=JSON.parse(JSON.stringify(A[jq.id]));delete ja.correction;assert(E.check(jq,ja).some(s=>s.includes('改正')));
 for(const f of fs.readdirSync('banks').filter(f=>f.endsWith('.json'))){const b=JSON.parse(fs.readFileSync('banks/'+f,'utf8'));if(b.questions)assert(E.validateBank(b))}

@@ -659,3 +659,45 @@ details[open]>.question-preferences-body,details[open]>.confidence-box{animation
 .plan-mastery-note{color:var(--muted);font-size:14px;margin:0 0 12px}
 
 .option-result{margin-left:auto;flex-shrink:0;font-size:14px;font-weight:600}.option.correct .option-result{color:#15803d}.option.wrong .option-result{color:#b91c1c}.plan-carryover p{margin:8px 0}.plan-carryover details ol{max-height:280px;overflow:auto;padding-left:24px}.plan-carryover li{margin:8px 0}@media(max-width:600px){.option-result{font-size:12px;max-width:72px;text-align:right;white-space:normal}}
+
+.home-content .plan-express{grid-column:1/-1;width:100%;min-height:52px;font-size:18px;font-weight:700}
+.result-item-actions{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin-top:10px}
+.result-item-actions .btn,.guessed-answer{min-height:44px}
+@media(max-width:600px){.home-content .plan-express{min-height:48px;font-size:16px}}
+
+/* The same palette serves native controls, cards, dialogs and grading feedback. */
+[data-theme="dark"] {
+ color-scheme:dark;
+ --bg:#10151e;--panel:#19222f;--soft:#222f40;--text:#f0f4fa;--muted:#b4c0d0;
+ --line:#435268;--border:var(--line);--brand:#90c2ff;--brand2:#aecfff;--primary:#285993;
+ --good:#80e4a3;--bad:#ffaaa9;--warn:#ffd17a;--danger:var(--bad);--purple:#d7b4ff;
+ --selected-bg:#203755;--success-bg:#203b30;--danger-bg:#452b32;--warning-bg:#423521;--violet-bg:#342a48;
+}
+:where([data-theme="dark"]) :where(button,input,textarea,select,dialog){color:var(--text)}
+[data-theme="dark"] button.mode-card{color:var(--text)}
+[data-theme="dark"] a:not(.btn){color:var(--brand)}
+[data-theme="dark"] a:not(.btn):focus-visible{text-decoration:underline}
+:where([data-theme="dark"]) :where(input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),textarea,select,select option,dialog){background-color:var(--panel)}
+[data-theme="dark"] :where(input,textarea)::placeholder{color:var(--muted);opacity:1}
+[data-theme="dark"] :where(input,select,textarea){accent-color:var(--brand)}
+[data-theme="dark"] :focus-visible{outline:2px solid var(--brand);outline-offset:2px}
+[data-theme="dark"] :is(.btn.primary,.count-buttons button.active,.special-type-grid .active,.device-cta,.cloud-account-avatar){background:var(--primary);color:#fff}
+[data-theme="dark"] .tag.single,[data-theme="dark"] .backup-step-number{background:var(--selected-bg);color:var(--brand)}
+[data-theme="dark"] .tag.multiple{background:var(--violet-bg);color:var(--purple)}
+[data-theme="dark"] .tag.judge{background:var(--success-bg);color:var(--good)}
+[data-theme="dark"] .tag.fill{background:var(--warning-bg);color:var(--warn)}
+[data-theme="dark"] :is(.blank-feedback-row.ok strong,.option.correct .option-result,.bug-success>span){color:var(--good)}
+[data-theme="dark"] :is(.blank-feedback-row.bad strong,.option.wrong .option-result,.transfer-error){color:var(--bad)}
+[data-theme="dark"] :is(.plan-warning,#planError,.device-mode-message){color:var(--warn)}
+[data-theme="dark"] :is(.required-update .update-symbol,.required-update .update-eyebrow){color:var(--brand)}
+[data-theme="dark"] :is(.blank-feedback ins,.bug-status.status-resolved,.cloud-account-state){color:var(--good);background:var(--success-bg)}
+[data-theme="dark"] .blank-feedback del{color:var(--bad);background:var(--danger-bg)}
+[data-theme="dark"] :is(.sync-test-notice,.search-item mark){color:var(--warn);background:var(--warning-bg)}
+[data-theme="dark"] .mastery-cell[data-status="熟练"]{background:var(--success-bg)}
+[data-theme="dark"] .mastery-cell:is([data-status="错题"],[data-status="反复错"]){background:var(--danger-bg)}
+[data-theme="dark"] .mastery-cell:is([data-status="SRS到期"],[data-status="高耗时"]){background:var(--warning-bg)}
+[data-theme="dark"] .mastery-cell[data-status="待复核"]{background:var(--violet-bg)}
+[data-theme="dark"] #cloudAccountButton:is([data-sync-state="signed-out"],[data-sync-state="syncing"]) .cloud-account-state{color:var(--brand);background:var(--selected-bg)}
+[data-theme="dark"] #cloudAccountButton:is([data-sync-state="pending"],[data-sync-state="confirm"],[data-sync-state="attention"],[data-sync-state="offline"]) .cloud-account-state{color:var(--warn);background:var(--warning-bg)}
+[data-theme="dark"] #cloudAccountButton[data-sync-state="error"] .cloud-account-state{color:var(--bad);background:var(--danger-bg)}
+[data-theme="dark"] button:disabled{opacity:1;color:var(--muted);background-color:var(--soft);border-color:var(--line)}

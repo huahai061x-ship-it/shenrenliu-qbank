@@ -48,6 +48,7 @@ function mergeRecord(a,b){
   const cumulative=(b.attempts||0)>(a.attempts||0)?b:(a.attempts||0)>(b.attempts||0)?a:recent;
   for(const k of ['attempts','correct','wrong','totalMs','timedAttempts','assistedCorrect','lowConfidenceCorrect'])if(typeof cumulative[k]==='number')out[k]=cumulative[k];
  }
+ if(Array.isArray(a.guessedPapers)||Array.isArray(b.guessedPapers))out.guessedPapers=[...new Set([...(a.guessedPapers||[]),...(b.guessedPapers||[])])].slice(-50);
  const understood=(b.understandingAt||0)>(a.understandingAt||0)?b:a;if(understood.understandingAt){out.understandingAt=understood.understandingAt;out.understanding=understood.understanding}
  for(const k of ['wrongTotal','totalExposure','regularExposure','fillExposure'])if(typeof a[k]==='number'||typeof b[k]==='number')out[k]=Math.max(a[k]||0,b[k]||0);
  return out;

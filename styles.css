@@ -701,3 +701,28 @@ details[open]>.question-preferences-body,details[open]>.confidence-box{animation
 [data-theme="dark"] #cloudAccountButton:is([data-sync-state="pending"],[data-sync-state="confirm"],[data-sync-state="attention"],[data-sync-state="offline"]) .cloud-account-state{color:var(--warn);background:var(--warning-bg)}
 [data-theme="dark"] #cloudAccountButton[data-sync-state="error"] .cloud-account-state{color:var(--bad);background:var(--danger-bg)}
 [data-theme="dark"] button:disabled{opacity:1;color:var(--muted);background-color:var(--soft);border-color:var(--line)}
+
+/* A press changes colour on contact. Release and navigation never wait for motion. */
+:root{--press-light:.83;--choice-ink:#174ba4;--choice-fill:#e5eeff;--choice-letter:#fff}
+[data-theme="dark"]{--press-light:1.22;--choice-ink:#a3cdff;--choice-fill:#294363;--choice-letter:#10243a}
+:where(button,a[href],summary,[role="button"],input:is([type="button"],[type="submit"],[type="reset"])){
+ touch-action:manipulation;
+ -webkit-tap-highlight-color:transparent;
+}
+:is(button,a[href],summary,[role="button"],input:is([type="button"],[type="submit"],[type="reset"])):is(:active,[data-pressing]):not(:disabled):not([aria-disabled="true"]){
+ filter:brightness(var(--press-light));
+ transition-duration:0s;
+}
+.option.selected:not(.correct):not(.wrong){
+ border-color:var(--choice-ink);background:var(--choice-fill);box-shadow:inset 0 0 0 1px var(--choice-ink);
+ transition-duration:0s;
+}
+.option.selected:not(.correct):not(.wrong) .letter{background:var(--choice-ink);color:var(--choice-letter);transition-duration:0s}
+@media(prefers-reduced-motion:no-preference){
+ :where(button,a[href],summary,[role="button"]){transition:filter 110ms ease-out}
+ :is(.btn,.icon-btn,.hero-bank-picker,.home-topic-trigger){transition:filter 110ms ease-out,scale 110ms ease-out,background-color var(--motion-fast) ease,border-color var(--motion-fast) ease}
+ :is(.btn,.icon-btn,.hero-bank-picker,.home-topic-trigger):is(:active,[data-pressing]):not(:disabled){scale:.985;transition-duration:0s}
+}
+@media(prefers-reduced-motion:reduce){.option.selected .letter{transform:none}}
+
+@media(hover:none){.mode-card:hover,.lulu-button:hover img{transform:none}}

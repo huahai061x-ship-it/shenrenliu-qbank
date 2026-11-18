@@ -86,11 +86,10 @@ const browserPath = process.env.CHROME_BIN;
 
     await go('forming_forging_2026');
     await page.evaluate(()=>{reviewOne(QUESTION_BANK.find(q=>q.sourceQuestionId===86).id);showAnswer()});
-    const details=page.locator('details').filter({has:page.locator('summary').filter({hasText:'对照两道原题'})});
-    await details.locator('summary').click();
-    const text=await details.innerText();
-    assert.match(text,/#86/);assert.match(text,/#88/);
-    assert.match(text,/300-400/);assert.match(text,/200---300/);
+    assert.equal(await page.getByText(/对照两道原题/).count(),0);
+    assert.match(await page.locator('.structured-explanation').innerText(),/200～300/);
+    const pair=await page.evaluate(()=>QUESTION_BANK.filter(q=>[86,88].includes(q.sourceQuestionId)).map(q=>[q.analysis.status,q.answers[0]]));
+    assert.deepEqual(pair,[['ready','200-300'],['ready','200---300℃']]);
     // A user-imported bank can supply legacy fill material, but new papers still use its original tests.
     const culture=require('../banks/sinotruk-culture-official.json');
     const question=structuredClone(culture.questions[0]);delete question.contentGroup;
@@ -128,6 +127,6 @@ const browserPath = process.env.CHROME_BIN;
     assert.equal(originalCulture.filter(i=>i.renderType==='fill'&&i.q.type!=='fill').length,10);
     console.log('PASS 导入纯选择题单库可开卷、专项不改编、单库及跨库保留原生填空、旧题型与已有授权试卷恢复');
     assert.deepEqual(errors,[]);
-    console.log('PASS 同考点原题间隔两题出现、恢复保序、保持题量与作答状态、过滤已掌握、考试原题型、两份冲突原文可对照');
+    console.log('PASS 同考点原题间隔两题出现、恢复保序、保持题量与作答状态、过滤已掌握、考试原题型、已解决的温度冲突不再提示');
   }finally{await browser.close()}
 })().catch(error=>{console.error(error);process.exitCode=1});

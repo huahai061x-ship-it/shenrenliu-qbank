@@ -21,8 +21,8 @@ async function main() {
   const browser = await chromium.launch({executablePath:process.env.CHROME_BIN || undefined});
   try {
     for (const [id, name, pending, width] of [
-      ['forming_forging_2026', '锻造知识', 47, 390],
-      ['forming_casting_2026', '铸造知识', 16, 1366]
+      ['forming_forging_2026', '锻造知识', 33, 390],
+      ['forming_casting_2026', '铸造知识', 12, 1366]
     ]) {
       const context = await browser.newContext({viewport:{width,height:900}, serviceWorkers:'block'});
       await context.addInitScript(()=>localStorage.setItem('shenrenliu_device_mode_v1','guest'));

@@ -16,7 +16,7 @@ window.QBANK_BANKS=[
   {
     "id": "forming_forging_2026",
     "name": "锻造知识",
-    "version": "2026.11.04",
+    "version": "2026.11.18",
     "file": "banks/forming_forging_2026.js",
     "sourcePageCount": 0,
     "examProfile": "forming50",
@@ -27,16 +27,12 @@ window.QBANK_BANKS=[
       [13, 58],
       [15, 30],
       [98, 231]
-    ],
-    "conflictPairs": [
-      [86, 88],
-      [83, 410]
     ]
   },
   {
     "id": "forming_casting_2026",
     "name": "铸造知识",
-    "version": "2026.11.04",
+    "version": "2026.11.18",
     "file": "banks/forming_casting_2026.js",
     "sourcePageCount": 0,
     "examProfile": "forming50",

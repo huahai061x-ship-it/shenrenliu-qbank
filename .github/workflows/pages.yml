@@ -112,6 +112,14 @@ jobs:
         run: node scripts/build-release.mjs
       - name: Verify release package
         run: node tests/release-package.cjs
+      - name: Test revised question banks in Chrome
+        env:
+          PLAYWRIGHT_PATH: ${{ runner.temp }}/qbank-browser/node_modules/playwright-core
+          FORMING_SCREENSHOTS: ${{ runner.temp }}/forming-screenshots
+        run: |
+          npm install --prefix "$RUNNER_TEMP/qbank-browser" --no-save --no-audit --no-fund playwright-core@1.56.1
+          export CHROME_BIN="$(command -v google-chrome)"
+          node tests/forming-editions-browser.cjs
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v5
         with:

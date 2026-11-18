@@ -61,7 +61,7 @@ async function contrast(locator) {
       const button=page.getByRole('button',{name:'我的计划直通车',exact:true});
       const full=await button.evaluate(e=>{const p=e.parentElement,s=getComputedStyle(p);return Math.abs(e.offsetWidth-(p.clientWidth-parseFloat(s.paddingLeft)-parseFloat(s.paddingRight)))<3});
       assert(full,'plan button width '+width);
-      assert(!(await page.locator('#main').textContent()).includes('今日复习'));
+      assert.equal(await page.locator('#main').getByRole('heading',{name:/今日复习|考前冲刺/,includeHidden:true}).count(),0);
       await screenshot(page,'dark-home-'+width);
       await button.click();
       assert(await page.getByRole('heading',{name:'定制计划'}).isVisible());

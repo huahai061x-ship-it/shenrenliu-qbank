@@ -1,1 +1,99 @@
-<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="refresh" content="0;url=index.html"><title>打开神人刘题库训练站</title></head><body><p>正在打开题库……若未自动跳转，请<a href="index.html">点这里</a>。</p><script>location.replace('index.html')</script></body></html>
+<!doctype html><html lang="zh-CN" data-nav-style="glass"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="refresh" content="0;url=index.html"><title>打开神人刘题库训练站</title><style id="lulu-home-motion" media="not all">/* The water uses the colours of the home hero, including at night. */
+#luluHomeButton .lulu-scene {
+  --lulu-play:paused;
+  --water-light:rgba(255,255,255,.94);
+  --water-edge:rgba(65,136,168,.47);
+  --water-glow:rgba(85,175,202,.27);
+  position:relative;isolation:isolate;display:block;width:100%;aspect-ratio:1;pointer-events:none;
+}
+#luluHomeButton .lulu-scene[data-live] {--lulu-play:running}
+.home-content .compact-hero .hero-main.lulu-hero {
+  --lulu-water-haze:rgba(118,192,207,.2);
+  background-image:radial-gradient(ellipse 36% 21% at 79% 65%,var(--lulu-water-haze),transparent),var(--ice-hero);
+}
+[data-theme=dark] .home-content .compact-hero .hero-main.lulu-hero {--lulu-water-haze:rgba(94,161,173,.15)}
+[data-theme=dark] #luluHomeButton .lulu-scene {
+  --water-light:rgba(190,232,243,.67);
+  --water-edge:rgba(68,156,178,.54);
+  --water-glow:rgba(86,176,187,.19);
+}
+#luluHomeButton .lulu-scene>img,.lulu-figure {
+  position:absolute;inset:0;display:block;width:100%;height:100%;
+  -webkit-mask-image:linear-gradient(#000 0 89%,rgba(0,0,0,.86) 93%,rgba(0,0,0,.32) 96%,transparent 99%);
+  mask-image:linear-gradient(#000 0 89%,rgba(0,0,0,.86) 93%,rgba(0,0,0,.32) 96%,transparent 99%);
+}
+#luluHomeButton .lulu-scene>img {filter:none;transform:none;transition:none;z-index:1}
+.lulu-figure {z-index:1;display:none}
+.lulu-scene[data-layered] .lulu-figure {display:block}
+#luluHomeButton .lulu-scene[data-layered]>img {visibility:hidden}
+.lulu-water,.lulu-water-back,.lulu-wake {position:absolute;display:block;pointer-events:none}
+.lulu-water {left:-8%;right:-8%;bottom:-1.5%;height:19%;background:radial-gradient(ellipse at 50% 51%,var(--water-glow),transparent 68%)}
+.lulu-water-back {left:-2%;right:-2%;height:12%;bottom:1.7%;border-radius:50%;border:1px solid var(--water-edge);border-left-color:transparent;border-right-color:transparent;transform:rotate(-3deg);opacity:.65}
+.lulu-wake {z-index:2;left:8%;right:9%;height:6%;bottom:2.3%;border-radius:50%;border-bottom:1.6px solid var(--water-light);border-right:1px solid transparent;border-left:1px solid transparent;transform-origin:50% 50%}
+.lulu-wake::after {content:"";position:absolute;left:8%;right:4%;height:100%;top:24%;border-radius:50%;border-bottom:1px solid var(--water-edge);opacity:.5}
+.lulu-torso,.lulu-head,.lulu-sprout>span,.lulu-eyes>span {display:block;position:absolute;background-image:var(--lulu-texture);background-repeat:no-repeat}
+.lulu-torso {left:0;top:79.4922%;width:100%;height:20.5078%;background-size:153.125% 668.5714%;background-position:0 85.7621%;transform-origin:50% 100%}
+.lulu-look,.lulu-nod,.lulu-head {position:absolute;display:block;inset:0;transform-origin:49% 89%}
+.lulu-head {background-size:153.125% 137.109375%;background-position:0 0}
+.lulu-sprout {display:block;position:absolute;left:40.625%;top:0;width:28.125%;height:13.28125%;transform-origin:28% 84%}
+.lulu-sprout>span {inset:0;background-size:544.4444% 1032.3529%;background-position:0 98.4227%;transform-origin:28% 84%}
+.lulu-eyes {display:block;position:absolute;left:21.484375%;top:38.671875%;width:53.125%;height:15.234375%;overflow:hidden}
+.lulu-eyes>span {width:100%;height:900%;background-position:right top;background-size:288.2353% 100%}
+.lulu-mouth {position:absolute;display:block;overflow:hidden;left:41.2109375%;top:74.4140625%;width:14.0625%;height:7.8125%}
+/* One cropped strip, with a quiet row and a greeting row in the existing texture. */
+.lulu-mouth>span {position:absolute;display:block;width:500%;height:100%;background-image:var(--lulu-texture);background-repeat:no-repeat;background-size:217.777778% 1755%;background-position:35.3773585% 93.655589%}
+.lulu-look {transition:transform .32s ease-out}
+.lulu-nod {transition:transform .13s ease-out}
+.lulu-sprout {transition:transform .22s .045s ease-out}
+@media (hover:hover) and (prefers-reduced-motion:no-preference) {
+  #luluHomeButton:hover .lulu-look {transform:translateY(-.6%) rotate(-3.6deg)}
+  #luluHomeButton:hover .lulu-sprout {transform:rotate(8deg)}
+}
+@media (prefers-reduced-motion:no-preference) {
+  #luluHomeButton:active .lulu-nod,.lulu-scene[data-pressed] .lulu-nod {transform:translateY(2.2%) scale(1.014,.952) rotate(1.3deg)}
+  #luluHomeButton:active .lulu-sprout,.lulu-scene[data-pressed] .lulu-sprout {transform:rotate(15deg)}
+  .lulu-torso {animation:lulu-inhale 4.4s ease-in-out infinite}
+  .lulu-head {animation:lulu-look-around 8.8s ease-in-out infinite}
+  .lulu-sprout>span {animation:lulu-leaf-sway 4.4s -.46s ease-in-out infinite}
+  .lulu-eyes>span {animation:lulu-blink 8.8s linear infinite}
+  .lulu-mouth>span {animation:lulu-murmur 8.8s linear infinite;animation-play-state:var(--lulu-play)}
+  .lulu-speech:not(.lulu-quiet) + .lulu-button .lulu-scene:not([data-pressed]) .lulu-mouth>span {
+    background-position-y:99.697885%;
+    animation:lulu-greet 1.85s linear both;animation-play-state:var(--lulu-play);
+  }
+  .lulu-scene[data-pressed] .lulu-mouth>span {animation:none;transform:translateX(-80%)}
+  .lulu-scene[data-layered] .lulu-wake {animation:lulu-ripple 4.4s ease-in-out infinite}
+  .lulu-torso,.lulu-head,.lulu-sprout>span,.lulu-eyes>span,.lulu-scene[data-layered] .lulu-wake {animation-play-state:var(--lulu-play,paused)}
+}
+@keyframes lulu-murmur {
+  0%,28%,100%{transform:translateX(0);animation-timing-function:steps(3,end)}
+  32%,34%{transform:translateX(-60%);animation-timing-function:steps(3,end)}
+  39%,76%{transform:translateX(0)}
+  71%{transform:translateX(0);animation-timing-function:steps(1,end)}
+  73%{transform:translateX(-20%);animation-timing-function:steps(1,end)}
+}
+@keyframes lulu-greet {
+  0%,8%{transform:translateX(0);animation-timing-function:steps(4,end)}
+  21%,25%{transform:translateX(-80%);animation-timing-function:steps(4,end)}
+  38%,45%{transform:translateX(0);animation-timing-function:steps(3,end)}
+  56%,60%{transform:translateX(-60%);animation-timing-function:steps(2,end)}
+  70%{transform:translateX(-20%);animation-timing-function:steps(1,end)}
+  77%{transform:translateX(-40%);animation-timing-function:steps(2,end)}
+  91%,100%{transform:translateX(0)}
+}
+@keyframes lulu-inhale {0%,100%{transform:scale(1,1)}48%{transform:scale(1.025,1.048)}}
+@keyframes lulu-look-around {
+  0%,100%{transform:translate(0,0) rotate(0)}
+  22%{transform:translate(-.6%,-.75%) rotate(-2.3deg)}
+  45%{transform:translate(0,.45%) rotate(.5deg)}
+  70%{transform:translate(.55%,-.65%) rotate(1.6deg)}
+}
+@keyframes lulu-leaf-sway {0%,100%{transform:rotate(-4deg)}47%{transform:rotate(8deg)}75%{transform:rotate(1deg)}}
+@keyframes lulu-ripple {0%,100%{transform:scaleX(.9);opacity:.7}53%{transform:scaleX(1.055);opacity:1}}
+@keyframes lulu-blink {
+  0%,14%,61%,100%{transform:translateY(0);animation-timing-function:steps(8,end)}
+  15.6%,62.6%{transform:translateY(-88.888889%);animation-timing-function:linear}
+  16%,63%{transform:translateY(-88.888889%);animation-timing-function:steps(8,end)}
+  18.1%,65.1%{transform:translateY(0)}
+}
+</style></head><body><p>正在打开题库……若未自动跳转，请<a href="index.html">点这里</a>。</p><script>location.replace('index.html')</script></body></html>

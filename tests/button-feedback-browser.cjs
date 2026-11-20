@@ -31,7 +31,7 @@ const root = path.resolve('dist'), origin='https://interaction.test';
     await page.emulateMedia({reducedMotion:'reduce'});
     await plan.focus();await page.keyboard.down('Space');
     assert(await plan.evaluate(e=>e.hasAttribute('data-pressing')&&getComputedStyle(e).scale==='none'));
-    await page.keyboard.up('Space');await page.getByRole('heading',{name:'定制计划'}).waitFor();
+    await page.keyboard.up('Space');await page.getByRole('heading',{name:'新建学习计划'}).waitFor();
     await page.emulateMedia({reducedMotion:'no-preference'});
     await page.evaluate(()=>{navHome(true);renderRealExamSetup();beginRealExam()});
     let option=page.locator('.option').first();await option.tap();

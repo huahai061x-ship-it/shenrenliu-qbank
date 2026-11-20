@@ -58,14 +58,14 @@ async function contrast(locator) {
     for(const width of widths){
       await page.setViewportSize({width,height:900});
       await page.evaluate(()=>navHome(true));
-      const button=page.getByRole('button',{name:'我的计划直通车',exact:true});
+      const button=page.getByRole('button',{name:'定制我的计划',exact:true});
       const full=await button.evaluate(e=>{const p=e.parentElement,s=getComputedStyle(p);return Math.abs(e.offsetWidth-(p.clientWidth-parseFloat(s.paddingLeft)-parseFloat(s.paddingRight)))<3});
       assert(full,'plan button width '+width);
       assert.equal(await page.locator('#main').getByRole('heading',{name:/今日复习|考前冲刺/,includeHidden:true}).count(),0);
       await screenshot(page,'dark-home-'+width);
       await button.click();
-      assert(await page.getByRole('heading',{name:'定制计划'}).isVisible());
-      ratios.plan=await contrast(page.locator('.plan-batch-control select'));
+      assert(await page.getByRole('heading',{name:'新建学习计划'}).isVisible());
+      ratios.plan=await contrast(page.locator('.plan-content input:not([type=checkbox])').first());
       await page.evaluate(()=>renderWrongBook());
       ratios.wrongHeading=await contrast(page.locator('.setup-grid button.mode-card h3'));
       ratios.wrongCount=await contrast(page.locator('.setup-grid button.mode-card p'));
@@ -153,7 +153,7 @@ async function contrast(locator) {
     await page.evaluate(()=>jumpQ(24));
     assert(await page.locator('.question-card .guessed-answer').isDisabled());
     await page.evaluate(()=>{navHome(true);renderWrongBook()});
-    const guessed=page.locator('.setup-grid button').filter({hasText:'蒙对待巩固'});
+    const guessed=page.locator('.setup-grid button').filter({hasText:'蒙对的'});
     assert.match(await guessed.innerText(),/2题/);
     await page.evaluate(()=>openSettings());
     await page.locator('#themeSetting').selectOption('light');await page.evaluate(()=>saveSettings());

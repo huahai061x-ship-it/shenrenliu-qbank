@@ -89,6 +89,7 @@ jobs:
           node tests/cloud-sync-server.cjs
           node tests/bug-feedback-server.cjs
           node tests/cloud-sync-controller.cjs
+          node tests/cloud-sync-navigation.cjs
           node tests/cloud-fast-controller.cjs
           node tests/cloud-sync-transport.cjs
           node tests/cloud-login-fast.cjs
@@ -129,6 +130,8 @@ jobs:
           node tests/quick-practice-browser.cjs
           node tests/button-feedback-browser.cjs
           node tests/exam-history-browser.cjs
+          node tests/session-controls-browser.cjs
+          node tests/public-forming-modules.cjs
       - name: Save responsive screenshots
         if: always()
         uses: actions/upload-artifact@v6

@@ -1,4 +1,4 @@
-// Retain the newest thirty papers in each exam/category and bank scope, including quieter categories.
+// Retain the newest fifty papers in each exam/category and bank scope, including quieter categories.
 (function(root){
  const scope=ids=>[...new Set((Array.isArray(ids)?ids:[]).filter(x=>typeof x==='string'&&/^[a-z0-9_-]{1,48}$/.test(x)))].sort().join('|')||'hos_2026';
  function category(row={}){
@@ -12,7 +12,7 @@
   const counts=new Map();
   return sorted.filter((row,index)=>{
    const key=scope(row?.examScope||row?.bankIds)+'/'+category(row||{}),n=counts.get(key)||0;
-   counts.set(key,n+1);return index<50||n<30;
+   counts.set(key,n+1);return index<50||n<50;
   });
  }
  const api={scope,category,retain};

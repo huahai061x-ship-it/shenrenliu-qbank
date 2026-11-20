@@ -1,7 +1,14 @@
 (() => {
   'use strict';
   let loading;
-  const failure=(result,stage)=>{if(result?.error){const hints={invalid_argument:stage==='send'?'发送未完成，请核对邮箱地址后重试':'验证码不正确或已过期，请核对邮件后重试',invalid_credentials:'验证码不正确或已过期，请核对邮件后重试',too_many_requests:'请求较频繁，请稍后重试',rate_limit_exceeded:'请求较频繁，请稍后重试',unreachable:'网络暂不可用，本机记录仍保留'};throw Error(hints[result.error.code]||'云服务未完成操作，请检查配置或稍后重试');}return result?.data;};
+  function temporaryFailure(error){
+    const code=String(error?.code||error?.errCode||'');
+    const status=Number(error?.status||error?.statusCode||error?.response?.status);
+    if([400,401,403,404,409,429].includes(status)||/TOKEN|CREDENTIAL|PERMISSION|UNAUTHENTICATED|INVALID_ARGUMENT|RATE_LIMIT|TOO_MANY_REQUESTS/i.test(code))return false;
+    const message=String(error?.message||error?.errMsg||error||'');
+    return [499,502,503,504].includes(status)||/REQUEST_CANCELED|ECONN|ENETUNREACH|ETIMEDOUT|UNREACHABLE|network|failed to fetch|timeout|网络|超时|连接中断/i.test(code+' '+message);
+  }
+  const failure=(result,stage)=>{if(result?.error){const hints={invalid_argument:stage==='send'?'发送未完成，请核对邮箱地址后重试':'验证码不正确或已过期，请核对邮件后重试',invalid_credentials:'验证码不正确或已过期，请核对邮件后重试',too_many_requests:'请求较频繁，请稍后重试',rate_limit_exceeded:'请求较频繁，请稍后重试',unreachable:'网络暂不可用，本机记录仍保留'};const code=result.error.code||result.error.errCode;throw Object.assign(Error(hints[code]||(temporaryFailure(result.error)?'网络暂不可用，本机记录仍保留':'云服务未完成操作，请检查配置或稍后重试')),{code});}return result?.data;};
   window.createQbankCloudbase=async config=>{
     if(!config.enabled||!config.envId||! /^[a-zA-Z0-9_-]+$/.test(config.functionName))throw Error('云同步尚未配置');
     if(!window.cloudbase){const url=new URL(config.sdkURL,document.baseURI);if(url.origin!==location.origin)throw Error('登录组件必须由本站提供');loading ||= new Promise((resolve,reject)=>{const script=document.createElement('script');script.src=url.href;const timer=setTimeout(()=>reject(Error('登录组件下载超时，本机学习记录仍保留')),30000);script.onload=()=>{clearTimeout(timer);window.cloudbase?resolve():reject(Error('登录组件无效'));};script.onerror=()=>{clearTimeout(timer);loading=null;reject(Error('登录组件暂不可用，本机学习记录仍保留'));};document.head.append(script);});try{await loading;}catch(error){loading=null;throw error;}}
@@ -21,10 +28,9 @@
         const P=window.CLOUD_SYNC_PAYLOAD;
         // Retry transport interruptions only. Preserve the exact operation IDs so a lost
         // reply after a committed write cannot duplicate learning records.
-        const transient=e=>/REQUEST_CANCELED|ECONN|ETIMEDOUT|network|failed to fetch|timeout|网络|超时|连接中断/i.test(String(e?.code||'')+' '+String(e?.message||e))||[499,502,503,504].includes(Number(e?.status||e?.statusCode));
         const invoke=async payload=>{for(let attempt=0;;attempt++){try{
           if(options.expectedUid&&(await currentUser())?.uid!==options.expectedUid)throw Error('登录账号已变化或会话已过期。请退出后重新登录原邮箱；待同步记录保留在本机。');
-          return await timed(()=>app.callFunction({name:config.functionName,data:payload}));}catch(error){if(attempt>=2||!transient(error)||document.hidden===true||(typeof navigator!=='undefined'&&navigator.onLine===false))throw error;await new Promise(resolve=>setTimeout(resolve,[300,1000][attempt]));if(document.hidden===true||(typeof navigator!=='undefined'&&navigator.onLine===false))throw error;}}};
+          return await timed(()=>app.callFunction({name:config.functionName,data:payload}));}catch(error){if(attempt>=2||!temporaryFailure(error)||document.hidden===true||(typeof navigator!=='undefined'&&navigator.onLine===false))throw error;await new Promise(resolve=>setTimeout(resolve,[300,1000][attempt]));if(document.hidden===true||(typeof navigator!=='undefined'&&navigator.onLine===false))throw error;}}};
         const raw=async payload=>{const response=await invoke(payload),result=response?.result;if(!result?.ok||result.schemaVersion!==1)throw Error(result?.error||'云同步暂不可用');if(result.protocolVersion!==2)throw Error('云同步服务版本过旧，请联系维护者更新');return result;};
         const expand=async row=>{
           if(!P.manifest(row.value))return row;const ref=P.validateManifest(row.value);let value=payloadCache.get(ref.hash);
@@ -52,4 +58,5 @@
       }
     };
   };
+  window.createQbankCloudbase.temporaryFailure=temporaryFailure;
 })();

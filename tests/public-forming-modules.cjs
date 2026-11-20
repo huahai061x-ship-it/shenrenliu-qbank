@@ -21,8 +21,8 @@ async function main() {
   const browser = await chromium.launch({executablePath:process.env.CHROME_BIN || undefined});
   try {
     for (const [id, name, pending, width] of [
-      ['forming_forging_2026', '锻造知识', 33, 390],
-      ['forming_casting_2026', '铸造知识', 12, 1366]
+      ['forming_forging_2026', '锻造知识', 78, 390],
+      ['forming_casting_2026', '铸造知识', 123, 1366]
     ]) {
       const context = await browser.newContext({viewport:{width,height:900}, serviceWorkers:'block'});
       await context.addInitScript(()=>localStorage.setItem('shenrenliu_device_mode_v1','guest'));
@@ -48,7 +48,7 @@ async function main() {
       await page.goto(base);await ready();
       assert.deepEqual(await page.evaluate(()=>BANK_RUNTIME.scopeBankIds()),[id]);
       await page.getByRole('button',{name:'定制我的计划'}).click();
-      await page.getByRole('button',{name:'新建学习计划'}).click();
+      await page.getByRole('heading',{name:'新建学习计划'}).waitFor();
       assert.deepEqual(await page.locator('[data-plan-bank]:checked').evaluateAll(nodes=>nodes.map(n=>n.dataset.planBank)), [id]);
       assert.equal(await page.locator('#planSelectionCount').innerText(),'已选 460 题 · 含 '+pending+' 道待核验题');
       await page.getByRole('button',{name:'生成每日安排预览'}).click();
@@ -72,11 +72,11 @@ async function main() {
       await page.getByRole('button',{name:'开始模拟',exact:true}).click();
       const paper = await page.evaluate(()=>__V22_TEST__.getSession().items.map(item=>({bank:item.q.bankId,type:item.renderType,status:item.q.analysis.status})));
       assert(paper.every(item=>item.bank===id && ['ready','needs_source'].includes(item.status))); // Disputed keys now participate with a visible flag.
-      for (const [type,count] of [['single',30],['multiple',7],['judge',13]]) assert.equal(paper.filter(item=>item.type===type).length,count);
+      for (const [type,count] of [['single',30],['judge',10],['multiple',10]]) assert.equal(paper.filter(item=>item.type===type).length,count);
       assert.equal(paper.length,50);
       assert.deepEqual(errors,[]);
       await context.close();
-      console.log('PASS', name, '首页默认与切换、整库460题、待核验题进入实际计划、单库30/7/13考试');
+      console.log('PASS', name, '首页默认与切换、整库460题、待核验题进入实际计划、单库30单/10判/10多考试');
     }
   } finally { await browser.close(); }
 }

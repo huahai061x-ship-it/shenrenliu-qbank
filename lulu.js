@@ -11,8 +11,80 @@ function schedule(){nextTimer=setTimeout(()=>{nextTimer=null;if(!active())return
 function imageMarkup(width,height,alt=''){const art=window.LULU_ART;return `<img src="${art?.preview||'lulu-mascot.png'}" ${art?`data-lulu-src="${art.src}"`:''} width="${width}" height="${height}" alt="${alt}" draggable="false">`;}
 const pending=new Map(),ready=new Map();
 function loadImages(){for(const element of document.querySelectorAll?.('img[data-lulu-src]')||[]){const src=new URL(element.dataset.luluSrc,document.baseURI).href;if(ready.has(src)){element.src=src;continue;}if(!pending.has(src)){pending.set(src,new Promise(resolve=>{const picture=new Image();picture.onload=()=>{ready.set(src,true);resolve(true);};picture.onerror=()=>resolve(false);picture.src=src;}).finally(()=>pending.delete(src)));}pending.get(src).then(ok=>{if(ok&&element.isConnected)element.src=src;});}}
-function mount(){loadImages();stop();if(!active())return;show('点击我试试吧～');schedule();}
+function mount(){loadImages();stop();if(!active())return;window.LULU_PORTRAIT?.mount();show('点击我试试吧～');schedule();}
 window.addEventListener?.('online',loadImages);
 document.addEventListener('visibilitychange',()=>{if(document.hidden)stop();else mount();});
 window.LULU={mount,stop,nextLine,LINES,imageMarkup,loadImages};
+})();
+
+(() => {
+  'use strict';
+  if(typeof URL!=='function'||typeof matchMedia!=='function'||!document.baseURI)return;
+  const asset = new URL('media/lulu-188a3aa87a4b6676.webp',document.baseURI).href;
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+  const style=document.querySelector('#lulu-home-motion');
+  const originalStop=window.LULU.stop;
+  let stage, observer, visible=false, texture, loaded=false;
+
+  function update(){
+    if(!stage)return;
+    const live=visible && !document.hidden && !reduce.matches;
+    stage.toggleAttribute('data-live',live && loaded);
+    stage.toggleAttribute('data-layered',loaded && !reduce.matches);
+    if(!live || texture)return;
+    texture=new Image();
+    texture.onload=()=>{loaded=true;update()};
+    texture.onerror=()=>{texture=null};
+    texture.src=asset;
+  }
+  function stop(){
+    if(!stage)return;
+    observer?.disconnect();observer=null;
+    stage.removeAttribute('data-live');stage.removeAttribute('data-pressed');
+    stage=null;visible=false;
+    style.media='not all';
+    document.removeEventListener('visibilitychange',update);
+    window.LULU.stop=originalStop;
+  }
+  function leaveHome(){stop();originalStop()}
+  function mount(){
+    stop();
+    const button=document.querySelector('#luluHomeButton');
+    const picture=button?.querySelector('img');
+    if(!picture)return;
+    style.media='all';
+    window.LULU.stop=leaveHome;
+    document.addEventListener('visibilitychange',update);
+    stage=button.querySelector('.lulu-scene');
+    if(!stage){
+      stage=document.createElement('span');
+      stage.className='lulu-scene';
+      stage.setAttribute('aria-hidden','true');
+      stage.style.setProperty('--lulu-texture','url("'+asset+'")');
+      picture.before(stage);
+      stage.innerHTML='<span class="lulu-water"></span><span class="lulu-water-back"></span><span class="lulu-figure"><span class="lulu-torso"></span><span class="lulu-look"><span class="lulu-nod"><span class="lulu-head"><span class="lulu-sprout"><span></span></span><span class="lulu-eyes"><span></span></span><span class="lulu-mouth"><span></span></span></span></span></span></span><span class="lulu-wake"></span>';
+      stage.prepend(picture);
+      const scene=stage;
+      button.addEventListener('pointerdown',event=>{
+        if(event.isPrimary && event.button===0 && scene.hasAttribute('data-live'))scene.setAttribute('data-pressed','');
+      },{passive:true});
+      for(const event of ['pointerup','pointercancel','pointerleave','lostpointercapture','blur']){
+        button.addEventListener(event,()=>scene.removeAttribute('data-pressed'),{passive:true});
+      }
+    }
+    if('IntersectionObserver' in window){
+      const current=stage;
+      observer=new IntersectionObserver(entries=>{
+        if(current!==stage)return;
+        visible=entries[entries.length-1].isIntersecting;update();
+      });
+      observer.observe(stage);
+    }else{
+      // Keep the original illustration on browsers without viewport visibility tracking.
+      visible=false;
+    }
+    update();
+  }
+  reduce.addEventListener?.('change',update);
+  window.LULU_PORTRAIT={mount,stop};
 })();

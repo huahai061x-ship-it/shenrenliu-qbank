@@ -12,8 +12,17 @@
   const validKey=x=>typeof x==='string'&&/^[a-z][a-z0-9_-]{0,47}:[1-9][0-9]{0,5}$/.test(x);
   const STORE_FIELDS={schemaVersion:'local-format',favorites:'favorite',mastery:'mastery',wrong:'wrong',learning:'learning',seen:'seen',reviewFlags:'reviewFlags',reviewNotes:'reviewNotes',pendingPractice:'pendingPractice',difficultyProgress:'difficultyProgress',aggregateStats:'statistics',history:'exam',recentSessions:'activity',lastSession:'activity-derived',recentSessionsMigrated:'activity-derived',settings:'preferences-with-device-backup-exclusions',examRotation:'rotation+examRotation',openStudy:'openStudy',easterEggs:'easterEggs',learningPlans:'learningPlan'};
   const recordId=(key,field)=>key+'/'+field;
-  function stable(value){if(Array.isArray(value))return '['+value.map(stable).join(',')+']';if(plain(value))return '{'+Object.keys(value).sort().map(k=>JSON.stringify(k)+':'+stable(value[k])).join(',')+'}';return JSON.stringify(value);}
-  const same=(a,b)=>stable(a)===stable(b);
+  function same(a,b){
+    if(a===b)return true;
+    if(Array.isArray(a)){
+      if(!Array.isArray(b)||a.length!==b.length)return false;
+      for(let i=0;i<a.length;i++)if(!same(a[i],b[i]))return false;
+      return true;
+    }
+    if(!plain(a)||!plain(b))return false;
+    const keys=Object.keys(a);
+    return keys.length===Object.keys(b).length&&keys.every(k=>Object.prototype.hasOwnProperty.call(b,k)&&same(a[k],b[k]));
+  }
   function safeTree(value,depth=0){if(depth>40)throw Error('同步记录过深');if(value===null||typeof value==='string'||typeof value==='boolean')return;if(typeof value==='number'&&Number.isFinite(value))return;if(Array.isArray(value)){if(value.length>20000)throw Error('同步数组过长');value.forEach(v=>safeTree(v,depth+1));return;}if(plain(value)){for(const [k,v] of Object.entries(value)){if(['__proto__','prototype','constructor'].includes(k))throw Error('同步记录字段无效');safeTree(v,depth+1);}return;}throw Error('同步记录类型无效');}
   function validateValue(field,value){
     if(!FIELDS.includes(field))throw Error('不支持的同步字段');
@@ -70,11 +79,23 @@
     return out;
   }
   function emptyValue(item){const v=item.value;if(v===null||v===false)return true;if(['seen','reviewFlags'].includes(item.field))return v===0;if(item.field==='statistics')return !(v.totalAnswers||v.totalExams||v.totalStudyMs||v.highestScore);if(item.field==='examRotation')return !v.round&&!v.recent?.length;if(item.field==='openStudy')return !Object.keys(v).length;if(item.field==='easterEggs')return !v.discovered?.length&&!Object.values(v.triggerCounts||{}).some(Boolean);return false;}
-  function sameSnapshot(item,value){return item.hash?item.hash===P.fingerprint(value):same(item.value,value);}
-  function compactState(state){
-    const out=clone({...state,records:{},baseline:{},pending:{},conflicts:{}}),compact=(row,revision)=>({...{key:row.key,field:row.field},...(revision?{rev:row.rev}:{}),hash:row.hash||P.fingerprint(row.value)});
+  // The controller owns these immutable snapshots. Only verified equivalent values carry
+  // a memoized digest into the next capture. Mutable live application records are never keys.
+  function rowHash(row,cache){
+    const known=row.hash||cache?.get(row);
+    if(known)return known;
+    const hash=P.fingerprint(row.value);cache?.set(row,hash);return hash;
+  }
+  function compactState(state,cache){
+    const out=clone({...state,records:{},baseline:{},pending:{},conflicts:{}}),compact=(row,revision)=>({...{key:row.key,field:row.field},...(revision?{rev:row.rev}:{}),hash:rowHash(row,cache)});
     for(const [id,row] of Object.entries(state.records||{}))out.records[id]=compact(row,true);
-    for(const [id,row] of Object.entries(state.baseline||{}))out.baseline[id]=compact(row,false);
+    for(const [id,row] of Object.entries(state.baseline||{})){
+      // A never-synced, untouched default produces no operation, including after restart.
+      // Keep all known revisions, tombstones, pending uploads and prior hash-only states.
+      const unused=(row.field==='favorite'&&row.value===false)||(['mastery','wrong'].includes(row.field)&&row.value===null);
+      if(unused&&!state.records?.[id]&&!state.pending?.[id]&&!state.conflicts?.[id])continue;
+      out.baseline[id]=compact(row,false);
+    }
     for(const [id,op] of Object.entries(state.pending||{})){if(P.length(JSON.stringify(op))<8000)out.pending[id]=clone(op);else{const {value,...meta}=op;out.pending[id]={...meta,valueRef:P.fingerprint(value)};}}
     return out;
   }
@@ -85,9 +106,18 @@
     return out;
   }
   function bootstrap(local,remote,pending={}){const rows={},conflicts=[],upload=[],download=[];for(const row of remote){validateRecord(row);const id=recordId(row.key,row.field);if(rows[id])throw Error('云端重复记录');rows[id]=clone(row);}for(const [id,item] of Object.entries(local)){const old=rows[id];if(old){if(!same(item.value,old.value)){const empty=emptyValue(item);if(empty)download.push(old);else conflicts.push({id,local:clone(item),remote:old});}}else if(!emptyValue(item))upload.push({...clone(item),baseRev:0});}for(const [id,row] of Object.entries(rows))if(!local[id])download.push(row);for(const [id,op] of Object.entries(pending)){const item=local[id]||op,row=rows[id];if(row&&!same(item.value,row.value)){const old=conflicts.findIndex(x=>x.id===id);if(old>=0)conflicts.splice(old,1);for(let i=download.length-1;i>=0;i--)if(recordId(download[i].key,download[i].field)===id)download.splice(i,1);conflicts.push({id,local:clone(item),remote:row});}else if(!row&&!upload.some(x=>recordId(x.key,x.field)===id))upload.push({...clone(item),baseRev:0});}return {records:rows,conflicts,upload,download};}
-  function capture(snapshot,current,pending,records,idFactory){
+  function capture(snapshot,current,pending,records,idFactory,cache){
     const next={...pending};
-    for(const [id,item] of Object.entries(current)){if(snapshot[id]&&sameSnapshot(snapshot[id],item.value))continue;if(!snapshot[id]&&emptyValue(item))continue;validateValue(item.field,item.value);next[id]={...clone(item),baseRev:snapshot[id]?(records[id]?.rev||0):0,id:idFactory()};}
+    for(const [id,item] of Object.entries(current)){
+      const prior=snapshot[id];
+      if(prior&&(prior.hash?prior.hash===rowHash(item,cache):same(prior.value,item.value))){
+        const known=prior.hash||cache?.get(prior);
+        if(known)cache?.set(item,known);
+        continue;
+      }
+      if(!prior&&emptyValue(item))continue;
+      validateValue(item.field,item.value);next[id]={...clone(item),baseRev:prior?(records[id]?.rev||0):0,id:idFactory()};
+    }
     for(const [id,item] of Object.entries(snapshot)){if(current[id]||QUESTION_FIELDS.includes(item.field)&&!current[recordId(item.key,'favorite')])continue;if(!item.hash&&emptyValue(item))continue;next[id]={key:item.key,field:item.field,value:null,baseRev:records[id]?.rev||0,id:idFactory()};}
     return next;
   }

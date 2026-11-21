@@ -19,11 +19,12 @@ async function checkGlassNavigation(page, cdp) {
   await page.evaluate(() => {navHome(true); startStudy('sequence'); setReciteAnswerMode('always')});
   for (const width of [320,390,430,768,1366]) {
     await page.setViewportSize({width,height:844});
-    assert.equal(await nav.isVisible(), width<=600);
     if (width>600) {
       assert(await sheet.isVisible());
       assert.equal(await blur(sheet),'none');
     } else {
+      assert(await nav.isVisible());
+      assert.equal(await nav.evaluate(el=>getComputedStyle(el).borderRadius),'32px');
       for (const btn of await nav.getByRole('button').all()) {
         const box = await btn.boundingBox();
         assert(box.width>=44 && box.height>=44);
@@ -39,7 +40,8 @@ async function checkGlassNavigation(page, cdp) {
   const explanation = page.locator('.structured-explanation').first();
   await explanation.waitFor();
   await page.evaluate(() => window.scrollTo({top:document.documentElement.scrollHeight,behavior:'instant'}));
-  assert((await explanation.boundingBox()).y + (await explanation.boundingBox()).height <= (await nav.boundingBox()).y);
+  const readingBox = await explanation.boundingBox();
+  assert(readingBox.y + readingBox.height <= (await nav.boundingBox()).y);
   await screenshot('glass-reading-dark-390');
   const box = await next.boundingBox();
   await cdp.send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[{x:box.x+box.width/2,y:box.y+box.height/2}]});

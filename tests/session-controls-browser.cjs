@@ -19,7 +19,32 @@ async function run(browser,width,bank){
   await page.waitForFunction(()=>document.querySelector('#settingsModal').classList.contains('hidden'));
   await page.locator('#luluHomeButton').click();await main.getByRole('button',{name:'进入'}).first().click();await back();
   await page.getByRole('heading',{name:'噜噜的学习小屋'}).waitFor();await back();await page.locator('.plan-express').waitFor();
-  await page.evaluate(()=>renderPracticeSetup());await page.locator('#practiceCount').fill('17');await button('开始刷题').click();await page.locator('#practiceScopeDialog .primary').click();
+  const frame=()=>page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+  const modes=page.locator('.more-modes');
+  if(!await modes.evaluate(el=>el.open))await modes.locator('summary').click();
+  const sequence=main.locator('.mode-card').filter({has:page.getByRole('heading',{name:'顺序背题',exact:true})}).getByRole('button');
+  const random=main.locator('.mode-card').filter({has:page.getByRole('heading',{name:'乱序背题',exact:true})}).getByRole('button');
+  const position=el=>el.evaluate(b=>b.getBoundingClientRect().top);
+  await sequence.evaluate(b=>b.scrollIntoView({block:'center',behavior:'instant'}));await frame();
+  const from=await position(sequence);
+  await sequence.click();await button('返回').click();await sequence.waitFor();await frame();
+  assert(Math.abs(await position(sequence)-from)<=3,'返回按钮应恢复顺序背题入口');
+  await sequence.click();await back();await sequence.waitFor();await frame();
+  assert(Math.abs(await position(sequence)-from)<=3,'浏览器返回应恢复顺序背题入口');
+  for(const entry of [sequence,random]){
+   await entry.evaluate(b=>b.scrollIntoView({block:'center',behavior:'instant'}));await frame();
+   const before=await position(entry);await entry.click();
+   await page.locator('#practiceCount').fill('5');await button('开始背题').click();
+   await page.locator('#practiceScopeDialog .primary').click();
+   const prefs=page.locator('.question-preferences'),answerMode=prefs.locator('.recite-controls select');
+   await prefs.locator('summary').click();await answerMode.selectOption('manual');
+   await button('查看本题答案').click();assert(await page.locator('.structured-explanation').first().isVisible());
+   await button('隐藏本题答案').click();assert.equal(await page.locator('.structured-explanation').count(),0);
+   await answerMode.selectOption('always');assert(await page.locator('.structured-explanation').first().isVisible());
+   await answerMode.selectOption('manual');await button('暂停保存，回首页').click();await entry.waitFor();await frame();
+   assert(Math.abs(await position(entry)-before)<=3,'新增继续进度后仍应回到原入口');
+  }
+  await page.evaluate(()=>renderPracticeSetup());await page.locator('#practiceCount').fill('17');await button('开始背题').click();await page.locator('#practiceScopeDialog .primary').click();
   assert.equal(await page.evaluate(()=>BANK_RUNTIME.app.getSession().items.length),17);
   await page.evaluate(()=>navHome(true));
   await page.evaluate(()=>{for(const k of Object.keys(localStorage))if(k.startsWith('sr_draw_round_v1/'))localStorage.removeItem(k)});await page.reload();await page.waitForFunction(()=>!!window.BANK_RUNTIME?.app);

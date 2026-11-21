@@ -44,18 +44,12 @@ const browserPath = process.env.CHROME_BIN;
     await start(5);
     assert.deepEqual(await list(),[1,2,3,4,5]);
     await page.evaluate(()=>jumpQ(1));await wrong();
-    assert.deepEqual(await list(),[1,2,3,4,114]);
-    await page.evaluate(()=>setStudyScope('all'));
-    assert.deepEqual(await list(),[1,2,3,4,114]);
+    assert.deepEqual(await list(),[1,2,3,4,5]);
     await page.getByRole('button',{name:'暂停保存，回首页',exact:true}).click();
     await page.reload();await ready();
-    await page.locator('.recent-activities>summary').click();await page.getByRole('button',{name:'继续上次练习',exact:true}).first().click();
-    assert.deepEqual(await list(),[1,2,3,4,114]);
-    await page.evaluate(()=>jumpQ(4));
-    assert.match(await page.locator('.question-card').innerText(),/换个角度.*#2/);
-    const follow=await page.evaluate(()=>{const i=BANK_RUNTIME.app.getSession().items[4];return [i.renderType,i.q.type,i.q.answers,i.answer,i.q.stem]});
-    assert.deepEqual(follow.slice(0,4),['single','single',['综合力学性能'],null]);
-    assert.equal(await page.locator('.q-stem').innerText(),follow[4]);
+    await page.getByRole('button',{name:'继续上次练习',exact:true}).first().click();
+    assert.deepEqual(await list(),[1,2,3,4,5]);
+    assert.equal(await page.evaluate(()=>BANK_RUNTIME.app.getSession().items[1].checked),true);
 
     await start(5);
     await page.evaluate(()=>{jumpQ(1);const item=BANK_RUNTIME.app.getSession().items[1];chooseOption(item.optionOrder.indexOf(item.q.answers[0]));checkStudy()});
@@ -72,13 +66,13 @@ const browserPath = process.env.CHROME_BIN;
     await page.evaluate(()=>startStudy('sequence'));await page.evaluate(()=>jumpQ(1));await wrong();
     assert.equal((await list())[4],5);
 
-    // A full casting queue moves the existing partner and retains every original question.
+    // A wrong or hesitant answer must keep the original shuffle intact.
     await go('forming_casting_2026');await start();
     await page.evaluate(()=>{jumpQ(41);setConfidence('hesitant');const item=BANK_RUNTIME.app.getSession().items[41];chooseOption(item.optionOrder.indexOf(item.q.answers[0]));checkStudy()});
     const casting=await list();
-    assert.equal(casting[44],392);assert.equal(new Set(casting).size,460);
+    assert.equal(casting[44],45);assert.equal(new Set(casting).size,460);
     const judge=await page.evaluate(()=>BANK_RUNTIME.app.getSession().items[44].renderType);
-    assert.equal(judge,'judge');
+    assert.equal(judge,await page.evaluate(()=>QUESTION_BANK.find(q=>q.sourceQuestionId===45).type));
     await page.evaluate(()=>{renderRealExamSetup();beginRealExam()});
     const exam=await page.evaluate(()=>BANK_RUNTIME.app.getSession().items);
     assert.equal(exam.length,50);
@@ -127,6 +121,6 @@ const browserPath = process.env.CHROME_BIN;
     assert.equal(originalCulture.filter(i=>i.renderType==='fill'&&i.q.type!=='fill').length,10);
     console.log('PASS 导入纯选择题单库可开卷、专项不改编、单库及跨库保留原生填空、旧题型与已有授权试卷恢复');
     assert.deepEqual(errors,[]);
-    console.log('PASS 同考点原题间隔两题出现、恢复保序、保持题量与作答状态、过滤已掌握、考试原题型、已解决的温度冲突不再提示');
+    console.log('PASS 错答和犹豫保留已抽队列、恢复保序、保持题量与作答状态、过滤已掌握、考试原题型、已解决的温度冲突不再提示');
   }finally{await browser.close()}
 })().catch(error=>{console.error(error);process.exitCode=1});

@@ -10,6 +10,15 @@
   const date=n=>new Date(n*DAY).toISOString().slice(0,10);
   const today=(now=Date.now())=>date(Math.floor((now+8*3600000)/DAY));
   const add=(d,n)=>date(ordinal(d)+n);
+  // Early events keep their plan-day envelope for existing backup and cloud validators.
+  // Actual recall and spacing always use studiedAt. Ordinary events retain the original format.
+  const eventTime=e=>e.studiedAt??e.at;
+  const eventDay=e=>today(eventTime(e));
+  function remainingMs(p,day){
+    if(!p.dailyMinutes)return Infinity;
+    const spent=Object.values(p.studyTime?.[day]||{}).reduce((sum,ms)=>sum+ms,0);
+    return Math.max(0,p.dailyMinutes*60000-spent);
+  }
   function validate(p){
     if(!plain(p)||p.version!==1||!/^plan_[a-zA-Z0-9_-]{8,70}$/.test(p.id)||typeof p.title!=='string'||!p.title.trim()||p.title.length>80)throw Error('学习计划身份或名称无效');
     const days=ordinal(p.end)-ordinal(p.start)+1;if(days<1||days>366)throw Error('计划时间须为1至366天');
@@ -21,6 +30,16 @@
     if(!Number.isFinite(p.createdAt)||p.createdAt<0||!plain(p.events)||Object.keys(p.events).length>30000)throw Error('计划记录无效');
     const keys=new Set(p.keys);
     for(const [id,e] of Object.entries(p.events)){if(!/^[a-zA-Z0-9_-]{8,120}$/.test(id)||!plain(e)||!keys.has(e.key)||!['remembered','assisted','again'].includes(e.rating)||!Number.isFinite(e.at)||e.at<0||today(e.at)!==e.day||ordinal(e.day)<ordinal(p.start))throw Error('计划回忆记录无效');}
+    for(const e of Object.values(p.events)){
+      if(e.studiedAt!==undefined&&(!Number.isFinite(e.studiedAt)||e.studiedAt<0||e.at!==e.studiedAt+DAY||e.day>p.end))throw Error('提前学习日期无效');
+    }
+    if(p.studyTime!==undefined){
+      if(!plain(p.studyTime))throw Error('计划计时无效');
+      for(const [d,rounds] of Object.entries(p.studyTime)){
+        ordinal(d);
+        if(!plain(rounds)||Object.entries(rounds).some(([id,ms])=>!/^[a-zA-Z0-9_-]{1,120}$/.test(id)||!Number.isFinite(ms)||ms<0||ms>DAY))throw Error('计划计时无效');
+      }
+    }
     return p;
   }
   function create({id,title,keys,start,end,dailyNew,dailyMinutes,secondsPerTask,now=Date.now()}){const p={version:1,id,title:String(title||'我的学习计划').trim().slice(0,80),keys:[...new Set(keys)],start,end,createdAt:now,events:{}};if(dailyNew!==undefined)p.dailyNew=dailyNew;if(dailyMinutes!==undefined)Object.assign(p,{dailyMinutes,secondsPerTask});validate(p);return p;}
@@ -54,7 +73,7 @@
     return {key,order:i,due:date(first+offset),stage:0,repetitions:0,lastDay:'',firstDay:'',againToday:0,lastRating:'',introduced:false,retryAt:0};
   }
   function advance(p,s,e){
-    const next={...s,introduced:true,firstDay:s.firstDay||e.day,lastDay:e.day,lastRating:e.rating,repetitions:s.repetitions+1,retryAt:0};
+    const next={...s,introduced:true,firstDay:s.firstDay||e.day,firstSlot:s.firstSlot||e.slot||e.day,lastDay:e.day,lastRating:e.rating,repetitions:s.repetitions+1,retryAt:0};
     next.againToday=e.day===s.lastDay?s.againToday:0;
     if(e.rating==='again'){
       next.stage=0;next.againToday++;next.due=next.againToday===1?e.day:add(e.day,1);
@@ -74,8 +93,8 @@
     validate(p);const start=ordinal(p.start),slots=Math.max(1,Math.floor((ordinal(p.end)-start+1)*.6));
     ordinal(day);
     const out=Object.fromEntries(p.keys.map((k,i)=>[k,initial(p,k,i,start,slots)]));
-    for(const [,e] of Object.entries(p.events).filter(([,e])=>e.day<=day).sort((a,b)=>a[1].at-b[1].at||a[0].localeCompare(b[0]))){
-      out[e.key]=advance(p,out[e.key],e);
+    for(const [,e] of Object.entries(p.events).filter(([,e])=>eventDay(e)<=day).sort((a,b)=>eventTime(a[1])-eventTime(b[1])||a[0].localeCompare(b[0]))){
+      out[e.key]=advance(p,out[e.key],{...e,slot:e.day,day:eventDay(e),at:eventTime(e)});
     }
     return out;
   }
@@ -84,20 +103,17 @@
     const remaining=active.filter(s=>!s.introduced).length,days=Math.max(1,ordinal(p.end)-ordinal(day)+1);
     const started=all.filter(s=>s.firstDay===day).length,required=Math.ceil((remaining+started)/days);
     const original=p.dailyNew||suggestedNew(p.keys.length,p.start,p.end);
-    // Keep the chosen pace until new questions have actually carried over.
-    // Use the start-of-day backlog so completing it cannot lower today's allowance mid-round.
-    const carriedNew=Object.values(states(p,add(day,-1))).some(s=>!ignore.has(s.key)&&!s.introduced&&s.due<day);
-    const dailyNew=p.dailyMinutes||day>p.end||!carriedNew?original:Math.min(2000,Math.max(original,required));
+    const dailyNew=original;
     return {plan:{...p,dailyNew},remaining,days,required,dailyNew,overdue:active.filter(s=>s.due<day),excluded:all.length-active.length};
   }
   function dueItems(p,all,day,at,spent=0,excluded=[],adaptive=false){
     const excludedSet=new Set(excluded);
-    const startedToday=all.filter(s=>s.firstDay===day).length;
+    const startedToday=all.filter(s=>s.firstSlot===day).length;
     let left=p.dailyNew===undefined?Infinity:Math.max(0,p.dailyNew-startedToday);
     const eligible=all.filter(s=>!excludedSet.has(s.key)&&(s.due<=day||adaptive&&!p.dailyMinutes&&!s.introduced)&&(!s.retryAt||s.retryAt<=at));
     eligible.sort((a,b)=>Number(b.introduced)-Number(a.introduced)||Number(b.lastRating==='again')-Number(a.lastRating==='again')||a.due.localeCompare(b.due)||a.order-b.order);
     if(p.dailyMinutes){
-      const slots=Math.max(0,p.dailyNew-spent),fresh=eligible.filter(s=>!s.introduced);
+      const slots=Math.max(0,Math.min(p.dailyNew-spent,Math.ceil(remainingMs(p,day)/(1000*p.secondsPerTask)))),fresh=eligible.filter(s=>!s.introduced).slice(0,left);
       // Keep some room for first encounters even when older reviews have accumulated.
       const freshQuota=p.dailyNew===1?(ordinal(day)-ordinal(p.start)+1)%2:Math.max(1,Math.floor(p.dailyNew/4));
       const reserve=Math.min(slots,fresh.length,Math.max(0,freshQuota-startedToday));
@@ -107,12 +123,41 @@
     return eligible.filter(s=>{if(s.introduced)return true;if(left<=0)return false;left--;return true;});
   }
   function tasks(p,day=today(),at=Date.now(),excluded=[],adaptive=false){
-    if(day<p.start)return [];
+    if(day>p.end||remainingMs(p,day)<=0)return [];
+    if(day<p.start){
+      if(add(day,1)!==p.start)return [];
+      return dueItems(p,Object.values(states(p,day)),day,at,usedToday(p,day),excluded).filter(s=>s.introduced);
+    }
     return dueItems(adaptive?replan(p,day,excluded).plan:p,Object.values(states(p,day)),day,at,usedToday(p,day),excluded,adaptive);
   }
-  const usedToday=(p,day)=>p.dailyMinutes?Object.values(p.events).filter(e=>e.day===day).length:0;
-  function record(p,{id,key,rating,at=Date.now()}){validate(p);if(p.events[id])return clone(p);const day=today(at);if(day<p.start)throw Error('计划尚未开始');const out=clone(p);out.events[id]={key,rating,day,at};validate(out);return out;}
-  function merge(a,b){validate(a);validate(b);if(a.id!==b.id||JSON.stringify([a.keys,a.start,a.end,a.title,a.createdAt,a.dailyNew,a.dailyMinutes,a.secondsPerTask])!==JSON.stringify([b.keys,b.start,b.end,b.title,b.createdAt,b.dailyNew,b.dailyMinutes,b.secondsPerTask]))return null;const out=clone(a),rank={remembered:0,assisted:1,again:2};for(const [id,e] of Object.entries(b.events)){const old=out.events[id];if(!old)out.events[id]=clone(e);else if(JSON.stringify(old)!==JSON.stringify(e)){if(old.key!==e.key)return null;out.events[id]=clone(rank[e.rating]>rank[old.rating]||rank[e.rating]===rank[old.rating]&&e.at>old.at?e:old);}}validate(out);return out;}
+  const usedToday=(p,day)=>p.dailyMinutes?Object.values(p.events).filter(e=>eventDay(e)===day).length:0;
+  function advanceTasks(p,day=today(),at=Date.now(),excluded=[]){
+    const target=add(day,1);
+    if(target<p.start||target>p.end||remainingMs(p,day)<=0)return [];
+    if(tasks(p,day,at,excluded,true).length)return [];
+    const all=Object.values(states(p,day)),effective=replan(p,target,excluded).plan;
+    // Tomorrow's reviews still need an overnight interval. Only borrow new questions.
+    const tomorrow=dueItems(effective,all,target,Date.parse(target+'T23:59:59+08:00'),0,excluded,true);
+    const budget=p.dailyMinutes?Math.max(0,Math.min(p.dailyNew-usedToday(p,day),Math.ceil(remainingMs(p,day)/(1000*p.secondsPerTask)))):Infinity;
+    return tomorrow.filter(s=>!s.introduced).slice(0,budget);
+  }
+  function record(p,{id,key,rating,at=Date.now(),plannedFor}){
+    validate(p);if(p.events[id])return clone(p);
+    const day=today(at),early=plannedFor===add(day,1)&&plannedFor>=p.start&&plannedFor<=p.end;
+    if(day>p.end||day<p.start&&!early)throw Error('当前时间超出计划日期');
+    const out=clone(p);
+    out.events[id]=early?{key,rating,day:plannedFor,at:at+DAY,studiedAt:at}:{key,rating,day,at};
+    validate(out);return out;
+  }
+  function merge(a,b){validate(a);validate(b);if(a.id!==b.id||JSON.stringify([a.keys,a.start,a.end,a.title,a.createdAt,a.dailyNew,a.dailyMinutes,a.secondsPerTask])!==JSON.stringify([b.keys,b.start,b.end,b.title,b.createdAt,b.dailyNew,b.dailyMinutes,b.secondsPerTask]))return null;const out=clone(a),rank={remembered:0,assisted:1,again:2};for(const [id,e] of Object.entries(b.events)){const old=out.events[id];if(!old)out.events[id]=clone(e);else if(JSON.stringify(old)!==JSON.stringify(e)){if(old.key!==e.key)return null;out.events[id]=clone(rank[e.rating]>rank[old.rating]||rank[e.rating]===rank[old.rating]&&e.at>old.at?e:old);}}
+    if(b.studyTime){
+      out.studyTime||={};
+      for(const [day,rounds] of Object.entries(b.studyTime)){
+        const row=out.studyTime[day]||={};
+        for(const [id,ms] of Object.entries(rounds))row[id]=Math.max(row[id]||0,ms);
+      }
+    }
+    validate(out);return out;}
   function schedule(p,from=today(),projectCoverage=false,excluded=[],adaptive=false){
     const start=from<p.start?p.start:from,all=Object.values(states(p,start)),rows=[];
     if(adaptive)p=replan(p,start,excluded).plan;
@@ -135,5 +180,5 @@
   }
   const calendar=(p,from=today())=>schedule(p,from).rows;
   function sanitize(raw){const out={};if(!plain(raw))return out;for(const [id,p] of Object.entries(raw)){try{validate(p);if(id===p.id)out[id]=clone(p);}catch(_){/* Caller keeps the raw workspace backup. */}}return out;}
-  return {DAY,INTERVALS,questionKey,validKey,ordinal,date,today,add,suggestedNew,estimateTime,orderedKeys,validate,create,states,tasks,record,merge,calendar,schedule,sanitize,replan};
+  return {DAY,INTERVALS,questionKey,validKey,ordinal,date,today,add,eventDay,eventTime,remainingMs,advanceTasks,suggestedNew,estimateTime,orderedKeys,validate,create,states,tasks,record,merge,calendar,schedule,sanitize,replan};
 });

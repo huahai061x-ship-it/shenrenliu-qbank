@@ -1,6 +1,6 @@
 const fs=require('fs'),assert=require('assert/strict'),{boot}=require('./scripts/test-app-harness.cjs');
 const app=fs.readFileSync('app.js','utf8'),html=fs.readFileSync('index.html','utf8');
-let x=boot();assert(!x.main.innerHTML.includes('符号英文专项'));for(const title of ['专项背诵','专项模拟','真实模拟'])assert(x.main.innerHTML.includes(title));
+let x=boot();assert(!x.main.innerHTML.includes('符号英文专项'));for(const title of ['专项背题','专项测试','真实模拟'])assert(x.main.innerHTML.includes(title));
 assert(!app.includes('startTechnicalStudy'));assert(!app.includes('technicalQuestions'));
 const counts={};
 for(const type of ['single','multiple','judge','fill']){

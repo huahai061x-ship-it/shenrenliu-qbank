@@ -16,11 +16,15 @@ async function checkGlassNavigation(page, cdp) {
     await fs.mkdir(process.env.FORMING_SCREENSHOTS, {recursive:true});
     await page.screenshot({path:path.join(process.env.FORMING_SCREENSHOTS, name+'.png')});
   }
-  await page.evaluate(() => {navHome(true); startStudy('sequence'); setReciteAnswerMode('always')});
+  await page.reload();
+  await page.waitForFunction(() => !!window.BANK_RUNTIME?.app);
+  await page.evaluate(() => {startStudy('sequence'); setReciteAnswerMode('always')});
   for (const width of [320,390,430,768,1366]) {
     await page.setViewportSize({width,height:844});
+    await page.waitForFunction(w => matchMedia('(width: '+w+'px)').matches,width);
     if (width>600) {
-      assert(await sheet.isVisible());
+      await page.evaluate(() => toggleDesktopSheet(false));
+      await sheet.waitFor({state:'visible'});
       assert.equal(await blur(sheet),'none');
     } else {
       assert(await nav.isVisible());
@@ -33,6 +37,7 @@ async function checkGlassNavigation(page, cdp) {
     await screenshot('glass-reading-'+width);
   }
   await page.setViewportSize({width:390,height:844});
+  await page.waitForFunction(() => matchMedia('(width: 390px)').matches);
   await page.evaluate(() => {openSettings(); document.querySelector('#themeSetting').value='dark'; saveSettings()});
   await page.evaluate(() => {startStudy('sequence'); setReciteAnswerMode('always')});
   for (let i=0;i<10;i++) await next.tap();

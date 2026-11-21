@@ -4,6 +4,70 @@ const fs = require('node:fs/promises');
 const {chromium} = require(process.env.PLAYWRIGHT_PATH || 'playwright');
 const root = path.resolve('dist'), origin='https://interaction.test';
 
+async function checkGlassNavigation(page, cdp) {
+  const nav = page.locator('.quick-nav');
+  const next = nav.locator('.primary');
+  const counter = nav.locator('.index-btn');
+  const sheet = page.locator('#answerPanel');
+  const header = page.locator('#settingsModal .modal-head');
+  const blur = el => el.evaluate(node => getComputedStyle(node).backdropFilter);
+  async function screenshot(name) {
+    if (!process.env.FORMING_SCREENSHOTS) return;
+    await fs.mkdir(process.env.FORMING_SCREENSHOTS, {recursive:true});
+    await page.screenshot({path:path.join(process.env.FORMING_SCREENSHOTS, name+'.png')});
+  }
+  await page.reload();
+  await page.waitForFunction(() => !!window.BANK_RUNTIME?.app);
+  await page.evaluate(() => {startStudy('sequence'); setReciteAnswerMode('always')});
+  for (const width of [320,390,430,768,1366]) {
+    await page.setViewportSize({width,height:844});
+    await page.waitForFunction(w => matchMedia('(width: '+w+'px)').matches,width);
+    if (width>600) {
+      await page.evaluate(() => toggleDesktopSheet(false));
+      await sheet.waitFor({state:'visible'});
+      assert.equal(await blur(sheet),'none');
+    } else {
+      assert(await nav.isVisible());
+      assert.equal(await nav.evaluate(el=>getComputedStyle(el).borderRadius),'32px');
+      for (const btn of await nav.getByRole('button').all()) {
+        const box = await btn.boundingBox();
+        assert(box.width>=44 && box.height>=44);
+      }
+    }
+    await screenshot('glass-reading-'+width);
+  }
+  await page.setViewportSize({width:390,height:844});
+  await page.waitForFunction(() => matchMedia('(width: 390px)').matches);
+  await page.evaluate(() => {openSettings(); document.querySelector('#themeSetting').value='dark'; saveSettings()});
+  await page.evaluate(() => {startStudy('sequence'); setReciteAnswerMode('always')});
+  for (let i=0;i<10;i++) await next.tap();
+  assert.match(await counter.innerText(),/\b11\s*\//);
+  const explanation = page.locator('.structured-explanation').first();
+  await explanation.waitFor();
+  await page.evaluate(() => window.scrollTo({top:document.documentElement.scrollHeight,behavior:'instant'}));
+  const readingBox = await explanation.boundingBox();
+  assert(readingBox.y + readingBox.height <= (await nav.boundingBox()).y);
+  await screenshot('glass-reading-dark-390');
+  const box = await next.boundingBox();
+  await cdp.send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[{x:box.x+box.width/2,y:box.y+box.height/2}]});
+  await page.waitForFunction(() => getComputedStyle(document.querySelector('.quick-nav .primary')).scale==='0.98');
+  assert.equal(await next.evaluate(el => getComputedStyle(el).transform),'none');
+  await cdp.send('Input.dispatchTouchEvent',{type:'touchCancel',touchPoints:[]});
+  await counter.tap();
+  await sheet.waitFor();
+  assert.match(await blur(sheet),/blur/);
+  await screenshot('glass-sheet-dark-390');
+  await cdp.send('Emulation.setEmulatedMedia',{features:[{name:'prefers-reduced-transparency',value:'reduce'}]});
+  assert.equal(await blur(sheet),'none');
+  assert.equal(await blur(nav),'none');
+  await sheet.locator('.answer-panel-close').tap();
+  await page.evaluate(() => openSettings());
+  assert.equal(await blur(header),'none');
+  await cdp.send('Emulation.setEmulatedMedia',{features:[]});
+  assert.match(await blur(header),/blur/);
+  await screenshot('glass-settings-dark-390');
+}
+
 (async()=>{
   const browser=await chromium.launch({executablePath:process.env.CHROME_BIN});
   try {
@@ -80,6 +144,8 @@ const root = path.resolve('dist'), origin='https://interaction.test';
     const record=await page.evaluate(()=>{const s=BANK_RUNTIME.app.getStore();return [s.history.length,s.lastSession]});
     assert.deepEqual(record,[1,null]);assert.deepEqual(errors,[]);
     if(process.env.FORMING_SCREENSHOTS)await fs.writeFile(path.join(process.env.FORMING_SCREENSHOTS,'exam-tap-timings.json'),JSON.stringify(result.times));
+    await checkGlassNavigation(page,cdp);
+    assert.deepEqual(errors,[]);
     console.log('PASS 真触摸按下、滑动取消、键盘与减少动效。考试多选四次点选同步整卷写入 0 次，合并后 1 次。立即刷新、切后台和重复交卷通过。单次点击处理耗时（Chrome，毫秒）',result.times);
   } finally {await browser.close();}
 })().catch(e=>{console.error(e);process.exitCode=1});

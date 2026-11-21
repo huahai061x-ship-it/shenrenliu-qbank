@@ -269,6 +269,12 @@ function installPressFeedback(){
 function armBackGuard(){try{history.pushState({srGuard:true},'',location.href)}catch(e){}}
 const pageTrail=[];
 let homePosition=null, homeTrigger=null, renderedHome=false;
+// Measure the layout box so hover/press animations cannot accumulate scroll drift.
+function homeLayoutTop(element){
+ let top=0;
+ for(let box=element;box;box=box.offsetParent)top+=box.offsetTop||0;
+ return top;
+}
 function rememberHomePosition(){
  const recent=document.querySelector('.recent-activities');
  const pos={y:window.scrollY||0,recentOpen:recent?.open};
@@ -276,7 +282,7 @@ function rememberHomePosition(){
   const rect=homeTrigger.getBoundingClientRect();
   if(rect.bottom>0&&rect.top<window.innerHeight){
    pos.action=homeTrigger.getAttribute('onclick');
-   pos.offset=rect.top;
+   pos.offset=homeLayoutTop(homeTrigger)-pos.y;
   }
  }
  homePosition=pos;homeTrigger=null;
@@ -285,7 +291,7 @@ function restoreHomePosition(){
  if(!homePosition)return;
  const {action,offset,y}=homePosition;
  const anchor=action&&Array.from(document.querySelectorAll('.home-content [onclick]')).find(el=>el.getAttribute('onclick')===action&&el.getClientRects().length);
- window.scrollTo({top:anchor?window.scrollY+anchor.getBoundingClientRect().top-offset:y,behavior:'instant'});
+ window.scrollTo({top:anchor?homeLayoutTop(anchor)-offset:y,behavior:'instant'});
 }
 function rememberPage(key,restore){
  if(key==='home'){pageTrail.length=0;pageTrail.push({key,restore});return}
@@ -547,7 +553,7 @@ function app(html,scrollMode='top'){
  renderedHome=home;
  html=decoratePracticeEntries(html);if(backGuardReady&&view!=='home')syncBackGuard();if(view!=='question')document.body.classList.remove('sheet-open');const header=$('.topbar');if(header)header.hidden=view!=='home';window.LULU?.stop();let y=window.scrollY,ticket=++renderScrollTicket;$('#main').innerHTML=html;
  if(home&&homePosition?.recentOpen===false){const recent=document.querySelector('.recent-activities');if(recent)recent.open=false;}
- window.LULU?.loadImages();window.BEIJING_CLOCK?.render();window.ROUTINE_EGGS?.onView({home:view==='home',muted:!!S.settings.eggMuted});window.CLOUD_SYNC?.onView(view==='home');updateWatermark();updatePwaNotice();requestAnimationFrame(()=>{if(ticket!==renderScrollTicket)return;if(home&&homePosition){restoreHomePosition();return}if(scrollMode==='preserve')window.scrollTo({top:y,behavior:'instant'});else if(scrollMode==='question'){let q=window.matchMedia('(min-width:1001px)').matches?$('.question-session-header'):$('.question-focus')||$('.q-stem')||$('.section-title')||$('.question-card');if(q){let height=pageHeaderHeight();if(q.style)q.style.scrollMarginTop=(height+10)+'px';q.scrollIntoView({block:'start',behavior:'instant'})}else window.scrollTo({top:0,behavior:'instant'})}else window.scrollTo({top:0,behavior:'instant'})})}
+ window.LULU?.loadImages();window.BEIJING_CLOCK?.render();window.ROUTINE_EGGS?.onView({home:view==='home',muted:!!S.settings.eggMuted});window.CLOUD_SYNC?.onView(view==='home');updateWatermark();updatePwaNotice();requestAnimationFrame(()=>{if(ticket!==renderScrollTicket)return;if(home&&homePosition){restoreHomePosition();const restoredY=window.scrollY;requestAnimationFrame(()=>{if(ticket===renderScrollTicket&&view==='home'&&window.scrollY===restoredY)restoreHomePosition()});return}if(scrollMode==='preserve')window.scrollTo({top:y,behavior:'instant'});else if(scrollMode==='question'){let q=window.matchMedia('(min-width:1001px)').matches?$('.question-session-header'):$('.question-focus')||$('.q-stem')||$('.section-title')||$('.question-card');if(q){let height=pageHeaderHeight();if(q.style)q.style.scrollMarginTop=(height+10)+'px';q.scrollIntoView({block:'start',behavior:'instant'})}else window.scrollTo({top:0,behavior:'instant'})}else window.scrollTo({top:0,behavior:'instant'})})}
 function navHome(force=false){if(view==='gradedPaper')saveReadingPlace();gradedReturn=null;if(session&&session.kind!=='exam')persistPractice();closeEasterEgg();if(!force&&isActiveExam()&&!confirm('确定放弃当前考试吗？本卷进度将被清除。'))return;if(isTimedSession())pauseExamTimer();if(isActiveExam()){cancelQueuedExamSave();forgetExamChoice(session.paperId);forgetActivity(session.paperId);S.lastSession=null;saveStore()}stopTimerTicker();document.body.classList.remove('sheet-open');view='home';session=null;current=0;renderHome()}
 
 function shortcutCards(){return normalizeShortcuts(S.settings.homeShortcuts).map(id=>{let x=SHORTCUT_MAP[id];return modeCard(x.icon,x.title,x.desc,x.action,'core')}).join('')}

@@ -24,13 +24,15 @@ async function run(browser,width,bank){
   if(!await modes.evaluate(el=>el.open))await modes.locator('summary').click();
   const sequence=main.locator('.mode-card').filter({has:page.getByRole('heading',{name:'顺序背题',exact:true})}).getByRole('button');
   const random=main.locator('.mode-card').filter({has:page.getByRole('heading',{name:'乱序背题',exact:true})}).getByRole('button');
-  const position=el=>el.evaluate(b=>b.getBoundingClientRect().top);
+  const position=el=>el.evaluate(b=>{let top=0;for(let n=b;n;n=n.offsetParent)top+=n.offsetTop;return top-window.scrollY});
+  async function expectReturn(entry,expected,label){
+   await entry.waitFor();await frame();const actual=await position(entry);
+   assert(Math.abs(actual-expected)<=3,label+' at '+width+'px: before='+expected+', after='+actual);
+  }
   await sequence.evaluate(b=>b.scrollIntoView({block:'center',behavior:'instant'}));await frame();
   const from=await position(sequence);
-  await sequence.click();await button('返回').click();await sequence.waitFor();await frame();
-  assert(Math.abs(await position(sequence)-from)<=3,'返回按钮应恢复顺序背题入口');
-  await sequence.click();await back();await sequence.waitFor();await frame();
-  assert(Math.abs(await position(sequence)-from)<=3,'浏览器返回应恢复顺序背题入口');
+  await sequence.click();await button('返回').click();await expectReturn(sequence,from,'返回按钮应恢复顺序背题入口');
+  const beforeBack=await position(sequence);await sequence.click();await back();await expectReturn(sequence,beforeBack,'浏览器返回应恢复顺序背题入口');
   for(const entry of [sequence,random]){
    await entry.evaluate(b=>b.scrollIntoView({block:'center',behavior:'instant'}));await frame();
    const before=await position(entry);await entry.click();
@@ -41,8 +43,7 @@ async function run(browser,width,bank){
    await button('查看本题答案').click();assert(await page.locator('.structured-explanation').first().isVisible());
    await button('隐藏本题答案').click();assert.equal(await page.locator('.structured-explanation').count(),0);
    await answerMode.selectOption('always');assert(await page.locator('.structured-explanation').first().isVisible());
-   await answerMode.selectOption('manual');await button('暂停保存，回首页').click();await entry.waitFor();await frame();
-   assert(Math.abs(await position(entry)-before)<=3,'新增继续进度后仍应回到原入口');
+   await answerMode.selectOption('manual');await button('暂停保存，回首页').click();await expectReturn(entry,before,'新增继续进度后仍应回到原入口');
   }
   await page.evaluate(()=>renderPracticeSetup());await page.locator('#practiceCount').fill('17');await button('开始背题').click();await page.locator('#practiceScopeDialog .primary').click();
   assert.equal(await page.evaluate(()=>BANK_RUNTIME.app.getSession().items.length),17);

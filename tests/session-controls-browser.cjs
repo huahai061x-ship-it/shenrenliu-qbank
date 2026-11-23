@@ -25,9 +25,24 @@ async function run(browser,width,bank){
   const sequence=main.locator('.mode-card').filter({has:page.getByRole('heading',{name:'顺序背题',exact:true})}).getByRole('button');
   const random=main.locator('.mode-card').filter({has:page.getByRole('heading',{name:'乱序背题',exact:true})}).getByRole('button');
   const position=el=>el.evaluate(b=>{let top=0;for(let n=b;n;n=n.offsetParent)top+=n.offsetTop;return top-window.scrollY});
+  // Playwright can scroll again while bringing the button into its final click position.
+  async function enterAndMeasure(entry){
+   const clicked=entry.evaluate(b=>new Promise(resolve=>{
+    b.addEventListener('click',()=>{
+     let top=0;for(let n=b;n;n=n.offsetParent)top+=n.offsetTop;
+     resolve(top-window.scrollY);
+    },{capture:true,once:true});
+   }));
+   const [offset]=await Promise.all([clicked,entry.click()]);
+   return offset;
+  }
   async function expectReturn(entry,expected,label){
    await entry.waitFor();await frame();const actual=await position(entry);
-   assert(Math.abs(actual-expected)<=3,label+' at '+width+'px: before='+expected+', after='+actual);
+   if(Math.abs(actual-expected)>3){
+    const details=await entry.evaluate(b=>({scroll:scrollY,limit:document.documentElement.scrollHeight-innerHeight,
+      action:b.getAttribute('onclick'),remembered:homePosition,fonts:document.fonts.status}));
+    assert.fail(label+' at '+width+'px: before='+expected+', after='+actual+' '+JSON.stringify(details));
+   }
   }
   await sequence.evaluate(b=>b.scrollIntoView({block:'center',behavior:'instant'}));await frame();
   const from=await position(sequence);
@@ -35,7 +50,7 @@ async function run(browser,width,bank){
   const beforeBack=await position(sequence);await sequence.click();await back();await expectReturn(sequence,beforeBack,'浏览器返回应恢复顺序背题入口');
   for(const entry of [sequence,random]){
    await entry.evaluate(b=>b.scrollIntoView({block:'center',behavior:'instant'}));await frame();
-   const before=await position(entry);await entry.click();
+   const before=await enterAndMeasure(entry);
    await page.locator('#practiceCount').fill('5');await button('开始背题').click();
    await page.locator('#practiceScopeDialog .primary').click();
    const prefs=page.locator('.question-preferences'),answerMode=prefs.locator('.recite-controls select');

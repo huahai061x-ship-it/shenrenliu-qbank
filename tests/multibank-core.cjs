@@ -12,3 +12,30 @@ let packed=C.pack({history:[{presentationSnapshots:[{questionId:4,stem:'保留�
 let broken=new C.Storage({getItem:()=>'{坏json',setItem:()=>{throw Error('不应写入')}},both);assert.throws(()=>broken.read());let quota=new C.Storage(storage,both);quota.read();quota.storage={getItem:storage.getItem,setItem:()=>{throw Error('quota')}};const before=raw[C.KEY];assert.throws(()=>quota.persist(restored));assert.equal(raw[C.KEY],before);
 assert.throws(()=>C.compile([hos,other,other],[C.HOS]));assert.throws(()=>C.validate({...other,questions:[{...other.questions[0],answers:['无效答案']}]}));assert.throws(()=>C.validate({...other,questions:[...other.questions,...other.questions]}));assert.throws(()=>C.validate({...other,meta:{...other.meta,sourceBase:'../逃逸'}}));
 console.log('PASS 旧版压缩快照迁移、原数据保留、同号隔离、分范围未交卷、暂缺题库记录保留、压缩往返、存储失败、无效数据拦截');
+
+// Some older records contain the learning store directly under the workspace key.
+const full={format:'shenrenliu-workspace',version:1,data:C.pack({schemaVersion:2,settings:{theme:'dark'},favorites:[foreign]}),scopeSessions:{sample:{ids:[foreign]}}};
+const sample=C.compile([hos,other],['sample']);
+x.c.TextEncoder=TextEncoder;
+vm.runInContext(fs.readFileSync('backup-core.js','utf8'),x.c);
+const transfer=x.w.BACKUP_CORE.encode({...full,includedBankIds:['sample']});
+const flat=JSON.stringify({...full.data,lastSession:full.scopeSessions.sample});
+const backupKey=C.KEY+'_before_format_migration';
+for(const original of [flat,JSON.stringify(JSON.stringify(full)),JSON.stringify({...full,version:'1'}),JSON.stringify({data:full.data,scopeSessions:full.scopeSessions}),transfer,'\ufeff'+JSON.stringify(full)]){
+ const db=new Map([[C.KEY,original]]);
+ const io={getItem:k=>db.get(k)??null,setItem:(k,v)=>db.set(k,v)};
+ const adapter=new C.Storage(io,sample),view=adapter.read();
+ assert.equal(view.settings.theme,'dark');assert(view.favorites.includes(foreign));assert.equal(view.lastSession.ids[0],foreign);
+ assert.equal(db.get(backupKey),original);assert.equal(JSON.parse(db.get(C.KEY)).version,1);
+ view.settings.theme='light';adapter.persist(view);
+ assert.equal(new C.Storage(io,sample).read().settings.theme,'light');assert.equal(db.size,2);
+}
+for(const original of [JSON.stringify({...full,version:2}),'{"format":"other","settings":{},"schemaVersion":2}','{}','null',transfer.replace('dark','xxxx')]){
+ const io={getItem:k=>k===C.KEY?original:null,setItem:()=>assert.fail('unexpected write')};
+ assert.throws(()=>new C.Storage(io,sample).read());
+}
+const blockedDb=new Map([[C.KEY,flat],[backupKey,'older original']]);
+const quotaIO={getItem:k=>blockedDb.get(k)??null,setItem:()=>{throw Error('quota')}};
+assert.throws(()=>new C.Storage(quotaIO,sample).read(),/quota/);
+assert.equal(blockedDb.get(C.KEY),flat);assert.equal(blockedDb.get(backupKey),'older original');
+console.log('PASS 工作区兼容迁移、原文保留、续考及再次保存、重复打开、未来版本与校验失败保护');

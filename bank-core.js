@@ -65,9 +65,70 @@ function reconcile(base,local,disk,path=[]){
  if(field.startsWith('data.seen.')&&Number.isFinite(local)&&Number.isFinite(disk))return Math.max(local,disk);
  throw conflict();
 }
+function workspaceEnvelope(data,scope=HOS){
+ return {format:'shenrenliu-workspace',version:1,data,scopeSessions:{[scope]:data.lastSession||null},deferredHistory:[]};
+}
+function readWorkspace(raw,ctx){
+ const text=raw.replace(/^\uFEFF/,'');
+ let e=JSON.parse(text);
+ const quoted=typeof e==='string';
+ if(quoted)e=JSON.parse(e);
+ const backup=e?.format==='shenrenliu-backup';
+ if(backup)e=window.BACKUP_CORE.decode(quoted?JSON.parse(text):text).payload;
+ if(!object(e))throw Error('工作区格式不兼容：记录根节点不是对象，已保留原件');
+ const isWorkspace=e.format==='shenrenliu-workspace';
+ const unmarked=e.format===undefined && object(e.data) && object(e.scopeSessions);
+ if(isWorkspace||unmarked){
+   if(e.version!==1 && e.version!=='1' && !(unmarked&&e.version===undefined))
+     throw Error('工作区格式不兼容：工作区版本'+(Number.isSafeInteger(e.version)?' '+e.version:'标记无法识别')+'，已保留原件');
+   if(!object(e.data)||e.data.schemaVersion>2)throw Error('工作区学习数据版本或结构不兼容，已保留原件');
+   return {envelope:{...e,format:'shenrenliu-workspace',version:1},migrate:raw!==text||quoted||backup||!isWorkspace||e.version!==1};
+ }
+ if(e.format===undefined && e.version===undefined && object(e.settings) &&
+    (e.schemaVersion===1||e.schemaVersion===2||e.schemaVersion===undefined) &&
+    (e.schemaVersion!==undefined||Array.isArray(e.history)||Array.isArray(e.favorites)||object(e.mastery))){
+   const data=unpack(e);
+   const ids=data.lastSession?.ids||[];
+   if(!Array.isArray(ids))throw Error('旧工作区未交卷的题号格式异常，已保留原件');
+   const banks=ctx.bankIdsFor(ids);
+   if(ids.some(n=>!ctx.byId.has(n)))throw Error('旧工作区的未交卷含有未载入的题库，已保留原件');
+   return {envelope:workspaceEnvelope(data,banks.sort().join('|')||HOS),migrate:true};
+ }
+ const fields=['data','settings','history','favorites','scopeSessions','schemaVersion','format','version'].filter(k=>Object.prototype.hasOwnProperty.call(e,k));
+ throw Error('工作区格式不兼容：'+(fields.length?'识别到字段 '+fields.join('、'):'无已知记录字段')+'，已保留原件');
+}
 class Storage{
 constructor(storage,ctx){this.storage=storage;this.ctx=ctx;this.blocked=false;this.envelope=null}
-read(){let raw=this.storage.getItem(KEY);this.raw=raw;if(raw){let e=JSON.parse(raw);if(e.format!=='shenrenliu-workspace'||e.version!==1)throw Error('工作区格式不兼容');this.envelope=e}else{let legacy=this.storage.getItem(LEGACY);let data=legacy?unpack(JSON.parse(legacy)):{};if(data.schemaVersion>2)throw Error('旧数据来自更新版本，暂不迁移');this.envelope={format:'shenrenliu-workspace',version:1,data,scopeSessions:{[HOS]:data.lastSession||null},deferredHistory:[]};if(legacy&&!this.storage.getItem(KEY+'_legacy_backup'))this.storage.setItem(KEY+'_legacy_backup',legacy)}return this.project(this.envelope)}
+read(){
+ const raw=this.storage.getItem(KEY);
+ if(raw===null){
+   const legacy=this.storage.getItem(LEGACY);
+   const data=legacy?unpack(JSON.parse(legacy)):{};
+   if(data.schemaVersion>2)throw Error('旧数据来自更新版本，暂不迁移');
+   if(legacy&&!this.storage.getItem(KEY+'_legacy_backup'))this.storage.setItem(KEY+'_legacy_backup',legacy);
+   this.raw=raw;
+   this.envelope=workspaceEnvelope(data);
+   return this.project(this.envelope);
+ }
+ const {envelope,migrate}=readWorkspace(raw,this.ctx);
+ const projection=this.project(envelope);
+ this.raw=raw;
+ if(migrate)this.withWriter(checkOwner=>{
+   if(this.storage.getItem(KEY)!==raw)throw conflict();
+   const prefix=KEY+'_before_format_migration';
+   let key=prefix;
+   for(let n=1;this.storage.getItem(key)!==null&&this.storage.getItem(key)!==raw;n++)key=prefix+'_'+n;
+   if(this.storage.getItem(key)===null)this.storage.setItem(key,raw);
+   if(this.storage.getItem(key)!==raw)throw Error('原记录未能备份，已暂停格式迁移');
+   const next=JSON.stringify(envelope);
+   checkOwner();
+   if(this.storage.getItem(KEY)!==raw)throw conflict();
+   this.storage.setItem(KEY,next);
+   this.raw=next;
+ });
+ this.envelope=envelope;
+ return projection;
+}
 project(envelope){let e=clone(envelope),d=unpack(e.data);let all=[...(d.history||[]),...(e.deferredHistory||[])],available=r=>!(r.ids||[]).some(n=>!this.ctx.byId.has(Number(n)));d={...d,history:all.filter(available),lastSession:e.scopeSessions?.[this.ctx.scopeKey]||null};if(d.lastSession?.ids?.some(n=>!this.ctx.byId.has(Number(n))))d.lastSession=null;return d}
 candidate(s,cloudScopes=null){if(this.blocked)throw Error('数据读取失败，已暂停写入以保护原记录');let e=clone(this.envelope),prev=unpack(e.data),d=clone(s);for(const k of MAPS)d[k]={...Object.fromEntries(Object.entries(prev[k]||{}).filter(([n])=>!this.ctx.byId.has(Number(n)))),...d[k]};d.favorites=[...new Set([...(prev.favorites||[]).filter(n=>!this.ctx.byId.has(Number(n))),...(d.favorites||[])])];d.openStudy={...Object.fromEntries(Object.entries(prev.openStudy||{}).filter(([n])=>!this.ctx.openIds.has(n))),...d.openStudy};e.scopeSessions||={};e.scopeSessions[this.ctx.scopeKey]=d.lastSession||null;if(Array.isArray(cloudScopes))for(const scope of cloudScopes){if(typeof scope!=='string'||scope.split('|').some(id=>!this.ctx.metas.has(id)))throw Error('云端题库范围无效');e.scopeSessions[scope]=(d.recentSessions||[]).filter(r=>r.scopeKey===scope&&r.kind==='exam').sort((a,b)=>b.time-a.time)[0]?.snapshot||null;}d.lastSession=null;if(prev.aggregateStats?.byQuestion)(d.aggregateStats||={}).byQuestion={...Object.fromEntries(Object.entries(prev.aggregateStats.byQuestion).filter(([n])=>!this.ctx.byId.has(Number(n)))),...d.aggregateStats.byQuestion};e.deferredHistory=[...(prev.history||[]),...(e.deferredHistory||[])].filter(row=>row.ids?.some(n=>!this.ctx.byId.has(Number(n))));e.data=pack(d);e.bankRegistry={...e.bankRegistry,...Object.fromEntries([...this.ctx.metas].map(([n,m])=>[n,m]))};e.bundles=[...(e.bundles||[]).filter(b=>!this.ctx.metas.has(b.meta.id)),...this.ctx.banks.filter(b=>b.meta.id!==HOS&&!window.QBANK_PRIVATE?.isBank(b.meta.id)&&!window.QBANK_BANKS?.some(m=>m.id===b.meta.id))];return e}
 // Synchronous save callers must receive quota/conflict errors before leaving a question.

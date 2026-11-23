@@ -133,34 +133,6 @@ jobs:
           node tests/exam-history-browser.cjs
           node tests/session-controls-browser.cjs
           node tests/public-forming-modules.cjs
-      - name: Review responsive layouts
-        if: always() && github.event_name == 'pull_request'
-        env:
-          SHOTS: ${{ runner.temp }}/forming-screenshots
-        run: |
-          python -m pip install --quiet pillow
-          python - <<'PY'
-          import base64, io, os
-          from pathlib import Path
-          from PIL import Image, ImageOps
-          for group in ('choice-alignment','resume-priority'):
-              panels=[]
-              for width, thumb in [(320,180),(390,205),(430,215),(768,265),(1366,380)]:
-                  file=Path(os.environ['SHOTS'])/f'{group}-{width}.png'
-                  if file.is_file():
-                      im=Image.open(file).convert('RGB')
-                      im.thumbnail((thumb,520))
-                      panels.append(im)
-              if panels:
-                  result=Image.new('RGB',(sum(im.width+3 for im in panels),max(im.height for im in panels)), 'white')
-                  x=0
-                  for im in panels:
-                      result.paste(im,(x,0))
-                      x+=im.width+3
-                  encoded=io.BytesIO()
-                  result.save(encoded,'JPEG',quality=56,optimize=True)
-                  print('LAYOUTSHOT_'+group+'='+base64.b64encode(encoded.getvalue()).decode('ascii'))
-          PY
       - name: Save responsive screenshots
         if: always()
         uses: actions/upload-artifact@v6

@@ -1074,3 +1074,45 @@ html .btn.history-entry{color:var(--hero-blue);background:var(--ice-face);border
  .overview-rows li{display:grid;gap:8px}
  .overview-rows .btn{justify-self:start}
 }
+
+.home-study-actions{
+ grid-column:1/-1;display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);
+ gap:12px;align-items:stretch;
+}
+.home-study-actions .plan-express{grid-column:auto;min-width:0}
+.home-study-actions .home-resume{
+ min-width:0;min-height:58px;display:grid;grid-template-columns:minmax(0,1fr);align-content:center;justify-items:center;gap:2px;
+ padding:7px 16px;line-height:1.3;
+}
+.home-resume strong{font-size:20px}
+.home-resume .resume-meta{display:flex;gap:.65em;max-width:100%;font-size:14px;line-height:1.4}
+.resume-meta>span:first-child{overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.resume-meta>span:last-child{flex:none;white-space:nowrap;font-variant-numeric:tabular-nums}
+.home-content .resume-banner{background:var(--panel);border-color:var(--ice-line)}
+@media(max-width:600px){
+ .home-study-actions{grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);gap:8px}
+ .home-study-actions .home-resume{min-height:50px;padding:6px 9px}
+ .home-resume strong{font-size:17px}
+ .home-resume .resume-meta{font-size:12px;gap:.4em}
+ .home-study-actions .plan-express{padding-inline:6px}
+}
+
+.question-card{--option-pad:14px;--option-marker:28px;--option-gap:10px}
+.question-card:is([data-input-kind="single"],[data-input-kind="multiple"],[data-input-kind="judge"])>.q-stem{
+ padding-inline-start:calc(1px + var(--option-pad) + var(--option-marker) + var(--option-gap));
+ overflow-wrap:anywhere;
+}
+.question-card .option{
+ display:grid;grid-template-columns:var(--option-marker) minmax(0,1fr);
+ column-gap:var(--option-gap);row-gap:3px;padding-inline:var(--option-pad);align-items:start;
+}
+.question-card .option .letter{grid-column:1;grid-row:1;width:var(--option-marker);height:var(--option-marker)}
+.question-card .option-text{grid-column:2;grid-row:1;min-width:0;align-self:center;overflow-wrap:anywhere}
+.question-card .option-result{grid-column:2;margin:0;max-width:none;text-align:start;line-height:1.35}
+.question-card .option-result:empty{display:none}
+@media(max-width:600px){
+ .question-card{--option-pad:10px;--option-marker:24px;--option-gap:8px}
+}
+@media(min-width:1001px){
+ .question-card{--option-pad:18px;--option-marker:32px;--option-gap:14px}
+}

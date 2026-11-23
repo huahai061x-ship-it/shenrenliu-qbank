@@ -36,6 +36,59 @@ async function contrast(locator) {
   return Number(ratio.toFixed(2));
 }
 
+async function checkReadingLayout(page) {
+  const card=page.locator('.question-card'),hero=page.locator('.compact-hero');
+  assert.equal(await hero.locator('.btn.primary').count(),1);
+  assert(await hero.locator('.plan-express.primary').isVisible());
+  const paper=await page.evaluate(()=>{
+    const choices=QUESTION_BANK.filter(q=>q.type==='single');
+    const longest=choices.reduce((a,b)=>Math.max(...b.options.map(s=>s.length))>Math.max(...a.options.map(s=>s.length))?b:a);
+    startStudy('sequence',[choices.find(q=>q.id!==longest.id),longest]);
+    setReciteAnswerMode('manual');jumpQ(1);return BANK_RUNTIME.app.getSession().paperId;
+  });
+  async function columns(){
+    return card.evaluate(el=>{
+      const stem=el.querySelector('.q-stem');
+      const start=stem.getBoundingClientRect().left+parseFloat(getComputedStyle(stem).paddingInlineStart);
+      return Array.from(el.querySelectorAll('.option-text'),text=>{
+        const b=text.getBoundingClientRect();
+        return {offset:Math.round(b.left-start),width:Math.round(b.width),height:Math.round(b.height)};
+      });
+    });
+  }
+  const plain=new Map();
+  for(const width of widths){
+    await page.setViewportSize({width,height:900});
+    const values=await columns();plain.set(width,values);
+    assert(values.length>1&&values.every(v=>Math.abs(v.offset)<=1),'题干与选项正文起点 '+width);
+    if(width===320)assert(Math.max(...values.map(v=>v.height))>40,'用换行选项验收');
+  }
+  await card.locator('.option').first().click();
+  await page.evaluate(()=>checkStudy());
+  assert(await card.locator('.option.correct .option-result').first().isVisible());
+  for(const width of widths){
+    await page.setViewportSize({width,height:900});
+    assert.deepEqual(await columns(),plain.get(width),'判分后选项正文位置、宽度及换行保持稳定 '+width);
+    await card.locator('.options').scrollIntoViewIfNeeded();
+    await screenshot(page,'choice-alignment-'+width);
+  }
+  await page.getByRole('button',{name:'暂停保存，回首页',exact:true}).click();
+  assert.match(await hero.locator('.home-resume').innerText(),/第 2\/2 题/);
+  for(const width of widths){
+    await page.setViewportSize({width,height:900});
+    assert.equal(await page.locator('.home-content .btn.primary').count(),1);
+    assert(await hero.locator('.home-resume.primary').isVisible());
+    assert(await hero.locator('.plan-express:not(.primary)').isVisible());
+    assert(await hero.locator('.resume-meta').evaluate(el=>el.scrollWidth<=el.clientWidth+1));
+    await hero.scrollIntoViewIfNeeded();
+    await screenshot(page,'resume-priority-'+width);
+  }
+  await page.locator('.recent-activities').evaluate(e=>e.open=false);
+  await hero.locator('.home-resume').click();
+  assert.equal(await page.evaluate(()=>BANK_RUNTIME.app.getSession().paperId),paper);
+  assert.match(await page.locator('.question-position').innerText(),/2\s*\/\s*2/);
+}
+
 (async()=>{
   const browser=await chromium.launch({executablePath:process.env.CHROME_BIN});
   try {
@@ -164,6 +217,7 @@ async function contrast(locator) {
       assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
       await screenshot(page,'mixed-home-'+width);
     }
+    await checkReadingLayout(page);
     assert.deepEqual(errors,[]);
     console.log('PASS 计划入口，五个宽度的暗色首页和错题本，两种返回方式复位，完整复盘，蒙对持久化，弹窗仅一次。对比度',JSON.stringify(ratios));
   } finally {await browser.close();}

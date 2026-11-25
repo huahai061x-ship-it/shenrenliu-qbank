@@ -62,7 +62,7 @@ const out=path.resolve(process.env.TRAINING_TEST_OUTPUT||'../../outputs/training
   await p.locator('.mastery-control select').selectOption('mastered');
   const eventCount=await p.evaluate(()=>Object.keys(BANK_RUNTIME.app.getStore().learningPlans.plan_readability.events).length);assert.equal(eventCount,2);
   await p.locator('.mastery-control select').selectOption('fuzzy');assert.equal(await p.evaluate(()=>Object.keys(BANK_RUNTIME.app.getStore().learningPlans.plan_readability.events).length),eventCount);
-  await p.getByRole('button',{name:'暂停保存，回首页',exact:true}).click();await p.reload();await ready();await p.locator('.recent-activities button[onclick^="resumeSavedActivity"]').first().click();
+  await p.getByRole('button',{name:'暂停保存，回首页',exact:true}).click();await p.reload();await ready();await p.locator('.home-resume').click();await p.locator('.recent-activities button[onclick^="resumeSavedActivity"]').first().click();
   assert(await p.locator('.option').first().isVisible());
   for(const width of [320,390,430,768]){await p.setViewportSize({width,height:900});await p.evaluate(()=>STUDY_PLANS.detail('plan_readability'));await fit('plan '+width);await shot('plan-'+width);}
   results.push('20/30/40/50 batches persist; options expand/collapse; disputed correct answer schedules normally; same-day next batch excludes it; single mastery control records assisted recall once; pause/reload safe');

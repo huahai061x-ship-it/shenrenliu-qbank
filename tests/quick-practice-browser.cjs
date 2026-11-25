@@ -76,20 +76,44 @@ async function checkReadingLayout(page) {
     await screenshot(page,'choice-alignment-'+width);
   }
   await page.getByRole('button',{name:'暂停保存，回首页',exact:true}).click();
-  assert.match(await hero.locator('.home-resume').innerText(),/第 2\/2 题/);
+  assert.equal(await hero.locator('.home-resume').innerText(),'继续上次练习');
   for(const width of widths){
     await page.setViewportSize({width,height:900});
     assert.equal(await page.locator('.home-content .btn.primary').count(),1);
     assert(await hero.locator('.home-resume.primary').isVisible());
     assert(await hero.locator('.plan-express:not(.primary)').isVisible());
-    assert(await hero.locator('.resume-meta').evaluate(el=>el.scrollWidth<=el.clientWidth+1));
+    assert(await page.locator('#recentActivityPicker').isHidden());
     await hero.scrollIntoViewIfNeeded();
     await screenshot(page,'resume-priority-'+width);
   }
-  await page.locator('.recent-activities').evaluate(e=>e.open=false);
   await hero.locator('.home-resume').click();
+  const row=page.locator('#recentActivityPicker .resume-banner').first();
+  assert.match(await row.innerText(),/第 2\/2 题/);
+  await row.getByRole('button',{name:'继续上次练习'}).click();
   assert.equal(await page.evaluate(()=>BANK_RUNTIME.app.getSession().paperId),paper);
   assert.match(await page.locator('.question-position').innerText(),/2\s*\/\s*2/);
+  await page.getByRole('button',{name:'暂停保存，回首页',exact:true}).click();
+  await page.evaluate(()=>{renderRealExamSetup();beginRealExam();jumpQ(3)});
+  const exam=await page.evaluate(()=>BANK_RUNTIME.app.getSession().paperId);
+  await page.getByRole('button',{name:'暂停保存，回首页',exact:true}).click();
+  const picker=page.getByRole('dialog',{name:'最近两次进度'});
+  await hero.locator('.home-resume').click();
+  assert.deepEqual(await picker.locator('[data-activity]').evaluateAll(rows=>rows.map(row=>row.dataset.activity)),[exam,paper]);
+  await picker.getByRole('button',{name:'继续上次考试'}).click();
+  assert.equal(await page.evaluate(()=>BANK_RUNTIME.app.getSession().paperId),exam);
+  assert.match(await page.locator('.question-position').innerText(),/4\s*\//);
+  await page.getByRole('button',{name:'暂停保存，回首页',exact:true}).click();
+  await hero.locator('.home-resume').click();
+  await picker.getByRole('button',{name:'放弃此进度'}).first().click();
+  await page.locator('[data-discard-cancel]').click();
+  assert.equal(await picker.locator('[data-activity]').count(),2);
+  for(const expected of [2,1]){
+    assert.equal(await picker.locator('[data-activity]').count(),expected);
+    await picker.getByRole('button',{name:'放弃此进度'}).first().click();
+    await page.locator('[data-discard-confirm]').click();
+  }
+  assert.equal(await hero.locator('.home-resume').count(),0);
+  assert(await hero.getByRole('button',{name:'今日计划',exact:true}).isVisible());
 }
 
 (async()=>{
@@ -114,7 +138,7 @@ async function checkReadingLayout(page) {
     for(const width of widths){
       await page.setViewportSize({width,height:900});
       await page.evaluate(()=>navHome(true));
-      const button=page.getByRole('button',{name:'定制我的计划',exact:true});
+      const button=page.getByRole('button',{name:'今日计划',exact:true});
       const full=await button.evaluate(e=>{const p=e.parentElement,s=getComputedStyle(p);return Math.abs(e.offsetWidth-(p.clientWidth-parseFloat(s.paddingLeft)-parseFloat(s.paddingRight)))<3});
       assert(full,'plan button width '+width);
       assert.equal(await page.locator('#main').getByRole('heading',{name:/今日复习|考前冲刺/,includeHidden:true}).count(),0);

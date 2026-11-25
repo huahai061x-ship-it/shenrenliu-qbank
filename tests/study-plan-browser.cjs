@@ -17,7 +17,7 @@ const server=http.createServer((req,res)=>{
       const errors=[],p=await ctx.newPage();p.on('pageerror',e=>errors.push(e.message));
       await ctx.route('**/*',r=>r.request().url().startsWith(base)?r.continue():r.abort());
       await p.goto(base+'?banks=hos_2026');await p.waitForFunction(()=>window.BANK_RUNTIME?.app);
-      await p.getByRole('button',{name:'定制我的计划'}).click();await p.getByRole('button',{name:'新建学习计划'}).click();
+      await p.getByRole('button',{name:'今日计划'}).click();await p.getByRole('button',{name:'新建学习计划'}).click();
       const [firstCount,bothCount]=await p.evaluate(()=>{
         const ids=['hos_2026','sinotruk_culture_2025_official'],all=BANK_RUNTIME.allQuestions;
         return [all.filter(q=>q.bankId===ids[0]).length,all.filter(q=>ids.includes(q.bankId)).length];
@@ -47,7 +47,7 @@ const server=http.createServer((req,res)=>{
       await p.getByRole('button',{name:'直接看答案',exact:true}).click();await p.getByRole('button',{name:'还没记住',exact:true}).click();
       assert.equal(await p.evaluate(()=>Object.values(Object.values(__V22_TEST__.getStore().learningPlans)[0].events)[0].rating),'again');
       await p.getByRole('button',{name:'暂停保存，回首页',exact:true}).click();assert(await p.evaluate(()=>__V22_TEST__.getStore().recentSessions.length>0));
-      await p.locator('.recent-activities>summary').click();
+      await p.locator('.home-resume').click();
       await p.getByRole('button',{name:'放弃此进度',exact:true}).first().click();await p.locator('[data-discard-cancel]').click();
       await p.getByRole('button',{name:'放弃此进度',exact:true}).first().click();await p.locator('[data-discard-confirm]').click();
       await p.getByRole('button',{name:/定制|查看我的计划/}).first().click();await p.getByRole('button',{name:'查看每日安排'}).click();

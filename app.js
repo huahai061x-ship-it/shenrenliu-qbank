@@ -584,22 +584,18 @@ function representativePracticePick(pool,n,store=S,random=Math.random){
  return out;
 }
 function homeStudyActions(rows){
- const hasPlan=window.STUDY_PLANS?.hasPlans();
- const planLabel=hasPlan?'开始今日计划':'定制我的计划';
- if(!rows.length)return `<button type="button" class="btn primary plan-express" onclick="STUDY_PLANS.startToday()">${planLabel}</button>`;
- const row=rows[0], info=recentActivityInfo(row);
+ const planButton=`<button type="button" class="btn ${rows.length?'':'primary '}plan-express" onclick="STUDY_PLANS.startToday()">今日计划</button>`;
+ if(!rows.length)return planButton;
  return `<div class="home-study-actions">
-   <button type="button" class="btn primary home-resume" data-activity="${esc(row.id)}" onclick="resumeSavedActivity(this.dataset.activity)">
-     <strong>${info.action}</strong><span class="resume-meta"><span>${esc(info.title)}</span><span>${info.position}</span></span>
-   </button>
-   <button type="button" class="btn plan-express" onclick="STUDY_PLANS.startToday()">${hasPlan?'今日计划':'定制计划'}</button>
+   <button type="button" class="btn primary home-resume" aria-haspopup="dialog" aria-controls="recentActivityPicker" onclick="document.getElementById('recentActivityPicker').showModal()">继续上次练习</button>
+   ${planButton}
  </div>`;
 }
 function renderHome(){enterPage('home',()=>renderHome());view='home';migrateRecentSessions();
+ const choosing=$('#recentActivityPicker')?.open===true;
  const scope=BANK_RUNTIME?.ctx?.scopeKey||'hos_2026', rows=(S.recentSessions||[]).filter(row=>row.scopeKey===scope);
  app(`<div class="home-content">
 <section class="hero compact-hero"><div class="panel hero-main lulu-hero"><div class="hero-copy"><div class="hero-heading"><h1><span>神人刘题库</span><span>训练站</span></h1></div><div class="hero-caption"><button class="hero-bank-picker" type="button" onclick="window.BANK_RUNTIME?.openSelector()" aria-haspopup="dialog"><span class="hero-bank-label">选择题库<span class="hero-bank-arrow" aria-hidden="true">›</span></span><span class="hero-bank-current">${BANK_RUNTIME?esc(BANK_RUNTIME.exportBankSummary()):'HOS 应知应会'}</span>${BANK_RUNTIME?.errors.length?'<span class="hero-bank-error">部分题库未加载，点击查看</span>':''}</button><button type="button" class="home-topic-trigger" onclick="openContentTopicPicker()" aria-haspopup="dialog">内容：${esc(contentTopicName())}<span aria-hidden="true"> ›</span></button></div></div><div class="lulu-mascot"><span id="luluSpeech" class="lulu-speech" aria-hidden="true">点击我试试吧～</span><button id="luluHomeButton" class="lulu-button" type="button" onclick="openLuluRoom()" aria-label="水豚噜噜：打开学习记录和掌握地图" title="水豚噜噜 · 点击探索学习小屋">${window.LULU?.imageMarkup(512,512)||'<img src="lulu-mascot.png" width="512" height="512" alt="" draggable="false">' }<span class="lulu-label">学习小屋 ›</span></button></div>${homeStudyActions(rows)}</div></section>
-${recentSessionsMarkup(rows)}
 ${DATA_WARNINGS.length?`<div class="notice danger-notice"><b>数据安全提示：</b>${esc([...new Set(DATA_WARNINGS)].join('；'))}</div>`:''}
 ${BANK_AUDIT_ERRORS.length?`<div class="notice danger-notice"><b>题库数据自检未通过：</b>${esc(BANK_AUDIT_ERRORS.slice(0,5).join('；'))}</div>`:''}
 <div class="section-title shortcut-title"><div><h2>我的快捷入口</h2></div><button class="btn small" onclick="openShortcutSettings()">编辑快捷入口</button></div><section class="mode-grid core-mode-grid">
@@ -612,7 +608,9 @@ ${MODE_REGISTRY.filter(x=>x.showInAllModes!==false&&(x.id!=='openConcept'||OPEN_
 <section class="panel status-overview" aria-label="学习状态概览"><b>学习状态概览</b><div>${overviewButtons()}</div></section>
 ${backupReminder()}
 <footer class="home-updates" aria-label="本次更新"><aside class="notice" id="homeReleaseNote" aria-label="本次更新" hidden></aside></footer>
-</div>`);window.LULU?.mount()}
+</div>${recentSessionsMarkup(rows)}`);window.LULU?.mount();
+ if(choosing){if(rows.length)$('#recentActivityPicker').showModal();else $('.plan-express')?.focus()}
+}
 let lastLuluOrange=-1;
 function luluOrangeLine(){return window.LULU_FORTUNES?.draw?.()||'慢慢学，噜噜陪你。'}
 function drawLuluOrangeNote(){const note=$('#luluOrangeNote');if(note)note.textContent=luluOrangeLine()}
@@ -1364,18 +1362,19 @@ function recentActivityInfo(row){
 }
 function recentSessionsMarkup(rows){
  if(!rows.length)return '';
- return `<details class="recent-activities panel" open><summary>最近两次进度 <span>查看与管理</span></summary>${rows.map(row=>{
+ return `<dialog id="recentActivityPicker" class="feedback-dialog recent-activities" aria-labelledby="recentActivityTitle">
+ <header class="progress-picker-head"><h2 id="recentActivityTitle">最近两次进度</h2><button class="btn small" autofocus onclick="this.closest('dialog').close()">关闭</button></header>${rows.map(row=>{
   const info=recentActivityInfo(row), banks=row.scopeKey.split('|').map(id=>BANK_RUNTIME?.ctx?.metas.get(id)?.name||'HOS题库').join('＋');
   const time=window.BEIJING_CLOCK?.format(row.time)||new Date(row.time).toLocaleString('zh-CN',{timeZone:'Asia/Shanghai'});
-  return `<div class="panel resume-banner"><div><b>${row.kind==='exam'?'未完成考试':'继续上次练习'}：${esc(info.title)}</b><span>${info.position} · ${esc(banks)} · ${esc(time)}</span></div>
-  <div class="q-actions"><button class="btn" onclick="resumeSavedActivity('${esc(row.id)}')">${info.action}</button><button class="btn" onclick="discardSavedActivity('${esc(row.id)}')">放弃此进度</button></div></div>`;
- }).join('')}</details>`;
+  return `<section class="panel resume-banner" data-activity="${esc(row.id)}"><div><b>${esc(info.title)}</b><span>${info.position} · ${esc(banks)}</span><span>${esc(time)}</span></div>
+  <div class="q-actions"><button class="btn primary" onclick="resumeSavedActivity(this.closest('[data-activity]').dataset.activity)">${info.action}</button><button class="btn" onclick="discardSavedActivity(this.closest('[data-activity]').dataset.activity)">放弃此进度</button></div></section>`;
+ }).join('')}</dialog>`;
 }
 function saveCurrentProgress(){return isActiveExam()?saveSession():session&&session.kind!=='exam'&&view!=='practiceComplete'?persistPractice():saveStore()}
 function manageSessionPlan(){if(saveCurrentProgress())window.STUDY_PLANS.open()}
 function pauseAndSave(){if(!session||session.finished)return navHome(true);if(session.kind!=='exam')return pausePractice();pauseExamTimer(false);if(!saveSession(false)){resumeExamTimer();return toast('保存失败，已留在当前考试，请先导出备份')}session=null;stopTimerTicker();navHome(true);toast('考试已保存，可从首页继续，暂停期间不计时');}
 function resumeSavedActivity(id){let row=S.recentSessions.find(x=>x.id===id);if(!row)return toast('此进度已变化，请查看最近两次进度');if(BANK_RUNTIME&&row.scopeKey!==BANK_RUNTIME.ctx.scopeKey){if(!prepareRequiredPwaUpdate())return;return BANK_RUNTIME.applySelection(row.scopeKey.split('|'),{resumeActivity:id})}try{if(row.kind==='exam'){const snap=sanitizeLastSession(row.snapshot);if(!snap)throw Error('考试快照不完整');S.lastSession=snap;resumeLastSession();saveSession(false);}else{const p=row.snapshot,restored=decodePracticeSession(p.session);if(!Number.isInteger(p.current)||p.current<0||p.current>=restored.items.length)throw Error('练习位置无效');session=restored;current=p.current;resumePracticeTimer();renderQuestion();persistPractice();toast('已恢复原队列、作答和位置；暂停期间不计时');}}catch(e){toast('暂不能恢复：'+e.message+'。原记录仍保留，请导出备份。');}}
-function discardSavedActivity(id,confirmed=false){const row=S.recentSessions.find(x=>x.id===id);if(!row)return;if(!confirmed){let modal=$('#discardActivityConfirm');if(!modal){modal=document.createElement('div');modal.id='discardActivityConfirm';modal.className='modal hidden';modal.setAttribute('role','dialog');modal.setAttribute('aria-modal','true');modal.setAttribute('aria-labelledby','discardActivityTitle');modal.innerHTML='<div class="modal-card compact-modal"><div class="modal-head"><h2 id="discardActivityTitle">放弃这次进度？</h2></div><div class="modal-body"><p>只移除这一次未完成进度，其他进度、学习记录和历史成绩保留。</p><div class="q-actions"><button class="btn" data-discard-cancel>取消，保留进度</button><button class="btn danger" data-discard-confirm>确认放弃</button></div></div></div>';document.body.append(modal)}const expected=JSON.stringify(row),trigger=document.activeElement,close=()=>{modal.classList.add('hidden');if(trigger?.isConnected)trigger.focus()};modal.querySelector('[data-discard-cancel]').onclick=close;modal.querySelector('[data-discard-confirm]').onclick=()=>{const now=S.recentSessions.find(x=>x.id===id);close();if(!now||JSON.stringify(now)!==expected)return toast('进度已变化，请重新确认');discardSavedActivity(id,true)};modal.onclick=e=>{if(e.target===modal)close()};modal.onkeydown=e=>{if(e.key==='Escape'){e.preventDefault();close()}};modal.classList.remove('hidden');modal.querySelector('[data-discard-cancel]').focus();return;}const old=S.recentSessions,last=S.lastSession;forgetActivity(id);if(S.lastSession?.paperId===id)S.lastSession=null;if(!saveStore()){S.recentSessions=old;S.lastSession=last;return}if(row.kind==='practice')try{const key='shenrenliu_practice_v1_'+(BANK_RUNTIME?row.scopeKey:'hos'),raw=JSON.parse(localStorage.getItem(key)||'null');if(raw?.session?.paperId===id)localStorage.removeItem(key)}catch(e){}renderHome();}
+function discardSavedActivity(id,confirmed=false){const row=S.recentSessions.find(x=>x.id===id);if(!row)return;if(!confirmed){let modal=$('#discardActivityConfirm');if(!modal){modal=document.createElement('dialog');modal.id='discardActivityConfirm';modal.className='feedback-dialog';modal.setAttribute('aria-labelledby','discardActivityTitle');modal.innerHTML='<div class="progress-picker-head"><h2 id="discardActivityTitle">放弃这次进度？</h2></div><div class="modal-body"><p>只移除这一次未完成进度，其他进度、学习记录和历史成绩保留。</p><div class="q-actions"><button class="btn" data-discard-cancel>取消，保留进度</button><button class="btn danger" data-discard-confirm>确认放弃</button></div></div>';document.body.append(modal)}const expected=JSON.stringify(row),trigger=document.activeElement,close=()=>{modal.close();if(trigger?.isConnected)trigger.focus()};modal.querySelector('[data-discard-cancel]').onclick=close;modal.querySelector('[data-discard-confirm]').onclick=()=>{const now=S.recentSessions.find(x=>x.id===id);close();if(!now||JSON.stringify(now)!==expected)return toast('进度已变化，请重新确认');discardSavedActivity(id,true)};modal.onclick=e=>{if(e.target===modal)close()};modal.showModal();modal.querySelector('[data-discard-cancel]').focus();return;}const old=S.recentSessions,last=S.lastSession;forgetActivity(id);if(S.lastSession?.paperId===id)S.lastSession=null;if(!saveStore()){S.recentSessions=old;S.lastSession=last;return}if(row.kind==='practice')try{const key='shenrenliu_practice_v1_'+(BANK_RUNTIME?row.scopeKey:'hos'),raw=JSON.parse(localStorage.getItem(key)||'null');if(raw?.session?.paperId===id)localStorage.removeItem(key)}catch(e){}renderHome();}
 function restoreRecentRoute(){if(typeof URL!=='function')return;let url=new URL(location.href),id=url.searchParams.get('resumeActivity');if(!id)return;url.searchParams.delete('resumeActivity');history.replaceState(history.state,'',url.href);resumeSavedActivity(id);}
 
 function practiceStorageKey(){return 'shenrenliu_practice_v1_'+(BANK_RUNTIME?.ctx?.scopeKey||'hos')}

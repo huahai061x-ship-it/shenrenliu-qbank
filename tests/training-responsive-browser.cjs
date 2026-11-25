@@ -65,7 +65,7 @@ fs.mkdirSync(out,{recursive:true});
   assert.equal(await page.locator('.structured-explanation,.immediate-feedback').count(),0);
   await page.getByRole('button',{name:'暂停保存，回首页',exact:true}).click();
   const paper=await page.evaluate(()=>BANK_RUNTIME.app.getStore().lastSession.paperId);
-  await page.reload();await ready();await page.locator('.recent-activities button[onclick^="resumeSavedActivity"]').first().click();
+  await page.reload();await ready();await page.locator('.home-resume').click();await page.locator('.recent-activities button[onclick^="resumeSavedActivity"]').first().click();
   assert.equal(await page.evaluate(()=>BANK_RUNTIME.app.getSession().paperId),paper);
   await page.evaluate(()=>{BANK_RUNTIME.app.getSession().strict=false;submitExam()});
   await page.locator('#submitConfirm').getByRole('button',{name:'继续答题',exact:true}).click();

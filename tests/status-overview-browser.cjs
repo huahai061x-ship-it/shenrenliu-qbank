@@ -70,13 +70,13 @@ async function verify(){
   assert.equal(await count('seen'),4);
   await page.evaluate(()=>{startStudy('sequence')});
   await page.getByRole('button',{name:'暂停保存，回首页',exact:true}).click();
-  const recent=page.locator('.recent-activities>summary');
+  const recent=page.locator('.home-resume');
   await recent.hover();
   for(const motion of ['reduce','no-preference']){
    await page.emulateMedia({reducedMotion:motion});
    assert.equal(await recent.evaluate(e=>getComputedStyle(e).outlineStyle),'none');
   }
-  await recent.click();assert.equal(await page.locator('.recent-activities').getAttribute('open'),null);
+  await recent.click();assert(await page.locator('.recent-activities').isVisible());await page.keyboard.press('Escape');
   assert.equal(await page.locator('.home-bank-note').count(),0);
   assert.equal(await page.locator('.home-updates > *').count(),1);
   assert.equal(await page.locator('#homeReleaseNote').count(),1);

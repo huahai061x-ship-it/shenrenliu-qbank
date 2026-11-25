@@ -47,7 +47,7 @@ async function main() {
       await page.waitForURL(url=>url.searchParams.get('banks')===id);await ready();
       await page.goto(base);await ready();
       assert.deepEqual(await page.evaluate(()=>BANK_RUNTIME.scopeBankIds()),[id]);
-      await page.getByRole('button',{name:'定制我的计划'}).click();
+      await page.getByRole('button',{name:'今日计划'}).click();
       await page.getByRole('heading',{name:'新建学习计划'}).waitFor();
       assert.deepEqual(await page.locator('[data-plan-bank]:checked').evaluateAll(nodes=>nodes.map(n=>n.dataset.planBank)), [id]);
       assert.equal(await page.locator('#planSelectionCount').innerText(),'已选 460 题 · 含 '+pending+' 道待核验题');

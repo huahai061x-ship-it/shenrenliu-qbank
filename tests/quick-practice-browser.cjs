@@ -50,9 +50,12 @@ async function checkReadingLayout(page) {
     return card.evaluate(el=>{
       const stem=el.querySelector('.q-stem');
       const start=stem.getBoundingClientRect().left+parseFloat(getComputedStyle(stem).paddingInlineStart);
+      const edge=el.querySelector('.question-focus').getBoundingClientRect().left;
+      if(Math.abs(start-edge)>1)throw Error('题干没有与题型标签所在行左缘对齐');
       return Array.from(el.querySelectorAll('.option-text'),text=>{
         const b=text.getBoundingClientRect();
-        return {offset:Math.round(b.left-start),width:Math.round(b.width),height:Math.round(b.height)};
+        const option=text.closest('.option').getBoundingClientRect();
+        return {offset:Math.round(option.left-start),textStart:Math.round(b.left),width:Math.round(b.width),height:Math.round(b.height)};
       });
     });
   }
@@ -60,7 +63,7 @@ async function checkReadingLayout(page) {
   for(const width of widths){
     await page.setViewportSize({width,height:900});
     const values=await columns();plain.set(width,values);
-    assert(values.length>1&&values.every(v=>Math.abs(v.offset)<=1),'题干与选项正文起点 '+width);
+    assert(values.length>1&&values.every(v=>Math.abs(v.offset)<=1),'题干与选项外框起点 '+width);
     if(width===320)assert(Math.max(...values.map(v=>v.height))>40,'用换行选项验收');
   }
   await card.locator('.option').first().click();

@@ -15,6 +15,7 @@ const started=new Promise(r=>startedSend=r),hold=new Promise(r=>releaseSend=r);
 await otpTest.p.route('**/__test/send',async route=>{startedSend();await hold;await route.continue();});
 await form.locator('#cloudEmail').fill('otp-audit@163.com');await form.locator('[data-action="send"]').click();await started;
 await form.locator('[data-action="close"]').click();await otpTest.p.locator('#cloudAccountButton').click();
+await otpTest.p.locator('#deviceModeDialog [data-email]').click();
 assert(await form.locator('[data-action="send"]').isDisabled());assert(await form.locator('[data-action="verify"]').isDisabled());
 releaseSend();await otpTest.p.waitForFunction(()=>document.querySelector('#cloudSyncMessage')?.textContent.includes('已发送至 otp-audit@163.com'));
 assert.equal(otpTest.cloudRequests.filter(u=>u.endsWith('/send')).length,1);
